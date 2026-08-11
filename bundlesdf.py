@@ -509,30 +509,26 @@ class BundleSdf:
     if len(frame_pairs)==0:
       return []
 
-    # Existing filtered matches are already ready for use. Missing filtered
-    # matches must be rebuilt even when their raw LoFTR matches are cached.
-    pairs_to_process = [pair for pair in frame_pairs if pair not in self.bundler._fm._matches]
-    if len(pairs_to_process)==0:
-      return [len(self.bundler._fm._matches[pair]) for pair in frame_pairs]
+    imgs, tfs, query_pairs = self.bundler._fm.getProcessedImagePairs(frame_pairs)
+    if len(query_pairs)==0:
+      return [len(self.bundler._fm._matches[pair]) if pair in self.bundler._fm._matches else 0 for pair in frame_pairs]
 
-    imgs, tfs, query_pairs = self.bundler._fm.getProcessedImagePairs(pairs_to_process)
-    if len(query_pairs)>0:
-      imgs = np.array([np.array(img) for img in imgs])
-      corres = self.loftr.predict(rgbAs=imgs[::2], rgbBs=imgs[1::2])
-      for i_pair in range(len(query_pairs)):
-        cur_corres = np.asarray(corres[i_pair][:,:4], dtype=np.float32).reshape(-1,4)
-        tfA = np.array(tfs[i_pair*2])
-        tfB = np.array(tfs[i_pair*2+1])
-        cur_corres[:,:2] = transform_pts(cur_corres[:,:2], np.linalg.inv(tfA))
-        cur_corres[:,2:4] = transform_pts(cur_corres[:,2:4], np.linalg.inv(tfB))
-        self.bundler._fm._raw_matches[query_pairs[i_pair]] = cur_corres.round().astype(np.uint16)
+    imgs = np.array([np.array(img) for img in imgs])
+    corres = self.loftr.predict(rgbAs=imgs[::2], rgbBs=imgs[1::2])
+    for i_pair in range(len(query_pairs)):
+      cur_corres = np.asarray(corres[i_pair][:,:4], dtype=np.float32).reshape(-1,4)
+      tfA = np.array(tfs[i_pair*2])
+      tfB = np.array(tfs[i_pair*2+1])
+      cur_corres[:,:2] = transform_pts(cur_corres[:,:2], np.linalg.inv(tfA))
+      cur_corres[:,2:4] = transform_pts(cur_corres[:,2:4], np.linalg.inv(tfB))
+      self.bundler._fm._raw_matches[query_pairs[i_pair]] = cur_corres.round().astype(np.uint16)
 
-    self.bundler._fm.rawMatchesToCorres(pairs_to_process)
+    self.bundler._fm.rawMatchesToCorres(query_pairs)
 
     min_ransac_input = max(self.cfg_track["ransac"]["num_sample"],
                            self.cfg_track["ransac"]["min_match_after_ransac"])
     ransac_pairs = []
-    for pair in pairs_to_process:
+    for pair in query_pairs:
       self.bundler._fm.vizCorresBetween(pair[0], pair[1], 'before_ransac')
       if len(self.bundler._fm._matches[pair])<min_ransac_input:
         self.bundler._fm._matches[pair] = []
@@ -542,10 +538,10 @@ class BundleSdf:
     if len(ransac_pairs)>0:
       self.bundler._fm.runRansacMultiPairGPU(ransac_pairs)
 
-    for pair in pairs_to_process:
+    for pair in query_pairs:
       self.bundler._fm.vizCorresBetween(pair[0], pair[1], 'after_ransac')
 
-    return [len(self.bundler._fm._matches[pair]) for pair in frame_pairs]
+    return [len(self.bundler._fm._matches[pair]) if pair in self.bundler._fm._matches else 0 for pair in frame_pairs]
 
 
 
