@@ -112,7 +112,6 @@ void OptimizerGpu::optimizeFrames(const std::vector<EntryJ> &global_corres, cons
     }
     sba.align(global_corres, n_match_per_pair, n_frames, &cuda_cache, d_transforms, false, true, false, true, false, false, -1);
 
-    transforms_cpu.clear();
     cudaMemcpy(transforms_cpu.data(), d_transforms, sizeof(float4x4)*n_frames, cudaMemcpyDeviceToHost);
     for (int i=0;i<n_frames;i++)
     {

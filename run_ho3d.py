@@ -15,10 +15,10 @@ sys.path.append(f'{code_dir}/BundleTrack/scripts')
 from data_reader import *
 
 
-def run_one_video(video_dir,out_dir):
+def run_one_video(video_dir,out_dir,mask_dir='masks_SAM2'):
   set_seed(0)
 
-  reader = Ho3dReader(video_dir)
+  reader = Ho3dReader(video_dir, mask_dir=mask_dir)
   video_name = reader.get_video_name()
   out_folder = f'{out_dir}/{video_name}/'   #!NOTE there has to be a / in the end
   if os.path.exists(f'{out_folder}/ob_in_cam'):
@@ -67,10 +67,10 @@ def run_one_video(video_dir,out_dir):
   print(f"Done {video_dir}")
 
 
-def run_one_video_global_nerf(video_dir,out_dir):
+def run_one_video_global_nerf(video_dir,out_dir,mask_dir='masks_SAM2'):
   set_seed(0)
 
-  reader = Ho3dReader(video_dir)
+  reader = Ho3dReader(video_dir, mask_dir=mask_dir)
   video_name = reader.get_video_name()
   out_folder = f'{out_dir}/{video_name}/'   #!NOTE there has to be a / in the end
 
@@ -101,7 +101,7 @@ def run_all():
   video_dirs = sorted(glob.glob('/mnt/9a72c439-d0a7-45e8-8d20-d7a235d02763/DATASET/HO3D_v3/evaluation/*'))
 
   for video_dir in video_dirs:
-    run_one_video(video_dir, out_dir=args.out_dir)
+    run_one_video(video_dir, out_dir=args.out_dir, mask_dir=args.mask_dir)
 
 
 if __name__=="__main__":
@@ -110,11 +110,11 @@ if __name__=="__main__":
   parser.add_argument('--out_dir', type=str, default="/home/bowen/debug/ho3d_ours")
   parser.add_argument('--use_segmenter', type=int, default=0)
   parser.add_argument('--use_gui', type=int, default=0)
+  parser.add_argument('--mask_dir', type=str, default='masks_SAM2', help='mask directory name under the HO3D root, or an absolute path')
   args = parser.parse_args()
 
   use_segmenter = args.use_segmenter
   video_dirs = args.video_dirs.split(',')
   print("video_dirs:\n",video_dirs)
   for video_dir in video_dirs:
-    run_one_video(video_dir, args.out_dir)
-
+    run_one_video(video_dir, args.out_dir, mask_dir=args.mask_dir)

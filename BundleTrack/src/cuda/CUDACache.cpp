@@ -46,7 +46,13 @@ void CUDACache::storeFrame(unsigned int inputDepthWidth, unsigned int inputDepth
 	// 	CUDAImageUtil::gaussFilterDepthMap(d_filterHelper, d_depth, m_filterDepthSigmaD, m_filterDepthSigmaR, inputDepthWidth, inputDepthHeight);
 	// 	d_inputDepth = d_filterHelper;
 	// }
-	CUDAImageUtil::convertDepthFloatToCameraSpaceFloat4(d_helperCamPos, d_depth, *(float4x4*)&m_inputIntrinsicsInv, inputDepthWidth, inputDepthHeight);
+	float4x4 inputIntrinsicsInv;
+	for (int row = 0; row < 4; row++) {
+		for (int col = 0; col < 4; col++) {
+			inputIntrinsicsInv.entries2[row][col] = m_inputIntrinsicsInv(row, col);
+		}
+	}
+	CUDAImageUtil::convertDepthFloatToCameraSpaceFloat4(d_helperCamPos, d_depth, inputIntrinsicsInv, inputDepthWidth, inputDepthHeight);
 	CUDAImageUtil::resampleFloat4(frame.d_cameraposDownsampled, m_width, m_height, d_helperCamPos, inputDepthWidth, inputDepthHeight);
 
 	// CUDAImageUtil::computeNormals(d_helperNormals, d_helperCamPos, inputDepthWidth, inputDepthHeight);

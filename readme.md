@@ -30,12 +30,12 @@ year          = {2023},
 - Download pretrained [weights of LoFTR outdoor_ds.ckpt](https://drive.google.com/drive/folders/1xu2Pq6mZT5hmFgiYMBT9Zt8h1yO-3SIp), and put it under
 `./BundleTrack/LoFTR/weights/outdoor_ds.ckpt`
 
-- Download HO3D data. We provide the augmented data that you can download [here](https://drive.google.com/drive/folders/1Wk-HZDvUExyUrRn7us4WWEbHnnFHgOAX?usp=share_link). Then download YCB-Video object models from [here](https://drive.google.com/file/d/1-1m7qMMyUHYLhaRiQBbsSRMt5dMRX4jD/view?usp=share_link). Finally, make sure the structure is like below, and update your root path of `HO3D_ROOT` at the top of `BundleTrack/scripts/data_reader.py`
+- Download HO3D data. We provide the augmented data that you can download [here](https://drive.google.com/drive/folders/1Wk-HZDvUExyUrRn7us4WWEbHnnFHgOAX?usp=share_link). Then download YCB-Video object models from [here](https://drive.google.com/file/d/1-1m7qMMyUHYLhaRiQBbsSRMt5dMRX4jD/view?usp=share_link). Place the SAM2 masks beside `evaluation/` as shown below. The reader infers the HO3D root from the sequence path.
   ```
   HO3D_v3
     ├── evaluation
     ├── models
-    └── masks_XMem
+    └── masks_SAM2
   ```
 
 
@@ -60,22 +60,22 @@ bash build.sh
 root
   ├──rgb/    (PNG files)
   ├──depth/  (PNG files, stored in mm, uint16 format. Filename same as rgb)
-  ├──masks/       (PNG files. Filename same as rgb. 0 is background. Else is foreground)
+  ├──masks_sam2/  (PNG files. Filename same as rgb. 0 is background. Else is foreground)
   └──cam_K.txt   (3x3 intrinsic matrix, use space and enter to delimit)
 ```
 
 Due to license issues, we are not able to include [XMem](https://github.com/hkchengrex/XMem) in this codebase for running segmentation online. If you are interested in doing so, please download the code separately and add a wrapper in `segmentation_utils.py`.
 
-- Run your RGBD video (specify the video_dir and your desired output path). There are 3 steps. Note we assume the max relevant depth in the demo data <1. If this is not the case for you, change it [here](https://github.com/NVlabs/BundleSDF/blob/master/BundleTrack/config_ho3d.yml#L16)
+- Run your RGBD video by specifying the input and output paths. `run_video` performs online tracking/reconstruction and then launches global refinement automatically. Note we assume the max relevant depth in the demo data <1. If this is not the case for you, change it [here](https://github.com/NVlabs/BundleSDF/blob/master/BundleTrack/config_ho3d.yml#L16)
 ```
-# 1) Run joint tracking and reconstruction. 
-python run_custom.py --mode run_video --video_dir /home/bowen/debug/2022-11-18-15-10-24_milk --out_folder /home/bowen/debug/bundlesdf_2022-11-18-15-10-24_milk --use_segmenter 1 --use_gui 1 --debug_level 2
+# Run online tracking/reconstruction, followed automatically by global refinement.
+python run_custom.py --mode run_video --video_dir datasets/YCBInEOAT/mustard0 --out_folder outputs/mustard0 --mask_dir masks_sam2 --use_segmenter 0 --use_gui 0 --debug_level 2
 
-# 2) Run global refinement post-processing to refine the mesh
-python run_custom.py --mode global_refine --video_dir /home/bowen/debug/2022-11-18-15-10-24_milk --out_folder /home/bowen/debug/bundlesdf_2022-11-18-15-10-24_milk   # Change the path to your video_directory
+# Optional: rerun only global refinement from saved tracking results.
+python run_custom.py --mode global_refine --video_dir datasets/YCBInEOAT/mustard0 --out_folder outputs/mustard0 --mask_dir masks_sam2
 
-# 3) (Optional) If you want to draw the oriented bounding box to visualize the pose, similar to our demo
-python run_custom.py --mode draw_pose --out_folder /home/bowen/debug/bundlesdf_2022-11-18-15-10-24_milk
+# Optional: draw the oriented bounding box to visualize the pose.
+python run_custom.py --mode draw_pose --out_folder outputs/mustard0
 ```
 
 - Finally the results will be dumped in the `out_folder`, including the tracked poses stored in `ob_in_cam/` and reconstructed mesh with texture `textured_mesh.obj`.
@@ -86,10 +86,10 @@ python run_custom.py --mode draw_pose --out_folder /home/bowen/debug/bundlesdf_2
 # Run on HO3D dataset
 ```
 # Run BundleSDF to get the pose and reconstruction results
-python run_ho3d.py --video_dirs /mnt/9a72c439-d0a7-45e8-8d20-d7a235d02763/DATASET/HO3D_v3/evaluation/SM1 --out_dir /home/bowen/debug/ho3d_ours
+python run_ho3d.py --video_dirs datasets/HO3D_v3/evaluation/SM1 --out_dir outputs/ho3d --mask_dir masks_SAM2
 
 # Benchmark the output results
-python benchmark_ho3d.py --video_dirs /mnt/9a72c439-d0a7-45e8-8d20-d7a235d02763/DATASET/HO3D_v3/evaluation/SM1 --out_dir /home/bowen/debug/ho3d_ours
+python benchmark_ho3d.py --video_dirs datasets/HO3D_v3/evaluation/SM1 --out_dir outputs/ho3d
 ```
 
 

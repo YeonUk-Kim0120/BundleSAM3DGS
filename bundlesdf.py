@@ -506,40 +506,46 @@ class BundleSdf:
 
   def find_corres(self, frame_pairs):
     logging.info(f"frame_pairs: {len(frame_pairs)}")
-    is_match_ref = len(frame_pairs)==1 and frame_pairs[0][0]._ref_frame_id==frame_pairs[0][1]._id and self.bundler._newframe==frame_pairs[0][0]
+    if len(frame_pairs)==0:
+      return []
 
-    imgs, tfs, query_pairs = self.bundler._fm.getProcessedImagePairs(frame_pairs)
-    imgs = np.array([np.array(img) for img in imgs])
+    # Existing filtered matches are already ready for use. Missing filtered
+    # matches must be rebuilt even when their raw LoFTR matches are cached.
+    pairs_to_process = [pair for pair in frame_pairs if pair not in self.bundler._fm._matches]
+    if len(pairs_to_process)==0:
+      return [len(self.bundler._fm._matches[pair]) for pair in frame_pairs]
 
-    if len(query_pairs)==0:
-      return
+    imgs, tfs, query_pairs = self.bundler._fm.getProcessedImagePairs(pairs_to_process)
+    if len(query_pairs)>0:
+      imgs = np.array([np.array(img) for img in imgs])
+      corres = self.loftr.predict(rgbAs=imgs[::2], rgbBs=imgs[1::2])
+      for i_pair in range(len(query_pairs)):
+        cur_corres = np.asarray(corres[i_pair][:,:4], dtype=np.float32).reshape(-1,4)
+        tfA = np.array(tfs[i_pair*2])
+        tfB = np.array(tfs[i_pair*2+1])
+        cur_corres[:,:2] = transform_pts(cur_corres[:,:2], np.linalg.inv(tfA))
+        cur_corres[:,2:4] = transform_pts(cur_corres[:,2:4], np.linalg.inv(tfB))
+        self.bundler._fm._raw_matches[query_pairs[i_pair]] = cur_corres.round().astype(np.uint16)
 
-    corres = self.loftr.predict(rgbAs=imgs[::2], rgbBs=imgs[1::2])
-    for i_pair in range(len(query_pairs)):
-      cur_corres = corres[i_pair][:,:4]
-      tfA = np.array(tfs[i_pair*2])
-      tfB = np.array(tfs[i_pair*2+1])
-      cur_corres[:,:2] = transform_pts(cur_corres[:,:2], np.linalg.inv(tfA))
-      cur_corres[:,2:4] = transform_pts(cur_corres[:,2:4], np.linalg.inv(tfB))
-      self.bundler._fm._raw_matches[query_pairs[i_pair]] = cur_corres.round().astype(np.uint16)
+    self.bundler._fm.rawMatchesToCorres(pairs_to_process)
 
-    min_match_with_ref = self.cfg_track["feature_corres"]["min_match_with_ref"]
-
-    if is_match_ref and len(self.bundler._fm._raw_matches[frame_pairs[0]])<min_match_with_ref:
-      self.bundler._fm._raw_matches[frame_pairs[0]] = []
-      self.bundler._newframe._status = my_cpp.Frame.FAIL
-      logging.info(f'frame {self.bundler._newframe._id_str} mark FAIL, due to no matching')
-      return
-
-    self.bundler._fm.rawMatchesToCorres(query_pairs)
-
-    for pair in query_pairs:
+    min_ransac_input = max(self.cfg_track["ransac"]["num_sample"],
+                           self.cfg_track["ransac"]["min_match_after_ransac"])
+    ransac_pairs = []
+    for pair in pairs_to_process:
       self.bundler._fm.vizCorresBetween(pair[0], pair[1], 'before_ransac')
+      if len(self.bundler._fm._matches[pair])<min_ransac_input:
+        self.bundler._fm._matches[pair] = []
+        continue
+      ransac_pairs.append(pair)
 
-    self.bundler._fm.runRansacMultiPairGPU(query_pairs)
+    if len(ransac_pairs)>0:
+      self.bundler._fm.runRansacMultiPairGPU(ransac_pairs)
 
-    for pair in query_pairs:
+    for pair in pairs_to_process:
       self.bundler._fm.vizCorresBetween(pair[0], pair[1], 'after_ransac')
+
+    return [len(self.bundler._fm._matches[pair]) for pair in frame_pairs]
 
 
 
@@ -586,16 +592,13 @@ class BundleSdf:
 
     min_match_with_ref = self.cfg_track["feature_corres"]["min_match_with_ref"]
 
-    self.find_corres([(frame, ref_frame)])
-    matches = self.bundler._fm._matches[(frame, ref_frame)]
-
+    match_counts = self.find_corres([(frame, ref_frame)])
     if frame._status==my_cpp.Frame.FAIL:
       logging.info(f"find corres fail, mark {frame._id_str} as FAIL")
       self.bundler.forgetFrame(frame)
       return
 
-    matches = self.bundler._fm._matches[(frame, ref_frame)]
-    if len(matches)<min_match_with_ref:
+    if match_counts[0]<min_match_with_ref:
       visibles = []
       for kf in self.bundler._keyframes:
         visible = my_cpp.computeCovisibility(frame, kf)
@@ -603,18 +606,22 @@ class BundleSdf:
       visibles = np.array(visibles)
       ids = np.argsort(visibles)[::-1]
       found = False
-      pdb.set_trace()
+      initial_ref_frame_id = ref_frame._id
       for id in ids:
         kf = self.bundler._keyframes[id]
+        if kf._id==initial_ref_frame_id:
+          continue
         logging.info(f"trying new ref frame {kf._id_str}")
         ref_frame = kf
         frame._ref_frame_id = kf._id
         frame._pose_in_model = kf._pose_in_model
-        self.find_corres([(frame, ref_frame)])
+        match_counts = self.find_corres([(frame, ref_frame)])
+        if frame._status==my_cpp.Frame.FAIL:
+          logging.info(f"find corres fail, mark {frame._id_str} as FAIL")
+          self.bundler.forgetFrame(frame)
+          return
 
-        # self.bundler._fm.findCorres(frame, ref_frame)
-
-        if len(self.bundler._fm._matches[(frame,kf)])>=min_match_with_ref:
+        if match_counts[0]>=min_match_with_ref:
           logging.info(f"re-choose new ref frame to {kf._id_str}")
           found = True
           break

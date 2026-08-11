@@ -15,12 +15,10 @@ code_dir = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(f'{code_dir}/../../')
 from Utils import *
 
-HO3D_ROOT = '/mnt/9a72c439-d0a7-45e8-8d20-d7a235d02763/DATASET/HO3D_v3'
-
-
 class YcbineoatReader:
-  def __init__(self,video_dir, downscale=1, shorter_side=None):
+  def __init__(self,video_dir, downscale=1, shorter_side=None, mask_dir='masks'):
     self.video_dir = video_dir
+    self.mask_dir = mask_dir if os.path.isabs(mask_dir) else os.path.join(video_dir, mask_dir)
     self.downscale = downscale
     self.color_files = sorted(glob.glob(f"{self.video_dir}/rgb/*.png"))
     self.K = np.loadtxt(f'{video_dir}/cam_K.txt').reshape(3,3)
@@ -68,12 +66,19 @@ class YcbineoatReader:
 
 
   def get_color(self,i):
-    color = imageio.imread(self.color_files[i])
+    color = imageio.imread(self.color_files[i])[...,:3]
     color = cv2.resize(color, (self.W,self.H), interpolation=cv2.INTER_NEAREST)
     return color
 
+  def get_mask_file(self,i):
+    return os.path.join(self.mask_dir, os.path.basename(self.color_files[i]))
+
+
   def get_mask(self,i):
-    mask = cv2.imread(self.color_files[i].replace('rgb','masks'),-1)
+    mask_file = self.get_mask_file(i)
+    mask = cv2.imread(mask_file,-1)
+    if mask is None:
+      raise FileNotFoundError(f'Mask not found: {mask_file}')
     if len(mask.shape)==3:
       mask = (mask.sum(axis=-1)>0).astype(np.uint8)
     mask = cv2.resize(mask, (self.W,self.H), interpolation=cv2.INTER_NEAREST)
@@ -111,8 +116,12 @@ class YcbineoatReader:
 
 
 class Ho3dReader:
-  def __init__(self,video_dir):
-    self.video_dir = video_dir
+  def __init__(self,video_dir, mask_dir='masks_SAM2', dataset_root=None):
+    self.video_dir = os.path.abspath(video_dir)
+    if dataset_root is None:
+      dataset_root = os.path.dirname(os.path.dirname(self.video_dir))
+    self.dataset_root = os.path.abspath(dataset_root)
+    self.mask_dir = mask_dir if os.path.isabs(mask_dir) else os.path.join(self.dataset_root, mask_dir)
     self.color_files = sorted(glob.glob(f"{self.video_dir}/rgb/*.jpg"))
     meta_file = self.color_files[0].replace('.jpg','.pkl').replace('rgb','meta')
     self.K = pickle.load(open(meta_file,'rb'))['camMat']
@@ -132,14 +141,19 @@ class Ho3dReader:
   def get_mask(self,i):
     video_name = self.get_video_name()
     index = int(os.path.basename(self.color_files[i]).split('.')[0])
-    mask = cv2.imread(f'{HO3D_ROOT}/masks_XMem/{video_name}/{index:05d}.png',-1)
+    mask_file = f'{self.mask_dir}/{video_name}/{index:05d}.png'
+    mask = cv2.imread(mask_file,-1)
+    if mask is None:
+      raise FileNotFoundError(f'Mask not found: {mask_file}')
+    if len(mask.shape)==3:
+      mask = (mask.sum(axis=-1)>0).astype(np.uint8)
     return mask
 
 
   def get_occ_mask(self,i):
     video_name = self.get_video_name()
     index = int(os.path.basename(self.color_files[i]).split('.')[0])
-    mask = cv2.imread(f'{HO3D_ROOT}/masks_XMem/{video_name}_hand/{index:04d}.png',-1)
+    mask = cv2.imread(f'{self.dataset_root}/masks_XMem/{video_name}_hand/{index:04d}.png',-1)
     return mask
 
 
@@ -155,7 +169,7 @@ class Ho3dReader:
       if video_name.startswith(k):
         ob_name = video2name[k]
         break
-    mesh = trimesh.load(f'{HO3D_ROOT}/models/{ob_name}/textured_simple.obj')
+    mesh = trimesh.load(f'{self.dataset_root}/models/{ob_name}/textured_simple.obj')
     return mesh
 
 

@@ -141,3 +141,7 @@ data/
 logs/
 !BundleTrack/XMem/inference/data
 run_used.yml
+datasets/
+
+# Model checkpoints
+*.ckpt
