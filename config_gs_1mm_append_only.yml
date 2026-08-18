@@ -1,0 +1,12 @@
+# Isolate RGB-D append behavior by disabling DefaultStrategy topology changes.
+voxel_size: 0.001
+novelty_distance: 0.001
+
+strategy:
+  refine_start_iter: 100000
+  refine_stop_iter: 100001
+  verbose: true
+
+update_strategy:
+  refine_start_iter: 100000
+  refine_stop_iter: 100001

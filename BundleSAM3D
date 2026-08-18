@@ -1,0 +1,56 @@
+
+  cd /home/kist/Desktop/unify/Harvest_Pipeline
+  source /home/kist/miniforge3/bin/activate harvest-pipeline
+  source /opt/ros/humble/setup.bash
+
+  PYTHONNOUSERSITE=1 PYTHONUNBUFFERED=1 \
+  python3 perception/web_gui.py \
+    --crop 230 \
+    --vlm \
+    --ros \
+    --tomato-pose \
+    --calib calib/T_base_camera.npy \
+    --base-frame base_link \
+    2>&1 | tee /home/kist/Desktop/unify/log/harvest_pose_debug.log
+
+---
+현재 하는 일: densification, split, pruning을 퍼센테이지로 진행해서 가우시안 수 조절.
+- 그럼 이거 끝나고 해야할 일은 36개의 키프레임으로 다시 돌려서 테스트해보는거야?
+
+
+"
+  - append 시 Adam optimizer와 DefaultStrategy 통계는 재생성
+"라고 했는데, 추가 설명 필요해. DefaultStrategy는 이해가 되는데,  Adam optimizer는 모든 가우시안에 대한 내용을 재생성한다는거야? 왜? 구현이 힘들어서? 그리고 재생성하는거랑 기존의 내용에 추가하는거랑 뭐가 다른건지 개념적으로 설명해줘. 
+
+- 매 키프레임 들어올때 돌릴 학습 step 수는 몇으로 하면 좋을까? 100단위로 늘려보면서 경과를 봐볼까?
+
+-(bundleSDF 통합전)현재 gaussian_runner.py에서 3DGS를 nerf_runner.py에 맞게 한거 맞아? 
+혹시 너가 임의대로 추가한 부분이 있다면, 어디고, 왜 추가했는지도 설명해. 
+
+- 현재 pose delta, depth loss, silhouette/background loss, mesh 생성은 아직 없습니다.
+- sdf | gsplat 선택식에서 gs only로 수정하기.
+- 현재 시퀀스 실행하면 gpu0/1을 백엔드, 프론트엔드 나눠서 진행하나? 그리고 두 시퀀스 병렬로 돌릴때는 gpu 하나가 백엔드, 프론트엔드 혼자 다 하나?
+
+
+
+현재 프레임별로 너무 많은게 저장. 필요한것만 두고 나머지 처내기
+  - ob_in_cam/<id>.txt
+  - color/, color_segmented/
+  - depth/, depth_filtered/
+  - mask/, normal visualization
+  - keyframes.yml, opt_frames.txt
+  - 온라인 NeRF mesh와 normalization/config 파일
+
+
+
+
+--------------------------------------
+@프로젝트 행동 강령 추가
+	- Notion API로 노션에 실험 결과 + 코드 변경 내역 기록
+	- research.md / experiments.md
+	- todolist
+	
++ 논문 읽기 + 연구 codex 어떻게하면 팁 있는지 확인하기.
+
+
+

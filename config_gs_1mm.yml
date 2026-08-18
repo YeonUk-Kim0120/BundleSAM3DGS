@@ -1,0 +1,4 @@
+# Experiment override: keep GaussianRunner defaults and change only spatial
+# sampling/novelty from 10 mm to 1 mm.
+voxel_size: 0.001
+novelty_distance: 0.001

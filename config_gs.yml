@@ -1,0 +1,57 @@
+# Persistent Gaussian representation and fixed-pose training.
+gsplat_version: 1.5.3
+device: cuda:0
+seed: 42
+
+# RGB-D seed preparation and metric-space novelty filtering.
+voxel_size: 0.01
+novelty_distance: 0.01
+min_depth: 0.1
+max_depth: 2.0
+roi_padding: 16
+
+# Initial five-keyframe fit and each later reconstruction update.
+initial_steps: 30000
+update_steps: 500
+initial_lr_scale: 1.0
+update_lr_scale: 0.1
+sh_degree: 3
+sh_degree_interval: 1000
+initial_opacity: 0.1
+initial_scale_multiplier: 1.0
+ssim_weight: 0.2
+packed: false
+rasterize_mode: classic
+
+learning_rates:
+  means: 0.00016
+  scales: 0.005
+  quats: 0.001
+  opacities: 0.05
+  sh0: 0.0025
+  shN: 0.000125
+
+# gsplat DefaultStrategy. State is recreated at each reconstruction update.
+strategy:
+  prune_opa: 0.005
+  grow_grad2d: 0.0002
+  grow_scale3d: 0.01
+  prune_scale3d: 0.1
+  refine_start_iter: 500
+  refine_stop_iter: 15000
+  reset_every: 3000
+  refine_every: 100
+  pause_refine_after_reset: 0
+  absgrad: false
+  revised_opacity: false
+
+# A 500-step update needs an earlier refine window than the 30k-step fit.
+update_strategy:
+  refine_start_iter: 100
+  refine_stop_iter: 500
+
+# Match BundleSDF's initial-five-frame bounds and online 0.7 scale margin.
+scene_bounds:
+  dbscan_eps: 0.06
+  dbscan_min_samples: 1
+  online_scale_multiplier: 0.7

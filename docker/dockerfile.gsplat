@@ -1,0 +1,4 @@
+# Keep the original BundleSDF image unchanged and add only the pinned renderer.
+FROM nvcr.io/nvidian/bundlesdf:latest
+
+RUN pip3 install --no-cache-dir gsplat==1.5.3
