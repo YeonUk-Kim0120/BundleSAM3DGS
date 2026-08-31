@@ -1,9 +1,14 @@
-"""Persistent 3D Gaussian Splatting reconstruction primitives.
+"""Persistent Gaussian Splatting reconstruction primitives.
 
 The runner deliberately keeps the public boundary in BundleTrack's native
 coordinate convention: OpenCV camera-to-object poses in metric units.  Scene
 normalization and conversion to gsplat world-to-camera matrices happen only
 inside this module.
+
+The ``renderer`` config selects between the 3DGS rasterizer (default,
+byte-identical to the original behavior) and gsplat's 2DGS surfel rasterizer,
+which additionally supports depth supervision plus the 2DGS normal-consistency
+and distortion regularizers.
 
 The first integration milestone uses fixed camera poses.  Learned Gaussian
 parameters persist across reconstruction updates, while optimizers and the
@@ -47,6 +52,14 @@ DEFAULT_CONFIG: dict[str, Any] = {
     "ssim_weight": 0.2,
     "packed": False,
     "rasterize_mode": "classic",
+    "renderer": "3dgs",
+    "depth_loss_weight": 0.0,
+    "depth_huber_delta_m": 0.03,
+    "depth_alpha_threshold": 0.05,
+    "normal_consistency_weight": 0.0,
+    "normal_consistency_start_step": 7_000,
+    "distortion_weight": 0.0,
+    "distortion_start_step": 3_000,
     "initial_lr_scale": 1.0,
     "update_lr_scale": 0.1,
     "learning_rates": {
@@ -120,6 +133,27 @@ def _validate_config(config: Mapping[str, Any]) -> None:
         raise ValueError("min_depth must be smaller than max_depth")
     if not 0.0 <= float(config["ssim_weight"]) <= 1.0:
         raise ValueError("ssim_weight must be in [0, 1]")
+    if config["renderer"] not in ("3dgs", "2dgs"):
+        raise ValueError("renderer must be '3dgs' or '2dgs'")
+    for key in (
+        "depth_loss_weight",
+        "normal_consistency_weight",
+        "distortion_weight",
+    ):
+        if not np.isfinite(config[key]) or float(config[key]) < 0:
+            raise ValueError(f"{key} must be finite and non-negative")
+    for key in ("depth_huber_delta_m", "depth_alpha_threshold"):
+        if not np.isfinite(config[key]) or float(config[key]) <= 0:
+            raise ValueError(f"{key} must be finite and positive")
+    for key in ("normal_consistency_start_step", "distortion_start_step"):
+        if int(config[key]) < 0:
+            raise ValueError(f"{key} must be non-negative")
+    if config["renderer"] != "2dgs":
+        for key in ("normal_consistency_weight", "distortion_weight"):
+            if float(config[key]) > 0:
+                raise ValueError(f"{key} requires renderer '2dgs'")
+    elif bool(config["strategy"]["absgrad"]):
+        raise ValueError("strategy.absgrad is not supported with renderer '2dgs'")
     for key in ("initial_steps", "update_steps", "roi_padding"):
         if int(config[key]) < 0:
             raise ValueError(f"{key} must be non-negative")
@@ -312,6 +346,7 @@ class TrainingView:
     K: torch.Tensor
     c2w_normalized: torch.Tensor
     crop_xyxy: tuple[int, int, int, int]
+    depth: torch.Tensor | None = None
 
     @property
     def height(self) -> int:
@@ -340,6 +375,22 @@ class GaussianUpdateStats:
         result = asdict(self)
         result["frame_ids"] = list(self.frame_ids)
         return result
+
+
+@dataclass
+class RasterResult:
+    """Renderer-agnostic rasterization output.
+
+    ``normals``, ``surf_normals``, and ``distort`` are 2DGS-only and stay
+    ``None`` for the 3DGS renderer.
+    """
+
+    colors: torch.Tensor
+    alpha: torch.Tensor
+    normals: torch.Tensor | None
+    surf_normals: torch.Tensor | None
+    distort: torch.Tensor | None
+    info: dict[str, Any]
 
 
 def voxel_downsample(
@@ -450,10 +501,10 @@ class GaussianRunner:
             return 0
         return int(self.splats["means"].shape[0])
 
-    def _require_gsplat(self) -> tuple[Any, Any, Any]:
+    def _require_gsplat(self) -> tuple[Any, Any, Any, Any]:
         try:
             import gsplat
-            from gsplat.rendering import rasterization
+            from gsplat.rendering import rasterization, rasterization_2dgs
             from gsplat.strategy import DefaultStrategy
         except ImportError as exc:
             raise RuntimeError(
@@ -464,7 +515,53 @@ class GaussianRunner:
             raise RuntimeError(
                 f"Expected gsplat {GSPLAT_VERSION}, found {gsplat.__version__}"
             )
-        return gsplat, rasterization, DefaultStrategy
+        return gsplat, rasterization, rasterization_2dgs, DefaultStrategy
+
+    def _rasterize(
+        self,
+        K: torch.Tensor,
+        c2w: torch.Tensor,
+        width: int,
+        height: int,
+        sh_degree: int,
+        render_mode: str,
+        absgrad: bool,
+    ) -> RasterResult:
+        if self.splats is None:
+            raise RuntimeError("Runner requires splats to rasterize")
+        _, rasterization, rasterization_2dgs, _ = self._require_gsplat()
+        common = dict(
+            means=self.splats["means"],
+            quats=self.splats["quats"],
+            scales=torch.exp(self.splats["scales"]),
+            opacities=torch.sigmoid(self.splats["opacities"]),
+            colors=torch.cat((self.splats["sh0"], self.splats["shN"]), dim=1),
+            viewmats=torch.linalg.inv(c2w),
+            Ks=K,
+            width=width,
+            height=height,
+            sh_degree=sh_degree,
+            packed=bool(self.config["packed"]),
+            sparse_grad=False,
+            render_mode=render_mode,
+        )
+        if self.config["renderer"] == "2dgs":
+            colors, alpha, normals, surf_normals, distort, _, info = (
+                rasterization_2dgs(
+                    **common,
+                    absgrad=absgrad,
+                    distloss=float(self.config["distortion_weight"]) > 0,
+                    depth_mode="expected",
+                )
+            )
+            return RasterResult(colors, alpha, normals, surf_normals, distort, info)
+        colors, alpha, info = rasterization(
+            **common,
+            absgrad=absgrad,
+            rasterize_mode=str(self.config["rasterize_mode"]),
+            camera_model="pinhole",
+        )
+        return RasterResult(colors, alpha, None, None, None, info)
 
     def _frames_to_cloud(
         self, frames: Sequence[GaussianFrame]
@@ -524,6 +621,9 @@ class GaussianRunner:
         else:
             rgb_tensor = torch.from_numpy(rgb.astype(np.float32, copy=True))
         mask_tensor = torch.from_numpy(frame.mask[y0:y1, x0:x1].copy()).bool()
+        depth_tensor = torch.from_numpy(
+            frame.depth[y0:y1, x0:x1].astype(np.float32, copy=True)
+        )
         K_crop = crop_intrinsics(frame.K, x0=x0, y0=y0).astype(np.float32)
         c2w_normalized = self.normalization.normalize_c2w(frame.c2w_cv)
         return TrainingView(
@@ -533,6 +633,7 @@ class GaussianRunner:
             K=torch.from_numpy(K_crop).contiguous(),
             c2w_normalized=torch.from_numpy(c2w_normalized).contiguous(),
             crop_xyxy=(x0, y0, x1, y1),
+            depth=depth_tensor.contiguous(),
         )
 
     def _initial_log_scales(
@@ -610,7 +711,7 @@ class GaussianRunner:
     ) -> None:
         if self.splats is None:
             raise RuntimeError("Cannot create optimizers before splats")
-        _, _, DefaultStrategy = self._require_gsplat()
+        _, _, _, DefaultStrategy = self._require_gsplat()
         base_lrs = self.config["learning_rates"]
         self.optimizers = {
             name: torch.optim.Adam(
@@ -628,6 +729,8 @@ class GaussianRunner:
         strategy_config = dict(self.config["strategy"])
         if not initial:
             strategy_config.update(dict(self.config["update_strategy"]))
+        if self.config["renderer"] == "2dgs":
+            strategy_config["key_for_gradient"] = "gradient_2dgs"
         self.strategy = DefaultStrategy(**strategy_config)
         self.strategy.check_sanity(self.splats, self.optimizers)
         self.strategy_state = self.strategy.initialize_state(scene_scale=1.0)
@@ -870,6 +973,34 @@ class GaussianRunner:
                 value=self.strategy.prune_opa * 2.0,
             )
 
+    def _masked_depth_loss(
+        self, result: RasterResult, view: TrainingView, mask: torch.Tensor
+    ) -> torch.Tensor:
+        if view.depth is None:
+            raise RuntimeError(
+                "depth_loss_weight > 0 requires views with stored depth; "
+                f"frame {view.frame_id} has none (old checkpoint?)"
+            )
+        if result.colors.shape[-1] < 4:
+            raise RuntimeError("Depth loss requires an ED depth render channel")
+        depth_gt_metric = view.depth.to(self.device, non_blocking=True)[None]
+        rendered_depth = result.colors[..., 3]
+        valid = (
+            mask
+            & torch.isfinite(depth_gt_metric)
+            & (depth_gt_metric >= float(self.config["min_depth"]))
+            & (depth_gt_metric <= float(self.config["max_depth"]))
+            & (result.alpha[..., 0] > float(self.config["depth_alpha_threshold"]))
+        )
+        if not bool(valid.any()):
+            return torch.zeros((), device=rendered_depth.device,
+                               dtype=rendered_depth.dtype)
+        depth_gt = depth_gt_metric * self.normalization.scale
+        delta = float(self.config["depth_huber_delta_m"]) * self.normalization.scale
+        return torch.nn.functional.huber_loss(
+            rendered_depth[valid], depth_gt[valid], delta=delta
+        )
+
     def train(
         self,
         steps: int,
@@ -884,7 +1015,7 @@ class GaussianRunner:
             raise ValueError("lr_decay_horizon_steps must be positive")
         if steps == 0:
             return None, None
-        _, rasterization, _ = self._require_gsplat()
+        self._require_gsplat()
         means_optimizer = self.optimizers["means"]
         means_scheduler = torch.optim.lr_scheduler.ExponentialLR(
             means_optimizer,
@@ -920,25 +1051,17 @@ class GaussianRunner:
                 self.total_steps // int(self.config["sh_degree_interval"]),
                 int(self.config["sh_degree"]),
             )
-            colors = torch.cat((self.splats["sh0"], self.splats["shN"]), dim=1)
-            rendered, _, info = rasterization(
-                means=self.splats["means"],
-                quats=self.splats["quats"],
-                scales=torch.exp(self.splats["scales"]),
-                opacities=torch.sigmoid(self.splats["opacities"]),
-                colors=colors,
-                viewmats=torch.linalg.inv(c2w),
-                Ks=K,
+            depth_weight = float(self.config["depth_loss_weight"])
+            result = self._rasterize(
+                K=K,
+                c2w=c2w,
                 width=view.width,
                 height=view.height,
                 sh_degree=active_sh_degree,
-                packed=bool(self.config["packed"]),
-                sparse_grad=False,
+                render_mode="RGB+ED" if depth_weight > 0 else "RGB",
                 absgrad=bool(self.strategy.absgrad),
-                render_mode="RGB",
-                rasterize_mode=str(self.config["rasterize_mode"]),
-                camera_model="pinhole",
             )
+            info = result.info
             self.strategy.step_pre_backward(
                 self.splats,
                 self.optimizers,
@@ -946,12 +1069,43 @@ class GaussianRunner:
                 strategy_step,
                 info,
             )
+            rendered = result.colors[..., :3]
             mask_channels = mask[..., None].to(rendered.dtype)
             denominator = mask_channels.sum().clamp_min(1.0) * 3.0
             l1 = (torch.abs(rendered - target) * mask_channels).sum() / denominator
             dssim = self._masked_dssim(rendered, target, mask)
             ssim_weight = float(self.config["ssim_weight"])
             loss = (1.0 - ssim_weight) * l1 + ssim_weight * dssim
+            if depth_weight > 0:
+                loss = loss + depth_weight * self._masked_depth_loss(
+                    result, view, mask
+                )
+            normal_weight = float(self.config["normal_consistency_weight"])
+            if (
+                result.normals is not None
+                and normal_weight > 0
+                and self.total_steps
+                >= int(self.config["normal_consistency_start_step"])
+            ):
+                weight_map = result.alpha[..., 0] * mask.to(result.alpha.dtype)
+                consistency = 1.0 - (
+                    result.normals * result.surf_normals
+                ).sum(dim=-1)
+                loss = loss + normal_weight * (
+                    (consistency * weight_map).sum()
+                    / weight_map.sum().clamp_min(1.0)
+                )
+            distortion_weight = float(self.config["distortion_weight"])
+            if (
+                result.distort is not None
+                and distortion_weight > 0
+                and self.total_steps >= int(self.config["distortion_start_step"])
+            ):
+                mask_float = mask.to(result.distort.dtype)
+                loss = loss + distortion_weight * (
+                    (result.distort[..., 0] * mask_float).sum()
+                    / mask_float.sum().clamp_min(1.0)
+                )
             if not torch.isfinite(loss):
                 raise FloatingPointError("Non-finite Gaussian training loss")
             loss.backward()
@@ -977,31 +1131,24 @@ class GaussianRunner:
         """
         if self.splats is None:
             raise RuntimeError("Runner is not initialized")
-        _, rasterization, _ = self._require_gsplat()
         view = self.views[view_index]
         K = view.K.to(self.device)[None]
         c2w = view.c2w_normalized.to(self.device)[None]
-        colors = torch.cat((self.splats["sh0"], self.splats["shN"]), dim=1)
         mode = "RGB+ED" if include_depth else "RGB"
-        rendered, alpha, _ = rasterization(
-            means=self.splats["means"],
-            quats=self.splats["quats"],
-            scales=torch.exp(self.splats["scales"]),
-            opacities=torch.sigmoid(self.splats["opacities"]),
-            colors=colors,
-            viewmats=torch.linalg.inv(c2w),
-            Ks=K,
+        result = self._rasterize(
+            K=K,
+            c2w=c2w,
             width=view.width,
             height=view.height,
             sh_degree=min(
                 self.total_steps // int(self.config["sh_degree_interval"]),
                 int(self.config["sh_degree"]),
             ),
-            packed=bool(self.config["packed"]),
             render_mode=mode,
-            rasterize_mode=str(self.config["rasterize_mode"]),
-            camera_model="pinhole",
+            absgrad=False,
         )
+        rendered = result.colors
+        alpha = result.alpha
         depth_metric = None
         rgb = rendered[..., :3]
         if include_depth:
@@ -1024,6 +1171,7 @@ class GaussianRunner:
                 "K": view.K.cpu(),
                 "c2w_normalized": view.c2w_normalized.cpu(),
                 "crop_xyxy": list(view.crop_xyxy),
+                "depth": None if view.depth is None else view.depth.cpu(),
             }
             for view in self.views
         ]
@@ -1107,6 +1255,11 @@ class GaussianRunner:
                 K=item["K"].contiguous(),
                 c2w_normalized=item["c2w_normalized"].contiguous(),
                 crop_xyxy=tuple(int(value) for value in item["crop_xyxy"]),
+                depth=(
+                    item["depth"].contiguous()
+                    if item.get("depth") is not None
+                    else None
+                ),
             )
             for item in payload["views"]
         ]
@@ -1145,7 +1298,7 @@ class GaussianRunner:
     ) -> None:
         if self.splats is None:
             raise RuntimeError("Runner is not initialized")
-        gsplat, _, _ = self._require_gsplat()
+        gsplat, _, _, _ = self._require_gsplat()
         normalized_path = Path(normalized_path)
         normalized_path.parent.mkdir(parents=True, exist_ok=True)
         values = {name: value.detach() for name, value in self.splats.items()}

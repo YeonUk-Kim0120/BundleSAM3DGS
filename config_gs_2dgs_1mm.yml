@@ -1,0 +1,27 @@
+# 2DGS experiment config: 1 mm spatial sampling (as adopted for mustard
+# research) plus the surfel renderer with geometric supervision.
+#
+# Loss = masked RGB L1 + DSSIM (unchanged)
+#        + depth Huber against sensor depth
+#        + 2DGS normal-consistency regularizer.
+#
+# Distortion is disabled: the 2026-08-31 append-only ablation (36 KF,
+# mustard0, logs/mustard0_gaussian_2dgs_1mm_36kf_appendonly_dist{0,1,10}_*)
+# showed it monotonically hurts both RGB and depth when direct sensor-depth
+# supervision is present (depth MAE 3.00 / 5.21 / 7.06 mm for weight 0/1/10).
+voxel_size: 0.001
+novelty_distance: 0.001
+
+renderer: 2dgs
+
+# Depth supervision (metric units; converted to normalized space internally).
+depth_loss_weight: 1.0
+depth_huber_delta_m: 0.03
+depth_alpha_threshold: 0.05
+
+# 2DGS self-consistency regularizer (paper/gsplat-example default,
+# gated on total_steps).  Distortion stays off — see header note.
+normal_consistency_weight: 0.05
+normal_consistency_start_step: 7000
+distortion_weight: 0.0
+distortion_start_step: 3000
