@@ -57,16 +57,33 @@ judged against the raw measured cloud: A = mesh colors / photo off
 SSIM w1.0; a 4-seq D control (mesh colors / SSIM 0.5) proved improvements
 come from the colors, not the term itself.
 
+YCB (9 seqs):
+
 | arm | mean 3D (mm) | mean IoU | notes |
 |---|---|---|---|
-| A | 3.84 | 0.763 | default |
-| B | 3.96 | 0.773 | no clear win; sugar_yalehand z-shift 10.6→30.6 mm regression |
-| C | 3.81 | 0.774 | bleach_hard 8.0→6.3 mm / IoU 0.65→0.78 (largest win), but easy seqs degrade (bleach0 IoU 0.87→0.80) |
+| A | 3.84 | 0.763 | |
+| B | 3.96 | 0.773 | sugar_yalehand z-shift 10.6→30.6 mm |
+| C | 3.81 | 0.774 | bleach_hard 8.0→6.3 mm / IoU 0.65→0.78 (largest win); bleach0 IoU 0.87→0.80 |
 
-**Decision: photo stays OFF by default** — population means are a wash and
-each photo arm has at least one regression. Per-sequence card: for
-bleach_hard-like cases (large SAM3D rotation error, IoU drop under
-depth-only), transferred colors + SSIM w1.0 is the recovery option.
-Follow-up idea (not implemented): occlusion-aware photo weighting —
-transferred colors mislead most where SAM3D saw least (sugar_yalehand had
-the largest color delta 0.084 and the photo-driven z-shift blow-up).
+HO3D_v3 (13 seqs, SAM2-mask priors via batch_sam3d_mesh_ho3d.py, raw
+RGB-encoded depth): SAM3D initial poses are far worse here (up to 46.5 mm,
+hand occlusion), and the alignment recovers every sequence to 1.6–5 mm.
+
+| arm | mean 3D (mm) | mean IoU | notes |
+|---|---|---|---|
+| A | 2.82 | 0.888 | |
+| C | 2.66 | 0.890 | AP12 5.0→2.5 mm / IoU 0.84→0.95 (rescues the worst init 46.5 mm); MPM12 3.6→4.5 regression |
+
+Combined (22 seqs): A 3.24 mm / IoU 0.837 vs **C 3.13 mm / IoU 0.843**.
+
+**Decision (2026-08-31): arm C is the default going forward** — transferred
+gaussian colors + SSIM-only photo at w=1.0. Pattern: C rescues the
+sequences where SAM3D's initial pose is badly wrong (bleach_hard, AP12) at
+the cost of small scattered losses on easy ones; across 22 sequences it
+leads on both metrics. Invoke via `run_sam3d_alignment.py --gaussian-ply
+<seq>_splat_depth.ply` (without the ply the tool falls back to depth-only;
+mesh-color+SSIM is rejected — arm D showed it is ineffective).
+Residual note: z-shift sign differs by dataset (+ on YCB, − on many HO3D) —
+the SAM3D shape bias direction is dataset-dependent; geometry refinement
+downstream owns it. Follow-up idea (not implemented): occlusion-aware
+photo weighting (largest color delta 0.084 where SAM3D saw least).

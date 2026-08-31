@@ -18,7 +18,6 @@ import argparse
 import json
 import math
 import sys
-from dataclasses import replace
 from pathlib import Path
 
 import numpy as np
@@ -37,14 +36,62 @@ from run_sam3d_alignment import (  # noqa: E402
     render_surfels,
     save_visuals,
 )
-from sam3d_prior import load_mesh_prior, load_sam3d_pose, sample_surfels  # noqa: E402
+from sam3d_prior import (  # noqa: E402
+    load_mesh_prior,
+    load_sam3d_gaussian_ply,
+    load_sam3d_pose,
+    sample_surfels,
+    transfer_gaussian_colors as transfer_colors,
+)
 
-SH_C0 = 0.28209479177387814
+HO3D_DEPTH_SCALE = 0.00012498664727900177
+
+
+def load_first_frame_ho3d(dataset_root: Path, seq: str) -> dict:
+    """HO3D_v3 first frame: jpg RGB, RGB-encoded depth (m), masks_SAM2, camMat.
+
+    Mirrors sam-3d-objects/batch_sam3d_mesh_ho3d.py so the alignment target
+    matches the SAM3D prior inputs exactly.
+    """
+
+    import pickle
+
+    from PIL import Image
+
+    eval_dir = dataset_root / "evaluation" / seq
+    rgb_files = sorted(p for p in (eval_dir / "rgb").iterdir()
+                       if p.suffix == ".jpg")
+    if not rgb_files:
+        raise FileNotFoundError(f"No RGB frames under {eval_dir / 'rgb'}")
+    frame_id = rgb_files[0].stem
+    rgb = np.array(Image.open(rgb_files[0]))
+    if rgb.ndim == 3 and rgb.shape[-1] == 4:
+        rgb = rgb[..., :3]
+    depth_rgb = np.array(Image.open(eval_dir / "depth" / f"{frame_id}.png"))
+    depth_m = (
+        depth_rgb[..., 0].astype(np.float32)
+        + depth_rgb[..., 1].astype(np.float32) * 256
+    ) * HO3D_DEPTH_SCALE
+    mask_path = dataset_root / "masks_SAM2" / seq / f"{int(frame_id):05d}.png"
+    mask = np.array(Image.open(mask_path))
+    if mask.ndim == 3:
+        mask = mask[..., -1]
+    mask = mask > 0
+    with (eval_dir / "meta" / f"{frame_id}.pkl").open("rb") as f:
+        meta = pickle.load(f)
+    K = np.asarray(meta["camMat"], dtype=np.float64)
+    return {"frame_id": frame_id, "rgb": rgb, "depth": depth_m,
+            "mask": mask, "K": K}
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument("--track-dir", type=Path, required=True)
+    parser.add_argument("--track-dir", type=Path, default=None,
+                        help="YCB saved-tracking-log first frame source")
+    parser.add_argument("--ho3d-root", type=Path, default=None,
+                        help="HO3D_v3 dataset root (first frame loaded directly)")
+    parser.add_argument("--ho3d-seq", default=None,
+                        help="HO3D sequence name (requires --ho3d-root)")
     parser.add_argument("--depth-dir", type=Path, default=None)
     parser.add_argument("--mesh-npz", type=Path, required=True)
     parser.add_argument("--pose-json", type=Path, required=True)
@@ -55,68 +102,6 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--device", default="cuda:0")
     return parser.parse_args()
-
-
-def load_sam3d_gaussian_ply(path: Path) -> dict[str, np.ndarray]:
-    """Parse SAM3D's gaussian PLY (binary_little_endian, float32 properties)."""
-
-    raw = path.read_bytes()
-    header_end = raw.index(b"end_header\n") + len(b"end_header\n")
-    header = raw[:header_end].decode("ascii").splitlines()
-    count = None
-    props: list[str] = []
-    for line in header:
-        if line.startswith("element vertex"):
-            count = int(line.split()[-1])
-        elif line.startswith("property float"):
-            props.append(line.split()[-1])
-        elif line.startswith("property") and count is not None:
-            raise ValueError(f"Non-float property unsupported: {line}")
-    if count is None:
-        raise ValueError("PLY has no vertex element")
-    for needed in ("x", "y", "z", "f_dc_0", "f_dc_1", "f_dc_2", "opacity"):
-        if needed not in props:
-            raise ValueError(f"PLY missing property {needed}")
-    data = np.frombuffer(raw, dtype="<f4", offset=header_end,
-                         count=count * len(props)).reshape(count, len(props))
-    idx = {name: i for i, name in enumerate(props)}
-    positions = data[:, [idx["x"], idx["y"], idx["z"]]].astype(np.float64)
-    f_dc = data[:, [idx["f_dc_0"], idx["f_dc_1"], idx["f_dc_2"]]]
-    colors = np.clip(0.5 + SH_C0 * f_dc, 0.0, 1.0).astype(np.float32)
-    opacities = 1.0 / (1.0 + np.exp(-data[:, idx["opacity"]]))
-    return {"positions": positions, "colors": colors, "opacities": opacities}
-
-
-def transfer_colors(surfels, gaussian: dict[str, np.ndarray], k: int = 8):
-    """k-NN inverse-distance color transfer in the shared canonical frame."""
-
-    from scipy.spatial import cKDTree
-
-    tree = cKDTree(gaussian["positions"])
-    # Typical gaussian spacing → outlier cutoff at 3× the median NN distance.
-    sample = gaussian["positions"][:: max(1, len(gaussian["positions"]) // 20000)]
-    spacing, _ = tree.query(sample, k=2, workers=-1)
-    cutoff = 3.0 * float(np.median(spacing[:, 1]))
-
-    query = surfels.means.numpy().astype(np.float64)
-    dists, indices = tree.query(query, k=k, workers=-1)
-    weights = 1.0 / (dists + 1e-6)
-    weights[dists > cutoff] = 0.0
-    weight_sum = weights.sum(axis=1)
-    neighbor_colors = gaussian["colors"][indices]  # [N, k, 3]
-    blended = (neighbor_colors * weights[..., None]).sum(axis=1) / np.maximum(
-        weight_sum, 1e-9
-    )[:, None]
-    fallback = weight_sum <= 1e-9
-    mesh_colors = surfels.colors.numpy()
-    blended[fallback] = mesh_colors[fallback]
-    delta = float(np.abs(blended - mesh_colors).mean())
-    colors = torch.from_numpy(np.clip(blended, 0.0, 1.0).astype(np.float32))
-    return replace(surfels, colors=colors), {
-        "color_delta_mean": delta,
-        "fallback_fraction": float(fallback.mean()),
-        "nn_cutoff_canonical": cutoff,
-    }
 
 
 def main() -> None:
@@ -135,7 +120,14 @@ def main() -> None:
         "w_photo": float(args.ssim_weight),
     })
 
-    frame = load_first_frame(args.track_dir, depth_dir=args.depth_dir)
+    if args.ho3d_seq is not None:
+        if args.ho3d_root is None:
+            raise SystemExit("--ho3d-seq requires --ho3d-root")
+        frame = load_first_frame_ho3d(args.ho3d_root, args.ho3d_seq)
+    elif args.track_dir is not None:
+        frame = load_first_frame(args.track_dir, depth_dir=args.depth_dir)
+    else:
+        raise SystemExit("Provide --track-dir or --ho3d-root/--ho3d-seq")
     target = prepare_target(frame, config, device)
     prior = load_mesh_prior(args.mesh_npz)
     init_pose = load_sam3d_pose(args.pose_json)
@@ -246,8 +238,12 @@ def main() -> None:
         },
         "metrics": {"before": metrics_before, "after": metrics_after},
         "inputs": {"track_dir": str(args.track_dir),
-                   "depth_source": str(args.depth_dir) if args.depth_dir else
-                   "track_dir/depth_filtered",
+                   "ho3d": (f"{args.ho3d_root}/{args.ho3d_seq}"
+                            if args.ho3d_seq else None),
+                   "depth_source": (
+                       "ho3d_raw_rgb_encoded" if args.ho3d_seq else
+                       str(args.depth_dir) if args.depth_dir else
+                       "track_dir/depth_filtered"),
                    "mesh_npz": str(args.mesh_npz),
                    "gaussian_ply": str(args.gaussian_ply)},
         "config": config,

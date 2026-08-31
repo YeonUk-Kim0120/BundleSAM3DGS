@@ -25,12 +25,15 @@ from __future__ import annotations
 
 from dataclasses import dataclass, replace
 from pathlib import Path
-from typing import Any
+from typing import Any, Mapping
 
 import json
 
 import numpy as np
 import torch
+
+
+SH_C0 = 0.28209479177387814
 
 
 @dataclass(frozen=True)
@@ -259,6 +262,83 @@ def transform_surfels_canonical_to_cv_camera(
         normals=normals_cv,
         radii=surfels.radii * float(scale.mean()),
     )
+
+
+def load_sam3d_gaussian_ply(path: str | Path) -> dict[str, np.ndarray]:
+    """Parse SAM3D's gaussian PLY (binary_little_endian, float32 properties).
+
+    Returns canonical-frame positions, activated RGB colors (from the SH DC
+    band), and sigmoid-activated opacities.
+    """
+
+    raw = Path(path).read_bytes()
+    header_end = raw.index(b"end_header\n") + len(b"end_header\n")
+    header = raw[:header_end].decode("ascii").splitlines()
+    count = None
+    props: list[str] = []
+    for line in header:
+        if line.startswith("element vertex"):
+            count = int(line.split()[-1])
+        elif line.startswith("property float"):
+            props.append(line.split()[-1])
+        elif line.startswith("property") and count is not None:
+            raise ValueError(f"Non-float property unsupported: {line}")
+    if count is None:
+        raise ValueError("PLY has no vertex element")
+    for needed in ("x", "y", "z", "f_dc_0", "f_dc_1", "f_dc_2", "opacity"):
+        if needed not in props:
+            raise ValueError(f"PLY missing property {needed}")
+    data = np.frombuffer(raw, dtype="<f4", offset=header_end,
+                         count=count * len(props)).reshape(count, len(props))
+    index = {name: i for i, name in enumerate(props)}
+    positions = data[:, [index["x"], index["y"], index["z"]]].astype(np.float64)
+    f_dc = data[:, [index["f_dc_0"], index["f_dc_1"], index["f_dc_2"]]]
+    colors = np.clip(0.5 + SH_C0 * f_dc, 0.0, 1.0).astype(np.float32)
+    opacities = 1.0 / (1.0 + np.exp(-data[:, index["opacity"]]))
+    return {"positions": positions, "colors": colors,
+            "opacities": opacities.astype(np.float32)}
+
+
+def transfer_gaussian_colors(
+    surfels: SurfelSet,
+    gaussian: Mapping[str, np.ndarray],
+    k: int = 8,
+) -> tuple[SurfelSet, dict[str, float]]:
+    """k-NN inverse-distance color transfer in the shared canonical frame.
+
+    Adopted as the default appearance source for the Sim(3) alignment
+    (2026-08-31, 22-sequence A/C study): SAM3D's gaussian colors are
+    appearance-trained, unlike the coarse mesh vertex colors.  Surfels with
+    no gaussian neighbor within 3x the median gaussian spacing keep their
+    mesh colors.
+    """
+
+    from scipy.spatial import cKDTree
+
+    tree = cKDTree(gaussian["positions"])
+    sample = gaussian["positions"][:: max(1, len(gaussian["positions"]) // 20000)]
+    spacing, _ = tree.query(sample, k=2, workers=-1)
+    cutoff = 3.0 * float(np.median(spacing[:, 1]))
+
+    query = surfels.means.numpy().astype(np.float64)
+    dists, indices = tree.query(query, k=k, workers=-1)
+    weights = 1.0 / (dists + 1e-6)
+    weights[dists > cutoff] = 0.0
+    weight_sum = weights.sum(axis=1)
+    neighbor_colors = gaussian["colors"][indices]
+    blended = (neighbor_colors * weights[..., None]).sum(axis=1) / np.maximum(
+        weight_sum, 1e-9
+    )[:, None]
+    fallback = weight_sum <= 1e-9
+    mesh_colors = surfels.colors.numpy()
+    blended[fallback] = mesh_colors[fallback]
+    delta = float(np.abs(blended - mesh_colors).mean())
+    colors = torch.from_numpy(np.clip(blended, 0.0, 1.0).astype(np.float32))
+    return replace(surfels, colors=colors), {
+        "color_delta_mean": delta,
+        "fallback_fraction": float(fallback.mean()),
+        "nn_cutoff_canonical": cutoff,
+    }
 
 
 def surfels_to_gsplat_inputs(

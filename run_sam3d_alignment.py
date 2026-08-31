@@ -12,11 +12,14 @@ implementation in the sibling checkout
 ``_compose_sam3d_refined_pose``), with the 3DGS rasterizer replaced by
 gsplat's 2DGS surfel rasterizer.
 
-Example:
+Example (the adopted default recipe: raw depth + transferred gaussian
+colors + SSIM w1.0):
     python3 run_sam3d_alignment.py \
       --track-dir logs/mustard0_bundlesam3dgs_..._20260811 \
+      --depth-dir datasets/YCBInEOAT/mustard0/depth \
       --mesh-npz .../mustard0_mesh_depth.npz \
       --pose-json .../mustard0_mesh_depth.json \
+      --gaussian-ply .../mustard0_splat_depth.ply \
       --output-dir logs/mustard0_sam3d_alignment_<date>
 """
 
@@ -36,17 +39,19 @@ from gaussian_runner import crop_intrinsics, resize_intrinsics, validate_intrins
 from sam3d_prior import (
     Sim3Pose,
     load_mesh_prior,
+    load_sam3d_gaussian_ply,
     load_sam3d_pose,
     quats_from_normals,
     sample_surfels,
+    transfer_gaussian_colors,
 )
 
 
 DEFAULT_CONFIG: dict[str, Any] = {
-    # Surfel prior
+    # Surfel prior (radius 0.75 adopted from the 2026-08-31 radius ablation)
     "surfel_count": 20000,
     "surfel_seed": 0,
-    "surfel_radius_multiplier": 1.5,
+    "surfel_radius_multiplier": 0.75,
     "surfel_opacity": 0.9,
     # Optimization (sibling gs_sam3d_refine_* defaults)
     "steps": 400,
@@ -57,11 +62,14 @@ DEFAULT_CONFIG: dict[str, Any] = {
     "max_rot_deg": 60.0,
     "max_translation_m": 0.24,
     "max_scale_delta": 2.7,
-    # Loss weights
-    "use_ssim": True,
-    "use_ms_ssim": True,
+    # Loss weights.  Photo defaults are OFF and are enabled (SSIM only,
+    # w_photo 1.0) when --gaussian-ply supplies transferred colors — the "C"
+    # recipe adopted 2026-08-31 (22-seq YCB+HO3D A/C study, see
+    # SAM3D_ALIGNMENT_RESULTS.md).  Mesh-color+SSIM was ineffective (arm D).
+    "use_ssim": False,
+    "use_ms_ssim": False,
     "w_depth": 80.0,
-    "w_photo": 2.0,
+    "w_photo": 1.0,
     "w_coverage": 2.0,
     "w_visibility": 50.0,
     "w_outside_alpha": 0.2,
@@ -103,6 +111,11 @@ def parse_args() -> argparse.Namespace:
                              "patches on some first frames.")
     parser.add_argument("--mesh-npz", type=Path, required=True)
     parser.add_argument("--pose-json", type=Path, required=True)
+    parser.add_argument("--gaussian-ply", type=Path, default=None,
+                        help="SAM3D <seq>_splat_depth.ply (same canonical "
+                             "frame). When given, gaussian colors are "
+                             "transferred onto the surfels and the SSIM photo "
+                             "term is enabled (the adopted default recipe).")
     parser.add_argument("--output-dir", type=Path, required=True,
                         help="New directory; it must not already exist")
     parser.add_argument("--config", type=Path, default=None,
@@ -487,6 +500,20 @@ def main() -> None:
         radius_multiplier=float(config["surfel_radius_multiplier"]),
         opacity=float(config["surfel_opacity"]),
     )
+    transfer_info: dict[str, float] | None = None
+    if args.gaussian_ply is not None:
+        gaussian = load_sam3d_gaussian_ply(args.gaussian_ply)
+        surfels, transfer_info = transfer_gaussian_colors(surfels, gaussian)
+        config["use_ssim"] = True
+        config["use_ms_ssim"] = False
+        print(f"color transfer: Δmean {transfer_info['color_delta_mean']:.4f} "
+              f"fallback {transfer_info['fallback_fraction'] * 100:.1f}% "
+              f"| SSIM w={config['w_photo']}")
+    elif bool(config["use_ssim"]) or bool(config["use_ms_ssim"]):
+        raise SystemExit(
+            "Photo terms require --gaussian-ply (transferred colors); the "
+            "mesh-color+SSIM combination was ineffective (arm D, 2026-08-31)."
+        )
     print(f"frame {target['frame_id']} | surfels {len(surfels)} "
           f"| crop {target['crop_xyxy']} → {config['render_size']}²")
 
@@ -614,6 +641,10 @@ def main() -> None:
         "inputs": {
             "track_dir": str(args.track_dir), "frame_id": target["frame_id"],
             "mesh_npz": str(args.mesh_npz), "pose_json": str(args.pose_json),
+            "gaussian_ply": (
+                str(args.gaussian_ply) if args.gaussian_ply is not None else None
+            ),
+            "color_transfer": transfer_info,
             "depth_source": (
                 str(args.depth_dir) if args.depth_dir is not None
                 else "track_dir/depth_filtered"
