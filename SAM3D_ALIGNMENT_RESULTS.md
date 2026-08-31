@@ -47,3 +47,26 @@ the pose (systematic SAM3D front-bulge shape bias).
   ambiguity on near-symmetric objects (photo/appearance term needed —
   color-transfer experiment), IoU drop on bleach_hard/tomato with the
   depth-only loss.
+
+## Color-transfer experiment (experiments/exp_color_transfer.py, 2026-08-31)
+
+Hypothesis: transferring SAM3D *gaussian* colors (appearance-trained) onto
+the mesh surfels rehabilitates an SSIM photo term. Arms over all 9 seqs,
+judged against the raw measured cloud: A = mesh colors / photo off
+(current default), B = transferred colors / SSIM w0.5, C = transferred /
+SSIM w1.0; a 4-seq D control (mesh colors / SSIM 0.5) proved improvements
+come from the colors, not the term itself.
+
+| arm | mean 3D (mm) | mean IoU | notes |
+|---|---|---|---|
+| A | 3.84 | 0.763 | default |
+| B | 3.96 | 0.773 | no clear win; sugar_yalehand z-shift 10.6→30.6 mm regression |
+| C | 3.81 | 0.774 | bleach_hard 8.0→6.3 mm / IoU 0.65→0.78 (largest win), but easy seqs degrade (bleach0 IoU 0.87→0.80) |
+
+**Decision: photo stays OFF by default** — population means are a wash and
+each photo arm has at least one regression. Per-sequence card: for
+bleach_hard-like cases (large SAM3D rotation error, IoU drop under
+depth-only), transferred colors + SSIM w1.0 is the recovery option.
+Follow-up idea (not implemented): occlusion-aware photo weighting —
+transferred colors mislead most where SAM3D saw least (sugar_yalehand had
+the largest color delta 0.084 and the photo-driven z-shift blow-up).
