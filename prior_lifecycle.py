@@ -105,6 +105,17 @@ class LifecycleFields:
         }
 
 
+def erode_mask(mask: torch.Tensor, radius_px: int) -> torch.Tensor:
+    """Binary erosion via inverted max-pooling (mask: [H, W] bool)."""
+
+    if radius_px <= 0:
+        return mask
+    kernel = 2 * radius_px + 1
+    inverted = (~mask).float()[None, None]
+    dilated = F.max_pool2d(inverted, kernel, stride=1, padding=radius_px)
+    return ~(dilated[0, 0] > 0.5)
+
+
 def depth_evidence_masks(
     gaussian_depth: torch.Tensor,
     observed_depth: torch.Tensor,

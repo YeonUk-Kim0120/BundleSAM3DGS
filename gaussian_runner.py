@@ -20,6 +20,8 @@ optimizer-resize behavior in gsplat.
 from __future__ import annotations
 
 import copy
+import json
+import logging
 import math
 from dataclasses import asdict, dataclass
 from pathlib import Path
@@ -28,6 +30,19 @@ from typing import Any, Mapping, Sequence
 import numpy as np
 import torch
 from scipy.spatial import cKDTree
+
+from prior_lifecycle import (
+    STATE_CONTRADICTED,
+    STATE_UNSEEN,
+    STATE_VERIFIED,
+    LifecycleFields,
+    TransitionThresholds,
+    accumulate_support_residuals,
+    apply_transitions,
+    depth_evidence_masks,
+    erode_mask,
+    independent_view_mask,
+)
 
 
 GSPLAT_VERSION = "1.5.3"
@@ -92,6 +107,21 @@ DEFAULT_CONFIG: dict[str, Any] = {
         "dbscan_min_samples": 1,
         "online_scale_multiplier": 0.7,
     },
+    # Observation-gated prior lifecycle (milestone ③, validated in
+    # experiments/ and PRIOR_LIFECYCLE_RESULTS.md).  Default off; when on it
+    # requires the 2DGS renderer and disabled densify/opacity-reset (v1).
+    "prior_lifecycle": {
+        "enabled": False,
+        "depth_tolerance_m": 0.01,
+        "min_view_angle_deg": 10.0,
+        "conflict_min_views": 2,
+        "retract_min_views": 3,
+        "geometric_alpha_threshold": 0.5,
+        "mask_erode_px": 2,
+        "grazing_tolerance_cap": 3.0,
+        "prior_opacity": 0.9,
+        "prior_flat_axis_ratio": 0.1,
+    },
 }
 
 
@@ -154,6 +184,35 @@ def _validate_config(config: Mapping[str, Any]) -> None:
                 raise ValueError(f"{key} requires renderer '2dgs'")
     elif bool(config["strategy"]["absgrad"]):
         raise ValueError("strategy.absgrad is not supported with renderer '2dgs'")
+    lifecycle = config["prior_lifecycle"]
+    if bool(lifecycle["enabled"]):
+        if config["renderer"] != "2dgs":
+            raise ValueError(
+                "prior_lifecycle requires renderer '2dgs' (median front depth)"
+            )
+        refine_off = 100_000_000
+        for block in ("strategy", "update_strategy"):
+            if int(config[block].get("refine_start_iter", 0)) < refine_off:
+                raise ValueError(
+                    "prior_lifecycle v1 requires densification disabled: set "
+                    f"{block}.refine_start_iter >= {refine_off}"
+                )
+        if int(config["strategy"]["reset_every"]) < refine_off:
+            raise ValueError(
+                "prior_lifecycle v1 requires opacity reset disabled: set "
+                f"strategy.reset_every >= {refine_off}"
+            )
+        if not 0.0 < float(lifecycle["prior_opacity"]) < 1.0:
+            raise ValueError("prior_lifecycle.prior_opacity must be in (0, 1)")
+        for key in ("depth_tolerance_m", "min_view_angle_deg",
+                    "geometric_alpha_threshold", "grazing_tolerance_cap",
+                    "prior_flat_axis_ratio"):
+            if not np.isfinite(lifecycle[key]) or float(lifecycle[key]) <= 0:
+                raise ValueError(f"prior_lifecycle.{key} must be positive")
+        for key in ("conflict_min_views", "retract_min_views",
+                    "mask_erode_px"):
+            if int(lifecycle[key]) < 0:
+                raise ValueError(f"prior_lifecycle.{key} must be non-negative")
     for key in ("initial_steps", "update_steps", "roi_padding"):
         if int(config[key]) < 0:
             raise ValueError(f"{key} must be non-negative")
@@ -477,6 +536,11 @@ class GaussianRunner:
         _validate_config(self.config)
         self.normalization = normalization
         self.device = torch.device(device or self.config["device"])
+        if self.device.type == "cuda":
+            # gsplat 1.5.3's rasterization_2dgs backward hits an illegal
+            # memory access whenever the current CUDA device differs from
+            # the tensor device (missing device guard in its 2DGS kernels).
+            torch.cuda.set_device(self.device)
         self.splats: torch.nn.ParameterDict | None = None
         self.optimizers: dict[str, torch.optim.Optimizer] = {}
         self.strategy: Any = None
@@ -487,6 +551,21 @@ class GaussianRunner:
         self.observed_colors = np.empty((0, 3), dtype=np.float32)
         self.total_steps = 0
         self.update_index = -1
+        lifecycle_cfg = self.config["prior_lifecycle"]
+        self.lifecycle_enabled = bool(lifecycle_cfg["enabled"])
+        self.lifecycle_thresholds = TransitionThresholds(
+            depth_tolerance_m=float(lifecycle_cfg["depth_tolerance_m"]),
+            min_view_angle_deg=float(lifecycle_cfg["min_view_angle_deg"]),
+            conflict_min_views=int(lifecycle_cfg["conflict_min_views"]),
+            retract_min_views=int(lifecycle_cfg["retract_min_views"]),
+            geometric_alpha_threshold=float(
+                lifecycle_cfg["geometric_alpha_threshold"]
+            ),
+            mask_erode_px=int(lifecycle_cfg["mask_erode_px"]),
+            grazing_tolerance_cap=float(lifecycle_cfg["grazing_tolerance_cap"]),
+        )
+        self.lifecycle_fields: LifecycleFields | None = None
+        self.lifecycle_log: list[dict[str, Any]] = []
         self._generator = torch.Generator(device="cpu")
         self._generator.manual_seed(int(self.config["seed"]))
         torch.manual_seed(int(self.config["seed"]))
@@ -784,6 +863,11 @@ class GaussianRunner:
             self.observed_colors = colors.copy()
             values = self._new_splat_values(points, colors, points)
             self._set_splats(values)
+            if self.lifecycle_enabled:
+                # RGB-D-seeded splats are direct observations.
+                self.lifecycle_fields = LifecycleFields.create(
+                    self.num_gaussians, lineage_prior=False, device=self.device
+                )
             self.views = [self._prepare_view(frame) for frame in validated]
             self.update_index = 0
             self._reset_optimization_state(
@@ -799,6 +883,7 @@ class GaussianRunner:
             self.strategy = None
             self.strategy_state = {}
             self.strategy_step = 0
+            self.lifecycle_fields = None
             self.views = []
             self.observed_points_metric = np.empty((0, 3), dtype=np.float32)
             self.observed_colors = np.empty((0, 3), dtype=np.float32)
@@ -863,13 +948,31 @@ class GaussianRunner:
                 if self.device.type == "cuda" and torch.cuda.is_available()
                 else None
             ),
+            "lifecycle_fields": (
+                self.lifecycle_fields.keep(
+                    torch.ones(len(self.lifecycle_fields), dtype=torch.bool,
+                               device=self.lifecycle_fields.state.device)
+                )
+                if self.lifecycle_fields is not None else None
+            ),
         }
 
         try:
             self._append_splats(novel_points, novel_colors)
             after_append = self.num_gaussians
+            if self.lifecycle_fields is not None and len(novel_points):
+                self.lifecycle_fields = self.lifecycle_fields.concat(
+                    LifecycleFields.create(
+                        len(novel_points), lineage_prior=False,
+                        device=self.device,
+                    )
+                )
             self.views.extend(self._prepare_view(frame) for frame in validated)
             self.update_index += 1
+            self.classify_lifecycle(
+                validated, event=f"update_{self.update_index:03d}"
+            )
+            self._remove_contradicted()
             self._reset_optimization_state(
                 float(self.config["update_lr_scale"]), initial=False
             )
@@ -887,6 +990,7 @@ class GaussianRunner:
                 )
         except Exception:
             self._set_splats(snapshot["splats"])
+            self.lifecycle_fields = snapshot["lifecycle_fields"]
             self.views = self.views[: snapshot["view_count"]]
             self.observed_points_metric = snapshot["observed_points"]
             self.observed_colors = snapshot["observed_colors"]
@@ -973,6 +1077,316 @@ class GaussianRunner:
                 value=self.strategy.prune_opa * 2.0,
             )
 
+    # ----- observation-gated prior lifecycle (milestone ③) -----------------
+
+    def initialize_from_prior(
+        self,
+        surfels_cv: Any,
+        first_c2w_cv: np.ndarray,
+        frames: Sequence[GaussianFrame],
+        train_steps: int | None = None,
+    ) -> GaussianUpdateStats:
+        """Initialize the map from aligned first-camera-frame surfels.
+
+        ``surfels_cv`` is a ``sam3d_prior.SurfelSet`` in the metric OpenCV
+        frame of the first camera (the ② alignment output); ``first_c2w_cv``
+        transforms it into the object frame. RGB-D novelty appends then only
+        add regions the prior does not cover.
+        """
+
+        import torch.nn.functional as F
+
+        from sam3d_prior import quats_from_normals
+
+        if self.is_initialized:
+            raise RuntimeError("GaussianRunner is already initialized")
+        if not self.lifecycle_enabled:
+            raise RuntimeError(
+                "initialize_from_prior requires prior_lifecycle.enabled"
+            )
+        if not frames:
+            raise ValueError("At least one frame is required")
+        validated = [frame.validated() for frame in frames]
+        first_c2w = validate_c2w_cv(first_c2w_cv).astype(np.float32)
+        lifecycle_cfg = self.config["prior_lifecycle"]
+
+        R0 = torch.from_numpy(first_c2w[:3, :3])
+        t0 = torch.from_numpy(first_c2w[:3, 3])
+        means_metric = surfels_cv.means @ R0.T + t0[None, :]
+        normals_obj = F.normalize(surfels_cv.normals @ R0.T, dim=-1)
+        means_norm = torch.from_numpy(
+            self.normalization.normalize_points(means_metric.numpy())
+        )
+        radii_norm = surfels_cv.radii * float(self.normalization.scale)
+        flat = float(lifecycle_cfg["prior_flat_axis_ratio"])
+        log_scales = torch.log(torch.stack(
+            (radii_norm, radii_norm, radii_norm * flat), dim=-1
+        ).clamp_min(1e-9))
+        opacity_logit = float(torch.logit(
+            torch.tensor(float(lifecycle_cfg["prior_opacity"]))
+        ))
+        sh_count = (int(self.config["sh_degree"]) + 1) ** 2
+        count = len(means_norm)
+        self._set_splats({
+            "means": means_norm.float(),
+            "scales": log_scales.float(),
+            "quats": quats_from_normals(normals_obj).float(),
+            "opacities": torch.full((count,), opacity_logit),
+            "sh0": ((surfels_cv.colors - 0.5) / SH_C0)[:, None, :].float(),
+            "shN": torch.zeros((count, sh_count - 1, 3), dtype=torch.float32),
+        })
+        self.lifecycle_fields = LifecycleFields.create(
+            count, lineage_prior=True, device=self.device
+        )
+        self.observed_points_metric = means_metric.numpy().astype(np.float32)
+        self.observed_colors = surfels_cv.colors.numpy().astype(np.float32)
+        self.views = [self._prepare_view(frame) for frame in validated]
+        self.update_index = 0
+        # Classify and compact BEFORE creating optimizers so Adam rows align.
+        self.classify_lifecycle(validated, event="initialize")
+        removed = self._remove_contradicted()
+        self._reset_optimization_state(
+            float(self.config["initial_lr_scale"]), initial=True
+        )
+        steps = int(
+            self.config["initial_steps"] if train_steps is None else train_steps
+        )
+        first_loss, final_loss = self.train(steps)
+        return GaussianUpdateStats(
+            update_index=self.update_index,
+            frame_ids=tuple(frame.frame_id for frame in validated),
+            raw_points=count,
+            candidate_points=count,
+            novel_points=count - removed,
+            gaussians_before=0,
+            gaussians_after_append=count,
+            gaussians_after_train=self.num_gaussians,
+            train_steps=steps,
+            first_loss=first_loss,
+            final_loss=final_loss,
+        )
+
+    def _splat_normals(self) -> torch.Tensor:
+        from sam3d_prior import quat_wxyz_to_matrix
+
+        return quat_wxyz_to_matrix(self.splats["quats"].detach())[:, :, 2]
+
+    @torch.no_grad()
+    def _geometric_front_depth(
+        self, c2w_norm: torch.Tensor, K: torch.Tensor, width: int, height: int
+    ) -> tuple[torch.Tensor, torch.Tensor]:
+        """Opacity-independent front depth: 2DGS median depth at opacity 1."""
+
+        _, _, rasterization_2dgs, _ = self._require_gsplat()
+        renders, alphas, *_ = rasterization_2dgs(
+            means=self.splats["means"].detach(),
+            quats=self.splats["quats"].detach(),
+            scales=torch.exp(self.splats["scales"].detach()),
+            opacities=torch.ones(self.num_gaussians, device=self.device),
+            colors=torch.zeros(self.num_gaussians, 1, 3, device=self.device),
+            sh_degree=0,
+            viewmats=torch.linalg.inv(c2w_norm)[None],
+            Ks=K[None],
+            width=width,
+            height=height,
+            render_mode="RGB+ED",
+            depth_mode="median",
+        )
+        depth_metric = renders[0, ..., 3] / float(self.normalization.scale)
+        return depth_metric, alphas[0, ..., 0]
+
+    @torch.no_grad()
+    def classify_lifecycle(
+        self,
+        frames: Sequence[GaussianFrame],
+        event: str,
+        occ_masks: Sequence[np.ndarray] | None = None,
+    ) -> dict[str, Any] | None:
+        """Update lifecycle states from a batch of keyframes (metric space)."""
+
+        import torch.nn.functional as F
+
+        if not self.lifecycle_enabled or self.lifecycle_fields is None:
+            return None
+        if occ_masks is not None and len(occ_masks) != len(frames):
+            raise ValueError("occ_masks must align with frames")
+        fields = self.lifecycle_fields.validated()
+        thresholds = self.lifecycle_thresholds
+        device = self.device
+        supported = torch.zeros(len(fields), dtype=torch.bool, device=device)
+        means_metric = torch.from_numpy(
+            self.normalization.metric_points(
+                self.splats["means"].detach().cpu().numpy()
+            )
+        ).to(device)
+        normals = self._splat_normals()
+        active = fields.state != STATE_CONTRADICTED
+        totals = {"projected_valid": 0, "support": 0, "free_space": 0,
+                  "behind_occluded": 0, "behind_miss": 0,
+                  "accepted_conflict": 0}
+
+        for index, frame in enumerate(frames):
+            frame = frame.validated()
+            c2w = torch.from_numpy(frame.c2w_cv.astype(np.float32)).to(device)
+            w2c = torch.linalg.inv(c2w)
+            points_cam = means_metric @ w2c[:3, :3].T + w2c[:3, 3][None, :]
+            depth_cam = points_cam[:, 2]
+            safe = depth_cam.clamp_min(1e-6)
+            K = frame.K
+            height, width = frame.mask.shape
+            u = points_cam[:, 0] / safe * float(K[0, 0]) + float(K[0, 2])
+            v = points_cam[:, 1] / safe * float(K[1, 1]) + float(K[1, 2])
+            in_image = ((depth_cam > 0.01) & (u >= 0) & (u < width)
+                        & (v >= 0) & (v < height))
+            ui = u.round().clamp(0, width - 1).long()
+            vi = v.round().clamp(0, height - 1).long()
+
+            observed = torch.from_numpy(frame.depth).to(device)
+            mask = erode_mask(
+                torch.from_numpy(frame.mask).to(device),
+                thresholds.mask_erode_px,
+            )
+            valid_pixels = (
+                mask & torch.isfinite(observed)
+                & (observed > float(self.config["min_depth"]))
+                & (observed < float(self.config["max_depth"]))
+            )
+            if occ_masks is not None and occ_masks[index] is not None:
+                occ = torch.from_numpy(
+                    np.asarray(occ_masks[index]) > 0
+                ).to(device)
+                valid_pixels &= ~occ
+            valid = active & in_image & valid_pixels[vi, ui]
+
+            c2w_norm = torch.from_numpy(
+                self.normalization.normalize_c2w(frame.c2w_cv).astype(
+                    np.float32
+                )
+            ).to(device)
+            K_t = torch.from_numpy(frame.K.astype(np.float32)).to(device)
+            front_depth, front_alpha = self._geometric_front_depth(
+                c2w_norm, K_t, width, height
+            )
+
+            camera_center = c2w[:3, 3]
+            view_dir = F.normalize(
+                means_metric - camera_center[None, :], dim=-1, eps=1e-8
+            )
+            view_abs_cos = (normals * view_dir).sum(dim=-1).abs()
+            evidence = depth_evidence_masks(
+                gaussian_depth=depth_cam,
+                observed_depth=observed[vi, ui],
+                valid_observation=valid,
+                geometric_front_depth=front_depth[vi, ui],
+                geometric_alpha=front_alpha[vi, ui],
+                depth_tolerance=thresholds.depth_tolerance_m,
+                geometric_alpha_threshold=thresholds.geometric_alpha_threshold,
+                view_abs_cos=view_abs_cos,
+                grazing_tolerance_cap=thresholds.grazing_tolerance_cap,
+            )
+            supported |= evidence["support"]
+            accumulate_support_residuals(
+                fields, evidence["support"], depth_cam, observed[vi, ui],
+                normals, view_dir,
+            )
+            candidate = evidence["free_space"] | evidence["behind_miss"]
+            accepted = independent_view_mask(
+                candidate, fields.conflict_count, fields.last_conflict_view,
+                view_dir, thresholds.min_view_angle_deg,
+            )
+            if bool(accepted.any()):
+                fields.conflict_count[accepted] += 1
+                fields.last_conflict_view[accepted] = view_dir[accepted]
+
+            totals["projected_valid"] += int(valid.sum())
+            for key in ("support", "free_space", "behind_occluded",
+                        "behind_miss"):
+                totals[key] += int(evidence[key].sum())
+            totals["accepted_conflict"] += int(accepted.sum())
+
+        masks = apply_transitions(fields, supported, thresholds)
+        newly_contradicted = masks["to_contradict"]
+        if bool(newly_contradicted.any()):
+            self.splats["opacities"].data[newly_contradicted] = -10.0
+        record = {
+            "event": str(event),
+            "n_frames": len(frames),
+            "new_verified": int(masks["to_verify"].sum()),
+            "new_suspect": int(masks["verified_to_suspect"].sum()),
+            "new_contradicted": int(newly_contradicted.sum()),
+            **totals,
+            "state": fields.summary(),
+        }
+        self.lifecycle_log.append(record)
+        logging.info("[Prior lifecycle] " + json.dumps(record, sort_keys=True))
+        return record
+
+    @torch.no_grad()
+    def _remove_contradicted(self) -> int:
+        if not self.lifecycle_enabled or self.lifecycle_fields is None:
+            return 0
+        drop = self.lifecycle_fields.state == STATE_CONTRADICTED
+        n_drop = int(drop.sum())
+        if n_drop == 0:
+            return 0
+        keep = ~drop
+        self._set_splats({
+            name: tensor.detach()[keep].cpu()
+            for name, tensor in self.splats.items()
+        })
+        self.lifecycle_fields = self.lifecycle_fields.keep(keep)
+        return n_drop
+
+    def refresh_view_poses(
+        self, poses_by_frame_id: Mapping[str, np.ndarray]
+    ) -> int:
+        """Adopt updated tracker poses for already-stored views.
+
+        The online tracker keeps bundle-adjusting past keyframes; this
+        applies the newest metric OpenCV c2w poses to matching views.
+        """
+
+        refreshed = 0
+        for view in self.views:
+            pose = poses_by_frame_id.get(view.frame_id)
+            if pose is None:
+                continue
+            normalized = self.normalization.normalize_c2w(pose)
+            view.c2w_normalized = torch.from_numpy(
+                normalized.astype(np.float32)
+            ).contiguous()
+            refreshed += 1
+        return refreshed
+
+    @torch.no_grad()
+    def export_state_ply(self, path: str | Path) -> None:
+        """Debug PLY with lifecycle-state colors (metric object frame)."""
+
+        colors_by_state = np.array(
+            [[128, 128, 128], [40, 200, 60], [240, 200, 40], [220, 40, 40]],
+            dtype=np.uint8,
+        )
+        means = self.normalization.metric_points(
+            self.splats["means"].detach().cpu().numpy()
+        )
+        if self.lifecycle_fields is not None:
+            state = self.lifecycle_fields.state.cpu().numpy()
+        else:
+            state = np.full(len(means), STATE_VERIFIED, dtype=np.int8)
+        rgb = colors_by_state[state.clip(0, 3)]
+        path = Path(path)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        header = ("ply\nformat ascii 1.0\n"
+                  f"element vertex {len(means)}\n"
+                  "property float x\nproperty float y\nproperty float z\n"
+                  "property uchar red\nproperty uchar green\n"
+                  "property uchar blue\nend_header\n")
+        with path.open("w") as f:
+            f.write(header)
+            for p, c in zip(means, rgb):
+                f.write(f"{p[0]:.6f} {p[1]:.6f} {p[2]:.6f} "
+                        f"{c[0]} {c[1]} {c[2]}\n")
+
     def _masked_depth_loss(
         self, result: RasterResult, view: TrainingView, mask: torch.Tensor
     ) -> torch.Tensor:
@@ -1031,6 +1445,11 @@ class GaussianRunner:
         )
         first_loss: float | None = None
         final_loss: float | None = None
+        frozen_rows: torch.Tensor | None = None
+        if self.lifecycle_enabled and self.lifecycle_fields is not None:
+            frozen = self.lifecycle_fields.state != STATE_VERIFIED
+            if bool(frozen.any()):
+                frozen_rows = frozen.to(self.device)
 
         for _ in range(steps):
             strategy_step = self.strategy_step
@@ -1109,6 +1528,11 @@ class GaussianRunner:
             if not torch.isfinite(loss):
                 raise FloatingPointError("Non-finite Gaussian training loss")
             loss.backward()
+            if frozen_rows is not None:
+                # Lifecycle: only VERIFIED splats may learn.
+                for parameter in self.splats.values():
+                    if parameter.grad is not None:
+                        parameter.grad[frozen_rows] = 0
             for optimizer in self.optimizers.values():
                 optimizer.step()
             means_scheduler.step()
@@ -1212,6 +1636,11 @@ class GaussianRunner:
             },
             "strategy_state": to_cpu(self.strategy_state),
             "views": self._checkpoint_views(),
+            "lifecycle_fields": (
+                {name: tensor.detach().cpu()
+                 for name, tensor in vars(self.lifecycle_fields).items()}
+                if self.lifecycle_fields is not None else None
+            ),
             "observed_points_metric": torch.from_numpy(
                 self.observed_points_metric
             ),
@@ -1263,6 +1692,21 @@ class GaussianRunner:
             )
             for item in payload["views"]
         ]
+        fields_payload = payload.get("lifecycle_fields")
+        if fields_payload is not None:
+            runner.lifecycle_fields = LifecycleFields(
+                **{name: tensor.to(runner.device)
+                   for name, tensor in fields_payload.items()}
+            ).validated()
+            if len(runner.lifecycle_fields) != runner.num_gaussians:
+                raise ValueError(
+                    "Checkpoint lifecycle fields do not align with splats"
+                )
+        elif runner.lifecycle_enabled:
+            raise ValueError(
+                "prior_lifecycle.enabled but the checkpoint has no "
+                "lifecycle fields"
+            )
         runner.observed_points_metric = payload[
             "observed_points_metric"
         ].numpy().copy()

@@ -158,6 +158,26 @@ def load_mesh_prior(path: str | Path) -> MeshPrior:
     return prior.validated()
 
 
+def load_sam3d_pose_or_refined(path: str | Path) -> Sim3Pose:
+    """Load either a raw SAM3D pose json or an alignment-refined cache.
+
+    The ② alignment writes ``{"refined": {"sam3d_row_pose": {...}}}``; the
+    SAM3D batch writes ``{"pose": {...}}``. Both map canonical → first-camera.
+    """
+
+    with Path(path).open("r", encoding="utf-8") as f:
+        meta = json.load(f)
+    if "refined" in meta:
+        rp = meta["refined"]["sam3d_row_pose"]
+        quat = torch.tensor(rp["rotation"], dtype=torch.float32).reshape(-1)
+        return Sim3Pose(
+            scale=torch.tensor(rp["scale"], dtype=torch.float32).reshape(-1),
+            R_row=quat_wxyz_to_matrix(quat[None])[0],
+            T=torch.tensor(rp["translation"], dtype=torch.float32).reshape(-1),
+        )
+    return load_sam3d_pose(path)
+
+
 def load_sam3d_pose(path: str | Path) -> Sim3Pose:
     with Path(path).open("r", encoding="utf-8") as f:
         meta = json.load(f)

@@ -87,6 +87,29 @@ def parse_args() -> argparse.Namespace:
         default=0,
         help="Save an intermediate checkpoint every N updates; 0 disables it",
     )
+    parser.add_argument(
+        "--prior-npz",
+        type=Path,
+        help="SAM3D raw-mesh prior npz; requires the other --prior-* inputs "
+             "and prior_lifecycle.enabled in the config",
+    )
+    parser.add_argument(
+        "--prior-pose-json",
+        type=Path,
+        help="Canonical→first-camera pose: alignment cache "
+             "(sam3d_rts_refined.json) or the SAM3D pose json",
+    )
+    parser.add_argument(
+        "--prior-gaussian-ply",
+        type=Path,
+        help="SAM3D gaussian PLY for the arm-C color transfer",
+    )
+    parser.add_argument(
+        "--prior-surfel-count",
+        type=int,
+        default=20000,
+        help="Surfels sampled from the prior mesh",
+    )
     return parser.parse_args()
 
 
@@ -329,13 +352,57 @@ def run(args: argparse.Namespace) -> None:
     output_dir.mkdir(parents=True, exist_ok=False)
     _dump_yaml(output_dir / "resolved_config.yml", config)
 
+    prior_inputs = (args.prior_npz, args.prior_pose_json,
+                    args.prior_gaussian_ply)
+    use_prior = any(path is not None for path in prior_inputs)
+    if use_prior and not all(path is not None for path in prior_inputs):
+        raise ValueError(
+            "--prior-npz, --prior-pose-json and --prior-gaussian-ply must be "
+            "given together"
+        )
+
     initial_frames = [
         load_frame(track_dir, frame_ids[index], K, c2w_cv[index])
         for index in range(INITIAL_KEYFRAMES)
     ]
-    normalization, normalization_metadata = compute_initial_normalization(
-        initial_frames, output_dir, config
-    )
+    surfels_cv = None
+    if use_prior:
+        from sam3d_prior import (
+            load_mesh_prior,
+            load_sam3d_gaussian_ply,
+            load_sam3d_pose_or_refined,
+            sample_surfels,
+            transfer_gaussian_colors,
+            transform_surfels_canonical_to_cv_camera,
+        )
+
+        prior = load_mesh_prior(args.prior_npz)
+        pose0 = load_sam3d_pose_or_refined(args.prior_pose_json)
+        surfels = sample_surfels(
+            prior, int(args.prior_surfel_count), seed=0,
+            radius_multiplier=0.75,
+        )
+        surfels, transfer_info = transfer_gaussian_colors(
+            surfels, load_sam3d_gaussian_ply(args.prior_gaussian_ply)
+        )
+        surfels_cv = transform_surfels_canonical_to_cv_camera(surfels, pose0)
+        first_c2w = c2w_cv[0].astype(np.float64)
+        means_obj = (surfels_cv.means.numpy() @ first_c2w[:3, :3].T
+                     + first_c2w[:3, 3][None, :])
+        center = means_obj.mean(axis=0)
+        radius = float(np.linalg.norm(means_obj - center, axis=1).max())
+        normalization = SceneNormalization(
+            scale=1.0 / max(radius * 1.2, 1e-6), translation=-center
+        )
+        normalization_metadata = {
+            "method": "SAM3D prior extent (center + 1.2x max radius)",
+            "prior_surfels": int(len(surfels_cv.means)),
+            "color_transfer": transfer_info,
+        }
+    else:
+        normalization, normalization_metadata = compute_initial_normalization(
+            initial_frames, output_dir, config
+        )
     _dump_yaml(
         output_dir / "normalization_gs.yml",
         {
@@ -377,7 +444,17 @@ def run(args: argparse.Namespace) -> None:
     replay_start = time.perf_counter()
 
     phase_start = time.perf_counter()
-    initial_stats = runner.initialize(initial_frames)
+    if use_prior:
+        manifest["prior_inputs"] = {
+            "mesh_npz": str(args.prior_npz),
+            "pose_json": str(args.prior_pose_json),
+            "gaussian_ply": str(args.prior_gaussian_ply),
+        }
+        initial_stats = runner.initialize_from_prior(
+            surfels_cv, c2w_cv[0], initial_frames
+        )
+    else:
+        initial_stats = runner.initialize(initial_frames)
     records.append(
         {
             "phase": "initialize",
@@ -426,6 +503,10 @@ def run(args: argparse.Namespace) -> None:
     manifest["elapsed_seconds"] = time.perf_counter() - replay_start
     manifest["final_gaussian_count"] = runner.num_gaussians
     manifest["total_training_steps"] = runner.total_steps
+    if runner.lifecycle_fields is not None:
+        manifest["lifecycle_state"] = runner.lifecycle_fields.summary()
+        runner.export_state_ply(output_dir / "state_colored.ply")
+        write_json(output_dir / "lifecycle_log.json", runner.lifecycle_log)
     if device.startswith("cuda"):
         manifest["peak_cuda_memory_bytes"] = int(
             torch.cuda.max_memory_allocated(torch.device(device))
