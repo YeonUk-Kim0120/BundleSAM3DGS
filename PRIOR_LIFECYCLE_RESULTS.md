@@ -57,3 +57,21 @@ false contradictions 591→25 while keeping back-side displacement at 0.
 Runs: `logs/mustard0_{priornolc,lifecycle,lifecycle_grazingA,lifecycle_A_bias}_full_20260901/`
 (each: result.json, state_colored.ply, viewer_state.html, lifecycle_fields.pt).
 Support-residual accumulators (③b input) remain in the fields for future use.
+
+## Hand-occlusion showcases (2026-09-01)
+
+- **cracker_box_yalehand0** (YCB, fixed gripper grasp, tracked poses,
+  36 KF): initial classification 4,618 verified / 15,290 unseen / 92
+  contradicted → final map keeps **12,221 UNSEEN prior surfels (61% of the
+  prior) at exactly their initial positions** while 94k verified splats
+  cover everything observed. This is the complete-mesh claim in action:
+  the gripper-covered and never-viewed regions survive as graded prior
+  geometry where BundleSDF leaves a hole.
+  `logs/ycb_crackeryale_lifecycle_full_20260901/viewer_state.html`.
+- **MPM10** (HO3D, GT-pose replay track built from `ob_in_cams.txt`):
+  ended with only 25 UNSEEN — not a valid showcase. Two confounds:
+  in-hand re-grasping over 1,618 frames exposes nearly the full surface,
+  and the GT-pose registration is loose (~19 mm inter-frame cloud
+  agreement), which together over-verify. Lesson: hand-occlusion
+  preservation demos need fixed-grasp sequences and tracking-quality
+  poses; HO3D lifecycle runs should wait for our own tracked poses (④).
