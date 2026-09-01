@@ -78,6 +78,10 @@ def main() -> None:
     parser.add_argument("--test-frames", type=int, default=6)
     parser.add_argument("--inject-trans-mm", type=float, default=2.5)
     parser.add_argument("--inject-rot-deg", type=float, default=1.5)
+    parser.add_argument("--lr-trans", type=float, default=None,
+                        help="override pose_feedback.lr_trans")
+    parser.add_argument("--w-reg-trans", type=float, default=None,
+                        help="override pose_feedback.w_reg_trans")
     args = parser.parse_args()
     out_dir = args.output_dir
     out_dir.mkdir(parents=True, exist_ok=False)
@@ -88,10 +92,16 @@ def main() -> None:
     config["device"] = args.device
     config["pose_feedback"] = dict(config["pose_feedback"])
     config["pose_feedback"]["enabled"] = True
+    if args.lr_trans is not None:
+        config["pose_feedback"]["lr_trans"] = args.lr_trans
+    if args.w_reg_trans is not None:
+        config["pose_feedback"]["w_reg_trans"] = args.w_reg_trans
+    print("pose_feedback: " + json.dumps(config["pose_feedback"]))
 
     frame_ids, poses = load_fixed_poses(find_latest_keyframe_snapshot(TRACK))
     K = np.loadtxt(TRACK / "cam_K.txt", dtype=np.float32).reshape(3, 3)
-    n_needed = 5 + args.test_frames
+    n_init = 5
+    n_needed = n_init + args.test_frames
     frame_ids, poses = frame_ids[:n_needed], poses[:n_needed]
 
     prior = load_mesh_prior(MESH / "mustard0_mesh_depth.npz")
@@ -112,7 +122,7 @@ def main() -> None:
     runner = GaussianRunner(config, normalization, device=args.device)
 
     initial_frames = [
-        load_frame(TRACK, frame_ids[i], K, poses[i]) for i in range(5)
+        load_frame(TRACK, frame_ids[i], K, poses[i]) for i in range(n_init)
     ]
     runner.initialize_from_prior(
         surfels_cv, poses[0], initial_frames, train_steps=args.initial_steps
@@ -120,7 +130,7 @@ def main() -> None:
 
     rng = np.random.default_rng(7)
     rows = []
-    for index in range(5, n_needed):
+    for index in range(n_init, n_needed):
         true_pose = poses[index]
         bad_pose = perturb(true_pose, rng, args.inject_trans_mm,
                            args.inject_rot_deg)
@@ -131,37 +141,58 @@ def main() -> None:
 
         injected_t, injected_r = pose_errors(bad_pose, true_pose)
         residual_t, residual_r = pose_errors(fb_pose, true_pose)
-        # drift of the UNPERTURBED views (their tracker poses are true)
-        drifts = []
+        # Views before the newest split into two pools: the initial n_init
+        # views were never perturbed (their tracker pose IS the true pose,
+        # so any feedback offset is genuine drift), while views perturbed in
+        # earlier cycles keep their bad tracker pose forever — their error
+        # vs the true pose is a stale residual, not drift.
+        clean_drifts = []
+        stale_residuals = []
         for view_index, view in enumerate(runner.views[:-1]):
             fb = feedback.get(view.frame_id)
             if fb is None:
                 continue
-            drifts.append(pose_errors(fb, poses[view_index])[0])
+            err = pose_errors(fb, poses[view_index])[0]
+            if view_index < n_init:
+                clean_drifts.append(err)
+            else:
+                stale_residuals.append(err)
         rows.append({
             "frame": frame_ids[index],
             "injected_mm": injected_t, "injected_deg": injected_r,
             "residual_mm": residual_t, "residual_deg": residual_r,
             "recovery_mm_pct": 100 * (1 - residual_t / max(injected_t, 1e-9)),
             "recovery_deg_pct": 100 * (1 - residual_r / max(injected_r, 1e-9)),
-            "clean_view_drift_mm_mean": float(np.mean(drifts)) if drifts else 0.0,
-            "clean_view_drift_mm_max": float(np.max(drifts)) if drifts else 0.0,
+            "clean_view_drift_mm_mean": (
+                float(np.mean(clean_drifts)) if clean_drifts else 0.0
+            ),
+            "clean_view_drift_mm_max": (
+                float(np.max(clean_drifts)) if clean_drifts else 0.0
+            ),
+            "stale_perturbed_residual_mm_mean": (
+                float(np.mean(stale_residuals)) if stale_residuals else None
+            ),
             "feedback_stats": stats,
         })
         print(json.dumps({k: (round(v, 3) if isinstance(v, float) else v)
                           for k, v in rows[-1].items()
                           if k != "feedback_stats"}))
 
+    stale = [r["stale_perturbed_residual_mm_mean"] for r in rows
+             if r["stale_perturbed_residual_mm_mean"] is not None]
     summary = {
         "mean_recovery_mm_pct": float(np.mean([r["recovery_mm_pct"] for r in rows])),
         "mean_recovery_deg_pct": float(np.mean([r["recovery_deg_pct"] for r in rows])),
         "mean_residual_mm": float(np.mean([r["residual_mm"] for r in rows])),
         "mean_injected_mm": float(np.mean([r["injected_mm"] for r in rows])),
         "clean_drift_mm_max": float(np.max([r["clean_view_drift_mm_max"] for r in rows])),
+        "mean_stale_residual_mm": float(np.mean(stale)) if stale else None,
     }
     with (out_dir / "result.json").open("w") as f:
-        json.dump({"rows": rows, "summary": summary}, f, indent=2)
-    print("SUMMARY " + json.dumps({k: round(v, 3) for k, v in summary.items()}))
+        json.dump({"rows": rows, "summary": summary,
+                   "pose_feedback_config": config["pose_feedback"]}, f, indent=2)
+    print("SUMMARY " + json.dumps({k: (round(v, 3) if isinstance(v, float) else v)
+                                   for k, v in summary.items()}))
 
 
 if __name__ == "__main__":
