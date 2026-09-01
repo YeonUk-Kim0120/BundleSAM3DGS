@@ -128,7 +128,16 @@ DEFAULT_CONFIG: dict[str, Any] = {
     # tracker's rematch thresholds. Default off (online no-op preserved).
     "pose_feedback": {
         "enabled": False,
-        "lr": 1.0e-4,
+        "lr_rot": 1.0e-4,
+        "lr_trans": 1.0e-5,
+        # Zero-attracting priors (metric semantics for translation): without
+        # them Adam integrates render-noise into multi-mm drift on already
+        # correct views (perturbation-recovery study, 2026-09-01).
+        "w_reg_rot": 0.3,
+        "w_reg_trans": 100.0,
+        # Steps at the start of each cycle with the pose frozen, so the map
+        # adapts to the new frame before the pose starts moving.
+        "warmup_steps": 100,
         "max_translation_m": 0.003,
         "max_rot_deg": 3.0,
         "verified_pixel_gate": True,
@@ -227,10 +236,13 @@ def _validate_config(config: Mapping[str, Any]) -> None:
                 raise ValueError(f"prior_lifecycle.{key} must be non-negative")
     feedback = config["pose_feedback"]
     if bool(feedback["enabled"]):
-        for key in ("lr", "max_translation_m", "max_rot_deg",
+        for key in ("lr_rot", "lr_trans", "max_translation_m", "max_rot_deg",
                     "gate_alpha_diff"):
             if not np.isfinite(feedback[key]) or float(feedback[key]) <= 0:
                 raise ValueError(f"pose_feedback.{key} must be positive")
+        for key in ("w_reg_rot", "w_reg_trans", "warmup_steps"):
+            if float(feedback[key]) < 0:
+                raise ValueError(f"pose_feedback.{key} must be non-negative")
     for key in ("initial_steps", "update_steps", "roi_padding"):
         if int(config[key]) < 0:
             raise ValueError(f"{key} must be non-negative")
@@ -613,7 +625,8 @@ class GaussianRunner:
         self.lifecycle_log: list[dict[str, Any]] = []
         feedback_cfg = self.config["pose_feedback"]
         self.pose_feedback_enabled = bool(feedback_cfg["enabled"])
-        self._pose_deltas: torch.Tensor | None = None
+        self._pose_rot: torch.Tensor | None = None
+        self._pose_trans: torch.Tensor | None = None
         self._generator = torch.Generator(device="cpu")
         self._generator.manual_seed(int(self.config["seed"]))
         torch.manual_seed(int(self.config["seed"]))
@@ -1445,16 +1458,16 @@ class GaussianRunner:
         training happened yet.
         """
 
-        if not self.pose_feedback_enabled or self._pose_deltas is None:
+        if not self.pose_feedback_enabled or self._pose_rot is None:
             return None
         feedback = self.config["pose_feedback"]
         max_rot = math.radians(float(feedback["max_rot_deg"]))
         max_trans_norm = (
             float(feedback["max_translation_m"]) * float(self.normalization.scale)
         )
-        deltas = self._pose_deltas.detach().clone()
-        rot = deltas[:, :3]
-        trans = deltas[:, 3:]
+        rot = self._pose_rot.detach().clone()
+        trans = self._pose_trans.detach().clone()
+        deltas = rot  # length reference for the view loop below
         rot_norm = torch.linalg.norm(rot, dim=-1, keepdim=True)
         trans_norm = torch.linalg.norm(trans, dim=-1, keepdim=True)
         clipped = int(((rot_norm > max_rot) | (trans_norm > max_trans_norm)).sum())
@@ -1599,18 +1612,29 @@ class GaussianRunner:
             if bool(frozen.any()):
                 frozen_rows = frozen.to(self.device)
         pose_optimizer: torch.optim.Optimizer | None = None
+        pose_warmup = 0
+        pose_reg_rot = pose_reg_trans = 0.0
         if self.pose_feedback_enabled:
             # Fresh zero deltas every cycle: corrections on top of the
             # CURRENT tracker poses (tracker-authority variant).
-            self._pose_deltas = torch.zeros(
-                (len(self.views), 6), device=self.device, requires_grad=True
+            feedback_cfg = self.config["pose_feedback"]
+            self._pose_rot = torch.zeros(
+                (len(self.views), 3), device=self.device, requires_grad=True
             )
-            pose_optimizer = torch.optim.Adam(
-                [self._pose_deltas],
-                lr=float(self.config["pose_feedback"]["lr"]),
+            self._pose_trans = torch.zeros(
+                (len(self.views), 3), device=self.device, requires_grad=True
             )
+            pose_optimizer = torch.optim.Adam([
+                {"params": [self._pose_rot],
+                 "lr": float(feedback_cfg["lr_rot"])},
+                {"params": [self._pose_trans],
+                 "lr": float(feedback_cfg["lr_trans"])},
+            ])
+            pose_warmup = int(feedback_cfg["warmup_steps"])
+            pose_reg_rot = float(feedback_cfg["w_reg_rot"])
+            pose_reg_trans = float(feedback_cfg["w_reg_trans"])
 
-        for _ in range(steps):
+        for step_in_cycle in range(steps):
             strategy_step = self.strategy_step
             view_index = int(
                 torch.randint(
@@ -1626,8 +1650,11 @@ class GaussianRunner:
                 )[None]
             K = view.K.to(self.device, non_blocking=True)[None]
             c2w = view.c2w_normalized.to(self.device, non_blocking=True)
-            if self._pose_deltas is not None:
-                c2w = c2w @ se3_exp(self._pose_deltas[view_index])
+            if self._pose_rot is not None:
+                delta = torch.cat(
+                    (self._pose_rot[view_index], self._pose_trans[view_index])
+                )
+                c2w = c2w @ se3_exp(delta)
             c2w = c2w[None]
 
             for optimizer in self.optimizers.values():
@@ -1693,6 +1720,16 @@ class GaussianRunner:
                     (result.distort[..., 0] * mask_float).sum()
                     / mask_float.sum().clamp_min(1.0)
                 )
+            if (pose_optimizer is not None
+                    and step_in_cycle >= pose_warmup):
+                # Zero-attracting delta priors (translation in metric units).
+                rot_delta = self._pose_rot[view_index]
+                trans_metric = (self._pose_trans[view_index]
+                                / float(self.normalization.scale))
+                loss = loss + pose_reg_rot * (rot_delta * rot_delta).sum()
+                loss = loss + pose_reg_trans * (
+                    trans_metric * trans_metric
+                ).sum()
             if not torch.isfinite(loss):
                 raise FloatingPointError("Non-finite Gaussian training loss")
             loss.backward()
@@ -1703,7 +1740,7 @@ class GaussianRunner:
                         parameter.grad[frozen_rows] = 0
             for optimizer in self.optimizers.values():
                 optimizer.step()
-            if pose_optimizer is not None:
+            if pose_optimizer is not None and step_in_cycle >= pose_warmup:
                 pose_optimizer.step()
             means_scheduler.step()
             self._strategy_post_backward(strategy_step, info)

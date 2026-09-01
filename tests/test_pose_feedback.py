@@ -81,16 +81,16 @@ class FeedbackClampTest(unittest.TestCase):
         runner = self.make_runner()
         frame = make_plane_frame("f0", camera_translation_x=0.02).validated()
         runner.views = [runner._prepare_view(frame)]
-        runner._pose_deltas = torch.zeros((1, 6))
+        runner._pose_rot = torch.zeros((1, 3))
+        runner._pose_trans = torch.zeros((1, 3))
         poses, stats = runner.get_feedback_poses()
         np.testing.assert_allclose(poses["f0"], frame.c2w_cv, atol=1e-5)
         self.assertEqual(stats["clipped"], 0)
 
         # Oversized delta must be clamped to the configured limits
         # (3 mm translation, 3° rotation by default).
-        runner._pose_deltas = torch.tensor(
-            [[0.0, 0.0, 1.0, 0.5, 0.0, 0.0]]  # 57° rotation, 0.25 m metric
-        )
+        runner._pose_rot = torch.tensor([[0.0, 0.0, 1.0]])   # 57°
+        runner._pose_trans = torch.tensor([[0.5, 0.0, 0.0]])  # 0.25 m metric
         poses, stats = runner.get_feedback_poses()
         self.assertEqual(stats["clipped"], 1)
         moved = poses["f0"]
@@ -103,10 +103,10 @@ class FeedbackClampTest(unittest.TestCase):
         self.assertLessEqual(np.degrees(rotation_error), 3.0 + 1e-3)
 
     def test_config_guard(self):
-        with self.assertRaisesRegex(ValueError, "pose_feedback.lr"):
+        with self.assertRaisesRegex(ValueError, "pose_feedback.lr_rot"):
             GaussianRunner(
                 {"renderer": "2dgs",
-                 "pose_feedback": {"enabled": True, "lr": 0.0}},
+                 "pose_feedback": {"enabled": True, "lr_rot": 0.0}},
                 SceneNormalization(1.0, np.zeros(3)), device="cpu",
             )
 
@@ -120,7 +120,8 @@ class FeedbackGpuTest(unittest.TestCase):
 
     def test_training_produces_finite_nonzero_deltas(self):
         config = {
-            **FEEDBACK_ON,
+            "renderer": "2dgs",
+            "pose_feedback": {"enabled": True, "warmup_steps": 5},
             "device": TEST_DEVICE,
             "voxel_size": 0.02,
             "novelty_distance": 0.01,
@@ -134,9 +135,10 @@ class FeedbackGpuTest(unittest.TestCase):
             config, SceneNormalization(1.0, np.zeros(3)), device=TEST_DEVICE
         )
         runner.initialize([make_plane_frame("f0")])
-        self.assertIsNotNone(runner._pose_deltas)
-        self.assertTrue(torch.isfinite(runner._pose_deltas).all())
-        self.assertGreater(float(runner._pose_deltas.abs().sum()), 0.0)
+        self.assertIsNotNone(runner._pose_rot)
+        deltas = torch.cat((runner._pose_rot, runner._pose_trans), dim=-1)
+        self.assertTrue(torch.isfinite(deltas).all())
+        self.assertGreater(float(deltas.abs().sum()), 0.0)
         poses, stats = runner.get_feedback_poses()
         self.assertIn("f0", poses)
         self.assertLessEqual(stats["trans_mm_max"], 3.0 + 1e-6)
