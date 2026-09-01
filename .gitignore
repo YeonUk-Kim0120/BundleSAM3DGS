@@ -145,3 +145,5 @@ datasets/
 
 # Model checkpoints
 *.ckpt
+# online backend experiment artifacts
+outputs/
