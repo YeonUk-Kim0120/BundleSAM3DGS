@@ -58,6 +58,23 @@ def run_one_video(video_dir='/home/bowen/debug/2022-11-18-15-10-24_milk', out_fo
   cfg_nerf['notes'] = ''
   cfg_nerf['expname'] = 'nerf_with_bundletrack_online'
   cfg_nerf['save_dir'] = cfg_nerf['datadir']
+  cfg_nerf['backend'] = args.backend
+  if args.backend == 'gaussian':
+    for name in ('prior_mesh_npz', 'prior_pose_json', 'prior_gaussian_ply'):
+      if getattr(args, name) is None:
+        raise ValueError(f"--backend gaussian requires --{name.replace('_','-')}")
+    cfg_nerf['gaussian'] = {
+      'runner_config': args.gs_runner_config,
+      'device': 'cuda:0',
+      'initial_steps': args.gs_initial_steps,
+      'update_steps': args.gs_update_steps,
+      'prior': {
+        'mesh_npz': args.prior_mesh_npz,
+        'pose_json': args.prior_pose_json,
+        'gaussian_ply': args.prior_gaussian_ply,
+        'surfel_count': 20000,
+      },
+    }
   cfg_nerf_dir = f'{out_folder}/config_nerf.yml'
   yaml.dump(cfg_nerf, open(cfg_nerf_dir,'w'))
 
@@ -103,7 +120,11 @@ def run_one_video(video_dir='/home/bowen/debug/2022-11-18-15-10-24_milk', out_fo
 
   tracker.on_finish()
 
-  run_one_video_global_nerf(video_dir=video_dir, out_folder=out_folder, mask_dir=mask_dir)
+  if args.backend == 'gaussian':
+    logging.info("Gaussian backend: global SDF refinement is skipped (milestone-4 v1); "
+                 "the online GS map is under <out_folder>/gs_online/")
+  else:
+    run_one_video_global_nerf(video_dir=video_dir, out_folder=out_folder, mask_dir=mask_dir)
 
 
 
@@ -217,6 +238,13 @@ if __name__=="__main__":
   parser.add_argument('--stride', type=int, default=1, help='interval of frames to run; 1 means using every frame')
   parser.add_argument('--debug_level', type=int, default=2, help='higher means more logging')
   parser.add_argument('--mask_dir', type=str, default='masks_sam2', help='mask directory name under video_dir, or an absolute path')
+  parser.add_argument('--backend', type=str, default='nerf', choices=['nerf','gaussian'], help="reconstruction backend; 'gaussian' needs the --prior-* inputs")
+  parser.add_argument('--gs_runner_config', type=str, default=f'{code_dir}/config_gs_2dgs_1mm_lifecycle.yml')
+  parser.add_argument('--gs_initial_steps', type=int, default=4000)
+  parser.add_argument('--gs_update_steps', type=int, default=500)
+  parser.add_argument('--prior_mesh_npz', type=str, default=None, help='SAM3D raw-mesh prior npz (offline batch output)')
+  parser.add_argument('--prior_pose_json', type=str, default=None, help='SAM3D pose json (canonical->first camera); alignment runs online')
+  parser.add_argument('--prior_gaussian_ply', type=str, default=None, help='SAM3D gaussian PLY for the color transfer')
   args = parser.parse_args()
 
   if args.mode=='run_video':

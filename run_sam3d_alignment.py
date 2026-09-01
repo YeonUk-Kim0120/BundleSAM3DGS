@@ -476,6 +476,113 @@ def save_visuals(tag: str, rendered, target, out_dir: Path) -> None:
     Image.fromarray(to_u8(heat)).save(out_dir / f"{tag}_depth_residual.png")
 
 
+def align_prior_sim3(
+    surfels,
+    init_pose,
+    target: Mapping[str, Any],
+    config: Mapping[str, Any],
+    device: torch.device,
+    verbose: bool = True,
+):
+    """Optimize the rigid Sim(3) correction of an aligned surfel prior.
+
+    Callable core of this script (used online by the ④ backend as well):
+    freezes the surfels and refines rotation/translation/log-scale deltas by
+    2DGS render-and-compare against ``target`` (see ``prepare_target``).
+    Returns ``(refined_pose: Sim3Pose, best, history, status)`` where the
+    refined pose composes the best deltas onto ``init_pose`` (sibling
+    ``_compose_sam3d_refined_pose``).
+    """
+
+    from sam3d_prior import Sim3Pose
+
+    torch.manual_seed(int(config["surfel_seed"]))
+    params = RtsParameters(config, device)
+    optimizer = torch.optim.AdamW(params.parameters(), lr=float(config["lr"]))
+    steps = int(config["steps"])
+    warmup = int(config["warmup"])
+    lr_max, lr_end = float(config["lr"]), float(config["end_lr"])
+
+    def lr_at(step: int) -> float:
+        if step < warmup:
+            return lr_max * (step + 1) / max(warmup, 1)
+        progress = (step - warmup) / max(steps - warmup, 1)
+        return lr_end + 0.5 * (lr_max - lr_end) * (
+            1.0 + math.cos(math.pi * progress)
+        )
+
+    ssim_metric, ms_ssim_metric = make_photo_metrics(config, device)
+    best: dict[str, Any] = {"loss": float("inf"), "step": -1}
+    history: list[dict[str, Any]] = []
+    for step in range(steps):
+        for group in optimizer.param_groups:
+            group["lr"] = lr_at(step)
+        optimizer.zero_grad(set_to_none=True)
+        rot_vec, trans_delta, log_scale_delta, scale_delta = params.current()
+        rendered = render_surfels(surfels, init_pose, rot_vec, trans_delta,
+                                  scale_delta, target, config, device)
+        loss, parts = refine_loss(rendered, target, rot_vec, trans_delta,
+                                  log_scale_delta, config, ssim_metric,
+                                  ms_ssim_metric)
+        is_candidate = (
+            np.isfinite(parts["total"])
+            and parts["visible_ratio"]
+            >= float(config["best_min_visible_ratio"])
+            and parts["depth_valid_ratio"]
+            >= float(config["best_min_depth_valid_ratio"])
+        )
+        if is_candidate and parts["total"] < best["loss"]:
+            best = {
+                "loss": parts["total"],
+                "step": step,
+                "rot_vec": rot_vec.detach().clone(),
+                "trans_delta": trans_delta.detach().clone(),
+                "log_scale_delta": log_scale_delta.detach().clone(),
+                "scale_delta": scale_delta.detach().clone(),
+            }
+        loss.backward()
+        torch.nn.utils.clip_grad_norm_(params.parameters(),
+                                       float(config["grad_clip"]))
+        optimizer.step()
+        log_every = int(config["log_every"])
+        if (step == 0 or step == steps - 1
+                or (log_every > 0 and (step + 1) % log_every == 0)):
+            row = {"step": step, **parts,
+                   "rot_deg": float(torch.rad2deg(torch.linalg.norm(rot_vec))),
+                   "trans_cm": float(torch.linalg.norm(trans_delta) * 100.0),
+                   "scale_delta": float(scale_delta), "lr": lr_at(step)}
+            history.append(row)
+            if verbose:
+                print(f"step {step:04d} total={parts['total']:.5f} "
+                      f"depth={parts['depth']:.5f} "
+                      f"photo={parts['photo']:.4f} "
+                      f"vis={parts['visible_ratio']:.2f} "
+                      f"rot={row['rot_deg']:.2f}° t={row['trans_cm']:.2f}cm "
+                      f"s={row['scale_delta']:.4f}")
+
+    if best["step"] < 0:
+        if verbose:
+            print("[warn] no candidate passed the guards; "
+                  "keeping the initial pose")
+        best.update({
+            "rot_vec": torch.zeros(3, device=device),
+            "trans_delta": torch.zeros(3, device=device),
+            "log_scale_delta": torch.zeros((), device=device),
+            "scale_delta": torch.ones((), device=device),
+        })
+        status = "no_improvement"
+    else:
+        status = "refined"
+
+    delta_r = axis_angle_to_matrix(best["rot_vec"]).cpu()
+    refined_pose = Sim3Pose(
+        scale=init_pose.scale * float(best["scale_delta"]),
+        R_row=delta_r.T @ init_pose.R_row,
+        T=best["trans_delta"].cpu() @ init_pose.R_row + init_pose.T,
+    )
+    return refined_pose, best, history, status
+
+
 def main() -> None:
     args = parse_args()
     config = load_config(args.config)
@@ -517,29 +624,12 @@ def main() -> None:
     print(f"frame {target['frame_id']} | surfels {len(surfels)} "
           f"| crop {target['crop_xyxy']} → {config['render_size']}²")
 
-    torch.manual_seed(int(config["surfel_seed"]))
-    params = RtsParameters(config, device)
-    optimizer = torch.optim.AdamW(params.parameters(), lr=float(config["lr"]))
-    steps = int(config["steps"])
-    warmup = int(config["warmup"])
-    lr_max, lr_end = float(config["lr"]), float(config["end_lr"])
-
-    def lr_at(step: int) -> float:
-        if step < warmup:
-            return lr_max * (step + 1) / max(warmup, 1)
-        progress = (step - warmup) / max(steps - warmup, 1)
-        return lr_end + 0.5 * (lr_max - lr_end) * (1.0 + math.cos(math.pi * progress))
-
-    ssim_metric, ms_ssim_metric = make_photo_metrics(config, device)
-
-    def render_current(rot_vec, trans_delta, scale_delta):
-        return render_surfels(surfels, init_pose, rot_vec, trans_delta,
-                              scale_delta, target, config, device)
-
     with torch.no_grad():
         zero = torch.zeros(3, device=device)
         one = torch.ones((), device=device)
-        rendered0 = render_current(zero, zero, one)
+        ssim_metric, ms_ssim_metric = make_photo_metrics(config, device)
+        rendered0 = render_surfels(surfels, init_pose, zero, zero, one,
+                                   target, config, device)
         metrics_before = evaluate(rendered0, target, config)
         _, parts_before = refine_loss(
             rendered0, target, zero, zero, torch.zeros((), device=device),
@@ -548,58 +638,15 @@ def main() -> None:
     save_visuals("before", rendered0, target, out_dir)
     print(f"before: {metrics_before} | parts {parts_before}")
 
-    best: dict[str, Any] = {"loss": float("inf"), "step": -1}
-    history = []
-    for step in range(steps):
-        for group in optimizer.param_groups:
-            group["lr"] = lr_at(step)
-        optimizer.zero_grad(set_to_none=True)
-        rot_vec, trans_delta, log_scale_delta, scale_delta = params.current()
-        rendered = render_current(rot_vec, trans_delta, scale_delta)
-        loss, parts = refine_loss(rendered, target, rot_vec, trans_delta,
-                                  log_scale_delta, config, ssim_metric, ms_ssim_metric)
-        is_candidate = (
-            np.isfinite(parts["total"])
-            and parts["visible_ratio"] >= float(config["best_min_visible_ratio"])
-            and parts["depth_valid_ratio"] >= float(config["best_min_depth_valid_ratio"])
-        )
-        if is_candidate and parts["total"] < best["loss"]:
-            best = {
-                "loss": parts["total"],
-                "step": step,
-                "rot_vec": rot_vec.detach().clone(),
-                "trans_delta": trans_delta.detach().clone(),
-                "log_scale_delta": log_scale_delta.detach().clone(),
-                "scale_delta": scale_delta.detach().clone(),
-            }
-        loss.backward()
-        torch.nn.utils.clip_grad_norm_(params.parameters(), float(config["grad_clip"]))
-        optimizer.step()
-        log_every = int(config["log_every"])
-        if step == 0 or step == steps - 1 or (log_every > 0 and (step + 1) % log_every == 0):
-            row = {"step": step, **parts,
-                   "rot_deg": float(torch.rad2deg(torch.linalg.norm(rot_vec))),
-                   "trans_cm": float(torch.linalg.norm(trans_delta) * 100.0),
-                   "scale_delta": float(scale_delta), "lr": lr_at(step)}
-            history.append(row)
-            print(f"step {step:04d} total={parts['total']:.5f} depth={parts['depth']:.5f} "
-                  f"photo={parts['photo']:.4f} vis={parts['visible_ratio']:.2f} "
-                  f"rot={row['rot_deg']:.2f}° t={row['trans_cm']:.2f}cm s={row['scale_delta']:.4f}")
-
-    if best["step"] < 0:
-        print("[warn] no candidate passed the guards; keeping the initial pose")
-        best.update({
-            "rot_vec": torch.zeros(3, device=device),
-            "trans_delta": torch.zeros(3, device=device),
-            "log_scale_delta": torch.zeros((), device=device),
-            "scale_delta": torch.ones((), device=device),
-        })
-        status = "no_improvement"
-    else:
-        status = "refined"
+    refined_pose, best, history, status = align_prior_sim3(
+        surfels, init_pose, target, config, device
+    )
 
     with torch.no_grad():
-        rendered1 = render_current(best["rot_vec"], best["trans_delta"], best["scale_delta"])
+        rendered1 = render_surfels(
+            surfels, init_pose, best["rot_vec"], best["trans_delta"],
+            best["scale_delta"], target, config, device,
+        )
         metrics_after = evaluate(rendered1, target, config)
         _, parts_after = refine_loss(
             rendered1, target, best["rot_vec"], best["trans_delta"],
@@ -608,13 +655,12 @@ def main() -> None:
     save_visuals("after", rendered1, target, out_dir)
     print(f"after ({status}, best step {best['step']}): {metrics_after}")
 
-    # Compose the refined canonical→p3d pose (sibling _compose_sam3d_refined_pose).
-    delta_r = axis_angle_to_matrix(best["rot_vec"]).cpu()
-    r_row = delta_r.T @ init_pose.R_row
-    t_row = best["trans_delta"].cpu() @ init_pose.R_row + init_pose.T
-    scale_refined = init_pose.scale * float(best["scale_delta"])
     from sam3d_prior import matrix_to_quat_wxyz
 
+    r_row = refined_pose.R_row
+    t_row = refined_pose.T
+    scale_refined = refined_pose.scale
+    steps = int(config["steps"])
     refined = {
         "mapping": "sam3d_canonical_to_pytorch3d_camera",
         "status": status,

@@ -410,6 +410,160 @@ def run_nerf(p_dict, kf_to_nerf_list, lock, cfg_nerf, translation, sc_factor, st
       os.system(f"rm -rf {cfg_nerf['save_dir']}/step_*_mesh_real_world.obj {cfg_nerf['save_dir']}/*frame*ray*.ply && mv {cfg_nerf['save_dir']}/*  {out_dir}/")
 
 
+def run_gaussian(p_dict, kf_to_nerf_list, lock, cfg_gs, start_nerf_keyframes, debug_dir):
+  """Milestone-④ Gaussian backend process (drop-in for ``run_nerf``).
+
+  Keeps the exact ``p_dict``/``kf_to_nerf_list`` contract of ``run_nerf`` so
+  the tracker side is unchanged. v1 pose feedback is a NO-OP: the tracker's
+  own poses are returned verbatim (``optimized_cvcam_in_obs`` = input), so
+  tracking results must match the SDF backend bit-for-noise — pose
+  optimization arrives with milestone ⑤. Map: SAM3D surfel prior (online
+  Sim(3) alignment on the first keyframe) + observation-gated lifecycle.
+  """
+
+  import torch
+  from gaussian_runner import GaussianFrame, GaussianRunner, SceneNormalization, load_gaussian_config
+  from run_sam3d_alignment import DEFAULT_CONFIG as ALIGN_DEFAULTS
+  from run_sam3d_alignment import align_prior_sim3, prepare_target
+  from sam3d_prior import (load_mesh_prior, load_sam3d_gaussian_ply,
+                           load_sam3d_pose_or_refined, sample_surfels,
+                           transfer_gaussian_colors,
+                           transform_surfels_canonical_to_cv_camera)
+
+  device = torch.device(cfg_gs.get('device', 'cuda:0'))
+  if device.type == 'cuda':
+    torch.cuda.set_device(device)   # gsplat 1.5.3 2DGS device-guard bug
+  runner_config = load_gaussian_config(cfg_gs['runner_config'])
+  runner_config['device'] = str(device)
+  initial_steps = int(cfg_gs.get('initial_steps', 4000))
+  update_steps = int(cfg_gs.get('update_steps', 500))
+  gs_out = os.path.join(debug_dir, 'gs_online')
+  os.makedirs(gs_out, exist_ok=True)
+
+  runner = None
+  consumed = 0
+  kf_frames_meta = []   # GaussianFrame list order == tracker keyframe order
+
+  with lock:
+    SPDLOG = p_dict['SPDLOG']
+
+  while 1:
+    with lock:
+      join = p_dict['join']
+    if join:
+      break
+
+    skip = False
+    with lock:
+      if runner is None and len(kf_to_nerf_list) < start_nerf_keyframes:
+        skip = True
+        p_dict['running'] = False
+      else:
+        if len(kf_to_nerf_list) > 0:
+          p_dict['running'] = True
+          frame_id = p_dict['frame_id']
+          cam_in_obs = p_dict['cam_in_obs'].copy()
+          batch = [dict(f) for f in kf_to_nerf_list]
+          K = p_dict['K']
+          p_dict['nerf_num_frames'] = consumed + len(batch)
+          kf_to_nerf_list[:] = []
+        else:
+          skip = True
+    if skip:
+      time.sleep(0.01)
+      continue
+
+    try:
+      assert len(cam_in_obs) == consumed + len(batch), \
+          f"pose/keyframe mismatch: {len(cam_in_obs)} vs {consumed}+{len(batch)}"
+      frames = []
+      for offset, item in enumerate(batch):
+        index = consumed + offset
+        frames.append(GaussianFrame(
+            frame_id=f"kf_{index:05d}",
+            rgb=np.ascontiguousarray(item['rgb']),
+            depth=np.ascontiguousarray(item['depth']).astype(np.float32),
+            mask=np.ascontiguousarray(item['mask']) > 0,
+            K=np.asarray(K, dtype=np.float32),
+            c2w_cv=np.asarray(cam_in_obs[index], dtype=np.float32),
+        ).validated())
+      consumed += len(batch)
+      kf_frames_meta.extend(frames)
+
+      if runner is None:
+        logging.info(f"[GS backend] first batch ({len(frames)} keyframes): "
+                     f"prior + online Sim(3) alignment")
+        prior_cfg = cfg_gs['prior']
+        prior = load_mesh_prior(prior_cfg['mesh_npz'])
+        init_pose = load_sam3d_pose_or_refined(prior_cfg['pose_json'])
+        surfels = sample_surfels(
+            prior, int(prior_cfg.get('surfel_count', 20000)), seed=0,
+            radius_multiplier=0.75,
+        )
+        surfels, transfer_info = transfer_gaussian_colors(
+            surfels, load_sam3d_gaussian_ply(prior_cfg['gaussian_ply'])
+        )
+        align_config = dict(ALIGN_DEFAULTS)
+        align_config.update(dict(cfg_gs.get('align', {})))
+        align_config['use_ssim'] = True         # adopted arm-C recipe
+        align_config['use_ms_ssim'] = False
+        first = frames[0]
+        target = prepare_target(
+            {"frame_id": first.frame_id, "rgb": first.rgb,
+             "depth": first.depth, "mask": first.mask, "K": first.K},
+            align_config, device,
+        )
+        refined_pose, _, _, align_status = align_prior_sim3(
+            surfels, init_pose, target, align_config, device, verbose=False
+        )
+        logging.info(f"[GS backend] alignment {align_status}; "
+                     f"color transfer {transfer_info}")
+        surfels_cv = transform_surfels_canonical_to_cv_camera(
+            surfels, refined_pose
+        )
+        first_c2w = np.asarray(cam_in_obs[0], dtype=np.float64)
+        means_obj = (surfels_cv.means.numpy() @ first_c2w[:3, :3].T
+                     + first_c2w[:3, 3][None, :])
+        center = means_obj.mean(axis=0)
+        radius = float(np.linalg.norm(means_obj - center, axis=1).max())
+        normalization = SceneNormalization(
+            scale=1.0 / max(radius * 1.2, 1e-6), translation=-center
+        )
+        runner = GaussianRunner(runner_config, normalization,
+                                device=str(device))
+        stats = runner.initialize_from_prior(
+            surfels_cv, cam_in_obs[0], frames, train_steps=initial_steps
+        )
+      else:
+        refreshed = runner.refresh_view_poses({
+            view.frame_id: cam_in_obs[index]
+            for index, view in enumerate(runner.views)
+        })
+        logging.info(f"[GS backend] refreshed {refreshed} view poses")
+        stats = runner.update(frames, train_steps=update_steps)
+
+      logging.info(f"[GS backend] frame {frame_id}: "
+                   + json.dumps(stats.to_dict(), sort_keys=True))
+      if runner.lifecycle_fields is not None and SPDLOG >= 2:
+        os.makedirs(f"{debug_dir}/{frame_id}", exist_ok=True)
+        runner.export_state_ply(f"{debug_dir}/{frame_id}/gs_state.ply")
+    finally:
+      with lock:
+        # v1 NO-OP feedback: hand the tracker its own poses back verbatim.
+        p_dict['optimized_cvcam_in_obs'] = np.asarray(cam_in_obs).copy()
+        p_dict['running'] = False
+
+  if runner is not None:
+    runner.save_checkpoint(os.path.join(gs_out, 'checkpoint_final.pt'))
+    runner.export_ply(os.path.join(gs_out, 'splats_normalized.ply'),
+                      os.path.join(gs_out, 'splats_metric.ply'))
+    if runner.lifecycle_fields is not None:
+      runner.export_state_ply(os.path.join(gs_out, 'state_colored.ply'))
+      with open(os.path.join(gs_out, 'lifecycle_log.json'), 'w') as ff:
+        json.dump(runner.lifecycle_log, ff, indent=2)
+  logging.info("[GS backend] joined")
+
+
 
 
 class BundleSdf:
@@ -457,7 +611,13 @@ class BundleSdf:
     self.p_dict['nerf_num_frames'] = 0
 
     self.p_dict['SPDLOG'] = self.SPDLOG
-    self.p_nerf = multiprocessing.Process(target=run_nerf, args=(self.p_dict, self.kf_to_nerf_list, self.lock, self.cfg_nerf, self.translation, self.sc_factor, start_nerf_keyframes, self.use_gui, self.gui_lock, self.gui_dict, self.debug_dir))
+    backend = self.cfg_nerf.get('backend', 'nerf')
+    if backend == 'gaussian':
+      self.p_nerf = multiprocessing.Process(target=run_gaussian, args=(self.p_dict, self.kf_to_nerf_list, self.lock, dict(self.cfg_nerf['gaussian']), start_nerf_keyframes, self.debug_dir))
+    elif backend == 'nerf':
+      self.p_nerf = multiprocessing.Process(target=run_nerf, args=(self.p_dict, self.kf_to_nerf_list, self.lock, self.cfg_nerf, self.translation, self.sc_factor, start_nerf_keyframes, self.use_gui, self.gui_lock, self.gui_dict, self.debug_dir))
+    else:
+      raise ValueError(f"Unknown reconstruction backend {backend!r} (expected 'nerf' or 'gaussian')")
     self.p_nerf.start()
 
     # self.p_dict = {}
