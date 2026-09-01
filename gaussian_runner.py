@@ -122,6 +122,18 @@ DEFAULT_CONFIG: dict[str, Any] = {
         "prior_opacity": 0.9,
         "prior_flat_axis_ratio": 0.1,
     },
+    # Milestone-⑤ pose feedback, tracker-authority variant: per-view SE(3)
+    # deltas start at zero every training cycle (small corrections on top of
+    # the CURRENT tracker poses) and are clamped at read-out below the
+    # tracker's rematch thresholds. Default off (online no-op preserved).
+    "pose_feedback": {
+        "enabled": False,
+        "lr": 1.0e-4,
+        "max_translation_m": 0.003,
+        "max_rot_deg": 3.0,
+        "verified_pixel_gate": True,
+        "gate_alpha_diff": 0.05,
+    },
 }
 
 
@@ -213,6 +225,12 @@ def _validate_config(config: Mapping[str, Any]) -> None:
                     "mask_erode_px"):
             if int(lifecycle[key]) < 0:
                 raise ValueError(f"prior_lifecycle.{key} must be non-negative")
+    feedback = config["pose_feedback"]
+    if bool(feedback["enabled"]):
+        for key in ("lr", "max_translation_m", "max_rot_deg",
+                    "gate_alpha_diff"):
+            if not np.isfinite(feedback[key]) or float(feedback[key]) <= 0:
+                raise ValueError(f"pose_feedback.{key} must be positive")
     for key in ("initial_steps", "update_steps", "roi_padding"):
         if int(config[key]) < 0:
             raise ValueError(f"{key} must be non-negative")
@@ -269,6 +287,29 @@ def validate_c2w_cv(c2w: np.ndarray | torch.Tensor) -> np.ndarray:
     if not np.isclose(np.linalg.det(rotation), 1.0, atol=2e-3):
         raise ValueError("c2w rotation must have determinant +1")
     return c2w_np
+
+
+def se3_exp(delta: torch.Tensor) -> torch.Tensor:
+    """Differentiable SE(3) exponential of a 6-vector (rotvec[3], trans[3]).
+
+    Small-correction convention for the pose feedback: the translation is
+    applied directly (no V-matrix coupling), which is exact at delta=0 and
+    accurate to second order for the millimeter/degree deltas we clamp to.
+    """
+
+    rotvec, translation = delta[:3], delta[3:]
+    theta = torch.linalg.norm(rotvec).clamp_min(1e-12)
+    axis = rotvec / theta
+    K = torch.zeros(3, 3, dtype=delta.dtype, device=delta.device)
+    K[0, 1], K[0, 2] = -axis[2], axis[1]
+    K[1, 0], K[1, 2] = axis[2], -axis[0]
+    K[2, 0], K[2, 1] = axis[0], -axis[1]
+    eye = torch.eye(3, dtype=delta.dtype, device=delta.device)
+    R = eye + torch.sin(theta) * K + (1.0 - torch.cos(theta)) * (K @ K)
+    top = torch.cat((R, translation[:, None]), dim=1)
+    bottom = torch.tensor([[0.0, 0.0, 0.0, 1.0]], dtype=delta.dtype,
+                          device=delta.device)
+    return torch.cat((top, bottom), dim=0)
 
 
 def crop_intrinsics(K: np.ndarray, x0: int, y0: int) -> np.ndarray:
@@ -406,6 +447,10 @@ class TrainingView:
     c2w_normalized: torch.Tensor
     crop_xyxy: tuple[int, int, int, int]
     depth: torch.Tensor | None = None
+    # Pixels where frozen non-VERIFIED splats influence the render are
+    # excluded from the losses when the pose-feedback gate is on (True =
+    # pixel usable). Recomputed after each lifecycle classification.
+    loss_pixel_mask: torch.Tensor | None = None
 
     @property
     def height(self) -> int:
@@ -566,6 +611,9 @@ class GaussianRunner:
         )
         self.lifecycle_fields: LifecycleFields | None = None
         self.lifecycle_log: list[dict[str, Any]] = []
+        feedback_cfg = self.config["pose_feedback"]
+        self.pose_feedback_enabled = bool(feedback_cfg["enabled"])
+        self._pose_deltas: torch.Tensor | None = None
         self._generator = torch.Generator(device="cpu")
         self._generator.manual_seed(int(self.config["seed"]))
         torch.manual_seed(int(self.config["seed"]))
@@ -973,6 +1021,7 @@ class GaussianRunner:
                 validated, event=f"update_{self.update_index:03d}"
             )
             self._remove_contradicted()
+            self._refresh_verified_pixel_masks()
             self._reset_optimization_state(
                 float(self.config["update_lr_scale"]), initial=False
             )
@@ -1145,6 +1194,7 @@ class GaussianRunner:
         # Classify and compact BEFORE creating optimizers so Adam rows align.
         self.classify_lifecycle(validated, event="initialize")
         removed = self._remove_contradicted()
+        self._refresh_verified_pixel_masks()
         self._reset_optimization_state(
             float(self.config["initial_lr_scale"]), initial=True
         )
@@ -1337,6 +1387,104 @@ class GaussianRunner:
         self.lifecycle_fields = self.lifecycle_fields.keep(keep)
         return n_drop
 
+    @torch.no_grad()
+    def _refresh_verified_pixel_masks(self) -> int:
+        """Cache per-view pixels influenced by frozen non-VERIFIED splats.
+
+        Compares the full render's alpha with a VERIFIED-only render; pixels
+        that differ are excluded from the losses (pose-feedback gate), so
+        pose gradients only come from observation-verified geometry.
+        """
+
+        feedback = self.config["pose_feedback"]
+        if not (self.pose_feedback_enabled and bool(feedback["verified_pixel_gate"])):
+            return 0
+        if self.lifecycle_fields is None:
+            return 0
+        frozen = self.lifecycle_fields.state != STATE_VERIFIED
+        if not bool(frozen.any()):
+            for view in self.views:
+                view.loss_pixel_mask = None
+            return 0
+        threshold = float(feedback["gate_alpha_diff"])
+        saved = self.splats["opacities"].data.clone()
+        excluded_total = 0
+        try:
+            for view in self.views:
+                K = view.K.to(self.device)[None]
+                c2w = view.c2w_normalized.to(self.device)[None]
+                sh = min(
+                    self.total_steps // int(self.config["sh_degree_interval"]),
+                    int(self.config["sh_degree"]),
+                )
+                full = self._rasterize(
+                    K=K, c2w=c2w, width=view.width, height=view.height,
+                    sh_degree=sh, render_mode="RGB", absgrad=False,
+                ).alpha[0, ..., 0]
+                self.splats["opacities"].data[frozen] = -10.0
+                verified_only = self._rasterize(
+                    K=K, c2w=c2w, width=view.width, height=view.height,
+                    sh_degree=sh, render_mode="RGB", absgrad=False,
+                ).alpha[0, ..., 0]
+                self.splats["opacities"].data.copy_(saved)
+                usable = (full - verified_only).abs() <= threshold
+                view.loss_pixel_mask = usable.cpu().contiguous()
+                excluded_total += int((~usable).sum())
+        finally:
+            self.splats["opacities"].data.copy_(saved)
+        return excluded_total
+
+    def get_feedback_poses(
+        self,
+    ) -> tuple[dict[str, np.ndarray], dict[str, Any]] | None:
+        """Clamped feedback poses (metric OpenCV c2w) after the last train().
+
+        Deltas are clamped below the tracker's rematch thresholds
+        (pose_feedback.max_translation_m / max_rot_deg) and composed onto
+        each view's CURRENT pose. Returns None when feedback is off or no
+        training happened yet.
+        """
+
+        if not self.pose_feedback_enabled or self._pose_deltas is None:
+            return None
+        feedback = self.config["pose_feedback"]
+        max_rot = math.radians(float(feedback["max_rot_deg"]))
+        max_trans_norm = (
+            float(feedback["max_translation_m"]) * float(self.normalization.scale)
+        )
+        deltas = self._pose_deltas.detach().clone()
+        rot = deltas[:, :3]
+        trans = deltas[:, 3:]
+        rot_norm = torch.linalg.norm(rot, dim=-1, keepdim=True)
+        trans_norm = torch.linalg.norm(trans, dim=-1, keepdim=True)
+        clipped = int(((rot_norm > max_rot) | (trans_norm > max_trans_norm)).sum())
+        rot = rot * torch.clamp(max_rot / rot_norm.clamp_min(1e-12), max=1.0)
+        trans = trans * torch.clamp(
+            max_trans_norm / trans_norm.clamp_min(1e-12), max=1.0
+        )
+        scale = float(self.normalization.scale)
+        translation = self.normalization.translation
+        poses: dict[str, np.ndarray] = {}
+        for index, view in enumerate(self.views):
+            if index >= len(deltas):
+                break
+            delta = torch.cat((rot[index], trans[index]))
+            c2w_norm = view.c2w_normalized.to(delta.dtype) @ se3_exp(delta.cpu())
+            c2w_metric = c2w_norm.numpy().astype(np.float64)
+            c2w_metric[:3, 3] = c2w_metric[:3, 3] / scale - translation
+            poses[view.frame_id] = c2w_metric.astype(np.float32)
+        stats = {
+            "views": len(poses),
+            "clipped": clipped,
+            "rot_deg_mean": float(torch.rad2deg(rot_norm.clamp(max=max_rot)).mean()),
+            "rot_deg_max": float(torch.rad2deg(rot_norm.clamp(max=max_rot)).max()),
+            "trans_mm_mean": float((trans_norm.clamp(max=max_trans_norm)
+                                    / scale).mean() * 1000),
+            "trans_mm_max": float((trans_norm.clamp(max=max_trans_norm)
+                                   / scale).max() * 1000),
+        }
+        return poses, stats
+
     def refresh_view_poses(
         self, poses_by_frame_id: Mapping[str, np.ndarray]
     ) -> int:
@@ -1450,6 +1598,17 @@ class GaussianRunner:
             frozen = self.lifecycle_fields.state != STATE_VERIFIED
             if bool(frozen.any()):
                 frozen_rows = frozen.to(self.device)
+        pose_optimizer: torch.optim.Optimizer | None = None
+        if self.pose_feedback_enabled:
+            # Fresh zero deltas every cycle: corrections on top of the
+            # CURRENT tracker poses (tracker-authority variant).
+            self._pose_deltas = torch.zeros(
+                (len(self.views), 6), device=self.device, requires_grad=True
+            )
+            pose_optimizer = torch.optim.Adam(
+                [self._pose_deltas],
+                lr=float(self.config["pose_feedback"]["lr"]),
+            )
 
         for _ in range(steps):
             strategy_step = self.strategy_step
@@ -1461,11 +1620,20 @@ class GaussianRunner:
             view = self.views[view_index]
             target = view.rgb.to(self.device, non_blocking=True)[None]
             mask = view.mask.to(self.device, non_blocking=True)[None]
+            if view.loss_pixel_mask is not None:
+                mask = mask & view.loss_pixel_mask.to(
+                    self.device, non_blocking=True
+                )[None]
             K = view.K.to(self.device, non_blocking=True)[None]
-            c2w = view.c2w_normalized.to(self.device, non_blocking=True)[None]
+            c2w = view.c2w_normalized.to(self.device, non_blocking=True)
+            if self._pose_deltas is not None:
+                c2w = c2w @ se3_exp(self._pose_deltas[view_index])
+            c2w = c2w[None]
 
             for optimizer in self.optimizers.values():
                 optimizer.zero_grad(set_to_none=True)
+            if pose_optimizer is not None:
+                pose_optimizer.zero_grad(set_to_none=True)
             active_sh_degree = min(
                 self.total_steps // int(self.config["sh_degree_interval"]),
                 int(self.config["sh_degree"]),
@@ -1535,6 +1703,8 @@ class GaussianRunner:
                         parameter.grad[frozen_rows] = 0
             for optimizer in self.optimizers.values():
                 optimizer.step()
+            if pose_optimizer is not None:
+                pose_optimizer.step()
             means_scheduler.step()
             self._strategy_post_backward(strategy_step, info)
             self.strategy_step += 1

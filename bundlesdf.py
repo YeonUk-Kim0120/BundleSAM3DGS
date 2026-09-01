@@ -435,6 +435,9 @@ def run_gaussian(p_dict, kf_to_nerf_list, lock, cfg_gs, start_nerf_keyframes, de
     torch.cuda.set_device(device)   # gsplat 1.5.3 2DGS device-guard bug
   runner_config = load_gaussian_config(cfg_gs['runner_config'])
   runner_config['device'] = str(device)
+  if bool(cfg_gs.get('pose_feedback', False)):
+    runner_config['pose_feedback'] = dict(runner_config['pose_feedback'])
+    runner_config['pose_feedback']['enabled'] = True
   initial_steps = int(cfg_gs.get('initial_steps', 4000))
   update_steps = int(cfg_gs.get('update_steps', 500))
   gs_out = os.path.join(debug_dir, 'gs_online')
@@ -547,10 +550,24 @@ def run_gaussian(p_dict, kf_to_nerf_list, lock, cfg_gs, start_nerf_keyframes, de
       if runner.lifecycle_fields is not None and SPDLOG >= 2:
         os.makedirs(f"{debug_dir}/{frame_id}", exist_ok=True)
         runner.export_state_ply(f"{debug_dir}/{frame_id}/gs_state.ply")
+      feedback = runner.get_feedback_poses()
+      if feedback is not None:
+        poses_by_id, feedback_stats = feedback
+        poses_out = np.asarray(cam_in_obs).copy()
+        for index, view in enumerate(runner.views):
+          if index < len(poses_out) and view.frame_id in poses_by_id:
+            poses_out[index] = poses_by_id[view.frame_id]
+        logging.info("[GS backend] pose feedback "
+                     + json.dumps(feedback_stats, sort_keys=True))
+      else:
+        # NO-OP feedback: hand the tracker its own poses back verbatim.
+        poses_out = np.asarray(cam_in_obs).copy()
     finally:
       with lock:
-        # v1 NO-OP feedback: hand the tracker its own poses back verbatim.
-        p_dict['optimized_cvcam_in_obs'] = np.asarray(cam_in_obs).copy()
+        try:
+          p_dict['optimized_cvcam_in_obs'] = poses_out
+        except NameError:
+          p_dict['optimized_cvcam_in_obs'] = np.asarray(cam_in_obs).copy()
         p_dict['running'] = False
 
   if runner is not None:

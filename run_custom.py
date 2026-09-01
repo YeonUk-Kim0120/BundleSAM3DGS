@@ -68,6 +68,7 @@ def run_one_video(video_dir='/home/bowen/debug/2022-11-18-15-10-24_milk', out_fo
       'device': 'cuda:0',
       'initial_steps': args.gs_initial_steps,
       'update_steps': args.gs_update_steps,
+      'pose_feedback': bool(args.pose_feedback),
       'prior': {
         'mesh_npz': args.prior_mesh_npz,
         'pose_json': args.prior_pose_json,
@@ -245,6 +246,7 @@ if __name__=="__main__":
   parser.add_argument('--prior_mesh_npz', type=str, default=None, help='SAM3D raw-mesh prior npz (offline batch output)')
   parser.add_argument('--prior_pose_json', type=str, default=None, help='SAM3D pose json (canonical->first camera); alignment runs online')
   parser.add_argument('--prior_gaussian_ply', type=str, default=None, help='SAM3D gaussian PLY for the color transfer')
+  parser.add_argument('--pose_feedback', type=int, default=0, help='milestone-5: enable clamped GS pose feedback (default 0 = no-op)')
   args = parser.parse_args()
 
   if args.mode=='run_video':
