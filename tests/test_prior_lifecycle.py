@@ -1,13 +1,13 @@
 """CPU tests for the milestone-③ lifecycle prototype (experiments module).
 
-Run: python3 -m unittest experiments.test_prior_lifecycle
+Run: python3 -m unittest tests.test_prior_lifecycle
 """
 
 import unittest
 
 import torch
 
-from experiments.prior_lifecycle import (
+from prior_lifecycle import (
     STATE_CONTRADICTED,
     STATE_SUSPECT,
     STATE_UNSEEN,

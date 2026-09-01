@@ -53,7 +53,7 @@ from sam3d_prior import (  # noqa: E402
     transfer_gaussian_colors,
     transform_surfels_canonical_to_cv_camera,
 )
-from experiments.prior_lifecycle import (  # noqa: E402
+from prior_lifecycle import (  # noqa: E402
     STATE_CONTRADICTED,
     STATE_UNSEEN,
     STATE_VERIFIED,
