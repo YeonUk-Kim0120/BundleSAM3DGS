@@ -849,8 +849,11 @@ class BundleSdf:
     if percentile<100:   # Denoise
       logging.info("percentile denoise start")
       valid = (depth>=0.1) & (mask>0)
-      thres = np.percentile(depth[valid], percentile)
-      depth[depth>=thres] = 0
+      if valid.any():
+        thres = np.percentile(depth[valid], percentile)
+        depth[depth>=thres] = 0
+      else:
+        logging.info("percentile denoise: no valid pixels, skipping")
       logging.info("percentile denoise done")
 
     frame = self.make_frame(color, depth, K, id_str, mask, occ_mask, pose_in_model)
