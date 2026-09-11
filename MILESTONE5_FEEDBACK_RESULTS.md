@@ -414,3 +414,18 @@ Reading:
   which still points to a residual loss/geometry limitation for translation on that object.
 - Consequence for the order of work: keeping the map's reference correct (which poses it is trained with, prior
   placement, when contaminated views enter) comes before any loss redesign. Recorded here; ⑤ is parked (§ MILESTONES).
+
+## 9. Parked ideas for when ⑤ is resumed (2026-09-11, recorded only — not run)
+1. **Map absorbs the tracker error (the ⑤-4 finding).** Hypothesis for why the original works: BundleSDF re-creates
+   the SDF and the PoseArray from fresh weights every cycle and solves map + poses jointly, so the map is always
+   consistent with the current joint solution and never keeps parts written with last cycle's wrong poses. Our GS
+   map persists across cycles. First thing to test on return: re-fit / re-create the map from the current poses
+   before the pose step, or otherwise stop contaminated views from being baked into a persistent map.
+2. **Multi-view steps.** gsplat rasterizes a camera batch (viewmats [C,4,4]); C views per step give C poses a gradient
+   every step (original: all keyframes every step via a pooled ray batch). Cost and memory scale ~C×; keep cycle time
+   by trading steps for views (e.g. 500×1 → ~60×8). Does not by itself fix item 1. Pixel subsampling in the SDF
+   style is not useful for a rasterizer (tile cost is per image); ROI crops / lower resolution are the levers.
+3. Translation on SB13 stays uninformative even with the GT map (50 %) — a loss/geometry limitation to look at
+   separately from item 1.
+4. ⑤-4 caveat: the perturbation rows have no translation component (perturb_mm = 0), so their translation cos is
+   meaningless; translation was assessed only at the tracker poses.
