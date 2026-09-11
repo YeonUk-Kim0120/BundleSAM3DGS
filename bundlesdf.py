@@ -435,6 +435,19 @@ def run_gaussian(p_dict, kf_to_nerf_list, lock, cfg_gs, start_nerf_keyframes, de
     torch.cuda.set_device(device)   # gsplat 1.5.3 2DGS device-guard bug
   runner_config = load_gaussian_config(cfg_gs['runner_config'])
   runner_config['device'] = str(device)
+  # Milestone ⑤ pose feedback: 'on' = GS-refined keyframe poses are written
+  # back (BundleSDF PoseArray port), 'noop' = the tracker's own poses back
+  # verbatim (milestone-④ behavior), 'off' = nothing is published.
+  feedback = str(cfg_gs.get('feedback', 'noop'))
+  if feedback not in ('on', 'noop', 'off'):
+    raise ValueError(f"cfg_gs['feedback'] must be on/noop/off, got {feedback!r}")
+  if feedback == 'on':
+    feedback_cfg = dict(runner_config.get('pose_feedback', {}))
+    feedback_cfg.update(dict(cfg_gs.get('pose_feedback', {})))
+    feedback_cfg['enabled'] = True
+    runner_config['pose_feedback'] = feedback_cfg
+  logging.info(f"[GS backend] pose feedback: {feedback}"
+               + (f" {json.dumps(runner_config['pose_feedback'], sort_keys=True)}" if feedback == 'on' else ''))
   initial_steps = int(cfg_gs.get('initial_steps', 4000))
   update_steps = int(cfg_gs.get('update_steps', 500))
   gs_out = os.path.join(debug_dir, 'gs_online')
@@ -473,6 +486,9 @@ def run_gaussian(p_dict, kf_to_nerf_list, lock, cfg_gs, start_nerf_keyframes, de
       time.sleep(0.01)
       continue
 
+    t_cycle = time.time()
+    write_back = np.asarray(cam_in_obs).copy()
+    n_feedback_log = len(runner.feedback_log) if runner is not None else 0
     try:
       assert len(cam_in_obs) == consumed + len(batch), \
           f"pose/keyframe mismatch: {len(cam_in_obs)} vs {consumed}+{len(batch)}"
@@ -544,16 +560,35 @@ def run_gaussian(p_dict, kf_to_nerf_list, lock, cfg_gs, start_nerf_keyframes, de
 
       logging.info(f"[GS backend] frame {frame_id}: "
                    + json.dumps(stats.to_dict(), sort_keys=True))
+      if feedback == 'on':
+        refined = runner.view_poses_metric()
+        if refined.shape[0] != len(cam_in_obs):
+          raise RuntimeError(f"feedback pose count mismatch: {refined.shape[0]} vs {len(cam_in_obs)}")
+        write_back = refined.astype(np.float32)
+        for record in runner.feedback_log[n_feedback_log:]:
+          logging.info(f"[GS backend] feedback {frame_id} {record['event']}: "
+                       f"max_rot {record['max_rot_deg']:.3f} deg, max_trans {record['max_trans_mm']:.2f} mm, "
+                       f"mean_rot {record['mean_rot_deg']:.3f} deg, mean_trans {record['mean_trans_mm']:.2f} mm "
+                       f"over {record['views']} views")
+      logging.info(f"[GS backend] cycle {frame_id}: {time.time() - t_cycle:.1f}s, feedback={feedback}")
+      if SPDLOG >= 2:
+        os.makedirs(f"{debug_dir}/{frame_id}", exist_ok=True)
+        np.savetxt(f"{debug_dir}/{frame_id}/poses_before_gs.txt", np.asarray(cam_in_obs).reshape(-1, 4))
+        np.savetxt(f"{debug_dir}/{frame_id}/poses_after_gs.txt", np.asarray(write_back).reshape(-1, 4))
       if runner.lifecycle_fields is not None and SPDLOG >= 2:
         os.makedirs(f"{debug_dir}/{frame_id}", exist_ok=True)
         runner.export_state_ply(f"{debug_dir}/{frame_id}/gs_state.ply")
     finally:
       with lock:
-        # v1 NO-OP feedback: hand the tracker its own poses back verbatim.
-        p_dict['optimized_cvcam_in_obs'] = np.asarray(cam_in_obs).copy()
+        # 'on': refined poses; 'noop': the tracker's own poses back verbatim
+        # (a failed cycle also falls back to them); 'off': publish nothing.
+        if feedback != 'off':
+          p_dict['optimized_cvcam_in_obs'] = write_back
         p_dict['running'] = False
 
   if runner is not None:
+    with open(os.path.join(gs_out, 'feedback_log.json'), 'w') as ff:
+      json.dump({'feedback': feedback, 'records': runner.feedback_log}, ff)
     runner.save_checkpoint(os.path.join(gs_out, 'checkpoint_final.pt'))
     runner.export_ply(os.path.join(gs_out, 'splats_normalized.ply'),
                       os.path.join(gs_out, 'splats_metric.ply'))
