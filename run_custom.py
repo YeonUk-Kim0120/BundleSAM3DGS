@@ -74,6 +74,7 @@ def run_one_video(video_dir='/home/bowen/debug/2022-11-18-15-10-24_milk', out_fo
         'gaussian_ply': args.prior_gaussian_ply,
         'surfel_count': 20000,
       },
+      'feedback': args.gs_feedback,
     }
   cfg_nerf_dir = f'{out_folder}/config_nerf.yml'
   yaml.dump(cfg_nerf, open(cfg_nerf_dir,'w'))
@@ -121,8 +122,7 @@ def run_one_video(video_dir='/home/bowen/debug/2022-11-18-15-10-24_milk', out_fo
   tracker.on_finish()
 
   if args.backend == 'gaussian':
-    logging.info("Gaussian backend: global SDF refinement is skipped (milestone-4 v1); "
-                 "the online GS map is under <out_folder>/gs_online/")
+    run_one_video_global_gaussian(out_folder=out_folder, steps=args.gs_global_steps)
   else:
     run_one_video_global_nerf(video_dir=video_dir, out_folder=out_folder, mask_dir=mask_dir)
 
@@ -173,6 +173,15 @@ def run_one_video_global_nerf(video_dir, out_folder='/home/bowen/debug/bundlesdf
   tracker.on_finish()
 
   print(f"Done")
+
+
+def run_one_video_global_gaussian(out_folder, steps=2000, device='cuda:0'):
+  """Global stage for the Gaussian backend: continue the online map, extract the meshes (gaussian_global)."""
+  from gaussian_global import run_global_refine
+  set_seed(0)
+  manifest = run_global_refine(out_folder, device=device, config={'steps': int(steps)})
+  logging.info(f"[GS global] {json.dumps({k: manifest[k] for k in ('views', 'gaussians_after', 'seconds_total')})}")
+  print("Done")
 
 
 def postprocess_mesh(out_folder):
@@ -245,12 +254,18 @@ if __name__=="__main__":
   parser.add_argument('--prior_mesh_npz', type=str, default=None, help='SAM3D raw-mesh prior npz (offline batch output)')
   parser.add_argument('--prior_pose_json', type=str, default=None, help='SAM3D pose json (canonical->first camera); alignment runs online')
   parser.add_argument('--prior_gaussian_ply', type=str, default=None, help='SAM3D gaussian PLY for the color transfer')
+  parser.add_argument('--gs_feedback', type=str, default='on', choices=['on', 'noop', 'off'], help="Gaussian backend pose feedback (milestone 5 v1)")
+  parser.add_argument('--gs_global_steps', type=int, default=2000, help='Gaussian backend: global-stage training steps')
   args = parser.parse_args()
 
   if args.mode=='run_video':
     run_one_video(video_dir=args.video_dir, out_folder=args.out_folder, use_segmenter=args.use_segmenter, use_gui=args.use_gui, mask_dir=args.mask_dir)
   elif args.mode=='global_refine':
-    run_one_video_global_nerf(video_dir=args.video_dir, out_folder=args.out_folder, mask_dir=args.mask_dir)
+    backend = yaml.load(open(f"{args.out_folder}/config_nerf.yml",'r')).get('backend', 'nerf')
+    if backend == 'gaussian':
+      run_one_video_global_gaussian(out_folder=args.out_folder, steps=args.gs_global_steps)
+    else:
+      run_one_video_global_nerf(video_dir=args.video_dir, out_folder=args.out_folder, mask_dir=args.mask_dir)
   elif args.mode=='draw_pose':
     draw_pose()
   else:
