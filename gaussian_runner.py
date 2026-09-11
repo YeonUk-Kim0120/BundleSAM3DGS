@@ -23,7 +23,7 @@ import copy
 import json
 import logging
 import math
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, replace
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
@@ -121,6 +121,38 @@ DEFAULT_CONFIG: dict[str, Any] = {
         "grazing_tolerance_cap": 3.0,
         "prior_opacity": 0.9,
         "prior_flat_axis_ratio": 0.1,
+    },
+    # Milestone ⑤: per-view pose corrections fed back to the tracker.  Port
+    # of BundleSDF's PoseArray: tanh-clamped 6-DoF deltas in the normalized
+    # object frame, left-multiplied onto each view's c2w, first view fixed,
+    # re-created at zero for every training call and baked into the view
+    # poses afterwards.  ``prealign_steps`` > 0 adds the v2 pose-only stage
+    # for new keyframes before their points are appended.  Default off so
+    # offline replay and the existing tests are unchanged.
+    "pose_feedback": {
+        "enabled": False,
+        "max_trans_m": 0.02,
+        "max_rot_deg": 20.0,
+        "lr": 0.01,
+        "lr_decay": 0.1,
+        "grad_max_norm": 0.1,
+        "fix_first_view": True,
+        "in_initial": True,
+        "prealign_steps": 0,
+        "prealign_lr": 0.01,
+        # every N-th training step renders one of the keyframes that arrived
+        # in this update (round-robin) instead of a uniformly drawn view;
+        # 0 = uniform sampling only (v1).  The random draw is still made every
+        # step so the RNG stream matches v1.
+        "new_view_interval": 0,
+        # which gradient drives the pose deltas (the map always trains on the
+        # full loss): "total" = full loss (v1); "depth" = depth term only (E1);
+        # "weighted" = photometric + pose_depth_scale * depth (E2);
+        # "normsum" = unit(photometric) + unit(depth) (E3);
+        # "gate" = normsum only when the two descent directions agree,
+        # rotation and translation parts gated separately (F).
+        "pose_loss": "total",
+        "pose_depth_scale": 25.0,
     },
 }
 
@@ -236,6 +268,20 @@ def _validate_config(config: Mapping[str, Any]) -> None:
         raise ValueError("scene_bounds.dbscan_min_samples must be positive")
     if float(config["scene_bounds"]["online_scale_multiplier"]) <= 0:
         raise ValueError("scene_bounds.online_scale_multiplier must be positive")
+    feedback = config["pose_feedback"]
+    for key in ("max_trans_m", "max_rot_deg", "lr", "prealign_lr", "grad_max_norm"):
+        if not np.isfinite(feedback[key]) or float(feedback[key]) < 0:
+            raise ValueError(f"pose_feedback.{key} must be finite and non-negative")
+    if not 0.0 < float(feedback["lr_decay"]) <= 1.0:
+        raise ValueError("pose_feedback.lr_decay must be in (0, 1]")
+    if int(feedback["prealign_steps"]) < 0:
+        raise ValueError("pose_feedback.prealign_steps must be non-negative")
+    if int(feedback["new_view_interval"]) < 0:
+        raise ValueError("pose_feedback.new_view_interval must be non-negative")
+    if str(feedback["pose_loss"]) not in ("total", "depth", "weighted", "normsum", "gate"):
+        raise ValueError("pose_feedback.pose_loss must be total/depth/weighted/normsum/gate")
+    if not np.isfinite(feedback["pose_depth_scale"]) or float(feedback["pose_depth_scale"]) < 0:
+        raise ValueError("pose_feedback.pose_depth_scale must be finite and non-negative")
 
 
 def _as_numpy(array: np.ndarray | torch.Tensor, dtype: np.dtype) -> np.ndarray:
@@ -337,6 +383,104 @@ class SceneNormalization:
         metric = validate_c2w_cv(c2w_cv_normalized)
         metric[:3, 3] = metric[:3, 3] / self.scale - self.translation
         return metric.astype(np.float32)
+
+
+def se3_exp_batch(delta: torch.Tensor) -> torch.Tensor:
+    """Batched SE(3)-style exponential of ``[trans(3), rotvec(3)]`` rows.
+
+    Returns ``[N, 4, 4]``.  Rotation is Rodrigues with a clamped angle so the
+    gradient stays alive at the zero initialization; translation is applied
+    directly (no V-matrix), exact at zero.  Same corrected antisymmetric
+    generator as ``experiments/exp_pose_only_probe.py``.
+    """
+
+    if delta.ndim != 2 or delta.shape[1] != 6:
+        raise ValueError("delta must have shape [N, 6]")
+    trans, rotvec = delta[:, :3], delta[:, 3:]
+    theta = torch.linalg.norm(rotvec, dim=-1, keepdim=True).clamp_min(1e-12)
+    axis = rotvec / theta
+    x, y, z = axis[:, 0], axis[:, 1], axis[:, 2]
+    zero = torch.zeros_like(x)
+    K = torch.stack(
+        (
+            torch.stack((zero, -z, y), dim=-1),
+            torch.stack((z, zero, -x), dim=-1),
+            torch.stack((-y, x, zero), dim=-1),
+        ),
+        dim=-2,
+    )
+    eye = torch.eye(3, dtype=delta.dtype, device=delta.device)[None]
+    sin = torch.sin(theta)[..., None]
+    cos = torch.cos(theta)[..., None]
+    R = eye + sin * K + (1.0 - cos) * (K @ K)
+    top = torch.cat((R, trans[:, :, None]), dim=-1)
+    bottom = torch.tensor(
+        [0.0, 0.0, 0.0, 1.0], dtype=delta.dtype, device=delta.device
+    ).reshape(1, 1, 4).expand(delta.shape[0], 1, 4)
+    return torch.cat((top, bottom), dim=-2)
+
+
+class PoseDeltas(torch.nn.Module):
+    """Per-view pose corrections in the normalized object frame.
+
+    Port of BundleSDF's ``PoseArray``: six raw values per view squashed with
+    ``tanh`` so translation stays within ``max_trans_norm`` and rotation
+    within ``max_rot_rad``.  ``matrices`` returns the correction ``T_i`` to
+    be left-multiplied onto the view's normalized c2w (``c2w' = T_i @ c2w``,
+    i.e. a rigid motion of the object frame).  With ``fix_first`` view 0 is
+    pinned to the identity (gauge anchor, as in the original).
+    """
+
+    def __init__(
+        self,
+        num_views: int,
+        max_trans_norm: float,
+        max_rot_rad: float,
+        *,
+        fix_first: bool = True,
+        device: torch.device | str | None = None,
+    ) -> None:
+        super().__init__()
+        if int(num_views) <= 0:
+            raise ValueError("num_views must be positive")
+        self.num_views = int(num_views)
+        self.max_trans_norm = float(max_trans_norm)
+        self.max_rot_rad = float(max_rot_rad)
+        self.fix_first = bool(fix_first)
+        self.data = torch.nn.Parameter(
+            torch.zeros((self.num_views, 6), dtype=torch.float32, device=device)
+        )
+
+    def deltas(self) -> torch.Tensor:
+        """Clamped ``[N, 6]`` rows ``[trans(3), rotvec(3)]``."""
+
+        theta = torch.tanh(self.data)
+        trans = theta[:, :3] * self.max_trans_norm
+        rot = theta[:, 3:] * self.max_rot_rad
+        return torch.cat((trans, rot), dim=-1)
+
+    def matrices(self, indices: Any) -> torch.Tensor:
+        indices = torch.as_tensor(
+            indices, dtype=torch.long, device=self.data.device
+        ).reshape(-1)
+        T = se3_exp_batch(self.deltas()[indices])
+        if self.fix_first:
+            keep = (indices != 0).to(T.dtype)[:, None, None]
+            eye = torch.eye(4, dtype=T.dtype, device=T.device)[None]
+            T = keep * T + (1.0 - keep) * eye
+        return T
+
+    @torch.no_grad()
+    def magnitudes(self) -> tuple[torch.Tensor, torch.Tensor]:
+        """(rotation angle [rad], translation norm [normalized]) per view."""
+
+        d = self.deltas()
+        rot = torch.linalg.norm(d[:, 3:], dim=-1)
+        trans = torch.linalg.norm(d[:, :3], dim=-1)
+        if self.fix_first:
+            rot[0] = 0.0
+            trans[0] = 0.0
+        return rot, trans
 
 
 def c2w_cv_to_viewmat(
@@ -566,6 +710,7 @@ class GaussianRunner:
         )
         self.lifecycle_fields: LifecycleFields | None = None
         self.lifecycle_log: list[dict[str, Any]] = []
+        self.feedback_log: list[dict[str, Any]] = []
         self._generator = torch.Generator(device="cpu")
         self._generator.manual_seed(int(self.config["seed"]))
         torch.manual_seed(int(self.config["seed"]))
@@ -927,8 +1072,6 @@ class GaussianRunner:
             raise ValueError(
                 f"Frames were already processed: {sorted(duplicate_ids)}"
             )
-        points, colors, raw_count, candidate_count = self._frames_to_cloud(validated)
-        novel_points, novel_colors, _ = self._select_novel(points, colors)
         before = self.num_gaussians
 
         snapshot = {
@@ -958,6 +1101,31 @@ class GaussianRunner:
         }
 
         try:
+            new_views = [self._prepare_view(frame) for frame in validated]
+            feedback_cfg = self.config["pose_feedback"]
+            prealign_steps = (
+                int(feedback_cfg["prealign_steps"])
+                if bool(feedback_cfg["enabled"]) else 0
+            )
+            if prealign_steps > 0:
+                # v2: pose-only refinement of the new keyframes against the
+                # frozen map before their points enter it.
+                self.prealign_views(
+                    new_views, prealign_steps, float(feedback_cfg["prealign_lr"])
+                )
+                validated = [
+                    replace(
+                        frame,
+                        c2w_cv=self.normalization.metric_c2w(
+                            view.c2w_normalized.numpy()
+                        ),
+                    )
+                    for frame, view in zip(validated, new_views)
+                ]
+            points, colors, raw_count, candidate_count = self._frames_to_cloud(
+                validated
+            )
+            novel_points, novel_colors, _ = self._select_novel(points, colors)
             self._append_splats(novel_points, novel_colors)
             after_append = self.num_gaussians
             if self.lifecycle_fields is not None and len(novel_points):
@@ -967,7 +1135,9 @@ class GaussianRunner:
                         device=self.device,
                     )
                 )
-            self.views.extend(self._prepare_view(frame) for frame in validated)
+            n_old_views = len(self.views)
+            self.views.extend(new_views)
+            new_view_indices = list(range(n_old_views, len(self.views)))
             self.update_index += 1
             self.classify_lifecycle(
                 validated, event=f"update_{self.update_index:03d}"
@@ -979,7 +1149,10 @@ class GaussianRunner:
             steps = int(
                 self.config["update_steps"] if train_steps is None else train_steps
             )
-            first_loss, final_loss = self.train(steps)
+            first_loss, final_loss = self.train(
+                steps, optimize_poses=bool(feedback_cfg["enabled"]),
+                new_view_indices=new_view_indices,
+            )
             if len(novel_points):
                 self.observed_points_metric, self.observed_colors = voxel_downsample(
                     np.concatenate(
@@ -1151,7 +1324,12 @@ class GaussianRunner:
         steps = int(
             self.config["initial_steps"] if train_steps is None else train_steps
         )
-        first_loss, final_loss = self.train(steps)
+        feedback_cfg = self.config["pose_feedback"]
+        first_loss, final_loss = self.train(
+            steps,
+            optimize_poses=bool(feedback_cfg["enabled"])
+            and bool(feedback_cfg["in_initial"]),
+        )
         return GaussianUpdateStats(
             update_index=self.update_index,
             frame_ids=tuple(frame.frame_id for frame in validated),
@@ -1420,6 +1598,8 @@ class GaussianRunner:
         steps: int,
         *,
         lr_decay_horizon_steps: int | None = None,
+        optimize_poses: bool | None = None,
+        new_view_indices: Sequence[int] | None = None,
     ) -> tuple[float | None, float | None]:
         if self.splats is None or not self.views:
             raise RuntimeError("Runner requires splats and training views")
@@ -1451,21 +1631,48 @@ class GaussianRunner:
             if bool(frozen.any()):
                 frozen_rows = frozen.to(self.device)
 
-        for _ in range(steps):
+        feedback_cfg = self.config["pose_feedback"]
+        if optimize_poses is None:
+            optimize_poses = bool(feedback_cfg["enabled"])
+        pose_deltas = pose_optimizer = pose_scheduler = None
+        if optimize_poses:
+            # ⑤: fresh zero deltas for every training call (original
+            # BundleSDF re-creates its PoseArray per cycle likewise).
+            pose_deltas = self._new_pose_deltas(
+                len(self.views), fix_first=bool(feedback_cfg["fix_first_view"])
+            )
+            pose_optimizer, pose_scheduler = self._pose_optimizer(
+                pose_deltas, float(feedback_cfg["lr"]), steps
+            )
+        pose_loss_mode = str(feedback_cfg["pose_loss"]) if optimize_poses else "total"
+        pose_depth_scale = float(feedback_cfg["pose_depth_scale"])
+        gate_counts = [0, 0]   # steps where the rotation / translation part moved (gate policy)
+        quota_views = list(new_view_indices or []) if optimize_poses else []
+        quota_interval = int(feedback_cfg["new_view_interval"]) if quota_views else 0
+        self._view_sample_counts = [0] * len(self.views)
+
+        for step in range(steps):
             strategy_step = self.strategy_step
             view_index = int(
                 torch.randint(
                     len(self.views), (1,), generator=self._generator
                 ).item()
             )
+            if quota_interval > 0 and step % quota_interval == 0:
+                view_index = quota_views[(step // quota_interval) % len(quota_views)]
+            self._view_sample_counts[view_index] += 1
             view = self.views[view_index]
             target = view.rgb.to(self.device, non_blocking=True)[None]
             mask = view.mask.to(self.device, non_blocking=True)[None]
             K = view.K.to(self.device, non_blocking=True)[None]
             c2w = view.c2w_normalized.to(self.device, non_blocking=True)[None]
+            if pose_deltas is not None:
+                c2w = pose_deltas.matrices([view_index]) @ c2w
 
             for optimizer in self.optimizers.values():
                 optimizer.zero_grad(set_to_none=True)
+            if pose_optimizer is not None:
+                pose_optimizer.zero_grad(set_to_none=True)
             active_sh_degree = min(
                 self.total_steps // int(self.config["sh_degree_interval"]),
                 int(self.config["sh_degree"]),
@@ -1494,11 +1701,12 @@ class GaussianRunner:
             l1 = (torch.abs(rendered - target) * mask_channels).sum() / denominator
             dssim = self._masked_dssim(rendered, target, mask)
             ssim_weight = float(self.config["ssim_weight"])
-            loss = (1.0 - ssim_weight) * l1 + ssim_weight * dssim
+            photometric = (1.0 - ssim_weight) * l1 + ssim_weight * dssim
+            loss = photometric
+            depth_term = None
             if depth_weight > 0:
-                loss = loss + depth_weight * self._masked_depth_loss(
-                    result, view, mask
-                )
+                depth_term = self._masked_depth_loss(result, view, mask)
+                loss = loss + depth_weight * depth_term
             normal_weight = float(self.config["normal_consistency_weight"])
             if (
                 result.normals is not None
@@ -1527,7 +1735,16 @@ class GaussianRunner:
                 )
             if not torch.isfinite(loss):
                 raise FloatingPointError("Non-finite Gaussian training loss")
+            pose_grad_override = None
+            if pose_deltas is not None and pose_loss_mode != "total":
+                pose_grad_override = self._pose_gradient_policy(
+                    pose_deltas, view_index, photometric,
+                    None if depth_term is None else depth_weight * depth_term,
+                    pose_loss_mode, pose_depth_scale, gate_counts,
+                )
             loss.backward()
+            if pose_grad_override is not None:
+                pose_deltas.data.grad = pose_grad_override
             if frozen_rows is not None:
                 # Lifecycle: only VERIFIED splats may learn.
                 for parameter in self.splats.values():
@@ -1536,13 +1753,223 @@ class GaussianRunner:
             for optimizer in self.optimizers.values():
                 optimizer.step()
             means_scheduler.step()
+            if pose_deltas is not None:
+                self._pose_step(pose_deltas, pose_optimizer, pose_scheduler)
             self._strategy_post_backward(strategy_step, info)
             self.strategy_step += 1
             self.total_steps += 1
             final_loss = float(loss.detach().cpu())
             if first_loss is None:
                 first_loss = final_loss
+        if pose_deltas is not None:
+            record = self._bake_pose_deltas(
+                pose_deltas, self.views, event=f"train_{self.update_index:03d}"
+            )
+            record["new_view_samples"] = [
+                self._view_sample_counts[i] for i in quota_views
+            ]
+            record["new_view_interval"] = quota_interval
+            record["pose_loss"] = pose_loss_mode
+            if pose_loss_mode == "gate":
+                record["gate_moved_rot_steps"] = gate_counts[0]
+                record["gate_moved_trans_steps"] = gate_counts[1]
         return first_loss, final_loss
+
+    def _pose_gradient_policy(
+        self,
+        pose_deltas: PoseDeltas,
+        view_index: int,
+        photometric: torch.Tensor,
+        depth_scaled: torch.Tensor | None,
+        mode: str,
+        depth_scale: float,
+        gate_counts: list[int],
+    ) -> torch.Tensor:
+        """⑤ stage 1: pose-delta gradient from the photometric / depth terms.
+
+        Only the sampled view's row of ``pose_deltas.data`` receives gradient.
+        Called before ``loss.backward()`` (graph retained); the returned tensor
+        replaces ``pose_deltas.data.grad`` afterwards.
+        """
+
+        def grad_of(term: torch.Tensor | None) -> torch.Tensor:
+            if term is None or not term.requires_grad:
+                return torch.zeros_like(pose_deltas.data)
+            (g,) = torch.autograd.grad(term, pose_deltas.data, retain_graph=True, allow_unused=True)
+            return torch.zeros_like(pose_deltas.data) if g is None else g
+
+        g_photo = grad_of(photometric)
+        g_depth = grad_of(depth_scaled)
+        if mode == "depth":
+            return g_depth
+        if mode == "weighted":
+            return g_photo + depth_scale * g_depth
+        # normsum / gate: unit vectors of the sampled view's row, rotation and
+        # translation parts separately (different units)
+        out = torch.zeros_like(pose_deltas.data)
+        for part, sl in ((0, slice(3, 6)), (1, slice(0, 3))):
+            a = g_photo[view_index, sl]
+            b = g_depth[view_index, sl]
+            na, nb = torch.linalg.norm(a), torch.linalg.norm(b)
+            ua = a / na if na > 0 else a
+            ub = b / nb if nb > 0 else b
+            if mode == "gate" and float(ua @ ub) <= 0.0:
+                continue
+            out[view_index, sl] = ua + ub
+            gate_counts[part] += 1
+        return out
+
+    # ---- milestone ⑤: pose feedback helpers --------------------------------
+
+    def _new_pose_deltas(self, num_views: int, *, fix_first: bool) -> PoseDeltas:
+        feedback_cfg = self.config["pose_feedback"]
+        return PoseDeltas(
+            num_views,
+            max_trans_norm=float(feedback_cfg["max_trans_m"])
+            * float(self.normalization.scale),
+            max_rot_rad=math.radians(float(feedback_cfg["max_rot_deg"])),
+            fix_first=fix_first,
+            device=self.device,
+        )
+
+    def _pose_optimizer(
+        self, deltas: PoseDeltas, lr: float, steps: int
+    ) -> tuple[torch.optim.Optimizer, torch.optim.lr_scheduler.LRScheduler]:
+        optimizer = torch.optim.Adam(
+            [{"params": [deltas.data], "lr": float(lr), "name": "pose_deltas"}],
+            eps=1e-15,
+        )
+        decay = float(self.config["pose_feedback"]["lr_decay"])
+        scheduler = torch.optim.lr_scheduler.ExponentialLR(
+            optimizer, gamma=decay ** (1.0 / float(max(int(steps), 1)))
+        )
+        return optimizer, scheduler
+
+    def _pose_step(
+        self,
+        deltas: PoseDeltas,
+        optimizer: torch.optim.Optimizer,
+        scheduler: torch.optim.lr_scheduler.LRScheduler,
+    ) -> None:
+        max_norm = float(self.config["pose_feedback"]["grad_max_norm"])
+        if deltas.data.grad is not None and max_norm > 0:
+            torch.nn.utils.clip_grad_norm_(
+                deltas.data, max_norm=max_norm, norm_type=float("inf")
+            )
+        optimizer.step()
+        scheduler.step()
+
+    @torch.no_grad()
+    def _bake_pose_deltas(
+        self, deltas: PoseDeltas, views: Sequence[TrainingView], event: str
+    ) -> dict[str, Any]:
+        """Fold the deltas into the views' stored poses and log magnitudes."""
+
+        T = deltas.matrices(
+            torch.arange(len(views), device=self.device)
+        ).detach().cpu().double().numpy()
+        for index, view in enumerate(views):
+            c2w = T[index] @ view.c2w_normalized.double().numpy()
+            # Re-project the rotation onto SO(3) so float32 products cannot
+            # drift past validate_c2w_cv's tolerance over many cycles.
+            u, _, vt = np.linalg.svd(c2w[:3, :3])
+            rotation = u @ vt
+            if np.linalg.det(rotation) < 0:
+                u[:, -1] *= -1.0
+                rotation = u @ vt
+            c2w[:3, :3] = rotation
+            view.c2w_normalized = torch.from_numpy(
+                c2w.astype(np.float32)
+            ).contiguous()
+        rot, trans = deltas.magnitudes()
+        rot_deg = torch.rad2deg(rot).cpu()
+        trans_mm = (trans / float(self.normalization.scale) * 1000.0).cpu()
+        record = {
+            "event": event,
+            "views": len(views),
+            "max_rot_deg": float(rot_deg.max()),
+            "mean_rot_deg": float(rot_deg.mean()),
+            "max_trans_mm": float(trans_mm.max()),
+            "mean_trans_mm": float(trans_mm.mean()),
+            "per_view_rot_deg": [round(float(v), 4) for v in rot_deg],
+            "per_view_trans_mm": [round(float(v), 4) for v in trans_mm],
+        }
+        self.feedback_log.append(record)
+        return record
+
+    def prealign_views(
+        self, views: Sequence[TrainingView], steps: int, lr: float
+    ) -> dict[str, Any] | None:
+        """v2 pre-refinement: pose-only fit of not-yet-appended views.
+
+        The map is frozen (its optimizers are never stepped; splat gradients
+        are computed because gsplat's backward needs them, then discarded).
+        Views are visited round-robin so each gets the same budget.  The
+        refined poses are baked into ``views`` in place.
+        """
+
+        if int(steps) <= 0 or not views:
+            return None
+        if self.splats is None:
+            raise RuntimeError("prealign_views requires an initialized map")
+        self._require_gsplat()
+        deltas = self._new_pose_deltas(len(views), fix_first=False)
+        optimizer, scheduler = self._pose_optimizer(deltas, lr, steps)
+        sh_degree = min(
+            self.total_steps // int(self.config["sh_degree_interval"]),
+            int(self.config["sh_degree"]),
+        )
+        depth_weight = float(self.config["depth_loss_weight"])
+        ssim_weight = float(self.config["ssim_weight"])
+        for step in range(int(steps)):
+            index = step % len(views)
+            view = views[index]
+            target = view.rgb.to(self.device, non_blocking=True)[None]
+            mask = view.mask.to(self.device, non_blocking=True)[None]
+            K = view.K.to(self.device, non_blocking=True)[None]
+            c2w = view.c2w_normalized.to(self.device, non_blocking=True)[None]
+            c2w = deltas.matrices([index]) @ c2w
+            optimizer.zero_grad(set_to_none=True)
+            result = self._rasterize(
+                K=K,
+                c2w=c2w,
+                width=view.width,
+                height=view.height,
+                sh_degree=sh_degree,
+                render_mode="RGB+ED" if depth_weight > 0 else "RGB",
+                absgrad=False,
+            )
+            rendered = result.colors[..., :3]
+            mask_channels = mask[..., None].to(rendered.dtype)
+            denominator = mask_channels.sum().clamp_min(1.0) * 3.0
+            l1 = (torch.abs(rendered - target) * mask_channels).sum() / denominator
+            dssim = self._masked_dssim(rendered, target, mask)
+            loss = (1.0 - ssim_weight) * l1 + ssim_weight * dssim
+            if depth_weight > 0:
+                loss = loss + depth_weight * self._masked_depth_loss(
+                    result, view, mask
+                )
+            if not torch.isfinite(loss):
+                raise FloatingPointError("Non-finite pose pre-alignment loss")
+            loss.backward()
+            for parameter in self.splats.values():
+                parameter.grad = None
+            self._pose_step(deltas, optimizer, scheduler)
+        return self._bake_pose_deltas(
+            deltas, views, event=f"prealign_{self.update_index + 1:03d}"
+        )
+
+    def view_poses_metric(self) -> np.ndarray:
+        """Current view poses in tracker order as metric OpenCV c2w, [N,4,4]."""
+
+        if not self.views:
+            return np.empty((0, 4, 4), dtype=np.float32)
+        return np.stack(
+            [
+                self.normalization.metric_c2w(view.c2w_normalized.numpy())
+                for view in self.views
+            ]
+        ).astype(np.float32)
 
     @torch.no_grad()
     def render(

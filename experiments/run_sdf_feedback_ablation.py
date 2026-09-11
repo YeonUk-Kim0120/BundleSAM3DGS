@@ -1,5 +1,8 @@
 """Fair pose-feedback ablation on the ORIGINAL SDF backend (no repo edits).
 
+``--backend gaussian`` runs the same three conditions with the milestone-④/⑤
+Gaussian backend instead (SAM3D prior resolved from ``--gs_prior_root``).
+
 Three conditions, identical backend / configs / masks / seed; the only
 variable is what the tracker receives back from the reconstruction process:
 
@@ -90,6 +93,35 @@ def main() -> None:
                         help="pristine: runtime-swap find_corres/process_new_frame "
                              "for the upstream BundleSDF versions "
                              "(experiments/pristine_tracker_patch.py)")
+    parser.add_argument("--backend", choices=("nerf", "gaussian"), default="nerf",
+                        help="reconstruction backend; 'gaussian' = milestone-④ GS "
+                             "process with the ⑤ pose feedback when --feedback on")
+    parser.add_argument("--gs_runner_config", type=str,
+                        default=f"{code_dir}/config_gs_2dgs_1mm_lifecycle.yml")
+    parser.add_argument("--gs_initial_steps", type=int, default=4000)
+    parser.add_argument("--gs_update_steps", type=int, default=500,
+                        help="joint map+pose steps per cycle (v1: 500, v2: 350)")
+    parser.add_argument("--gs_prealign_steps", type=int, default=0,
+                        help="v2 pose-only pre-refinement steps for new keyframes "
+                             "before append (0 = v1, original order)")
+    parser.add_argument("--gs_pose_loss", choices=("total", "depth", "weighted", "normsum", "gate"), default="total",
+                        help="stage-1 pose-gradient policy (map always trains on the total loss)")
+    parser.add_argument("--gs_pose_depth_scale", type=float, default=25.0,
+                        help="depth-gradient multiplier for --gs_pose_loss weighted")
+    parser.add_argument("--gs_new_view_interval", type=int, default=0,
+                        help="experiment D: every N-th joint step renders a keyframe that arrived "
+                             "in this cycle (0 = v1 uniform sampling)")
+    parser.add_argument("--gs_prior_mesh_npz", type=str, default=None,
+                        help="override the SAM3D mesh npz (e.g. an oracle prior from experiments/make_oracle_prior.py)")
+    parser.add_argument("--gs_prior_pose_json", type=str, default=None)
+    parser.add_argument("--gs_prior_gaussian_ply", type=str, default=None)
+    parser.add_argument("--gs_prior_skip_alignment", action="store_true",
+                        help="use the pose json as-is (no online Sim(3) refinement)")
+    parser.add_argument("--gs_prior_skip_color_transfer", action="store_true",
+                        help="keep mesh vertex colors (no SAM3D gaussian color transfer)")
+    parser.add_argument("--gs_prior_root", type=str,
+                        default="/home/kist/Desktop/sam-3d-objects",
+                        help="root holding output_{YCBInEOAT,HO3D}_sam2mask_mesh/")
     args = parser.parse_args()
     if args.mask_dir is None:
         args.mask_dir = "masks_sam2" if args.dataset == "ycb" else "masks_SAM2"
@@ -129,6 +161,61 @@ def apply_feedback_condition(args, cfg_nerf, tracker_factory):
     return tracker
 
 
+def resolve_prior_paths(args):
+    seq = os.path.basename(os.path.normpath(args.video_dir))
+    sub = ("output_YCBInEOAT_sam2mask_mesh" if args.dataset == "ycb"
+           else "output_HO3D_sam2mask_mesh")
+    root = os.path.join(args.gs_prior_root, sub)
+    paths = {
+        "mesh_npz": f"{root}/{seq}_mesh_depth.npz",
+        "pose_json": f"{root}/{seq}_mesh_depth.json",
+        "gaussian_ply": f"{root}/{seq}_splat_depth.ply",
+    }
+    for p in paths.values():
+        if not os.path.isfile(p):
+            raise FileNotFoundError(f"SAM3D prior input missing: {p}")
+    return paths
+
+
+def configure_backend(args, cfg_nerf):
+    """Mirror run_custom.run_one_video's backend wiring."""
+    cfg_nerf["backend"] = args.backend
+    args._gs_manifest = None
+    if args.backend != "gaussian":
+        return
+    prior = resolve_prior_paths(args)
+    for key, override in (("mesh_npz", args.gs_prior_mesh_npz), ("pose_json", args.gs_prior_pose_json),
+                          ("gaussian_ply", args.gs_prior_gaussian_ply)):
+        if override:
+            if not os.path.isfile(override):
+                raise FileNotFoundError(f"prior override missing: {override}")
+            prior[key] = override
+    prior_flags = {"skip_alignment": bool(args.gs_prior_skip_alignment),
+                   "skip_color_transfer": bool(args.gs_prior_skip_color_transfer)}
+    cfg_nerf["gaussian"] = {
+        "runner_config": args.gs_runner_config,
+        "device": "cuda:0",
+        "initial_steps": int(args.gs_initial_steps),
+        "update_steps": int(args.gs_update_steps),
+        "prior": {**prior, "surfel_count": 20000, **prior_flags},
+        "feedback": args.feedback,
+        "pose_feedback": {"prealign_steps": int(args.gs_prealign_steps),
+                          "new_view_interval": int(args.gs_new_view_interval),
+                          "pose_loss": args.gs_pose_loss,
+                          "pose_depth_scale": float(args.gs_pose_depth_scale)},
+    }
+    args._gs_manifest = {
+        "runner_config": args.gs_runner_config,
+        "initial_steps": int(args.gs_initial_steps),
+        "update_steps": int(args.gs_update_steps),
+        "prealign_steps": int(args.gs_prealign_steps),
+        "new_view_interval": int(args.gs_new_view_interval),
+        "pose_loss": args.gs_pose_loss,
+        "pose_depth_scale": float(args.gs_pose_depth_scale),
+        "prior": {**prior, **prior_flags},
+    }
+
+
 def run_ho3d_video(args, out_folder):
     sys.path.append(f"{code_dir}/BundleTrack/scripts")
     from data_reader import Ho3dReader  # noqa: E402
@@ -155,6 +242,7 @@ def run_ho3d_video(args, out_folder):
     cfg_nerf["datadir"] = f"{out_folder}/nerf_with_bundletrack_online"
     cfg_nerf["save_dir"] = cfg_nerf["datadir"]
     # ---------------------------------------------------------------------
+    configure_backend(args, cfg_nerf)
 
     def factory(cfg):
         cfg_nerf_dir = f"{out_folder}/config_nerf.yml"
@@ -219,7 +307,7 @@ def run_ycb_video(args, out_folder):
     cfg_nerf["notes"] = ""
     cfg_nerf["expname"] = "nerf_with_bundletrack_online"
     cfg_nerf["save_dir"] = cfg_nerf["datadir"]
-    cfg_nerf["backend"] = "nerf"
+    configure_backend(args, cfg_nerf)
     # ---------------------------------------------------------------------
 
     def factory(cfg):
@@ -272,6 +360,8 @@ def write_manifest(args, out_folder, t_start):
             "n_step": args._n_step,
             "max_trans": args._max_trans,
             "max_rot": args._max_rot,
+            "backend": args.backend,
+            "gs": args._gs_manifest,
             "elapsed_s": time.time() - t_start,
         }, f, indent=2)
 
