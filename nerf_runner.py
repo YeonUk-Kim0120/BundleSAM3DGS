@@ -299,7 +299,7 @@ class NerfRunner:
       self.ray_near_slice = 10
       self.ray_far_slice = 11
 
-    if self.cfg['use_octree']:
+    if self.cfg['use_octree'] and len(cur_rays)>0:   # empty ray set (e.g. a keyframe whose pose points away from the object) would make kaolin's raytrace exit(1)
       rays_o_world = (self.poses[frame_id]@to_homo(np.zeros((len(cur_rays),3))).T).T[:,:3]
       rays_o_world = torch.from_numpy(rays_o_world).cuda().float()
       rays_unit_d_cam = cur_rays[:,:3]/np.linalg.norm(cur_rays[:,:3],axis=-1).reshape(-1,1)

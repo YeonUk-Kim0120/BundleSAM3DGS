@@ -233,3 +233,14 @@ ycb/tomato_soup_can_yalehand0 |       2.450    1.211   1.562 |     0.804   0.695
 ho3d mean over 13 done: ADD SDF-on 0.728 tracker 1.674 OURS 2.064 | P1 BSDF 0.478 OURS 0.490 | P2 BSDF 0.490 OURS 0.453 | unseen BSDF 0.799 OURS 0.504
 ycb mean over 9 done: ADD SDF-on 1.489 tracker 1.275 OURS 1.212 | P1 BSDF 0.723 OURS 0.470 | P2 BSDF 0.723 OURS 0.470 | unseen BSDF 1.398 OURS 0.571
 ```
+
+**MPM10 crash root cause and BundleSDF global result (2026-09-12)**: gdb shows the original global stage exits in
+`kaolin::raytrace_cuda_impl → exit()` (CUB's `CubDebugExit`, silent). Trigger: keyframe 24 (frame 0169) contributes **zero
+rays** — its online pose is in the MPM10 slip window (frames 0162–0177), so none of its rays intersect the normalized
+scene bounds in `NerfRunner.make_frame_rays` (keyframe 23 had 13 rays) — and kaolin's `unbatched_raytrace` on an empty
+batch terminates the process. Guard added (approved): `nerf_runner.py` skips the octree ray trace when a keyframe has no
+rays (one-line condition; our Gaussian path never uses kaolin, so our results are unaffected). With the guard the
+BundleSDF global stage completes on MPM10 (2000 steps, marching cubes, textured mesh): P1 0.455 / P2 0.431 / unseen
+0.297 cm (85 %), original benchmark 0.451 — practically identical to the baseline's online-mesh fallback (0.451 / 0.428 /
+0.386). Reference JSON: `cd_ref_ho3d_MPM10.json` (global mesh), `cd_ref_ho3d_MPM10_onlinefallback.json` (previous).
+Ours on MPM10: P1 0.331 / P2 0.297 / unseen 0.177 (96 %).

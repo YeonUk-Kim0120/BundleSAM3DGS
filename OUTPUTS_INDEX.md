@@ -100,3 +100,14 @@ ADD는 cm, 마스크는 별도 표기 없으면 SAM2(`masks_sam2` / `masks_SAM2`
   `prune_outputs.py --apply --only gsfb_v1_ho3d_AP12_20260907 gsfb_v1_ho3d_SB13_20260907`로 같은 정책 적용.
 - **재발 방지 미적용**: 289 GB의 원인은 `bundlesdf.py` `run_gaussian`이 SPDLOG≥2에서 매 사이클 `gs_state.ply`를 쓰는 것. 이를 opt-in으로 바꾸는
   것은 코드 수정이라 별도 승인 후 진행 (포즈 덤프 `poses_before/after_gs.txt`는 진단에 필요하므로 유지).
+
+## 2026-09-12 정리 (사용자 승인)
+- **기준선**: `outputs/fulleval_20260912/{ho3d,ycb}/<seq>` — 정식 파이프라인(트래킹 + 온라인 GS v1 피드백 + global 단계) 22개 시퀀스.
+  절충 정리 후 시퀀스당 남긴 것: 키프레임 프레임의 `color/ depth_filtered/ mask/`, `ob_in_cam/`, `final/gs/`(메쉬·체크포인트·포즈),
+  `gs_online/checkpoint_final.pt`, 설정 yml, 프레임별 작은 텍스트(`keyframes.yml`, `nerf_frames.txt`, `poses_*_gs.txt`, `opt_*`).
+  지운 것(49.6 GB, 161만 파일): 사이클별 `gs_state.ply`, `*_uvs.txt`, 비키프레임 이미지, `depth/ normal/ color_segmented/ depth_vis/ color_viz/`. 70 GB → 21 GB.
+  채점 JSON·표: `logs/fulleval_20260912/` (`summary_table_final.txt`, `cd_*.json`, `add_*.json`, `cd_ref_*` = BundleSDF 참조).
+- **그 외 210개 실행 디렉터리 삭제** (마일스톤 5 배치 `gsfb_*`, 공정 평가 `fbabl_*`, ablation/diag, `int_*`, `bsdf_ref_MPM10`, `mustard0_gs_online`, `_failed_launch`).
+  결론은 모두 문서에 있음(`MILESTONE5_FEEDBACK_RESULTS.md`, `MILESTONES.md`, `GLOBAL_REFINE_RESULTS.md`). 보험으로 각 실행의 기록 파일만
+  `outputs/_archive_records_20260912/<실행명>/`에 보존(1.5 GB: `ob_in_cam/`, manifest·설정, 마지막 `keyframes.yml`/`nerf_frames.txt`, `final/**/*.obj|json`, `gs_online/*.json`).
+  BundleSDF MPM10 global 참조 메쉬: `logs/fulleval_20260912/ref_MPM10_bundlesdf_global_textured_mesh.obj`.
