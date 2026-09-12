@@ -158,3 +158,78 @@ difference = surface-sampling noise), ADD 2.45 / ADD-S 0.86 — same numbers as 
 Note: this repo's own `benchmark_ho3d.py` fails on `Utils.trimesh_clean` (`remove_degenerate_faces` removed in
 trimesh ≥ 4) in both of our containers — a pre-existing incompatibility, not touched here; `eval_mesh_cd.py` carries the
 API-compatible equivalent.
+
+## Full 22-sequence evaluation through the official pipeline (2026-09-12, `logs/fulleval_20260912`, outputs/fulleval_20260912)
+Tracking + online GS (v1 feedback on) + global stage (confirmed setting), scored with ADD (online poses), P1/P2/P3 (our port) and the original benchmark_ho3d.py (HO3D; agrees with P1 within sampling noise). BundleSDF references: SAM2-mask runs in BundleSDF_baseline_outputs (MPM10 has no reference mesh). MPM12: our Chamfer failed — Poisson picked a far-away blob made of mask-leak Gaussians (10 % of the map at 8× the object radius); fix = distance filter on the Poisson input, pending approval.
+
+```
+seq                          | ADD: SDF on  tracker    OURS |  P1: BSDF    OURS |  P2: BSDF    OURS | unseen GT->pred: BSDF         OURS | seen: BSDF   OURS
+ho3d/SM1                     |       0.551    4.361   3.533 |     0.421   0.488 |     0.420   0.454 |          1.113 ( 25%)  0.268 ( 92%) |      0.322  0.318
+ho3d/AP10                    |       0.969    4.552   5.549 |     0.494   0.588 |     0.469   0.548 |          0.459 ( 65%)  0.214 ( 93%) |      0.361  0.374
+ho3d/AP11                    |       0.946    1.341   2.418 |     0.547   0.508 |     0.579   0.554 |          1.128 ( 37%)  1.664 (  8%) |      0.294  0.386
+ho3d/AP12                    |       0.454    0.888   2.300 |     0.631   0.505 |     0.706   0.420 |          1.297 ( 34%)  0.539 ( 56%) |      0.276  0.252
+ho3d/AP13                    |       0.641    0.969   1.406 |     0.619   0.512 |     0.584   0.455 |          0.548 ( 60%)  0.420 ( 66%) |      0.245  0.270
+ho3d/AP14                    |       0.499    0.790   0.888 |     0.460   0.757 |     0.593   0.781 |          1.504 ( 29%)  1.083 ( 17%) |      0.345  0.338
+ho3d/MPM10                   |       0.964    1.092   1.992 |         -   0.331 |         -   0.297 |               -        0.177 ( 96%) |          -  0.183
+ho3d/MPM11                   |       0.819    0.830   1.398 |     0.413   0.309 |     0.389   0.267 |          0.098 (100%)  0.128 (100%) |      0.391  0.194
+ho3d/MPM12                   |       0.777    0.457   0.772 |     0.431       - |     0.443       - |          0.830 ( 41%)       -       |      0.327      -
+ho3d/MPM13                   |       1.373    2.753   3.462 |     0.437   0.702 |     0.410   0.678 |          0.283 (100%)  0.388 ( 70%) |      0.421  0.282
+ho3d/MPM14                   |       0.508    0.910   0.800 |     0.423   0.288 |     0.454   0.199 |          1.032 ( 33%)  0.234 (100%) |      0.340  0.140
+ho3d/SB11                    |       0.506    2.144   1.387 |     0.435   0.563 |     0.441   0.514 |          0.910 ( 37%)  0.392 ( 72%) |      0.303  0.315
+ho3d/SB13                    |       0.454    0.673   0.924 |     0.452   0.559 |     0.447   0.543 |          0.801 ( 45%)  0.813 ( 45%) |      0.315  0.359
+ycb/mustard0                 |       1.380    0.748   0.683 |     0.533   0.236 |     0.533   0.236 |          1.082 ( 34%)  0.214 ( 95%) |      0.281  0.215
+ycb/bleach0                  |       1.801    1.764   1.338 |     0.819   0.480 |     0.819   0.480 |          1.087 ( 43%)  0.431 ( 64%) |      0.907  0.440
+ycb/bleach_hard_00_03_chaitanya |       0.960    1.011   1.027 |     0.732   0.608 |     0.732   0.608 |          2.393 ( 10%)  0.552 ( 50%) |      0.585  0.335
+ycb/cracker_box_reorient     |       0.785    0.756   0.823 |     0.770   0.543 |     0.770   0.543 |          1.556 ( 27%)  0.548 ( 47%) |      0.271  0.602
+ycb/cracker_box_yalehand0    |       2.849    2.763   2.658 |     0.800   0.722 |     0.800   0.722 |          0.738 ( 45%)  1.629 ( 13%) |      0.876  0.380
+ycb/mustard_easy_00_02       |       0.646    0.784   0.627 |     0.756   0.182 |     0.756   0.182 |          2.318 (  7%)  0.153 ( 99%) |      0.372  0.179
+ycb/sugar_box1               |       0.976    0.681   0.777 |     0.713   0.286 |     0.713   0.286 |          1.680 ( 28%)  0.350 ( 86%) |      0.986  0.239
+ycb/sugar_box_yalehand0      |       1.555    1.757   1.409 |     0.579   0.479 |     0.579   0.479 |          1.115 ( 34%)  0.696 ( 17%) |      0.314  0.290
+ycb/tomato_soup_can_yalehand0 |       2.450    1.211   1.562 |     0.804   0.695 |     0.804   0.695 |          0.616 ( 57%)  0.568 ( 50%) |      1.072  0.485
+ho3d mean over 12 done: ADD SDF-on 0.724 tracker 1.775 OURS 2.171 | P1 BSDF 0.485 OURS 0.509 | P2 BSDF 0.499 OURS 0.476 | unseen BSDF 0.834 OURS 0.527
+ycb mean over 9 done: ADD SDF-on 1.489 tracker 1.275 OURS 1.212 | P1 BSDF 0.723 OURS 0.470 | P2 BSDF 0.723 OURS 0.470 | unseen BSDF 1.398 OURS 0.571
+```
+Original benchmark_ho3d.py chamfer (cm): chamfer_dist(cm): 0.508 chamfer_dist(cm): 0.560 chamfer_dist(cm): 0.505 chamfer_dist(cm): 0.509 chamfer_dist(cm): 0.586 chamfer_dist(cm): 0.752 chamfer_dist(cm): 0.490 chamfer_dist(cm): 0.331 chamfer_dist(cm): 0.712 chamfer_dist(cm): 0.310 chamfer_dist(cm): 0.288 chamfer_dist(cm): 0.561 
+
+**MPM12 fix (2026-09-12, approved)**: `gaussian_surfels` now also drops Gaussians beyond 1.25 normalized units from the
+object centre (`max_radius_norm`; 1.0 = 1.2 × prior radius). MPM12 re-extracted from its global checkpoint (no
+retraining): P1 0.262 / P2 0.175 / unseen 0.230 cm (88 %) vs BundleSDF 0.431 / 0.443 / 0.830 (41 %).
+Open map defect recorded for later: 10 % of MPM12's map were observed-lineage Gaussians appended ~8 object radii away
+(depth that came through the SAM2 mask, opacity ≈ 0.5); the lifecycle only manages prior-lineage states and never
+removes observed outliers — a check on observed Gaussians (distance / support) is missing.
+
+**MPM10 reference (2026-09-12)**: BundleSDF's global stage crashes on MPM10 — reproduced with our copy of the
+original SDF code (`run_ho3d.py --mode global_refine`, nerf backend, bundlesdf container, on a copy of the baseline's
+online output): the process exits (rc 1, no Python traceback, faulthandler silent) inside `NerfRunner.__init__` after
+the hash-grid construction, exactly where the baseline's own log stops. The baseline evaluation therefore scored MPM10
+with its documented fallback, the last ONLINE SDF mesh (`1616/nerf/mesh_real_world.obj`, chamfer 0.452); the same mesh is
+used here as the reference (P1 0.451 / P2 0.428 / unseen 0.386 cm 78 %). Our MPM10: P1 0.331 / P2 0.297 / unseen 0.177 (96 %).
+
+**Complete 22-sequence table** (`logs/fulleval_20260912/summary_table.txt`; original benchmark_ho3d.py agrees with P1):
+```
+seq                          | ADD: SDF on  tracker    OURS |  P1: BSDF    OURS |  P2: BSDF    OURS | unseen GT->pred: BSDF         OURS | seen: BSDF   OURS
+ho3d/SM1                     |       0.551    4.361   3.533 |     0.421   0.488 |     0.420   0.454 |          1.113 ( 25%)  0.268 ( 92%) |      0.322  0.318
+ho3d/AP10                    |       0.969    4.552   5.549 |     0.494   0.588 |     0.469   0.548 |          0.459 ( 65%)  0.214 ( 93%) |      0.361  0.374
+ho3d/AP11                    |       0.946    1.341   2.418 |     0.547   0.508 |     0.579   0.554 |          1.128 ( 37%)  1.664 (  8%) |      0.294  0.386
+ho3d/AP12                    |       0.454    0.888   2.300 |     0.631   0.505 |     0.706   0.420 |          1.297 ( 34%)  0.539 ( 56%) |      0.276  0.252
+ho3d/AP13                    |       0.641    0.969   1.406 |     0.619   0.512 |     0.584   0.455 |          0.548 ( 60%)  0.420 ( 66%) |      0.245  0.270
+ho3d/AP14                    |       0.499    0.790   0.888 |     0.460   0.757 |     0.593   0.781 |          1.504 ( 29%)  1.083 ( 17%) |      0.345  0.338
+ho3d/MPM10                   |       0.964    1.092   1.992 |     0.451   0.331 |     0.428   0.297 |          0.386 ( 78%)  0.177 ( 96%) |      0.381  0.183
+ho3d/MPM11                   |       0.819    0.830   1.398 |     0.413   0.309 |     0.389   0.267 |          0.098 (100%)  0.128 (100%) |      0.391  0.194
+ho3d/MPM12                   |       0.777    0.457   0.772 |     0.431   0.262 |     0.443   0.175 |          0.830 ( 41%)  0.230 ( 88%) |      0.327  0.149
+ho3d/MPM13                   |       1.373    2.753   3.462 |     0.437   0.702 |     0.410   0.678 |          0.283 (100%)  0.388 ( 70%) |      0.421  0.282
+ho3d/MPM14                   |       0.508    0.910   0.800 |     0.423   0.288 |     0.454   0.199 |          1.032 ( 33%)  0.234 (100%) |      0.340  0.140
+ho3d/SB11                    |       0.506    2.144   1.387 |     0.435   0.563 |     0.441   0.514 |          0.910 ( 37%)  0.392 ( 72%) |      0.303  0.315
+ho3d/SB13                    |       0.454    0.673   0.924 |     0.452   0.559 |     0.447   0.543 |          0.801 ( 45%)  0.813 ( 45%) |      0.315  0.359
+ycb/mustard0                 |       1.380    0.748   0.683 |     0.533   0.236 |     0.533   0.236 |          1.082 ( 34%)  0.214 ( 95%) |      0.281  0.215
+ycb/bleach0                  |       1.801    1.764   1.338 |     0.819   0.480 |     0.819   0.480 |          1.087 ( 43%)  0.431 ( 64%) |      0.907  0.440
+ycb/bleach_hard_00_03_chaitanya |       0.960    1.011   1.027 |     0.732   0.608 |     0.732   0.608 |          2.393 ( 10%)  0.552 ( 50%) |      0.585  0.335
+ycb/cracker_box_reorient     |       0.785    0.756   0.823 |     0.770   0.543 |     0.770   0.543 |          1.556 ( 27%)  0.548 ( 47%) |      0.271  0.602
+ycb/cracker_box_yalehand0    |       2.849    2.763   2.658 |     0.800   0.722 |     0.800   0.722 |          0.738 ( 45%)  1.629 ( 13%) |      0.876  0.380
+ycb/mustard_easy_00_02       |       0.646    0.784   0.627 |     0.756   0.182 |     0.756   0.182 |          2.318 (  7%)  0.153 ( 99%) |      0.372  0.179
+ycb/sugar_box1               |       0.976    0.681   0.777 |     0.713   0.286 |     0.713   0.286 |          1.680 ( 28%)  0.350 ( 86%) |      0.986  0.239
+ycb/sugar_box_yalehand0      |       1.555    1.757   1.409 |     0.579   0.479 |     0.579   0.479 |          1.115 ( 34%)  0.696 ( 17%) |      0.314  0.290
+ycb/tomato_soup_can_yalehand0 |       2.450    1.211   1.562 |     0.804   0.695 |     0.804   0.695 |          0.616 ( 57%)  0.568 ( 50%) |      1.072  0.485
+ho3d mean over 13 done: ADD SDF-on 0.728 tracker 1.674 OURS 2.064 | P1 BSDF 0.478 OURS 0.490 | P2 BSDF 0.490 OURS 0.453 | unseen BSDF 0.799 OURS 0.504
+ycb mean over 9 done: ADD SDF-on 1.489 tracker 1.275 OURS 1.212 | P1 BSDF 0.723 OURS 0.470 | P2 BSDF 0.723 OURS 0.470 | unseen BSDF 1.398 OURS 0.571
+```

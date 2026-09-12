@@ -46,6 +46,7 @@ DEFAULT_GLOBAL_CONFIG: dict[str, Any] = {
     "pose_refine": False,
     "opacity_min": 0.1,
     "max_scale_mm": 10.0,
+    "max_radius_norm": 1.25,          # Poisson input: drop Gaussians beyond 1.25 normalized units (1.5x prior radius)
     "include_suspect": True,
     "poisson_depth": 9,
     "poisson_density_quantile": 0.05,
@@ -180,7 +181,7 @@ def tsdf_fuse(frames: Iterable[tuple[np.ndarray, np.ndarray, np.ndarray, np.ndar
 
 
 def gaussian_surfels(runner: GaussianRunner, opacity_min: float, max_scale_mm: float,
-                     include_suspect: bool = True) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+                     include_suspect: bool = True, max_radius_norm: float = 1.25) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     """Metric centres, outward-oriented surfel normals (local +z axis) and colours of the Gaussians kept for Poisson."""
     with torch.no_grad():
         means = runner.normalization.metric_points(runner.splats["means"].detach().cpu().numpy()).astype(np.float64)
@@ -189,7 +190,10 @@ def gaussian_surfels(runner: GaussianRunner, opacity_min: float, max_scale_mm: f
         normals = R[:, :, 2].astype(np.float64)
         colors = np.clip(runner.splats["sh0"].detach().cpu().numpy()[:, 0, :] * 0.28209479177387814 + 0.5, 0, 1)
         radius_mm = (torch.exp(runner.splats["scales"][:, :2]).max(1).values / runner.normalization.scale * 1000.0).cpu().numpy()
-    keep = (opac > float(opacity_min)) & (radius_mm <= float(max_scale_mm))
+    # normalized radius: prior extent * 1.2 == 1.0, so the object lies inside ~1.0; observed Gaussians further out
+    # come from depth that leaked through the mask (MPM12: 10 % of the map at radius ~8) and would dominate Poisson
+    radius_norm = np.linalg.norm(runner.splats["means"].detach().cpu().numpy(), axis=1)
+    keep = (opac > float(opacity_min)) & (radius_mm <= float(max_scale_mm)) & (radius_norm <= float(max_radius_norm))
     if runner.lifecycle_fields is not None:
         state = runner.lifecycle_fields.state.cpu().numpy()
         keep &= state != STATE_CONTRADICTED
@@ -237,10 +241,13 @@ def extract_meshes(runner: GaussianRunner, out_dir: Path, cfg: dict[str, Any], K
     manifest: dict[str, Any] = {}
 
     t1 = time.time()
-    means, normals, colors = gaussian_surfels(runner, cfg["opacity_min"], cfg["max_scale_mm"], cfg["include_suspect"])
+    means, normals, colors = gaussian_surfels(runner, cfg["opacity_min"], cfg["max_scale_mm"], cfg["include_suspect"],
+                                              cfg["max_radius_norm"])
+    with torch.no_grad():
+        n_far = int((np.linalg.norm(runner.splats["means"].detach().cpu().numpy(), axis=1) > float(cfg["max_radius_norm"])).sum())
     trimesh.PointCloud(means, colors=(colors * 255).astype(np.uint8)).export(out_dir / "surfels_metric.ply")
     mesh = poisson_mesh(means, normals, colors, cfg["poisson_depth"], cfg["poisson_density_quantile"])
-    manifest["poisson"] = {"points": int(len(means)), "vertices_raw": len(mesh.vertices)}
+    manifest["poisson"] = {"points": int(len(means)), "far_gaussians_excluded": n_far, "vertices_raw": len(mesh.vertices)}
     mesh = largest_component(mesh)
     mesh.export(out_dir / "mesh_poisson.obj")
     mesh.export(out_dir / "mesh_real_world.obj")
