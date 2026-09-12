@@ -244,3 +244,47 @@ BundleSDF global stage completes on MPM10 (2000 steps, marching cubes, textured 
 0.297 cm (85 %), original benchmark 0.451 — practically identical to the baseline's online-mesh fallback (0.451 / 0.428 /
 0.386). Reference JSON: `cd_ref_ho3d_MPM10.json` (global mesh), `cd_ref_ho3d_MPM10_onlinefallback.json` (previous).
 Ours on MPM10: P1 0.331 / P2 0.297 / unseen 0.177 (96 %).
+
+### Second BundleSDF reference: its own (paper) masks (`logs/fulleval_20260912/summary_refs_compare.txt`, `cd_refpaper_*`)
+`BundleSDF_baseline_outputs/full_eval` = BundleSDF run with the masks of its own protocol (YCB paper masks; HO3D XMem
+masks). Means (cm): HO3D P1 own-mask 0.642 / SAM2 0.478 / ours 0.490; P2 0.663 / 0.490 / 0.453; unseen 0.930 / 0.792 / 0.504;
+seen 0.381 / 0.333 / 0.274. YCB P1 0.802 / 0.723 / 0.470; unseen 1.786 / 1.398 / 0.571; seen 0.704 / 0.630 / 0.352.
+The SAM2-mask BundleSDF (same input as ours) is the stronger reference on CD and stays the primary comparison; against
+its own-mask run we win P1 on 8/13 HO3D and 8/9 YCB sequences.
+
+### Analysis of the baseline (2026-09-12, see chat record for the full reading)
+- P1 = ½(pred→GT + GT→pred). HO3D: ours pred→GT 0.699 vs BSDF 0.625 (we lose this direction), GT→pred 0.282 vs 0.332
+  (we win) → net −0.012. Under P2 our pred→GT drops to 0.584 (BSDF 0.553): part of the P1 loss is P1's penalty on
+  correct completion (surface where the visible GT has no points), the rest is real misplacement. YCB: pred→GT equal
+  (0.555 vs 0.574), GT→pred 0.385 vs 0.871 → BundleSDF's YCB meshes miss surface even in the seen region (seen 0.63 vs 0.35).
+- Pose drives CD: HO3D sequences where we lose P1 have mean ADD 2.62 vs 1.58 where we win; corr(ADD, seen-region
+  error) = +0.46 on HO3D, corr(ADD, P1) = +0.76 on YCB. Our meshes need 1–27° of ICP before scoring (BSDF 0.2–10°):
+  the object frame of the v1 runs drifts, and ICP (2 cm threshold) only partly undoes it.
+- Completion depends on how much was seen: corr(visible fraction, unseen ≤5 mm) = +0.63 on HO3D. Small unseen
+  patches next to observed surface fill well (MPM10/11/14, SM1, AP10: 92–100 %); large unseen regions fill poorly
+  (AP11 8 %, AP14 17 %, cracker/sugar _yalehand 13–17 %) — the prior's unobserved part carries its placement/shape error.
+- Map defects: 350–2400 over-sized Gaussians hidden per sequence; MPM12 21 818 far Gaussians (mask leak); Gaussian
+  counts 170–790 k (HO3D) vs 50–125 k (YCB).
+
+## Parked: render-based (SuGaR-style) mesh extraction (2026-09-12, `experiments/exp_mesh_render_poisson.py`)
+Idea (SuGaR, Guédon & Lepetit 2024): sample surface points from rendered depth/normal maps at the training views
+(visible level set) instead of Gaussian centres, then Poisson. Ours uses 2DGS median depth + rendered normals (frame
+self-checked against surfel normals, |cos| 0.98); variants: A = training views only, B = A + virtual-sphere views for
+the never-observed region (gap fill, over-sized Gaussians hidden), C = B without hiding (pure visibility).
+Tried on mustard0 from the confirmed global checkpoint (no retraining), same scoring:
+
+| extraction | P1 | seen | unseen (≤5 mm) | pred→GT | GT→pred |
+|---|---|---|---|---|---|
+| current: centres + surfel normals → Poisson | **0.236** | **0.215** | **0.214 (95 %)** | 0.257 | **0.214** |
+| A (2 mm / 1 mm / 0.5 mm voxel; alpha 0.2) | 0.834 / 0.840 / 0.853 / 0.859 | 0.405–0.585 | 2.9–3.4 (0 %) | 0.42 → 0.15 | 1.25–1.55 |
+| B | 0.573 | 0.209 | 0.459 (65 %) | 0.852 | 0.295 |
+| C | 2.779 | 0.576 | 0.424 (80 %) | 5.035 | 0.524 |
+
+Why it loses on our maps (measured): the rendered median depth deviates from the observed depth by 2.8–4.3 mm median
+(p90 7–13 mm; mustard0 / AP12 / MPM14) whereas the surfel centres sit 1.7–2.1 mm (p90 4–4.5) from the observed points —
+most observed Gaussians have opacity < 0.1, so "what the map renders" is a semi-transparent layer stack whose 0.5-transmittance
+depth wobbles, while the centres were seeded on the depth points. A also cannot produce hand-occluded surface (counted as
+seen by the YCB label), B imports virtual-view noise (pred→GT 0.85), C shows the over-sized Gaussians are real geometry
+to the renderer (P1 2.78) — i.e. the size filter hides a training defect rather than inflating scores.
+Decision (user): stop here; retry once the online map is opaque/clean (opacity handling, size cap, mask-leak rejection).
+Script kept under experiments/; nothing in the main code changed.
