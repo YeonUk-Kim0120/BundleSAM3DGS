@@ -49,7 +49,7 @@ DEFAULT_GLOBAL_CONFIG: dict[str, Any] = {
     "max_radius_norm": 1.25,          # Poisson input: drop Gaussians beyond 1.25 normalized units (1.5x prior radius)
     "include_suspect": True,
     "poisson_depth": 9,
-    "poisson_density_quantile": 0.05,
+    "poisson_density_quantile": 0.0,  # 2026-09-14: the 5 % cut removed the prior-completed back face at depth 9 (ONLINE_MAP_DEFECTS.md §4)
     "tsdf_voxel": 0.002,
     "tsdf_trunc": 0.02,
     "depth_mode": "median",

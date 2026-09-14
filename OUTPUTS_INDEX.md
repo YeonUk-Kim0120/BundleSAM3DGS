@@ -111,3 +111,9 @@ ADD는 cm, 마스크는 별도 표기 없으면 SAM2(`masks_sam2` / `masks_SAM2`
   결론은 모두 문서에 있음(`MILESTONE5_FEEDBACK_RESULTS.md`, `MILESTONES.md`, `GLOBAL_REFINE_RESULTS.md`). 보험으로 각 실행의 기록 파일만
   `outputs/_archive_records_20260912/<실행명>/`에 보존(1.5 GB: `ob_in_cam/`, manifest·설정, 마지막 `keyframes.yml`/`nerf_frames.txt`, `final/**/*.obj|json`, `gs_online/*.json`).
   BundleSDF MPM10 global 참조 메쉬: `logs/fulleval_20260912/ref_MPM10_bundlesdf_global_textured_mesh.obj`.
+
+
+## 2026-09-14 — density-cut fix re-extraction (`outputs/fulleval_20260912`)
+
+- `final/gs/` = extraction with `poisson_density_quantile` 0 (same online+global checkpoint, 0 steps); `final/_gs_before_densitycut_fix/` = the previous extraction (meshes, manifest, old clouds; NOTE.txt inside). Duplicate checkpoint copies produced by the re-extraction were deleted (22 files, 7.1 GB, approved).
+- `logs/fulleval_20260912/cd_*` and `summary_table_final.txt` now describe the new extraction. The old per-sequence CD JSON/log/cloud files were overwritten by mistake during the rename step (the archive directory had not been created); they are being regenerated deterministically from the archived meshes into `logs/fulleval_20260912/_before_densitycut_fix/` (old `summary_table_final.txt` preserved there).

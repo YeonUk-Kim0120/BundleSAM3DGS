@@ -367,7 +367,7 @@ bleach bottle every term is weak (rotation \|cos\| ≤ 0.1) and depth is harmful
 usable signal on either object. A per-object term choice (G) would therefore fix the sign on AP12 but cannot give
 SDF-like strength (best \|cos\| 0.42), consistent with E1's online failure through accumulation (§7.3).
 
-### 7.5 ⑤-4: is the map or the loss the bottleneck? (2026-09-11, `experiments/exp_feedback_gradient_probe_gtmap.py`, `logs/gtmap_probe_20260911/report.html`)
+### 7.7 ⑤-4: is the map or the loss the bottleneck? (2026-09-11, `experiments/exp_feedback_gradient_probe_gtmap.py`, `logs/gtmap_probe_20260911/report.html`; numbered 7.7 because 7.5/7.6 above were added the same day by another session)
 Same keyframes and schedule as online (SAM3D prior, 4 000 + 500 steps/keyframe), map built either from the tracker
 poses v1 saw ("tracker map" = the original probe) or from GT poses ("GT map"; poses locked, map only). Every cycle's
 newest keyframe probed (AP12 175, SB13 201) at its tracker pose, and at GT + controlled perturbations (1/3/5/10°,

@@ -128,7 +128,7 @@ mustard0: 0.232 / 0.232 / 0.214 both (26 541 vs 26 524 points). No measurable ef
 few (< 0.4 %). Decision: keep them (no filter).
 
 ## Confirmed setting (2026-09-11)
-Input = online map continued; pose refinement off; 2000 steps; primary mesh = screened Poisson (depth 9, density cut 5 %)
+Input = online map continued; pose refinement off; 2000 steps; primary mesh = screened Poisson (depth 9, density cut 5 %) — **2026-09-14: density cut set to 0** (the 5 % cut removed the prior-completed back face once the far-Gaussian filter made the Poisson octree fine; see ONLINE_MAP_DEFECTS.md §4; all 22 fulleval meshes re-extracted from the unchanged checkpoints; `final/gs` = new extraction, `final/_gs_before_densitycut_fix` = old; 22-sequence table in ONLINE_MAP_DEFECTS.md §5: HO3D P1 0.459 / P2 0.404 / unseen 77 % vs BundleSDF 0.478 / 0.490 / 53 %)
 from Gaussians with opacity ≥ 0.1 and in-plane radius ≤ 10 mm (CONTRADICTED excluded, SUSPECT/UNSEEN included);
 control mesh = TSDF from training views (median depth, voxel 2 mm, trunc 2 cm, same Gaussian hiding); post-processing =
 largest component, metric object frame. To be integrated into the main pipeline (see MILESTONE ledger for the diff).
@@ -288,3 +288,8 @@ seen by the YCB label), B imports virtual-view noise (pred→GT 0.85), C shows t
 to the renderer (P1 2.78) — i.e. the size filter hides a training defect rather than inflating scores.
 Decision (user): stop here; retry once the online map is opaque/clean (opacity handling, size cap, mask-leak rejection).
 Script kept under experiments/; nothing in the main code changed.
+
+## Design notes recorded for the paper (2026-09-12)
+- Opacity reset (3DGS's periodic reset to ~0.01) is not used online: it would periodically make the map
+  semi-transparent and destroy the reference the pose feedback is computed against at that moment. Pruning of
+  observed-lineage Gaussians is the safer tool; prior-lineage Gaussians are managed by the lifecycle instead.
