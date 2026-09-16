@@ -44,6 +44,32 @@ from prior_lifecycle import (
     independent_view_mask,
 )
 
+# EXPERIMENT COPY (experiments/online_variants, 2026-09-15).  Variants are switched on with the environment variable
+# GS_ONLINE_VARIANTS (comma-separated).  With none set this module behaves exactly like the main gaussian_runner.
+#   fusion : experiment F "re-observation fusion" — a candidate depth point whose pixel already holds a map splat
+#            within GS_FUSION_BAND_M (default 0.005 m) along the ray is NOT appended; instead that splat's centre moves
+#            to the count-weighted mean  c <- (n*c + p) / (n + 1),  n <- min(n + 1, GS_FUSION_NMAX).  Prior surfels
+#            start with n = GS_FUSION_PRIOR_N (2), appended splats with n = 1.  Only non-CONTRADICTED splats with
+#            opacity >= GS_FUSION_MIN_OPACITY (0.05) can absorb observations.
+import os as _os
+ONLINE_VARIANTS = {v.strip() for v in _os.environ.get("GS_ONLINE_VARIANTS", "").split(",") if v.strip()}
+FUSION_BAND_M = float(_os.environ.get("GS_FUSION_BAND_M", "0.005"))
+FUSION_NMAX = int(_os.environ.get("GS_FUSION_NMAX", "20"))
+FUSION_PRIOR_N = int(_os.environ.get("GS_FUSION_PRIOR_N", "2"))
+FUSION_MIN_OPACITY = float(_os.environ.get("GS_FUSION_MIN_OPACITY", "0.05"))
+#   GS_MEANS_UPDATE_LR_MULT : experiment A — multiply the means (position) learning rate in keyframe updates only
+#            (default 1.0 = unchanged; 3 / 10 tested).  Other parameter groups keep update_lr_scale.
+#   GS_APPEND_MASK_ERODE_PX : experiment B — erode the mask by this many pixels before back-projecting candidate points
+#            (default 0 = unchanged; the lifecycle judges inside a 2-px-eroded mask).
+MEANS_UPDATE_LR_MULT = float(_os.environ.get("GS_MEANS_UPDATE_LR_MULT", "1.0"))
+#   GS_MAP_DEPTH_WEIGHT / GS_POSE_DEPTH_WEIGHT : experiment "loss split" — the map parameters receive
+#            colour + GS_MAP_DEPTH_WEIGHT * depth (+ regularisers) and the pose deltas receive colour + GS_POSE_DEPTH_WEIGHT * depth,
+#            through two backward passes routed with torch.autograd.backward(inputs=...).  Unset = shared loss as before.
+MAP_DEPTH_WEIGHT = float(_os.environ["GS_MAP_DEPTH_WEIGHT"]) if _os.environ.get("GS_MAP_DEPTH_WEIGHT") else None
+POSE_DEPTH_WEIGHT = float(_os.environ["GS_POSE_DEPTH_WEIGHT"]) if _os.environ.get("GS_POSE_DEPTH_WEIGHT") else None
+APPEND_MASK_ERODE_PX = int(_os.environ.get("GS_APPEND_MASK_ERODE_PX", "2"))  # default 2 = main-code default since 2026-09-16
+logging.info(f"[online_variants] runner copy {__file__}; variants={sorted(ONLINE_VARIANTS)}")
+
 
 GSPLAT_VERSION = "1.5.3"
 SH_C0 = 0.28209479177387814
@@ -58,9 +84,6 @@ DEFAULT_CONFIG: dict[str, Any] = {
     "min_depth": 0.1,
     "max_depth": 2.0,
     "roi_padding": 16,
-    # 2026-09-16: erode the mask before back-projecting candidate points (same 2 px the lifecycle judges inside);
-    # removes silhouette-edge and mask-leak points at the source (ONLINE_MAP_DEFECTS.md §7–9; 0 = old behaviour).
-    "append_mask_erode_px": 2,
     "initial_steps": 30_000,
     "update_steps": 500,
     "sh_degree": 3,
@@ -772,14 +795,10 @@ class GaussianRunner:
         point_batches: list[np.ndarray] = []
         color_batches: list[np.ndarray] = []
         raw_count = 0
-        erode_px = int(self.config.get("append_mask_erode_px", 0))
         for frame in frames:
-            if erode_px > 0:
+            if APPEND_MASK_ERODE_PX > 0:
                 import dataclasses
-
-                eroded = erode_mask(
-                    torch.from_numpy(np.asarray(frame.mask).astype(bool)), erode_px
-                )
+                eroded = erode_mask(torch.from_numpy(np.asarray(frame.mask).astype(bool)), APPEND_MASK_ERODE_PX)
                 frame = dataclasses.replace(frame, mask=eroded.numpy())
             batch = rgbd_to_point_cloud(
                 frame,
@@ -814,6 +833,101 @@ class GaussianRunner:
         distances = np.asarray(distances, dtype=np.float32)
         novel = distances > float(self.config["novelty_distance"])
         return points[novel], colors[novel], distances
+
+    @torch.no_grad()
+    def _fuse_reobservations(
+        self, points: np.ndarray, colors: np.ndarray, frames: Sequence[GaussianFrame]
+    ) -> tuple[np.ndarray, np.ndarray, dict[str, Any]]:
+        """Experiment F: fuse candidate observations into the map splat projected to the same pixel (within the band)."""
+
+        stats: dict[str, Any] = {"candidates": int(len(points)), "fused": 0, "splats_moved": 0, "mean_move_mm": 0.0}
+        if len(points) == 0 or self.splats is None or self.lifecycle_fields is None:
+            return points, colors, stats
+        device = self.device
+        fields = self.lifecycle_fields
+        means_metric = torch.from_numpy(
+            self.normalization.metric_points(
+                self.splats["means"].detach().cpu().numpy()
+            ).astype(np.float32)
+        ).to(device)
+        opac = torch.sigmoid(self.splats["opacities"].detach()).to(device)
+        eligible = (fields.state.to(device) != STATE_CONTRADICTED) & (opac >= FUSION_MIN_OPACITY)
+        pts = torch.from_numpy(np.asarray(points, dtype=np.float32)).to(device)
+        fused_any = torch.zeros(len(pts), dtype=torch.bool, device=device)
+        acc_sum = torch.zeros_like(means_metric)
+        acc_n = torch.zeros(len(means_metric), dtype=torch.int32, device=device)
+        band = float(FUSION_BAND_M)
+        for frame in frames:
+            frame = frame.validated()
+            c2w = torch.from_numpy(frame.c2w_cv.astype(np.float32)).to(device)
+            w2c = torch.linalg.inv(c2w)
+            K = frame.K
+            height, width = frame.mask.shape
+
+            def project(x: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
+                pc = x @ w2c[:3, :3].T + w2c[:3, 3][None, :]
+                z = pc[:, 2]
+                safe = z.clamp_min(1e-6)
+                u = (pc[:, 0] / safe * float(K[0, 0]) + float(K[0, 2])).round().long()
+                v = (pc[:, 1] / safe * float(K[1, 1]) + float(K[1, 2])).round().long()
+                ok = (z > 0.01) & (u >= 0) & (u < width) & (v >= 0) & (v < height)
+                key = v.clamp(0, height - 1) * width + u.clamp(0, width - 1)
+                return z, key, ok
+
+            zg, keyg, okg = project(means_metric)
+            okg &= eligible
+            zp, keyp, okp = project(pts)
+            observed = torch.from_numpy(frame.depth.astype(np.float32)).to(device).reshape(-1)
+            # per pixel: the eligible splat whose ray depth is closest to the observed depth of that pixel
+            dg = (zg - observed[keyg]).abs()
+            diff = torch.full((height * width,), float("inf"), device=device)
+            diff.scatter_reduce_(0, keyg[okg], dg[okg], reduce="amin", include_self=True)
+            best = torch.full((height * width,), -1, dtype=torch.long, device=device)
+            idx = torch.nonzero(okg & (dg <= diff[keyg]))[:, 0]
+            best[keyg[idx]] = idx
+            # 3x3 pixel neighbourhood (1 mm splats fall on neighbouring pixels): take the neighbour splat closest in
+            # ray depth to the candidate; strict same-pixel matching missed 34-41 % of re-observations (2026-09-15).
+            kp_v = keyp // width
+            kp_u = keyp % width
+            best_d = torch.full((len(pts),), float("inf"), device=device)
+            best_g = torch.full((len(pts),), -1, dtype=torch.long, device=device)
+            for dv in (-1, 0, 1):
+                for du in (-1, 0, 1):
+                    vv = (kp_v + dv).clamp(0, height - 1)
+                    uu = (kp_u + du).clamp(0, width - 1)
+                    gg = best[vv * width + uu]
+                    has = gg >= 0
+                    d = torch.full((len(pts),), float("inf"), device=device)
+                    d[has] = (zp[has] - zg[gg[has]]).abs()
+                    better = d < best_d
+                    best_d = torch.where(better, d, best_d)
+                    best_g = torch.where(better, gg, best_g)
+            hit = okp & (best_g >= 0) & ~fused_any & (best_d <= band)
+            hit_idx = torch.nonzero(hit)[:, 0]
+            if len(hit_idx) == 0:
+                continue
+            gi = best_g[hit_idx]
+            acc_sum.index_add_(0, gi, pts[hit_idx])
+            acc_n.index_add_(0, gi, torch.ones(len(hit_idx), dtype=torch.int32, device=device))
+            fused_any[hit_idx] = True
+        moved = acc_n > 0
+        if bool(moved.any()):
+            n = fields.obs_count.to(device)[moved].to(torch.float32)
+            target = acc_sum[moved] / acc_n[moved].to(torch.float32)[:, None]
+            new_metric = (n[:, None] * means_metric[moved] + target) / (n[:, None] + 1.0)
+            new_norm = torch.from_numpy(
+                self.normalization.normalize_points(new_metric.cpu().numpy()).astype(np.float32)
+            ).to(self.splats["means"].device)
+            self.splats["means"].data[moved.to(self.splats["means"].device)] = new_norm
+            fields.obs_count[moved.to(fields.obs_count.device)] = torch.clamp(
+                fields.obs_count[moved.to(fields.obs_count.device)] + 1, max=FUSION_NMAX
+            )
+            stats["mean_move_mm"] = float(((new_metric - means_metric[moved]).norm(dim=1).mean() * 1000.0).item())
+        keep = (~fused_any).cpu().numpy()
+        stats["fused"] = int(fused_any.sum())
+        stats["splats_moved"] = int(moved.sum())
+        logging.info("[fusion] " + json.dumps(stats))
+        return np.asarray(points)[keep], np.asarray(colors)[keep], stats
 
     def _prepare_view(self, frame: GaussianFrame) -> TrainingView:
         frame = frame.validated()
@@ -929,7 +1043,8 @@ class GaussianRunner:
                 [
                     {
                         "params": [self.splats[name]],
-                        "lr": float(base_lrs[name]) * lr_scale,
+                        "lr": float(base_lrs[name]) * lr_scale
+                        * (MEANS_UPDATE_LR_MULT if (name == "means" and not initial) else 1.0),
                         "name": name,
                     }
                 ],
@@ -1060,6 +1175,9 @@ class GaussianRunner:
                 f"Frames were already processed: {sorted(duplicate_ids)}"
             )
         points, colors, raw_count, candidate_count = self._frames_to_cloud(validated)
+        fusion_stats = None
+        if "fusion" in ONLINE_VARIANTS and self.lifecycle_fields is not None:
+            points, colors, fusion_stats = self._fuse_reobservations(points, colors, validated)
         novel_points, novel_colors, _ = self._select_novel(points, colors)
         before = self.num_gaussians
 
@@ -1104,6 +1222,8 @@ class GaussianRunner:
             self.classify_lifecycle(
                 validated, event=f"update_{self.update_index:03d}"
             )
+            if fusion_stats is not None and self.lifecycle_log:
+                self.lifecycle_log[-1]["fusion"] = fusion_stats
             self._remove_contradicted()
             self._reset_optimization_state(
                 float(self.config["update_lr_scale"]), initial=False
@@ -1270,7 +1390,8 @@ class GaussianRunner:
             "shN": torch.zeros((count, sh_count - 1, 3), dtype=torch.float32),
         })
         self.lifecycle_fields = LifecycleFields.create(
-            count, lineage_prior=True, device=self.device
+            count, lineage_prior=True, device=self.device,
+            obs_count=FUSION_PRIOR_N if "fusion" in ONLINE_VARIANTS else 1,
         )
         self.observed_points_metric = means_metric.numpy().astype(np.float32)
         self.observed_colors = surfels_cv.colors.numpy().astype(np.float32)
@@ -1635,7 +1756,7 @@ class GaussianRunner:
                 width=view.width,
                 height=view.height,
                 sh_degree=active_sh_degree,
-                render_mode="RGB+ED" if depth_weight > 0 else "RGB",
+                render_mode="RGB+ED" if (depth_weight > 0 or MAP_DEPTH_WEIGHT or POSE_DEPTH_WEIGHT) else "RGB",
                 absgrad=bool(self.strategy.absgrad),
             )
             info = result.info
@@ -1652,11 +1773,12 @@ class GaussianRunner:
             l1 = (torch.abs(rendered - target) * mask_channels).sum() / denominator
             dssim = self._masked_dssim(rendered, target, mask)
             ssim_weight = float(self.config["ssim_weight"])
-            loss = (1.0 - ssim_weight) * l1 + ssim_weight * dssim
-            if depth_weight > 0:
-                loss = loss + depth_weight * self._masked_depth_loss(
-                    result, view, mask
-                )
+            colour_loss = (1.0 - ssim_weight) * l1 + ssim_weight * dssim
+            split = (MAP_DEPTH_WEIGHT is not None or POSE_DEPTH_WEIGHT is not None) and pose_optimizer is not None
+            w_map = MAP_DEPTH_WEIGHT if (split and MAP_DEPTH_WEIGHT is not None) else depth_weight
+            w_pose = POSE_DEPTH_WEIGHT if (split and POSE_DEPTH_WEIGHT is not None) else depth_weight
+            depth_term = self._masked_depth_loss(result, view, mask) if max(w_map, w_pose) > 0 else None
+            loss = colour_loss + (w_map * depth_term if (w_map > 0 and depth_term is not None) else 0.0)
             normal_weight = float(self.config["normal_consistency_weight"])
             if (
                 result.normals is not None
@@ -1685,7 +1807,14 @@ class GaussianRunner:
                 )
             if not torch.isfinite(loss):
                 raise FloatingPointError("Non-finite Gaussian training loss")
-            loss.backward()
+            if split:
+                pose_loss = colour_loss + (w_pose * depth_term if (w_pose > 0 and depth_term is not None) else 0.0)
+                splat_params = [p for p in self.splats.values()]
+                pose_params = [p for g in pose_optimizer.param_groups for p in g["params"]]
+                torch.autograd.backward(loss, inputs=splat_params, retain_graph=True)
+                torch.autograd.backward(pose_loss, inputs=pose_params)
+            else:
+                loss.backward()
             if frozen_rows is not None:
                 # Lifecycle: only VERIFIED splats may learn.
                 for parameter in self.splats.values():

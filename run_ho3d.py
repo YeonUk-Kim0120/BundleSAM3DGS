@@ -150,7 +150,7 @@ if __name__=="__main__":
   parser.add_argument('--backend', type=str, default='nerf', choices=['nerf', 'gaussian'], help="reconstruction backend")
   parser.add_argument('--gs_runner_config', type=str, default=f'{os.path.dirname(os.path.realpath(__file__))}/config_gs_2dgs_1mm_lifecycle.yml',
                       help="GaussianRunner config (repo root; 'code_dir' is shadowed by data_reader's star import)")
-  parser.add_argument('--gs_initial_steps', type=int, default=4000)
+  parser.add_argument('--gs_initial_steps', type=int, default=500)  # 2026-09-15: 500 adopted (sweep 500/1000/2000/4000, ONLINE_MAP_DEFECTS.md §7)
   parser.add_argument('--gs_update_steps', type=int, default=500)
   parser.add_argument('--gs_feedback', type=str, default='on', choices=['on', 'noop', 'off'], help="Gaussian backend pose feedback (milestone 5 v1)")
   parser.add_argument('--gs_global_steps', type=int, default=2000, help='Gaussian backend: global-stage training steps')

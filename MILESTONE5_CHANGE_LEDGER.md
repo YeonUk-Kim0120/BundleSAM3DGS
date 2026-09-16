@@ -89,3 +89,17 @@ Removed from the main code relative to `4a84dc8`: v2 pre-alignment (`prealign_vi
 `bundlesdf.py` (`skip_alignment`, `skip_color_transfer`) and the matching driver flags / tests.
 Checks on the reduced code: full CPU+GPU suites 73 tests OK; feedback off ≡ `6039ee0` (equiv_check, GPU-noise level);
 feedback on ≡ `4a84dc8` with default policy (equiv_check_on); online v1 reproduction (`logs/v1check_20260911`): mustard0 feedback on ADD 0.650 / ADD-S 0.287 (attempt-2 v1 run: 0.638 / 0.28; first-cycle correction 5.99° / 4.04 mm vs 5.92° / 3.93 mm) — reproduced within run-to-run noise.
+
+## Online-map defaults adopted after the B-track experiments (2026-09-16)
+Main-code changes relative to the v1 reduction, each validated in `experiments/` first (ONLINE_MAP_DEFECTS.md §7–9):
+- `run_custom.py`, `run_ho3d.py`: `--gs_initial_steps` default 4000 → 500 (sweep 500/1000/2000/4000; 500 best or
+  tied on all four test sequences, prior scale blow-up (B4) −40–75 %).
+- `gaussian_runner.py`: new `DEFAULT_CONFIG["append_mask_erode_px"] = 2`, applied in `_frames_to_cloud` before
+  back-projection (same erosion the lifecycle judges inside; 0 = old behaviour). Far / mask-leak Gaussians −60–70 %,
+  ADD mustard0 −0.09 (×2), other sequences equal, completion unchanged.
+- `tests/test_gaussian_geometry.py`: the three 5×6-pixel synthetic-mask runner configs pass `append_mask_erode_px: 0`.
+- `gaussian_global.py` (2026-09-14, committed in 4b294cd): `poisson_density_quantile` 0.05 → 0.
+22-sequence confirmation of the combination (run through `experiments/online_variants/`, cfg `adopt`): HO3D ADD
+2.064 → 1.831, P1 0.459 → 0.412, P2 0.404 → 0.352, unseen coverage 77 %; YCB ADD 1.212 → 1.183, P1 0.466 → 0.458.
+Not adopted (recorded): update steps 350 (speed option), position lr ×3, re-observation fusion, depth-weight
+changes (stage 1 shared-loss results in §10; a single setting for all datasets, as BundleSDF does).

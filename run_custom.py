@@ -249,7 +249,7 @@ if __name__=="__main__":
   parser.add_argument('--mask_dir', type=str, default='masks_sam2', help='mask directory name under video_dir, or an absolute path')
   parser.add_argument('--backend', type=str, default='nerf', choices=['nerf','gaussian'], help="reconstruction backend; 'gaussian' needs the --prior-* inputs")
   parser.add_argument('--gs_runner_config', type=str, default=f'{code_dir}/config_gs_2dgs_1mm_lifecycle.yml')
-  parser.add_argument('--gs_initial_steps', type=int, default=4000)
+  parser.add_argument('--gs_initial_steps', type=int, default=500)  # 2026-09-15: 500 adopted (sweep 500/1000/2000/4000, ONLINE_MAP_DEFECTS.md §7)
   parser.add_argument('--gs_update_steps', type=int, default=500)
   parser.add_argument('--prior_mesh_npz', type=str, default=None, help='SAM3D raw-mesh prior npz (offline batch output)')
   parser.add_argument('--prior_pose_json', type=str, default=None, help='SAM3D pose json (canonical->first camera); alignment runs online')

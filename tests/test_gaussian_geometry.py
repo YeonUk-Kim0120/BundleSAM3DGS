@@ -120,7 +120,7 @@ class GaussianGeometryTest(unittest.TestCase):
 
     def test_initialize_failure_returns_to_clean_state(self):
         runner = GaussianRunner(
-            {"device": "cpu"}, SceneNormalization(1.0, np.zeros(3))
+            {"device": "cpu", "append_mask_erode_px": 0}, SceneNormalization(1.0, np.zeros(3))
         )
         with mock.patch.object(
             runner,
@@ -137,7 +137,7 @@ class GaussianGeometryTest(unittest.TestCase):
 
     def test_update_failure_restores_splats_views_and_observed_cloud(self):
         runner = GaussianRunner(
-            {"device": "cpu", "novelty_distance": 0.01},
+            {"device": "cpu", "novelty_distance": 0.01, "append_mask_erode_px": 0},
             SceneNormalization(1.0, np.zeros(3)),
         )
         with mock.patch.object(runner, "_reset_optimization_state"):
@@ -168,7 +168,7 @@ class GaussianGeometryTest(unittest.TestCase):
 
     def test_duplicate_frame_id_is_rejected_before_update(self):
         runner = GaussianRunner(
-            {"device": "cpu"}, SceneNormalization(1.0, np.zeros(3))
+            {"device": "cpu", "append_mask_erode_px": 0}, SceneNormalization(1.0, np.zeros(3))
         )
         with mock.patch.object(runner, "_reset_optimization_state"):
             runner.initialize([make_small_frame()], train_steps=0)
