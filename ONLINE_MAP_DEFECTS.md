@@ -607,3 +607,295 @@ of the winner.
   depth_weight 0, sdf_lambda 5, fs_weight 100, trunc_weight 6000, …) is shared. No per-dataset weight tuning.
 - Launched (2026-09-16): second `adopt` run, erosion 3 px ×2, and the loss split (map 10 / pose 1, map 1 / pose 10;
   two backward passes routed with `torch.autograd.backward(inputs=…)` in the copy) on mustard0 / cracker / AP12 / MPM12.
+
+## 11. Erosion 3 px, map/pose loss split (2026-09-16; base = adopted config 500/500/erosion 2 px; single runs unless ×2)
+
+| 설정 | mustard0 ADD / P1 / cov | cracker ADD / P1 / cov | AP12 ADD / P1 / P2 / cov | MPM12 ADD / P1 / P2 / cov | 평균 ADD / P1 / P2 / cov | 평균 렌더 깊이 mm |
+|---|---|---|---|---|---|---|
+| 채택 2px (지도 1 / 포즈 1) ×2 | 0.512, 0.508 / 0.226, 0.224 / 96, 95 | 2.667, 2.688 / 0.743, 0.712 / 15, 16 | 2.159, 2.217 / 0.471, 0.479 / 0.368, 0.376 / 69, 68 | 0.673, 0.649 / 0.261, 0.263 / 0.172, 0.173 / 89, 90 | 1.509 / 0.422 / 0.374 / 67 % | 3.10 |
+| 침식 3px ×2 | 0.508, 0.494 / 0.228, 0.236 / 95, 95 | 2.680, 2.689 / 0.745, 0.740 / 15, 15 | 2.320, 2.069 / 0.493, 0.473 / 0.390, 0.365 / 68, 68 | 0.664, 0.672 / 0.265, 0.261 / 0.174, 0.168 / 90, 89 | 1.512 / 0.430 / 0.381 / 67 % | 3.15 |
+| 공유 깊이 10 | 0.582 / 0.239 / 96 | 2.708 / 0.733 / 16 | 1.849 / 0.452 / 0.341 / 72 | 0.648 / 0.257 / 0.160 / 93 | 1.447 / 0.420 / 0.368 / 69 % | 1.69 |
+| 공유 깊이 30 | 0.596 / 0.235 / 97 | 2.761 / 0.711 / 14 | 1.656 / 0.460 / 0.333 / 77 | 0.929 / 0.315 / 0.239 / 83 | 1.486 / 0.430 / 0.380 / 68 % | 1.53 |
+| 지도 10 / 포즈 1 | 0.490 / 0.228 / 95 | 2.668 / 0.745 / 15 | 2.423 / 0.513 / 0.429 / 57 | 0.535 / 0.258 / 0.176 / 85 | 1.529 / 0.436 / 0.395 / 63 % | 2.31 |
+| 지도 1 / 포즈 10 | 0.666 / 0.243 / 95 | 2.739 / 0.726 / 15 | 1.879 / 0.481 / 0.365 / 75 | 0.776 / 0.272 / 0.181 / 87 | 1.515 / 0.431 / 0.379 / 68 % | 2.06 |
+
+Reading:
+- **Erosion 3 px = 2 px** within noise (mean ADD 1.512 vs 1.509, P1 0.430 vs 0.422, coverage 67 %); far Gaussians a
+  little lower (AP12 5.1–5.7 k vs 6.7–7.8 k). 2 px stays.
+- **Loss split attributes the depth-weight gain per sequence**: the map-side weight (map 10 / pose 1) helps mustard0
+  (0.490 vs 0.51) and MPM12 (0.535 vs 0.65–0.67) but hurts AP12 (2.423 vs 2.16–2.22, coverage 57 %); the pose-side
+  weight (map 1 / pose 10) helps AP12 (1.879, ≈ the shared 1.849) but hurts mustard0 (0.666) and MPM12 (0.776).
+  cracker is neutral to everything. The shared weight 10 is the compromise with the best mean (1.447 / P1 0.420 /
+  P2 0.368 / coverage 69 %) — the pose-side depth term helps where the tracker drifts a lot and is noise where tracking
+  is already good. Single runs; the shared-10 candidate needs repeats before any 22-sequence run.
+
+## 12. Prior alignment with 1 / 3 / 5 keyframes (2026-09-16, `experiments/exp_prior_align_multiframe.py`; 400 steps fixed, round-robin frames; reference = SAM3D mesh at the 1-frame result registered onto the GT model by Sim(3) ICP; mean mesh-vertex displacement in mm)
+
+| seq | init | 1 frame (best / step 400) | 3 frames | 5 frames | note |
+|---|---|---|---|---|---|
+| mustard0 | 23.1 | 9.4 / 9.3 | 10.2 / 10.4 | 11.4 / 10.0 | worse with more frames |
+| cracker_box_yalehand0 | 72.8 | 43.4 / 43.7 | 42.3 / 42.3 | 42.8 / 42.0 | prior 32 % too large (scale ratio 1.32), 37 mm offset remains |
+| AP12 | 69.5 | 26.6 / 26.2 | 20.3 / 20.7 | 20.8 / 20.8 | better |
+| MPM12 | 23.2 | 14.8 / 11.8 | 13.5 / 11.6 | 16.9 / 11.7 | loss-selected "best" (step 27–43) worse than the final pose |
+| AP10 | 17.5 | 7.3 / 7.8 | 6.3 / 7.2 | 5.8 / 6.2 | better |
+| MPM10 | 14.3 | 5.7 / 5.7 | 6.1 / 6.1 | 6.2 / 6.4 | slightly worse |
+| SM1 | 8.6 | 4.2 / 4.1 | 4.9 / 4.9 | 5.7 / 5.7 | worse |
+| mean | 32.7 | 15.9 | 14.8 | 15.6 | |
+
+- Convergence: every run reaches its plateau by step 100 (s100 ≈ s400 in all 21 runs); no steady decrease afterwards,
+  so 400 steps is ~4× more than needed and multi-frame sharing does not change that.
+- Multi-frame alignment is not a general improvement: it helps the two pitcher sequences (AP12 −6 mm, AP10 −1.5 mm) and
+  hurts SM1 / mustard0 / MPM10 by 0.5–2 mm; mean 15.9 → 14.8 (3 frames) → 15.6 (5). Reason: the extra frames are
+  rendered through the tracker's relative poses (early tracker error enters the alignment) and the round-robin loss
+  fights between views on objects the prior does not fit well.
+- Side findings: the cracker prior is mis-scaled by ~32 % and the alignment does not correct it (43 mm residual; this
+  is the sequence with 15 % completion); on MPM12 the loss-based best-pose selection picks an early pose 3–5 mm worse
+  than the final one (the guards/`best` rule deserve a look).
+
+## 13. Why the per-frame ADD rises and falls, and why feedback-on follows tracker-alone (2026-09-16, `experiments/analyze_error_episodes.py`, logs/exp_fusion_20260915/error_episodes/)
+
+Per-frame ADD of the adopted runs vs the archived tracker-alone runs, joined with GT motion (rotation deg/frame, translation mm/frame), visibility (SAM2 mask area / projected GT convex hull) and the tracker's RANSAC inliers vs the previous frame. Rising / falling episodes = smoothed ADD change over 30 frames beyond ±0.3 cm.
+
+| seq | ADD on / off | r(on,off) curves | r increments | gap cm | rho(Δerr~rot) | rho(Δerr~trans) | rho(Δerr~visible) | rho(Δerr~inliers) | rise: rot / vis / inl | fall: rot / vis / inl |
+|---|---|---|---|---|---|---|---|---|---|---|
+| AP10 | 5.74 / 4.55 | 0.88 | 0.30 | 1.19 | -0.02 | 0.02 | -0.01 | -0.13 | 0.89 / 0.88 / 488 | 0.85 / 0.81 / 498 |
+| AP11 | 2.00 / 1.34 | 0.93 | 0.33 | 0.66 | 0.03 | -0.02 | -0.00 | 0.01 | 1.01 / 0.83 / 483 | 1.17 / 0.91 / 402 |
+| AP12 | 2.16 / 0.89 | 0.74 | 0.26 | 1.27 | 0.02 | -0.02 | -0.03 | -0.03 | 0.96 / 0.84 / 450 | 1.06 / 0.89 / 541 |
+| AP13 | 1.22 / 0.97 | 0.91 | 0.54 | 0.25 | 0.02 | -0.01 | -0.01 | 0.01 | 1.10 / 0.92 / 482 | 1.00 / 0.95 / 476 |
+| AP14 | 0.84 / 0.79 | 0.72 | 0.48 | 0.05 | 0.08 | 0.01 | 0.02 | 0.03 | 0.91 / 0.73 / 555 | 1.15 / 0.72 / 649 |
+| MPM10 | 1.17 / 1.09 | 0.64 | -0.07 | 0.07 | 0.00 | 0.00 | 0.00 | -0.00 | 1.68 / 0.47 / 419 | 2.04 / 0.64 / 501 |
+| MPM11 | 1.30 / 0.83 | 0.64 | 0.39 | 0.47 | 0.04 | -0.01 | -0.03 | 0.02 | 1.64 / 0.87 / 600 | 2.73 / 0.86 / 566 |
+| MPM12 | 0.67 / 0.46 | 0.44 | 0.50 | 0.22 | 0.02 | 0.01 | -0.01 | -0.02 | – / – / – | 0.91 / 0.72 / 1199 |
+| MPM13 | 2.73 / 2.75 | 0.94 | 0.33 | -0.02 | 0.03 | -0.06 | -0.05 | -0.02 | 1.51 / 0.86 / 601 | 1.63 / 0.93 / 647 |
+| MPM14 | 0.78 / 0.91 | 0.84 | 0.41 | -0.13 | 0.03 | 0.08 | -0.01 | -0.02 | 1.11 / 0.51 / 561 | 2.39 / 0.76 / 698 |
+| SB11 | 1.22 / 2.14 | 0.76 | 0.33 | -0.92 | 0.15 | -0.02 | -0.02 | 0.05 | 1.41 / 0.82 / 392 | 1.49 / 0.90 / 360 |
+| SB13 | 0.81 / 0.67 | 0.98 | 0.70 | 0.14 | 0.12 | 0.00 | -0.04 | -0.05 | 1.54 / 0.85 / 469 | 1.64 / 0.95 / 560 |
+| SM1 | 3.16 / 4.36 | 0.71 | 0.79 | -1.20 | -0.02 | -0.04 | 0.01 | -0.03 | 2.99 / 0.68 / 464 | 2.79 / 0.61 / 392 |
+| bleach0 | 1.54 / 1.76 | 0.92 | 0.48 | -0.22 | 0.03 | 0.03 | -0.02 | -0.03 | 2.36 / 0.94 / 318 | – / – / – |
+| bleach_hard_00_03_chaitanya | 0.80 / 1.01 | 0.85 | 0.93 | -0.21 | 0.01 | -0.02 | -0.01 | -0.02 | 2.81 / 0.83 / 417 | 0.00 / 0.45 / 567 |
+| cracker_box_reorient | 0.84 / 0.76 | 0.92 | 0.82 | 0.08 | -0.04 | -0.12 | 0.05 | -0.00 | 2.72 / 0.83 / 538 | 0.21 / 1.00 / 381 |
+| cracker_box_yalehand0 | 2.67 / 2.76 | 1.00 | 0.99 | -0.10 | 0.13 | 0.14 | -0.08 | -0.01 | 2.40 / 0.75 / 407 | 1.16 / 0.80 / 460 |
+| mustard0 | 0.51 / 0.74 | 0.74 | 0.75 | -0.23 | -0.01 | 0.07 | 0.01 | -0.01 | 2.59 / 0.94 / 537 | 2.20 / 1.04 / 536 |
+| mustard_easy_00_02 | 0.62 / 0.78 | 0.99 | 0.80 | -0.17 | 0.03 | -0.02 | -0.01 | -0.03 | 2.51 / 0.85 / 383 | 0.03 / 0.84 / 399 |
+| sugar_box1 | 0.60 / 0.68 | 0.98 | 0.81 | -0.08 | 0.04 | -0.03 | -0.03 | -0.02 | 3.15 / 0.75 / 302 | 0.53 / 0.85 / 545 |
+| sugar_box_yalehand0 | 1.47 / 1.76 | 0.98 | 0.96 | -0.28 | 0.00 | 0.00 | 0.00 | 0.00 | 3.09 / 0.82 / 456 | 1.02 / 0.82 / 508 |
+| tomato_soup_can_yalehand0 | 1.60 / 1.21 | 0.95 | 0.63 | 0.39 | -0.01 | 0.04 | 0.02 | -0.03 | 1.79 / 0.74 / 479 | 1.07 / 0.70 / 454 |
+
+pooled episode means: {"rise": {"rot_deg_per_frame": 1.913019652686053, "trans_mm_per_frame": 4.353754318744448, "visible_ratio": 0.7953639286311099, "inliers_prev": 466.71675330348745}, "fall": {"rot_deg_per_frame": 1.288090317329542, "trans_mm_per_frame": 1.187511412044569, "visible_ratio": 0.8163536228130058, "inliers_prev": 539.9156107545189}, "flat": {"rot_deg_per_frame": 1.035741742479742, "trans_mm_per_frame": 1.2705807630483028, "visible_ratio": 0.8665670559187906, "inliers_prev": 607.2222117042546}}
+pooled mean spearman(Δerr, signal): {"rot_deg_per_frame": 0.030107861984306775, "trans_mm_per_frame": 0.001415648256400326, "visible_ratio": -0.01045367965607146, "inliers_prev": -0.014832200256622984}
+comovement mean: {"pearson_curves": 0.8393252813369709, "pearson_increments": 0.566118604171847, "level_gap_cm": 0.05526544825436273}
+
+Reading:
+- **Co-movement**: the two curves correlate at r = 0.84 on average (HO3D 0.44–0.98, YCB 0.74–1.00) and their frame-to-frame
+  increments at r = 0.57. Both runs share the whole frontend — the same frames, the same LoFTR matches to the previous
+  frame, the same BA against keyframes — so the shape of the error is the tracker's; the feedback only moves keyframe
+  anchors by 1–3 mm per cycle, which shows up as a slowly varying level offset (mean gap +0.06 cm; per sequence −1.2 to
+  +1.3 cm), not as a different shape. The curves separate where a burst of keyframe corrections during fast motion adds
+  an error that then persists (AP12 frames 1150–1250: on 1.2 → 3.9 cm while alone stays 1.2).
+- **Rise / fall causes**: frame-level correlations of the increments with any signal are ~0 (noise), but the episode
+  means separate clearly (pooled over 22 sequences): rising episodes have translation 4.4 mm/frame, rotation 1.9°/frame,
+  visibility 0.80, inliers 497; flat stretches 1.3 mm, 1.0°, 0.87, 660; falling episodes 1.2 mm, 1.3°, 0.82, 577. Error
+  grows while the object moves fast (3.5× the flat-phase translation speed) with fewer matches and partial occlusion, and
+  recovers when the motion slows and visibility/matches return — the BA against keyframes pulls the pose back toward the
+  anchored keyframes (AP12: every fall coincides with rotation < 0.5°/frame and visibility ≈ 1.0). Per-sequence plots:
+  `episodes_<seq>.png` (rises red, falls green, keyframe ticks).
+
+### 13b. Gap analysis (correction of the 'slowly varying offset' reading, 2026-09-16)
+
+| seq | gap mean / std cm | Δgap std vs Δon std vs Δoff std | r(gap, gap at last keyframe) | gap growth in rise / flat / fall (cm) |
+|---|---|---|---|---|
+| AP10 | +1.19 / 1.33 | 0.112 / 0.094 / 0.094 | 0.88 | +3.16 / -0.32 / -1.95 |
+| AP11 | +0.66 / 0.42 | 0.079 / 0.076 / 0.057 | 0.97 | +2.95 / -0.21 / -1.79 |
+| AP12 | +1.27 / 0.60 | 0.086 / 0.083 / 0.053 | 0.97 | +4.47 / +1.85 / -4.50 |
+| AP13 | +0.25 / 0.28 | 0.052 / 0.057 / 0.050 | 0.95 | +0.69 / +0.33 / -0.97 |
+| AP14 | +0.05 / 0.23 | 0.048 / 0.054 / 0.037 | 0.9 | +0.97 / -0.74 / -0.16 |
+| MPM10 | +0.07 / 0.54 | 0.244 / 0.167 / 0.166 | 0.94 | +0.35 / +0.64 / +0.22 |
+| MPM11 | +0.47 / 0.33 | 0.054 / 0.052 / 0.046 | 0.94 | +1.19 / +0.61 / -0.95 |
+| MPM12 | +0.22 / 0.21 | 0.046 / 0.050 / 0.041 | 0.93 | +0.00 / +0.38 / -0.03 |
+| MPM13 | -0.02 / 0.56 | 0.085 / 0.068 / 0.078 | 0.97 | +1.89 / +0.76 / -2.86 |
+| MPM14 | -0.13 / 0.21 | 0.054 / 0.055 / 0.042 | 0.81 | +0.48 / -0.74 / +0.04 |
+| SB11 | -0.92 / 1.47 | 0.151 / 0.151 / 0.100 | 1.0 | -0.23 / -1.39 / -2.83 |
+| SB13 | +0.14 / 0.27 | 0.053 / 0.072 / 0.062 | 0.97 | +2.11 / +0.04 / -1.73 |
+| SM1 | -1.20 / 0.57 | 0.057 / 0.092 / 0.078 | 0.99 | +1.45 / -1.20 / -2.48 |
+| bleach0 | -0.22 / 0.74 | 0.512 / 0.291 / 0.583 | 0.97 | -12.16 / -0.32 / +0.00 |
+| bleach_hard_00_03_chaitanya | -0.21 / 0.23 | 0.099 / 0.259 / 0.254 | 0.62 | -0.93 / +0.78 / +0.03 |
+| cracker_box_reorient | +0.08 / 0.13 | 0.070 / 0.113 / 0.119 | 0.83 | +0.65 / -0.46 / -0.01 |
+| cracker_box_yalehand0 | -0.10 / 0.14 | 0.044 / 0.322 / 0.318 | 0.39 | +0.14 / +0.16 / -0.04 |
+| mustard0 | -0.23 / 0.17 | 0.041 / 0.060 / 0.050 | 0.94 | +0.04 / -0.07 / -0.01 |
+| mustard_easy_00_02 | -0.17 / 0.16 | 0.055 / 0.084 / 0.090 | 0.78 | -0.92 / +0.76 / -0.03 |
+| sugar_box1 | -0.08 / 0.17 | 0.067 / 0.109 / 0.111 | 0.9 | -0.06 / -0.39 / -0.04 |
+| sugar_box_yalehand0 | -0.28 / 0.19 | 0.045 / 0.171 / 0.165 | 0.93 | -0.45 / +0.03 / +0.03 |
+| tomato_soup_can_yalehand0 | +0.39 / 0.38 | 0.105 / 0.120 / 0.122 | 0.81 | +1.01 / +0.19 / -0.11 |
+
+pooled gap stats: {"mean_cm": 0.05526544825436273, "std_cm": 0.4233214608213516, "increment_std_cm": 0.09811598260015097, "increment_std_on_cm": 0.11821119082171629, "increment_std_off_cm": 0.12343161802190919, "r_gap_vs_gap_at_last_keyframe": 0.8825178400574998, "mean_abs_gap_change_between_keyframes_cm": 0.08081712123612243, "dgap_in_rise_cm_per_frame": -0.0013851847749358265, "dgap_in_fall_cm_per_frame": -0.0061564996726332895, "dgap_in_flat_cm_per_frame": 2.9704640161172033e-05, "gap_growth_in_rise_total_cm": 0.30819036408031275, "gap_growth_in_fall_total_cm": -0.9171880353457411, "gap_growth_in_flat_total_cm": 0.03242431160271413}
+
+- The gap (on − off) is NOT smooth: its std is 0.2–1.5 cm per sequence (pooled 0.42) and its frame-to-frame increment
+  std (0.098 cm) is as large as the curves' own (0.118 / 0.123). What is true is that the gap is *anchored to keyframe
+  cycles*: the correlation between the gap at a frame and the gap at the most recent keyframe cycle is 0.8–1.0 (pooled
+  ≈ 0.9). The feedback's effect on a frame is whatever offset the last write-back put on the keyframes the frame is
+  registered against; between cycles the tracker adds its own jitter on top.
+- Where the gap grows: on the sequences the feedback hurts, the gap grows almost entirely inside rising episodes
+  (fast motion): AP12 +4.5 cm in rises / +1.9 flat / −4.5 in falls; AP10 +3.2 / −0.3 / −2.0; AP11 +3.0 / −0.2 / −1.8;
+  SB13 +2.1 / 0.0 / −1.7; MPM13 +1.9 / +0.8 / −2.9. On the sequences it helps the gap shrinks in flat / fall phases
+  (SB11 −0.2 / −1.4 / −2.8, SM1 +1.5 / −1.2 / −2.5). Reading: the corrections written back during fast-motion
+  keyframe bursts are the harmful ones and are only partly undone when the tracker re-anchors; corrections written
+  during slow, well-observed phases are neutral or helpful.
+- Actionable consequence: suspend the write-back (or the map append) during fast-motion cycles, judged by the
+  tracker's own velocity / inlier drop, and keep it in slow phases. Unlike the earlier 'protective gate' this is not
+  meant to avoid all intervention: SB11 / SM1 / bleach0 / sugar_yalehand0 show the slow-phase corrections beat the
+  tracker (−0.4 to −1.2 cm), so removing the fast-phase harm could make the feedback a net gain on more sequences.
+
+## 14. Initial alignment error vs run outcome, and why the loss-selected pose misses (2026-09-16, `experiments/summarize_alignment_vs_runs.py`, logs/exp_fusion_20260915/prior_align_multiframe/alignment_vs_runs.md)
+
+| seq | dataset | align init mm | align best mm | rot deg | scale | ADD | P1 | P2 | unseen % | centres→GT mm |
+|---|---|---|---|---|---|---|---|---|---|---|
+| SB13 | ho3d | 25.0 | 3.4 | 0.9 | 0.99 | 0.810 | 0.456 | 0.431 | 48 | 2.74 |
+| SB11 | ho3d | 19.9 | 3.9 | 4.0 | 1.01 | 1.220 | 0.445 | 0.394 | 77 | 3.12 |
+| SM1 | ho3d | 8.6 | 4.2 | 2.1 | 1.00 | 3.159 | 0.392 | 0.358 | 71 | 3.37 |
+| MPM13 | ho3d | 13.5 | 4.3 | 5.4 | 1.01 | 2.732 | 0.507 | 0.474 | 78 | 4.39 |
+| MPM14 | ho3d | 9.2 | 5.2 | 3.5 | 0.99 | 0.783 | 0.265 | 0.146 | 100 | 1.80 |
+| MPM10 | ho3d | 14.3 | 5.7 | 7.8 | 1.00 | 1.165 | 0.301 | 0.264 | 76 | 2.93 |
+| mustard_easy_00_02 | ycb | 10.8 | 7.2 | 6.1 | 1.01 | 0.617 | 0.172 | 0.172 | 99 | 1.95 |
+| AP10 | ho3d | 17.5 | 7.3 | 5.8 | 0.99 | 5.740 | 0.600 | 0.564 | 99 | 4.10 |
+| AP14 | ho3d | 11.7 | 7.6 | 1.9 | 0.95 | 0.838 | 0.401 | 0.340 | 32 | 2.52 |
+| AP13 | ho3d | 18.9 | 7.7 | 3.4 | 1.03 | 1.220 | 0.398 | 0.323 | 87 | 2.45 |
+| MPM11 | ho3d | 14.6 | 8.0 | 10.4 | 1.02 | 1.300 | 0.273 | 0.232 | 100 | 2.44 |
+| mustard0 | ycb | 23.1 | 9.4 | 10.0 | 1.03 | 0.512 | 0.226 | 0.226 | 96 | 2.47 |
+| bleach0 | ycb | 12.1 | 9.5 | 8.7 | 1.03 | 1.543 | 0.462 | 0.462 | 62 | 4.42 |
+| sugar_box1 | ycb | 25.7 | 10.1 | 2.6 | 1.05 | 0.598 | 0.204 | 0.204 | 100 | 2.39 |
+| cracker_box_reorient | ycb | 28.1 | 12.6 | 3.8 | 1.00 | 0.839 | 0.553 | 0.553 | 37 | 4.25 |
+| AP11 | ho3d | 31.5 | 13.6 | 10.1 | 1.04 | 2.000 | 0.582 | 0.508 | 77 | 2.70 |
+| MPM12 | ho3d | 23.2 | 14.8 | 20.4 | 0.87 | 0.673 | 0.261 | 0.172 | 89 | 1.67 |
+| tomato_soup_can_yalehand0 | ycb | 10.7 | 14.9 | 17.1 | 1.16 | 1.598 | 0.718 | 0.718 | 41 | 7.30 |
+| bleach_hard_00_03_chaitanya | ycb | 22.4 | 26.2 | 5.0 | 1.18 | 0.799 | 0.580 | 0.580 | 59 | 3.95 |
+| AP12 | ho3d | 69.5 | 26.6 | 5.7 | 0.99 | 2.159 | 0.471 | 0.368 | 69 | 3.45 |
+| sugar_box_yalehand0 | ycb | 36.1 | 37.3 | 6.8 | 1.20 | 1.474 | 0.465 | 0.465 | 18 | 4.71 |
+| cracker_box_yalehand0 | ycb | 72.8 | 43.4 | 3.1 | 1.33 | 2.667 | 0.743 | 0.743 | 15 | 5.06 |
+
+Spearman(align best mm, ·) over all (n=22): ADD 0.06, P1 0.40, P2 0.36, unseen cov -0.37, centres→GT 0.33
+Spearman(align best mm, ·) over ho3d (n=13): ADD -0.01, P1 -0.08, P2 -0.23, unseen cov 0.22, centres→GT -0.34
+Spearman(align best mm, ·) over ycb (n=9): ADD 0.65, P1 0.83, P2 0.83, unseen cov -0.83, centres→GT 0.72
+
+### best-selection traces (per step: total loss parts vs mesh displacement)
+
+- **Alignment error predicts the outcome on YCB, not on HO3D.** Over the 22 sequences the 1-frame alignment error
+  (mesh displacement after registration) correlates with ADD 0.06 / P1 0.40 / P2 0.36 / unseen coverage −0.37
+  overall; HO3D alone ≈ 0 (ADD −0.01, P1 −0.08: the tracker dominates), YCB alone 0.65 / 0.83 / 0.83 / −0.83. The four
+  worst-completion YCB sequences are exactly the mis-scaled priors: cracker_yalehand0 (scale ratio 1.33, 43 mm),
+  sugar_yalehand0 (1.20, 37 mm), bleach_hard (1.18, 26 mm), tomato (1.16, 15 mm); the alignment never corrects a 16–33 %
+  scale error although `max_scale_delta` 2.7 allows it.
+- **Why 'best' misses**: the guards are not the reason (visible / depth-valid ratios stay ≥ 0.96 after step 40). The total
+  loss is simply a weak proxy for the pose error along the trajectory (Spearman total ~ displacement: AP12 −0.16,
+  MPM12 +0.03, mustard0 +0.19). Two mechanisms in the traces: (i) MPM12 — the weighted depth term rises 0.11 → 0.32
+  while the pose error falls 13.5 → 11.8 mm, because the depth loss is a mean over *rendered* pixels: as the prior comes
+  to cover the mask (14.1 k → 16.8 k depth pixels) more rim pixels with prior-shape mismatch enter the mean, so a pose
+  that renders fewer pixels scores lower; the loss-min (step 43) is such a pose. (ii) AP12 — the loss keeps decreasing
+  (0.376 → 0.352) while the error rises from 21.6 mm (step 58) to 26.4 mm: the loss optimum itself is ~5 mm off the
+  true pose (prior shape mismatch of the pitcher). Convergence is reached by step 100–150 in all 22 traces.
+- Consequences (proposals): normalise the depth loss by the target-mask pixel count (or add a coverage-weighted
+  symmetric term) so covering less is not rewarded; take the final (or EMA) pose instead of the loss-min; 150 steps
+  instead of 400; and treat the prior scale explicitly (the YCB priors are too large by 16–33 %).
+
+### 13c. Offline check of a motion / inlier gate on the write-back (2026-09-17) — withdraws the gate proposal
+
+Per keyframe cycle of the adopted runs: gap change (on − off) until the next keyframe, split by whether the tracker's own
+signals over the 6 frames before the keyframe would flag the cycle (tracker translation > 2.5 mm/frame or inliers < 60 %
+of the sequence median). Assumes that skipping a write-back leaves the tracker as in the tracker-alone run there.
+
+| seq | cycles | flagged | gap growth in flagged cycles | in other cycles | total |
+|---|---|---|---|---|---|
+| AP10 | 165 | 13 % | +1.87 | −1.54 | +0.33 |
+| AP11 | 171 | 28 % | +0.74 | +0.08 | +0.82 |
+| AP12 | 173 | 24 % | −0.54 | +2.51 | +1.98 |
+| MPM10 | 248 | 42 % | −2.14 | +3.29 | +1.15 |
+| MPM11 | 237 | 11 % | −0.14 | +1.71 | +1.57 |
+| SB11 | 215 | 24 % | −6.13 | +1.76 | −4.37 |
+| SB13 | 201 | 23 % | −0.01 | +0.68 | +0.67 |
+| SM1 | 282 | 75 % | −1.25 | −0.75 | −2.00 |
+| HO3D total | | | **−7.19** | **+5.82** | |
+
+The cycles a tracker-side gate would skip are, on balance, the cycles where the feedback *helps* (−7.2 cm over
+HO3D); the harm accumulates in ordinary cycles (+5.8 cm). The earlier episode reading ("harm concentrates in fast
+motion") described when the *error* grows in both runs, not where the feedback's *increment* is harmful. A motion /
+inlier gate on the write-back is therefore not supported; the harmful component is the diffuse per-cycle bias of §8.
+
+### 13d. Per-write-back analysis: motion, error jumps and the sign of the feedback effect (2026-09-17) — supersedes 13c
+
+Script `experiments/analyze_feedback_by_motion.py`, outputs `logs/exp_fusion_20260915/feedback_by_motion/` (summary.md,
+cycles_<seq>.csv/.png, scatter_<ds>.png).  Verified from the run logs: the tracker waits for the backend, so every write-back
+(2949 over 22 sequences) lands in the keyframe's own frame (lag 0), and the saved `ob_in_cam` of a keyframe is the
+post-write-back pose.  Measures per write-back: cycle effect = change of the on−off ADD gap over exactly the frames the
+write-back influences (< 0 helped); immediate effect at the keyframe frame; motion = mean displacement of the model points
+between consecutive frames (GT and tracker); rise_on = on-run ADD change over the 5 frames before the write-back.  No thresholds
+(helped/hurt groups, deciles, rankings).
+
+- HO3D, 2653 update write-backs: helped 1333 (mean −0.104 cm) vs hurt 1320 (+0.104).  Group medians are identical:
+  GT motion 2.18 vs 2.06 mm/frame, rotation 1.65 vs 1.62 °/frame, tracker motion over the 5 frames before 2.08 vs 2.00,
+  rise 0.00 vs 0.00 cm, delta 0.97 vs 1.04 mm, inliers 556 vs 525.  Deciles of GT motion, tracker motion, rise and delta:
+  mean effect within ±0.04 cm and helped 45–56 % in every decile; Spearman |ρ| ≤ 0.04.  YCB (296): same (|ρ| ≤ 0.13).
+- Sharp tracker jumps: after the top-2 % jumps (≥ 0.35 cm over 5 frames) the error change at the write-back frame is
+  −0.045 cm (−0.013 over 3 frames) vs +0.005 / +0.078 at other on-run frames and +0.014 / +0.070 in the tracker-alone run:
+  the feedback acts in the good direction but weakly (deltas 1–4 mm against jumps of 0.35–3 cm).  After top-10 % jumps the
+  error came down at the next frame in 49 % (write-back) vs 51 % (other on-run frames) vs 45 % (tracker alone).  YCB top 2 %
+  (n = 18): −0.40 / −0.59 vs +0.36 / +1.15 (other) and +0.26 / +1.01 (alone).
+- The per-event label is noisy because the tracker-alone run is an independent trajectory that jumps on its own
+  (MPM10 1330–1415: its jumps of up to +2.3 cm flip the sign of neighbouring write-backs: −2.9, −2.1, +1.7, −1.7, −3.8, +2.7).
+  The 13c flagged-cycle sums were driven by such stretches and are evidence neither for nor against a gate.
+- Sequence-level harm is a slight excess of hurt write-backs (AP10 58 %, AP12 55 %, AP11 54 % vs SB11 44 %, SM1 42 %), each
+  ±0.1 cm; nothing observable at the keyframe (motion, jump, delta, inliers) separates them.  A motion / inlier / jump gate
+  cannot work; withdrawn definitively.
+- Initial 5-view write-back: its delta is the largest of the run and tracks the prior alignment error (ρ 0.71 over 22:
+  AP12 26.6 mm → 7.0 mm, AP11 13.6 → 6.0).  On HO3D larger first deltas hurt at once (AP12 +0.53 cm, AP14 +0.33, AP11 +0.12;
+  ρ 0.54, n = 13); on YCB the large ones helped (cracker 6.3 mm → −0.34, tomato 7.3 → −0.29).  Observation only.
+- Front-loading: the sum of cycle effects over HO3D is −2.4 cm (end-point gap) while the sum of mean gaps is +2.0 cm: the
+  on-run gap is positive during the middle of the sequences and closes towards the end (SB11 −4.4 at the end).
+
+### Parked: prior scale handling (2026-09-17, user decision)
+
+The alignment optimiser leaves 16–33 % scale errors on four YCB priors; whether the clamp / regulariser or a scale-insensitive
+loss is responsible is unverified.  To be examined later as its own topic (candidate: closed-form scale initialisation from
+the observed depth extent before the gradient refinement).  Depth-term normalisation by mask pixels and final-pose selection
+(150 steps) are accepted in principle for a later single-variable test.
+
+## 15. Safety-point verification with the MAIN code (c297f6a) and shared depth weight 10 on all 22 sequences (2026-09-17; single runs)
+
+Batch `logs/safety22_20260917/` (run_one.sh: run_custom.py / run_ho3d.py directly, no experiment copy), outputs `outputs/safety22_20260917/{main,main_dw10}/`, 44 runs, no failures. `main` = the committed defaults (init 500, update 500, erosion 2 px, density cut 0, depth weight 1); `main_dw10` = the same with `depth_loss_weight` 10 in the runner config (the only difference).
+
+| set | ADD tracker alone | ADD main | ADD adopt (copy, §9) | ADD dw10 | P1 main / dw10 | P2 main / dw10 | unseen coverage main / dw10 | render depth err mm main / dw10 |
+|---|---|---|---|---|---|---|---|---|
+| HO3D 13 | 1.674 | 1.867 | 1.831 | 1.911 | 0.405 / 0.436 | 0.343 / 0.371 | 78 % / 81 % | 3.71 / 2.30 |
+| HO3D without MPM10 | 1.722 | 1.901 | 1.886 | 1.669 | 0.414 / 0.430 | 0.350 / 0.362 | 77 % / 80 % | 3.72 / 2.18 |
+| YCB 9 | 1.274 | 1.199 | 1.183 | 1.299 | 0.453 / 0.469 | 0.453 / 0.469 | 59 % / 60 % | 3.80 / 2.43 |
+
+Per sequence:
+
+| seq | ADD alone | ADD main | ADD adopt | ADD dw10 | P1 main | P1 dw10 | P2 main | P2 dw10 | cov main | cov dw10 |
+|---|---|---|---|---|---|---|---|---|---|---|
+| AP10 | 4.552 | 5.530 | 5.740 | 2.906 | 0.609 | 0.612 | 0.565 | 0.574 | 99 | 85 |
+| AP11 | 1.341 | 2.153 | 2.000 | 2.039 | 0.579 | 0.644 | 0.507 | 0.573 | 73 | 68 |
+| AP12 | 0.888 | 2.271 | 2.159 | 1.890 | 0.476 | 0.462 | 0.372 | 0.349 | 69 | 71 |
+| AP13 | 0.969 | 1.244 | 1.220 | 1.322 | 0.393 | 0.402 | 0.321 | 0.322 | 81 | 86 |
+| AP14 | 0.790 | 0.878 | 0.838 | 0.752 | 0.401 | 0.393 | 0.332 | 0.287 | 33 | 48 |
+| MPM10 | 1.092 | 1.462 | 1.165 | 4.816 | 0.297 | 0.511 | 0.259 | 0.480 | 95 | 100 |
+| MPM11 | 0.830 | 1.316 | 1.300 | 1.057 | 0.274 | 0.267 | 0.232 | 0.224 | 100 | 100 |
+| MPM12 | 0.457 | 0.641 | 0.673 | 0.661 | 0.260 | 0.261 | 0.170 | 0.169 | 87 | 90 |
+| MPM13 | 2.753 | 2.723 | 2.732 | 2.877 | 0.411 | 0.384 | 0.377 | 0.348 | 63 | 93 |
+| MPM14 | 0.910 | 0.758 | 0.783 | 0.791 | 0.260 | 0.320 | 0.147 | 0.210 | 100 | 100 |
+| SB11 | 2.144 | 1.256 | 1.220 | 1.276 | 0.455 | 0.469 | 0.393 | 0.422 | 90 | 69 |
+| SB13 | 0.673 | 0.824 | 0.810 | 0.896 | 0.466 | 0.477 | 0.433 | 0.437 | 53 | 56 |
+| SM1 | 4.361 | 3.216 | 3.159 | 3.558 | 0.378 | 0.470 | 0.345 | 0.432 | 72 | 88 |
+| bleach0 | 1.764 | 1.493 | 1.543 | 1.683 | 0.476 | 0.543 | 0.476 | 0.543 | 63 | 59 |
+| bleach_hard_00_03_chaitanya | 1.011 | 0.779 | 0.799 | 0.810 | 0.572 | 0.583 | 0.572 | 0.583 | 57 | 57 |
+| cracker_box_reorient | 0.756 | 0.889 | 0.839 | 0.831 | 0.545 | 0.511 | 0.545 | 0.511 | 38 | 40 |
+| cracker_box_yalehand0 | 2.763 | 2.691 | 2.667 | 2.723 | 0.716 | 0.734 | 0.716 | 0.734 | 17 | 16 |
+| mustard0 | 0.743 | 0.508 | 0.512 | 0.570 | 0.231 | 0.239 | 0.231 | 0.239 | 95 | 96 |
+| mustard_easy_00_02 | 0.784 | 0.616 | 0.617 | 0.646 | 0.172 | 0.179 | 0.172 | 0.179 | 99 | 99 |
+| sugar_box1 | 0.681 | 0.643 | 0.598 | 0.822 | 0.217 | 0.243 | 0.217 | 0.243 | 97 | 100 |
+| sugar_box_yalehand0 | 1.757 | 1.526 | 1.474 | 1.606 | 0.456 | 0.449 | 0.456 | 0.449 | 18 | 17 |
+| tomato_soup_can_yalehand0 | 1.211 | 1.651 | 1.598 | 1.996 | 0.692 | 0.737 | 0.692 | 0.737 | 47 | 59 |
+
+- **Main code = copy runner.** Per-sequence ADD differences main − adopt average +0.04 cm (largest MPM10 +0.30, the unstable sequence); P1/P2/coverage identical within Poisson variation. The safety point c297f6a is verified on 22 sequences; these `main` numbers are the reference for later comparisons.
+- **Depth weight 10: not adopted.** ADD better on only 5/13 HO3D and 1/9 YCB sequences (median change +0.02 / +0.06 cm); large gains on the pitcher sequences (AP10 5.53 → 2.91, AP12 2.27 → 1.89, MPM11 1.32 → 1.06) are cancelled by a progressive drift on MPM10 (1.46 → 4.82, error growing from frame 200 to 1000 and plateauing at ~8 cm, no crash) and small losses elsewhere. Geometry vs GT is worse (P1 worse on 17/22; HO3D 0.405 → 0.436, YCB 0.453 → 0.469) although the rendered depth fits the observations better (3.7 → 2.3 mm): the map follows the tracker's biased depth more tightly (§8 mechanism), so the feedback anchors to a worse map. The single loss setting stays at depth weight 1.
+- Outputs carry the per-frame dumps (128 GB); cleanup needs approval.
+
+> 2026-09-18: the consolidated 22-sequence tables (original BundleSDF with paper and SAM2 masks, tracker alone, GS 9/12, adopt, main, main + depth 10, the 4-sequence B-track sweep, repeat noise, verdicts) are in `RESULTS_22SEQ.md`, generated by `experiments/build_results_tables.py`; the safety22 dumps were cleaned (128 → 14 GB, list in `logs/safety22_20260917/cleanup_deleted_list.txt`).

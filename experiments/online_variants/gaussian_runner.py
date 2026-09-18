@@ -1808,11 +1808,15 @@ class GaussianRunner:
             if not torch.isfinite(loss):
                 raise FloatingPointError("Non-finite Gaussian training loss")
             if split:
+                # pose deltas: gradient of the pose-weighted loss; map (and gsplat's screen-space means2d grad that the
+                # strategy reads in step_post_backward): full backward of the map-weighted loss, then the pose grads are
+                # overwritten with the pose-loss grads.  (A backward restricted with inputs= left means2d.grad None.)
                 pose_loss = colour_loss + (w_pose * depth_term if (w_pose > 0 and depth_term is not None) else 0.0)
-                splat_params = [p for p in self.splats.values()]
                 pose_params = [p for g in pose_optimizer.param_groups for p in g["params"]]
-                torch.autograd.backward(loss, inputs=splat_params, retain_graph=True)
-                torch.autograd.backward(pose_loss, inputs=pose_params)
+                pose_grads = torch.autograd.grad(pose_loss, pose_params, retain_graph=True, allow_unused=True)
+                loss.backward()
+                for p, g in zip(pose_params, pose_grads):
+                    p.grad = None if g is None else g.detach().clone()
             else:
                 loss.backward()
             if frozen_rows is not None:
