@@ -1,0 +1,2 @@
+ctrl ho3d AP12
+normalinit ho3d AP12

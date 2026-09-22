@@ -1,0 +1,12 @@
+[
+  {
+    "run_dir": "outputs/exp_batch_20260921/sB/ycb/cracker_box_yalehand0",
+    "frames": 1327,
+    "ADDS_err_cm": 1.8504962520536676,
+    "ADD_err_cm": 2.8531231375045234,
+    "ADDS_AUC": 90.98803085710513,
+    "ADD_AUC": 85.27658950626322,
+    "ADD_err_cm_median": 1.297292696316732,
+    "ADD_err_cm_p90": 1.6026947523626556
+  }
+]

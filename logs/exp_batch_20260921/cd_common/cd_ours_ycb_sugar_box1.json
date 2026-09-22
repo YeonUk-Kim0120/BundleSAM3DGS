@@ -1,0 +1,34 @@
+{
+ "dataset": "ycb",
+ "seq": "sugar_box1",
+ "mesh": "outputs/fulleval_20260912/ycb/sugar_box1/final/gs/mesh_real_world.obj",
+ "run_dir": "outputs/fulleval_20260912/ycb/sugar_box1",
+ "mesh_vertices_raw": 71449,
+ "mesh_vertices_used": 71448,
+ "icp_fitness": 1.0,
+ "icp_rmse_m": 0.004444951957616098,
+ "icp_rotation_deg": 2.2946807159309146,
+ "icp_translation_mm": 9.603523947941326,
+ "P1_original": {
+  "gt": "full model",
+  "chamfer_cm": 0.2862693374670182,
+  "pred_to_gt_cm": 0.34409943576495927,
+  "gt_to_pred_cm": 0.22843923916907724,
+  "gt_points": 99999
+ },
+ "P2_full_model": {
+  "chamfer_cm": 0.2862693374670182,
+  "pred_to_gt_cm": 0.34409943576495927,
+  "gt_to_pred_cm": 0.22843923916907724,
+  "gt_points": 99999
+ },
+ "P3_regions": {
+  "seen_source": "ray cast from 182 keyframe GT poses (common_seen)",
+  "seen_frac": 0.998269982699827,
+  "gt_to_pred_seen_cm": 0.22818101953324277,
+  "gt_to_pred_unseen_cm": 0.37743943204083813,
+  "unseen_within_5mm_frac": 0.7341040462427746,
+  "seen_within_5mm_frac": 0.9377817402279968,
+  "pred_to_gt_cm": 0.34409943576495927
+ }
+}

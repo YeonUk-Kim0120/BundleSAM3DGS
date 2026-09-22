@@ -1,0 +1,6 @@
+ctrl ycb mustard0
+normalinit ycb mustard0
+ctrl ho3d MPM12
+normalinit ho3d MPM12
+ctrl ycb cracker_box_yalehand0
+normalinit ycb cracker_box_yalehand0

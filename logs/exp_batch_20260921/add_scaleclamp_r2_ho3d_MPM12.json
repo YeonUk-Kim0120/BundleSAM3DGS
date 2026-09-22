@@ -1,0 +1,12 @@
+[
+  {
+    "run_dir": "outputs/exp_batch_20260921/scaleclamp_r2/ho3d/MPM12",
+    "frames": 1571,
+    "ADDS_err_cm": 0.2250531540695752,
+    "ADD_err_cm": 0.5219423757242864,
+    "ADDS_AUC": 97.7520751515513,
+    "ADD_AUC": 94.78707776090619,
+    "ADD_err_cm_median": 0.5001746309436214,
+    "ADD_err_cm_p90": 0.7586864162571183
+  }
+]

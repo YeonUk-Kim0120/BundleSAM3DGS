@@ -1,0 +1,12 @@
+[
+  {
+    "run_dir": "outputs/exp_batch_20260921/sA/ho3d/AP12",
+    "frames": 1607,
+    "ADDS_err_cm": 0.348415666341048,
+    "ADD_err_cm": 0.8388317226846237,
+    "ADDS_AUC": 96.51966553260746,
+    "ADD_AUC": 91.62246635769436,
+    "ADD_err_cm_median": 0.87335059279547,
+    "ADD_err_cm_p90": 1.1410074773970986
+  }
+]

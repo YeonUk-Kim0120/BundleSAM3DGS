@@ -1,0 +1,65 @@
+{
+ "checkpoint": "outputs/exp_batch_20260921/sC/ho3d/MPM12/final/gs/checkpoint_global.pt",
+ "gaussians": 112536,
+ "views": 238,
+ "opacity": {
+  "all_active": {
+   "n": 112536,
+   "lt0.1": 0.09648468045780906,
+   "0.1_0.5": 0.44893189734840405,
+   "ge0.5": 0.4545834221937869,
+   "median": 0.44881343841552734
+  },
+  "prior": {
+   "n": 19524,
+   "lt0.1": 0.026070477361196477,
+   "0.1_0.5": 0.1854640442532268,
+   "ge0.5": 0.7884654783855767,
+   "median": 0.8269813656806946
+  },
+  "observed": {
+   "n": 93012,
+   "lt0.1": 0.11126521309078398,
+   "0.1_0.5": 0.5042360125575195,
+   "ge0.5": 0.38449877435169655,
+   "median": 0.38751882314682007
+  }
+ },
+ "outliers": {
+  "radius_gt_10mm": 76,
+  "radius_gt_10mm_prior": 0,
+  "dist_gt_1.25": 7636,
+  "radius_p99_mm": 2.148167765140533
+ },
+ "lifecycle": {
+  "unseen": 1593,
+  "verified": 110677,
+  "suspect": 266,
+  "contradicted": 0
+ },
+ "render_depth_residual_mm": {
+  "median": 2.961322784423828,
+  "p90": 9.769996547698982,
+  "signed_median": -2.9092283248901367
+ },
+ "centre_residual_mm": {
+  "median": 0.5875984577915552,
+  "p90": 0.9184143588621732
+ },
+ "vs_gt": {
+  "centres_used": 94040,
+  "icp_rotation_deg": 6.22809035600323,
+  "centres_to_gt_mm": {
+   "median": 2.053196184489964,
+   "mean": 2.5981758232155965,
+   "gt1cm_frac": 0.005933645257337303
+  },
+  "gt_to_centres_mm": {
+   "seen_mean": 0.9306298266608245,
+   "unseen_mean": 2.5838460820743023,
+   "seen_within5mm": 0.9919193132016569,
+   "unseen_within5mm": 0.8378604762474572,
+   "seen_frac": 0.8328583285832858
+  }
+ }
+}

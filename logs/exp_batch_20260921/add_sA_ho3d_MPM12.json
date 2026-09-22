@@ -1,0 +1,12 @@
+[
+  {
+    "run_dir": "outputs/exp_batch_20260921/sA/ho3d/MPM12",
+    "frames": 1571,
+    "ADDS_err_cm": 0.234260244659866,
+    "ADD_err_cm": 0.5452618899867095,
+    "ADDS_AUC": 97.6600566565824,
+    "ADD_AUC": 94.55402587133108,
+    "ADD_err_cm_median": 0.527080785078075,
+    "ADD_err_cm_p90": 0.7855703593158536
+  }
+]

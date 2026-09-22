@@ -1,0 +1,34 @@
+{
+ "dataset": "ycb",
+ "seq": "tomato_soup_can_yalehand0",
+ "mesh": "logs/exp_batch_20260921/supersede/fulleval_tomato_soup_can_yalehand0/r5k3/mesh_real_world.obj",
+ "run_dir": "outputs/fulleval_20260912/ycb/tomato_soup_can_yalehand0",
+ "mesh_vertices_raw": 53613,
+ "mesh_vertices_used": 53613,
+ "icp_fitness": 0.9224077940153097,
+ "icp_rmse_m": 0.008816267059210903,
+ "icp_rotation_deg": 2.0987448994983557,
+ "icp_translation_mm": 6.108975356236131,
+ "P1_original": {
+  "gt": "full model",
+  "chamfer_cm": 0.6736624017763676,
+  "pred_to_gt_cm": 0.8910747741148974,
+  "gt_to_pred_cm": 0.4562500294378377,
+  "gt_points": 99999
+ },
+ "P2_full_model": {
+  "chamfer_cm": 0.6736624017763676,
+  "pred_to_gt_cm": 0.8910747741148974,
+  "gt_to_pred_cm": 0.4562500294378377,
+  "gt_points": 99999
+ },
+ "P3_regions": {
+  "seen_source": "ray cast from 262 keyframe GT poses (common_seen)",
+  "seen_frac": 0.8470084700847008,
+  "gt_to_pred_seen_cm": 0.4383124508589435,
+  "gt_to_pred_unseen_cm": 0.5555580172561484,
+  "unseen_within_5mm_frac": 0.5250016340937316,
+  "seen_within_5mm_frac": 0.6740968122786305,
+  "pred_to_gt_cm": 0.8910747741148974
+ }
+}

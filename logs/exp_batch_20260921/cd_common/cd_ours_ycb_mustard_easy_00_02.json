@@ -1,0 +1,34 @@
+{
+ "dataset": "ycb",
+ "seq": "mustard_easy_00_02",
+ "mesh": "outputs/fulleval_20260912/ycb/mustard_easy_00_02/final/gs/mesh_real_world.obj",
+ "run_dir": "outputs/fulleval_20260912/ycb/mustard_easy_00_02",
+ "mesh_vertices_raw": 55343,
+ "mesh_vertices_used": 55343,
+ "icp_fitness": 1.0,
+ "icp_rmse_m": 0.0025303184074525606,
+ "icp_rotation_deg": 2.215752047015201,
+ "icp_translation_mm": 5.141361128065558,
+ "P1_original": {
+  "gt": "full model",
+  "chamfer_cm": 0.1757876286936443,
+  "pred_to_gt_cm": 0.2003989361550729,
+  "gt_to_pred_cm": 0.15117632123221578,
+  "gt_points": 99999
+ },
+ "P2_full_model": {
+  "chamfer_cm": 0.1757876286936443,
+  "pred_to_gt_cm": 0.2003989361550729,
+  "gt_to_pred_cm": 0.15117632123221578,
+  "gt_points": 99999
+ },
+ "P3_regions": {
+  "seen_source": "ray cast from 138 keyframe GT poses (common_seen)",
+  "seen_frac": 0.6373963739637396,
+  "gt_to_pred_seen_cm": 0.15018056653074907,
+  "gt_to_pred_unseen_cm": 0.15292669103135492,
+  "unseen_within_5mm_frac": 0.9910093767236624,
+  "seen_within_5mm_frac": 0.997442695994603,
+  "pred_to_gt_cm": 0.2003989361550729
+ }
+}

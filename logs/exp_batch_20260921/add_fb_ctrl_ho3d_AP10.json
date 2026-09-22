@@ -1,0 +1,12 @@
+[
+  {
+    "run_dir": "outputs/exp_batch_20260921/fb_ctrl/ho3d/AP10",
+    "frames": 1607,
+    "ADDS_err_cm": 1.0043795384120657,
+    "ADD_err_cm": 5.424734734971174,
+    "ADDS_AUC": 89.96579745958853,
+    "ADD_AUC": 46.06060462139214,
+    "ADD_err_cm_median": 5.51244025826527,
+    "ADD_err_cm_p90": 8.514769627336623
+  }
+]

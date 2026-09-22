@@ -1,0 +1,10 @@
+mustard0: 38 keyframes with GT in outputs/fulleval_20260912/ycb/mustard0
+mustard0: 38 keyframes with GT in outputs/fulleval_20260912/ycb/mustard0
+k*=10 seed=0: map built (43927 gaussians, own layer 2252), injected error 3.00 deg / 27.25 mm, others max 0.012 deg (143s)
+sanity: {'check1_max_abs_diff': 6.532669067382812e-05, 'check2_grad_full_map': 0.3627829849720001, 'check2_grad_own_layer_only': 0.0009617611649446189, 'check2_ratio': 0.0026510646992411965, 'own_layer_gaussians': 2252, 'check3_max_abs_diff': 0.0003116130828857422, 'pass': False}
+SANITY FAILED -> no results written
+mustard0: 38 keyframes with GT in outputs/fulleval_20260912/ycb/mustard0
+k*=10 seed=0: map built (43910 gaussians, own layer 2241), injected error 3.00 deg / 5.00 mm, others max 0.012 deg (162s)
+mustard0: 38 keyframes with GT in outputs/fulleval_20260912/ycb/mustard0
+k*=10 seed=0: map built (43918 gaussians, own layer 2260), injected error 3.00 deg / 5.00 mm, others max 0.012 deg (182s)
+sanity: {'check1_max_abs_diff': 5.960464477539063e-08, 'check2_grad_full_map': 0.3687000274658203, 'check2_grad_own_layer_only': 5.667501667971919e-08, 'check2_ratio': 1.537157918573064e-07, 'own_layer_gaussians': 2260, 'check3_max_abs_diff': 0.0037707574665546417, 'check3_mean_abs_diff': 3.622993972385302e-05, 'check3_negative_control_mean_abs_diff': 0.005849984008818865, 'pass': True}

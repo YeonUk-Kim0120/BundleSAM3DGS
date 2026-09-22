@@ -72,9 +72,6 @@ APPEND_MASK_ERODE_PX = int(_os.environ.get("GS_APPEND_MASK_ERODE_PX", "2"))  # d
 #            normal (PCA over the update's full candidate cloud, radius GS_NORMALINIT_RADIUS_M = 0.004 m, >= 6 neighbours,
 #            fallback = point -> camera direction, sign towards the source camera) instead of the identity quaternion.
 NORMALINIT_RADIUS_M = float(_os.environ.get("GS_NORMALINIT_RADIUS_M", "0.004"))
-#   scaleclamp : EXP_BATCH_20260921 4.5 — after every optimizer step the two in-plane log-scales are clamped to
-#            log(GS_SCALECLAMP_RADIUS_M = 0.005 m in normalized units), for all Gaussians.
-SCALECLAMP_RADIUS_M = float(_os.environ.get("GS_SCALECLAMP_RADIUS_M", "0.005"))
 NORMALINIT_MIN_NEIGHBOURS = 6
 NORMALINIT_K = 32
 
@@ -1880,9 +1877,6 @@ class GaussianRunner:
                         parameter.grad[frozen_rows] = 0
             for optimizer in self.optimizers.values():
                 optimizer.step()
-            if "scaleclamp" in ONLINE_VARIANTS:  # EXP_BATCH_20260921 4.5: in-plane radius cap (clamp, not deletion)
-                with torch.no_grad():
-                    self.splats["scales"].data[:, :2].clamp_(max=math.log(SCALECLAMP_RADIUS_M * float(self.normalization.scale)))
             means_scheduler.step()
             if pose_deltas is not None:
                 self._pose_step(pose_deltas, pose_optimizer, pose_scheduler)

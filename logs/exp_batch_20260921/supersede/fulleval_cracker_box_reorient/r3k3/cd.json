@@ -1,0 +1,34 @@
+{
+ "dataset": "ycb",
+ "seq": "cracker_box_reorient",
+ "mesh": "logs/exp_batch_20260921/supersede/fulleval_cracker_box_reorient/r3k3/mesh_real_world.obj",
+ "run_dir": "outputs/fulleval_20260912/ycb/cracker_box_reorient",
+ "mesh_vertices_raw": 89818,
+ "mesh_vertices_used": 89818,
+ "icp_fitness": 1.0,
+ "icp_rmse_m": 0.006330314305263469,
+ "icp_rotation_deg": 1.9961756224214866,
+ "icp_translation_mm": 5.568757047997067,
+ "P1_original": {
+  "gt": "full model",
+  "chamfer_cm": 0.5276745254943691,
+  "pred_to_gt_cm": 0.5298542496420484,
+  "gt_to_pred_cm": 0.5254948013466898,
+  "gt_points": 99999
+ },
+ "P2_full_model": {
+  "chamfer_cm": 0.5276745254943691,
+  "pred_to_gt_cm": 0.5298542496420484,
+  "gt_to_pred_cm": 0.5254948013466898,
+  "gt_points": 99999
+ },
+ "P3_regions": {
+  "seen_source": "ray cast from 75 keyframe GT poses (common_seen)",
+  "seen_frac": 0.5419654196541965,
+  "gt_to_pred_seen_cm": 0.5038054397260546,
+  "gt_to_pred_unseen_cm": 0.5511585491883579,
+  "unseen_within_5mm_frac": 0.48335261882409447,
+  "seen_within_5mm_frac": 0.5267178389549044,
+  "pred_to_gt_cm": 0.5298542496420484
+ }
+}

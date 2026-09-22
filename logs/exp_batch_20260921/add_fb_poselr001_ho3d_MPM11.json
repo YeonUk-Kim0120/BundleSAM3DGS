@@ -1,0 +1,12 @@
+[
+  {
+    "run_dir": "outputs/exp_batch_20260921/fb_poselr001/ho3d/MPM11",
+    "frames": 1571,
+    "ADDS_err_cm": 0.4144857658409635,
+    "ADD_err_cm": 0.9615886877672495,
+    "ADDS_AUC": 95.85912362070317,
+    "ADD_AUC": 90.39369768933543,
+    "ADD_err_cm_median": 0.9538825977045094,
+    "ADD_err_cm_p90": 1.3330259509157312
+  }
+]

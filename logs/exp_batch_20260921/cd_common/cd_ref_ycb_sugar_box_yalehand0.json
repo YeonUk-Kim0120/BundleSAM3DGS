@@ -1,0 +1,34 @@
+{
+ "dataset": "ycb",
+ "seq": "sugar_box_yalehand0",
+ "mesh": "/home/kist/Desktop/BundleSDF_baseline_outputs/full_eval_sam2_ycb/ycb/sugar_box_yalehand0/textured_mesh.obj",
+ "run_dir": "/home/kist/Desktop/BundleSDF_baseline_outputs/full_eval_sam2_ycb/ycb/sugar_box_yalehand0",
+ "mesh_vertices_raw": 33964,
+ "mesh_vertices_used": 33964,
+ "icp_fitness": 0.988454925079833,
+ "icp_rmse_m": 0.00737278641213107,
+ "icp_rotation_deg": 8.062352902600853,
+ "icp_translation_mm": 24.184397376618797,
+ "P1_original": {
+  "gt": "full model",
+  "chamfer_cm": 0.5794594823686284,
+  "pred_to_gt_cm": 0.6103985734583212,
+  "gt_to_pred_cm": 0.5485203912789357,
+  "gt_points": 99999
+ },
+ "P2_full_model": {
+  "chamfer_cm": 0.5794594823686284,
+  "pred_to_gt_cm": 0.6103985734583212,
+  "gt_to_pred_cm": 0.5485203912789357,
+  "gt_points": 99999
+ },
+ "P3_regions": {
+  "seen_source": "ray cast from 201 keyframe GT poses (common_seen)",
+  "seen_frac": 0.7084570845708457,
+  "gt_to_pred_seen_cm": 0.31447070413924333,
+  "gt_to_pred_unseen_cm": 1.1172673929051793,
+  "unseen_within_5mm_frac": 0.33449955409206283,
+  "seen_within_5mm_frac": 0.8594113910650011,
+  "pred_to_gt_cm": 0.6103985734583212
+ }
+}

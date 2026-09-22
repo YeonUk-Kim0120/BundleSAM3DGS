@@ -1,0 +1,34 @@
+{
+ "dataset": "ycb",
+ "seq": "bleach_hard_00_03_chaitanya",
+ "mesh": "logs/exp_batch_20260921/supersede/fulleval_bleach_hard_00_03_chaitanya/r3k3/mesh_real_world.obj",
+ "run_dir": "outputs/fulleval_20260912/ycb/bleach_hard_00_03_chaitanya",
+ "mesh_vertices_raw": 81468,
+ "mesh_vertices_used": 81468,
+ "icp_fitness": 0.8990519662921348,
+ "icp_rmse_m": 0.007092396053567575,
+ "icp_rotation_deg": 10.118122539460996,
+ "icp_translation_mm": 6.248023838739484,
+ "P1_original": {
+  "gt": "full model",
+  "chamfer_cm": 0.6217600899598791,
+  "pred_to_gt_cm": 0.8706794599952341,
+  "gt_to_pred_cm": 0.37284071992452394,
+  "gt_points": 99999
+ },
+ "P2_full_model": {
+  "chamfer_cm": 0.6217600899598791,
+  "pred_to_gt_cm": 0.8706794599952341,
+  "gt_to_pred_cm": 0.37284071992452394,
+  "gt_points": 99999
+ },
+ "P3_regions": {
+  "seen_source": "ray cast from 89 keyframe GT poses (common_seen)",
+  "seen_frac": 0.7130171301713017,
+  "gt_to_pred_seen_cm": 0.31970892824682423,
+  "gt_to_pred_unseen_cm": 0.5048481726533437,
+  "unseen_within_5mm_frac": 0.5385044253954979,
+  "seen_within_5mm_frac": 0.8116155453640201,
+  "pred_to_gt_cm": 0.8706794599952341
+ }
+}

@@ -1,0 +1,12 @@
+[
+  {
+    "run_dir": "outputs/exp_batch_20260921/scaleclamp/ycb/mustard0",
+    "frames": 737,
+    "ADDS_err_cm": 0.3329957320034901,
+    "ADD_err_cm": 0.7593790921789496,
+    "ADDS_AUC": 96.67865843715609,
+    "ADD_AUC": 92.42131855951641,
+    "ADD_err_cm_median": 0.8277983931551224,
+    "ADD_err_cm_p90": 0.95638025414132
+  }
+]

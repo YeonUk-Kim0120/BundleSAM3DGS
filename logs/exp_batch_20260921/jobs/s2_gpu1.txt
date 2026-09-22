@@ -1,0 +1,10 @@
+sA ho3d AP12
+sB ho3d AP12
+sC ho3d AP12
+scaleclamp ho3d AP12
+fb_ctrl ho3d AP12
+fb_poselr001 ho3d AP12
+ctrl ho3d AP10
+fb_ctrl ho3d AP10
+fb_poselr001 ho3d AP10
+sh0 ho3d AP12

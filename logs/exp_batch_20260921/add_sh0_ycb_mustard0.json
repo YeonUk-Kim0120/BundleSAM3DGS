@@ -1,0 +1,12 @@
+[
+  {
+    "run_dir": "outputs/exp_batch_20260921/sh0/ycb/mustard0",
+    "frames": 737,
+    "ADDS_err_cm": 0.32744251570707816,
+    "ADD_err_cm": 0.7584316945581214,
+    "ADDS_AUC": 96.73406224067767,
+    "ADD_AUC": 92.43070278992998,
+    "ADD_err_cm_median": 0.8272562666388572,
+    "ADD_err_cm_p90": 0.9515218270808593
+  }
+]

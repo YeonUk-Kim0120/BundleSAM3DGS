@@ -1,0 +1,24 @@
+{
+ "cfg": "fb_ctrl",
+ "dataset": "ycb",
+ "seq": "mustard0",
+ "gpu": "0",
+ "command": "/usr/bin/python3 experiments/online_variants/launch.py run_custom.py --mode run_video --video_dir datasets/YCBInEOAT/mustard0 --out_folder outputs/exp_batch_20260921/fb_ctrl/ycb/mustard0 --mask_dir masks_sam2 --use_segmenter 0 --use_gui 0 --debug_level 2 --backend gaussian --gs_feedback on --gs_initial_steps 500 --gs_update_steps 500  --prior_mesh_npz /home/kist/Desktop/sam-3d-objects/output_YCBInEOAT_sam2mask_mesh/mustard0_mesh_depth.npz --prior_pose_json /home/kist/Desktop/sam-3d-objects/output_YCBInEOAT_sam2mask_mesh/mustard0_mesh_depth.json --prior_gaussian_ply /home/kist/Desktop/sam-3d-objects/output_YCBInEOAT_sam2mask_mesh/mustard0_splat_depth.ply",
+ "env": {
+  "GS_ONLINE_VARIANTS": "",
+  "CUDA_VISIBLE_DEVICES": "0",
+  "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+ },
+ "feedback": "on",
+ "initial_steps": 500,
+ "update_steps": 500,
+ "runner_config": "config_gs_2dgs_1mm_lifecycle.yml",
+ "runner_config_text": "# 2DGS + observation-gated prior lifecycle (milestone \u2462 v1, adopted\n# 2026-09-01 \u2014 see PRIOR_LIFECYCLE_RESULTS.md).\n#\n# Built on config_gs_2dgs_1mm.yml. The lifecycle requires densification and\n# opacity reset disabled (v1 constraint) and manages a SAM3D surfel prior:\n# UNSEEN frozen/protected, VERIFIED trained, CONTRADICTED removed.\nvoxel_size: 0.001\nnovelty_distance: 0.001\n\nrenderer: 2dgs\n\ndepth_loss_weight: 1.0\ndepth_huber_delta_m: 0.03\ndepth_alpha_threshold: 0.05\n\nnormal_consistency_weight: 0.05\nnormal_consistency_start_step: 7000\ndistortion_weight: 0.0\n\nstrategy:\n  refine_start_iter: 100000000\n  refine_stop_iter: 100000001\n  reset_every: 100000000\n\nupdate_strategy:\n  refine_start_iter: 100000000\n  refine_stop_iter: 100000001\n\nprior_lifecycle:\n  enabled: true\n",
+ "start": "2026-09-21 13:47:10",
+ "end": "2026-09-21 13:53:49",
+ "rc": 0,
+ "git_head": "ref: refs/heads/milestone5-v1",
+ "copy_runner_sha1": "d57bf1fa9948c4d55eb854d7f25e9701c7338600",
+ "copy_lifecycle_sha1": "c570b3d0e832290d401df6c236f8aa0eb15846b1",
+ "git_commit": "86c2766104b094e3d2febb8e5c67d0ea29bc1fbb"
+}

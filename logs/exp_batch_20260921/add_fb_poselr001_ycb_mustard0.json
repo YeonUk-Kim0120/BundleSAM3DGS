@@ -1,0 +1,12 @@
+[
+  {
+    "run_dir": "outputs/exp_batch_20260921/fb_poselr001/ycb/mustard0",
+    "frames": 737,
+    "ADDS_err_cm": 0.260391522449329,
+    "ADD_err_cm": 0.5868290860431182,
+    "ADDS_AUC": 97.40359525568894,
+    "ADD_AUC": 94.14535767422146,
+    "ADD_err_cm_median": 0.617272205813356,
+    "ADD_err_cm_p90": 0.7734670154965014
+  }
+]

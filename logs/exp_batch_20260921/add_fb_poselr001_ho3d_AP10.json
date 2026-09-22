@@ -1,0 +1,12 @@
+[
+  {
+    "run_dir": "outputs/exp_batch_20260921/fb_poselr001/ho3d/AP10",
+    "frames": 1607,
+    "ADDS_err_cm": 0.7912244138931452,
+    "ADD_err_cm": 2.8667861742289626,
+    "ADDS_AUC": 92.09663810779004,
+    "ADD_AUC": 71.38985035044514,
+    "ADD_err_cm_median": 2.2146644941743547,
+    "ADD_err_cm_p90": 5.472470694205916
+  }
+]

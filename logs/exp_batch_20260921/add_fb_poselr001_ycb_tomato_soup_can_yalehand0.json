@@ -1,0 +1,12 @@
+[
+  {
+    "run_dir": "outputs/exp_batch_20260921/fb_poselr001/ycb/tomato_soup_can_yalehand0",
+    "frames": 1308,
+    "ADDS_err_cm": 0.47113580576616254,
+    "ADD_err_cm": 1.3381543092078296,
+    "ADDS_AUC": 95.2977483748786,
+    "ADD_AUC": 86.6393197641789,
+    "ADD_err_cm_median": 1.1641030194988429,
+    "ADD_err_cm_p90": 2.5588433532932506
+  }
+]

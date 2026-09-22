@@ -1,0 +1,12 @@
+[
+  {
+    "run_dir": "outputs/exp_batch_20260921/normalinit/ho3d/AP12",
+    "frames": 1607,
+    "ADDS_err_cm": 0.34849395591967475,
+    "ADD_err_cm": 0.8429345923195213,
+    "ADDS_AUC": 96.51883387637585,
+    "ADD_AUC": 91.58148593857615,
+    "ADD_err_cm_median": 0.8767264743685884,
+    "ADD_err_cm_p90": 1.1335838192705283
+  }
+]

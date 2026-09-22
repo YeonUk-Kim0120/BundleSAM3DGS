@@ -1,0 +1,12 @@
+[
+  {
+    "run_dir": "outputs/exp_batch_20260921/fb_ctrl/ho3d/SM1",
+    "frames": 895,
+    "ADDS_err_cm": 0.8799281019634826,
+    "ADD_err_cm": 3.230243236024373,
+    "ADDS_AUC": 91.21358721454112,
+    "ADD_AUC": 67.75930465048535,
+    "ADD_err_cm_median": 3.3296660515028593,
+    "ADD_err_cm_p90": 4.528025423143294
+  }
+]

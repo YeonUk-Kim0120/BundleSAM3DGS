@@ -1,0 +1,54 @@
+{
+ "checkpoint": "outputs/exp_batch_20260921/ctrl/ho3d/MPM12/final/gs/checkpoint_global.pt",
+ "gaussians": 111716,
+ "poisson_input_control": 52203,
+ "prior_verified_in_input": 12404,
+ "live_observed": 38779,
+ "variants": {
+  "control": {
+   "removed_prior_surfels": 0,
+   "poisson_points": 52203,
+   "components": 1954,
+   "components_ge_100v": 3,
+   "vertices": 109020,
+   "seconds": 270.88993978500366,
+   "P1": 0.2679340665386296,
+   "P2": 0.18966691096812127,
+   "pred_to_gt": 0.2219305317593076,
+   "gt_to_pred_seen": 0.12888787263657,
+   "gt_to_pred_unseen": 0.2994941451397981,
+   "unseen_within_5mm": 0.8086035658729209,
+   "seen_within_5mm": 0.9917031878489524
+  },
+  "r3k3": {
+   "removed_prior_surfels": 7343,
+   "poisson_points": 44860,
+   "components": 1343,
+   "components_ge_100v": 2,
+   "vertices": 91385,
+   "seconds": 118.37945914268494,
+   "P1": 0.27403530936631704,
+   "P2": 0.19486125513784702,
+   "pred_to_gt": 0.227935658656235,
+   "gt_to_pred_seen": 0.13460899275826688,
+   "gt_to_pred_unseen": 0.2972127206666283,
+   "unseen_within_5mm": 0.8041163096805074,
+   "seen_within_5mm": 0.9924956474755358
+  },
+  "r5k3": {
+   "removed_prior_surfels": 9220,
+   "poisson_points": 42983,
+   "components": 1331,
+   "components_ge_100v": 3,
+   "vertices": 87157,
+   "seconds": 116.59989285469055,
+   "P1": 0.30104007150715856,
+   "P2": 0.22641188783985422,
+   "pred_to_gt": 0.2519934672892994,
+   "gt_to_pred_seen": 0.16184382118498356,
+   "gt_to_pred_unseen": 0.3950979634642311,
+   "unseen_within_5mm": 0.6981572334569822,
+   "seen_within_5mm": 0.9804886834363931
+  }
+ }
+}

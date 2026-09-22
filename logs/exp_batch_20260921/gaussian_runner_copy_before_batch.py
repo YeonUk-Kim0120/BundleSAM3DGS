@@ -68,52 +68,6 @@ MEANS_UPDATE_LR_MULT = float(_os.environ.get("GS_MEANS_UPDATE_LR_MULT", "1.0"))
 MAP_DEPTH_WEIGHT = float(_os.environ["GS_MAP_DEPTH_WEIGHT"]) if _os.environ.get("GS_MAP_DEPTH_WEIGHT") else None
 POSE_DEPTH_WEIGHT = float(_os.environ["GS_POSE_DEPTH_WEIGHT"]) if _os.environ.get("GS_POSE_DEPTH_WEIGHT") else None
 APPEND_MASK_ERODE_PX = int(_os.environ.get("GS_APPEND_MASK_ERODE_PX", "2"))  # default 2 = main-code default since 2026-09-16
-#   normalinit : EXP_BATCH_20260921 4.1 (H1) — appended observed Gaussians get their quaternion from the local surface
-#            normal (PCA over the update's full candidate cloud, radius GS_NORMALINIT_RADIUS_M = 0.004 m, >= 6 neighbours,
-#            fallback = point -> camera direction, sign towards the source camera) instead of the identity quaternion.
-NORMALINIT_RADIUS_M = float(_os.environ.get("GS_NORMALINIT_RADIUS_M", "0.004"))
-#   scaleclamp : EXP_BATCH_20260921 4.5 — after every optimizer step the two in-plane log-scales are clamped to
-#            log(GS_SCALECLAMP_RADIUS_M = 0.005 m in normalized units), for all Gaussians.
-SCALECLAMP_RADIUS_M = float(_os.environ.get("GS_SCALECLAMP_RADIUS_M", "0.005"))
-NORMALINIT_MIN_NEIGHBOURS = 6
-NORMALINIT_K = 32
-
-
-def estimate_append_normals(novel_points: np.ndarray, cloud_points: np.ndarray, camera_centres: np.ndarray,
-                            radius: float = NORMALINIT_RADIUS_M) -> tuple[np.ndarray, dict]:
-    """Unit normals (metric object frame) for ``novel_points``: PCA of the neighbours within ``radius`` in
-    ``cloud_points`` (the update's candidate cloud before the novelty filter); fewer than 6 neighbours -> direction to
-    the camera.  Sign: facing the source camera(s) (majority vote when an update carries several frames)."""
-    novel = np.asarray(novel_points, dtype=np.float64); cloud = np.asarray(cloud_points, dtype=np.float64)
-    cams = np.asarray(camera_centres, dtype=np.float64).reshape(-1, 3)
-    n = len(novel)
-    if n == 0:
-        return np.empty((0, 3), dtype=np.float32), {"points": 0, "pca": 0, "fallback": 0}
-    to_cam = cams[None, :, :] - novel[:, None, :]                                   # [n, C, 3]
-    to_cam /= np.clip(np.linalg.norm(to_cam, axis=-1, keepdims=True), 1e-12, None)
-    fallback_dir = to_cam.mean(1); fallback_dir /= np.clip(np.linalg.norm(fallback_dir, axis=-1, keepdims=True), 1e-12, None)
-    k = int(min(NORMALINIT_K, len(cloud)))
-    dist, idx = cKDTree(cloud).query(novel, k=k, distance_upper_bound=float(radius), workers=-1)
-    if k == 1:
-        dist, idx = dist[:, None], idx[:, None]
-    valid = np.isfinite(dist)                                                          # [n, k]
-    count = valid.sum(1)
-    nb = cloud[np.where(valid, idx, 0)]                                                # [n, k, 3]
-    w = valid[..., None].astype(np.float64)
-    mean = (nb * w).sum(1) / np.clip(count, 1, None)[:, None]
-    d = (nb - mean[:, None, :]) * w
-    cov = np.einsum("nki,nkj->nij", d, d)
-    _, vecs = np.linalg.eigh(cov)                                                      # ascending eigenvalues
-    normals = vecs[:, :, 0]
-    use_pca = count >= NORMALINIT_MIN_NEIGHBOURS
-    normals = np.where(use_pca[:, None], normals, fallback_dir)
-    votes = np.sign(np.einsum("ni,nci->nc", normals, to_cam)).sum(1)
-    flip = (votes < 0) | ((votes == 0) & ((normals * to_cam[:, 0, :]).sum(1) < 0))
-    normals[flip] *= -1.0
-    normals /= np.clip(np.linalg.norm(normals, axis=-1, keepdims=True), 1e-12, None)
-    return normals.astype(np.float32), {"points": int(n), "pca": int(use_pca.sum()), "fallback": int((~use_pca).sum())}
-
-
 logging.info(f"[online_variants] runner copy {__file__}; variants={sorted(ONLINE_VARIANTS)}")
 
 
@@ -1108,7 +1062,7 @@ class GaussianRunner:
         self.strategy_state = self.strategy.initialize_state(scene_scale=1.0)
         self.strategy_step = 0
 
-    def _append_splats(self, points_metric: np.ndarray, colors: np.ndarray, normals: np.ndarray | None = None) -> None:
+    def _append_splats(self, points_metric: np.ndarray, colors: np.ndarray) -> None:
         if len(points_metric) == 0:
             return
         if self.splats is None:
@@ -1117,9 +1071,6 @@ class GaussianRunner:
             (self.observed_points_metric, points_metric), axis=0
         )
         new_values = self._new_splat_values(points_metric, colors, reference)
-        if normals is not None:  # variant normalinit
-            from sam3d_prior import quats_from_normals
-            new_values["quats"] = quats_from_normals(torch.from_numpy(np.asarray(normals, dtype=np.float32))).float()
         combined: dict[str, torch.Tensor] = {}
         for name in self.splats.keys():
             combined[name] = torch.cat(
@@ -1228,11 +1179,6 @@ class GaussianRunner:
         if "fusion" in ONLINE_VARIANTS and self.lifecycle_fields is not None:
             points, colors, fusion_stats = self._fuse_reobservations(points, colors, validated)
         novel_points, novel_colors, _ = self._select_novel(points, colors)
-        novel_normals = None
-        if "normalinit" in ONLINE_VARIANTS and len(novel_points):
-            cam_centres = np.stack([np.asarray(f.c2w_cv, dtype=np.float64)[:3, 3] for f in validated], axis=0)
-            novel_normals, ni_stats = estimate_append_normals(novel_points, points, cam_centres)
-            logging.info(f"[online_variants] normalinit: {ni_stats}")
         before = self.num_gaussians
 
         snapshot = {
@@ -1262,7 +1208,7 @@ class GaussianRunner:
         }
 
         try:
-            self._append_splats(novel_points, novel_colors, normals=novel_normals)
+            self._append_splats(novel_points, novel_colors)
             after_append = self.num_gaussians
             if self.lifecycle_fields is not None and len(novel_points):
                 self.lifecycle_fields = self.lifecycle_fields.concat(
@@ -1880,9 +1826,6 @@ class GaussianRunner:
                         parameter.grad[frozen_rows] = 0
             for optimizer in self.optimizers.values():
                 optimizer.step()
-            if "scaleclamp" in ONLINE_VARIANTS:  # EXP_BATCH_20260921 4.5: in-plane radius cap (clamp, not deletion)
-                with torch.no_grad():
-                    self.splats["scales"].data[:, :2].clamp_(max=math.log(SCALECLAMP_RADIUS_M * float(self.normalization.scale)))
             means_scheduler.step()
             if pose_deltas is not None:
                 self._pose_step(pose_deltas, pose_optimizer, pose_scheduler)

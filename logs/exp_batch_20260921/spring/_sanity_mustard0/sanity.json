@@ -1,0 +1,11 @@
+{
+ "check1_max_abs_diff": 5.960464477539063e-08,
+ "check2_grad_full_map": 0.3687000274658203,
+ "check2_grad_own_layer_only": 5.667501667971919e-08,
+ "check2_ratio": 1.537157918573064e-07,
+ "own_layer_gaussians": 2260,
+ "check3_max_abs_diff": 0.0037707574665546417,
+ "check3_mean_abs_diff": 3.622993972385302e-05,
+ "check3_negative_control_mean_abs_diff": 0.005849984008818865,
+ "pass": true
+}

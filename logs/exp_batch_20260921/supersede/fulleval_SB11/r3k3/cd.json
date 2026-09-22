@@ -1,0 +1,34 @@
+{
+ "dataset": "ho3d",
+ "seq": "SB11",
+ "mesh": "logs/exp_batch_20260921/supersede/fulleval_SB11/r3k3/mesh_real_world.obj",
+ "run_dir": "outputs/fulleval_20260912/ho3d/SB11",
+ "mesh_vertices_raw": 203667,
+ "mesh_vertices_used": 203662,
+ "icp_fitness": 0.9055344958301744,
+ "icp_rmse_m": 0.008093513782547565,
+ "icp_rotation_deg": 4.882838921517099,
+ "icp_translation_mm": 5.4319092675860166,
+ "P1_original": {
+  "gt": "visible_mesh.ply",
+  "chamfer_cm": 0.5902557475045503,
+  "pred_to_gt_cm": 0.8704882301892483,
+  "gt_to_pred_cm": 0.31002326481985243,
+  "gt_points": 2496
+ },
+ "P2_full_model": {
+  "chamfer_cm": 0.5451530730106801,
+  "pred_to_gt_cm": 0.7662528896343418,
+  "gt_to_pred_cm": 0.3240532563870183,
+  "gt_points": 99999
+ },
+ "P3_regions": {
+  "seen_source": "visible_mesh.obj faces",
+  "seen_frac": 0.8408884088840889,
+  "gt_to_pred_seen_cm": 0.3039189480068088,
+  "gt_to_pred_unseen_cm": 0.4304610071930678,
+  "unseen_within_5mm_frac": 0.6590409150901891,
+  "seen_within_5mm_frac": 0.793549614689373,
+  "pred_to_gt_cm": 0.7662528896343418
+ }
+}

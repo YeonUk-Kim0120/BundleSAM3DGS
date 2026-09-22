@@ -1,0 +1,12 @@
+[
+  {
+    "run_dir": "outputs/exp_batch_20260921/scaleclamp/ho3d/AP12",
+    "frames": 1607,
+    "ADDS_err_cm": 0.36816997453333516,
+    "ADD_err_cm": 0.8964013765537349,
+    "ADDS_AUC": 96.3223638017802,
+    "ADD_AUC": 91.04763972510541,
+    "ADD_err_cm_median": 0.9323933582659115,
+    "ADD_err_cm_p90": 1.2131094965715592
+  }
+]

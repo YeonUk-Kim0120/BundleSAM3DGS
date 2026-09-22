@@ -1,0 +1,34 @@
+{
+ "dataset": "ho3d",
+ "seq": "MPM11",
+ "mesh": "outputs/exp_batch_20260921/fb_ctrl/ho3d/MPM11/final/gs_online0/mesh_real_world.obj",
+ "run_dir": "outputs/exp_batch_20260921/fb_ctrl/ho3d/MPM11",
+ "mesh_vertices_raw": 84359,
+ "mesh_vertices_used": 84359,
+ "icp_fitness": 1.0,
+ "icp_rmse_m": 0.00468764885617861,
+ "icp_rotation_deg": 12.361796080897394,
+ "icp_translation_mm": 2.800185383187282,
+ "P1_original": {
+  "gt": "visible_mesh.ply",
+  "chamfer_cm": 0.2789119998662906,
+  "pred_to_gt_cm": 0.3884203703239208,
+  "gt_to_pred_cm": 0.16940362940866052,
+  "gt_points": 1416
+ },
+ "P2_full_model": {
+  "chamfer_cm": 0.2369182678040612,
+  "pred_to_gt_cm": 0.3044351113805037,
+  "gt_to_pred_cm": 0.1694014242276187,
+  "gt_points": 99999
+ },
+ "P3_regions": {
+  "seen_source": "visible_mesh.obj faces",
+  "seen_frac": 0.998969989699897,
+  "gt_to_pred_seen_cm": 0.16942123783058538,
+  "gt_to_pred_unseen_cm": 0.15018492246100845,
+  "unseen_within_5mm_frac": 1.0,
+  "seen_within_5mm_frac": 0.9706494754544727,
+  "pred_to_gt_cm": 0.3044351113805037
+ }
+}

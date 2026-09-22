@@ -1,0 +1,34 @@
+{
+ "dataset": "ycb",
+ "seq": "bleach0",
+ "mesh": "/home/kist/Desktop/BundleSDF_baseline_outputs/full_eval_sam2_ycb/ycb/bleach0/textured_mesh.obj",
+ "run_dir": "/home/kist/Desktop/BundleSDF_baseline_outputs/full_eval_sam2_ycb/ycb/bleach0",
+ "mesh_vertices_raw": 48061,
+ "mesh_vertices_used": 48061,
+ "icp_fitness": 0.9523328620480711,
+ "icp_rmse_m": 0.007020482436970254,
+ "icp_rotation_deg": 3.897147124242784,
+ "icp_translation_mm": 16.35916271295046,
+ "P1_original": {
+  "gt": "full model",
+  "chamfer_cm": 0.8189427580813988,
+  "pred_to_gt_cm": 0.7024730526289811,
+  "gt_to_pred_cm": 0.9354124635338166,
+  "gt_points": 99999
+ },
+ "P2_full_model": {
+  "chamfer_cm": 0.8189427580813988,
+  "pred_to_gt_cm": 0.7024730526289811,
+  "gt_to_pred_cm": 0.9354124635338166,
+  "gt_points": 99999
+ },
+ "P3_regions": {
+  "seen_source": "ray cast from 133 keyframe GT poses (common_seen)",
+  "seen_frac": 0.8472784727847279,
+  "gt_to_pred_seen_cm": 0.8978309574426179,
+  "gt_to_pred_unseen_cm": 1.1439095999003015,
+  "unseen_within_5mm_frac": 0.4262702985856469,
+  "seen_within_5mm_frac": 0.6266951503062778,
+  "pred_to_gt_cm": 0.7024730526289811
+ }
+}

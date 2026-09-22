@@ -1,0 +1,34 @@
+{
+ "dataset": "ycb",
+ "seq": "cracker_box_yalehand0",
+ "mesh": "outputs/exp_batch_20260921/bsdfpose/ycb/cracker_box_yalehand0/final/gs_online0/mesh_real_world.obj",
+ "run_dir": "/home/kist/Desktop/BundleSDF_baseline_outputs/full_eval_sam2_ycb/ycb/cracker_box_yalehand0",
+ "mesh_vertices_raw": 144949,
+ "mesh_vertices_used": 144949,
+ "icp_fitness": 0.8573923892701185,
+ "icp_rmse_m": 0.006395434610720409,
+ "icp_rotation_deg": 3.207502146563254,
+ "icp_translation_mm": 10.99789058971007,
+ "P1_original": {
+  "gt": "full model",
+  "chamfer_cm": 0.7180350690816852,
+  "pred_to_gt_cm": 0.9417101090114788,
+  "gt_to_pred_cm": 0.4943600291518917,
+  "gt_points": 99999
+ },
+ "P2_full_model": {
+  "chamfer_cm": 0.7180350690816852,
+  "pred_to_gt_cm": 0.9417101090114788,
+  "gt_to_pred_cm": 0.4943600291518917,
+  "gt_points": 99999
+ },
+ "P3_regions": {
+  "seen_source": "ray cast from 266 keyframe GT poses (common_seen)",
+  "seen_frac": 0.8866088660886609,
+  "gt_to_pred_seen_cm": 0.36184227915958156,
+  "gt_to_pred_unseen_cm": 1.5305205119385763,
+  "unseen_within_5mm_frac": 0.16385924684716466,
+  "seen_within_5mm_frac": 0.7450823370178209,
+  "pred_to_gt_cm": 0.9417101090114788
+ }
+}
