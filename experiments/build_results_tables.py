@@ -180,6 +180,43 @@ def main() -> None:
           "| 프라이어 정합 1/3/5 프레임 | 채택 안 함 | 평균 15.9→14.8→15.6 mm, 주전자만 이득·SM1/mustard0/MPM10 손실; 100~150 스텝이면 수렴 | §14 |",
           "| 빠른 움직임 게이트 (써넣기 생략) | 철회 | 써넣기 2,653건 분석: 득실 50/50이며 움직임·오차 급등·delta·인라이어와 무관 | §13d |",
           "| 프라이어 스케일 처리 | 보류 | YCB 프라이어 4개에 16~33 % 스케일 오차 잔존; 나중에 별도 집중 | §14, Parked |", ""]
+    # table 7: BundleSDF notation (ADD-S / ADD AUC@0.1 m in %, mean errors in cm, CD in cm) for the three columns the user asked for
+    def baseline_entry(s, prefix):
+        f = Path("logs") / (f"add_eval_baseline_ho3d_{s}_20260903.json" if s in HO else f"add_eval_baseline_{s}_20260903.json")
+        d = jload(f) or []
+        for r in d:
+            rd = r["run_dir"].replace("/home/kist/Desktop/BundleSDF_baseline_outputs/", "")
+            if rd.startswith(prefix): return r
+        return None
+    def ours_entry(s):
+        d = jload(S / f"add_main_{DS[s]}_{s}.json"); return (d[0] if isinstance(d, list) else d) if d else None
+    cols7 = [("BundleSDF 논문 마스크 on", lambda s: baseline_entry(s, "full_eval/"), "BundleSDF 논문 마스크 (원본)"),
+             ("BundleSDF SAM2 on", lambda s: baseline_entry(s, "full_eval_sam2"), "BundleSDF SAM2 (원본)"),
+             ("우리 (본 코드 9/17)", ours_entry, "GS 본 코드 9/17")]
+    L += ["## 표 7. BundleSDF 표기법 비교 — ADD-S / ADD AUC@0.1 m (%), 평균 오차 (cm), CD (cm)", "",
+          "BundleSDF 논문과 같은 계산: AUC = 오차 임계값 0~10 cm에 대한 정확도 곡선 아래 면적(%, 높을수록 좋음; `Utils.compute_auc`, max 0.1 m), 평균 오차 = 프레임 평균 ADD/ADD-S(cm), CD = 원본 벤치마크 프로토콜(P1: HO3D는 보인 면 `visible_mesh.ply`, YCB는 전체 모델; ICP 2 cm 후 상호 챔퍼, cm). 세 열 모두 같은 채점기(`experiments/eval_add_ycbineoat.py`, `experiments/eval_mesh_cd.py`)로 계산.", "",
+          "### 7a. 추적", "",
+          "| 시퀀스 | ADD-S AUC % 논문마스크 | SAM2 | 우리 | ADD AUC % 논문마스크 | SAM2 | 우리 | ADD-S cm 논문마스크 | SAM2 | 우리 | ADD cm 논문마스크 | SAM2 | 우리 |", "|---|" + "---|" * 12]
+    acc = {name: {k: {"ho3d": [], "ycb": []} for k in ("ADDS_AUC", "ADD_AUC", "ADDS_err_cm", "ADD_err_cm")} for name, _, _ in cols7}
+    for ds, seqs, label in (("ho3d", HO, "HO3D"), ("ycb", YC, "YCB")):
+        for s in seqs:
+            ents = [(name, fn(s)) for name, fn, _ in cols7]
+            cells = []
+            for k, nd in (("ADDS_AUC", 1), ("ADD_AUC", 1), ("ADDS_err_cm", 3), ("ADD_err_cm", 3)):
+                for name, e in ents:
+                    v = float(e[k]) if e else NA; cells.append(fmt(v, nd)); acc[name][k][ds].append(v)
+            L.append(f"| {s} | " + " | ".join(cells) + " |")
+        L.append(f"| **{label} 평균 ({len(seqs)})** | " + " | ".join(f"**{fmt(mean(acc[name][k][ds]), nd)}**" for k, nd in (("ADDS_AUC", 1), ("ADD_AUC", 1), ("ADDS_err_cm", 3), ("ADD_err_cm", 3)) for name, _, _ in cols7) + " |")
+    L += ["", "### 7b. 복원 (메시)", "",
+          "| 시퀀스 | CD P1 cm 논문마스크 | SAM2 | 우리 | P2 전체모델 cm 논문마스크 | SAM2 | 우리 | 커버리지 % 논문마스크 | SAM2 | 우리 |", "|---|" + "---|" * 9]
+    for ds, seqs, label in (("ho3d", HO, "HO3D"), ("ycb", YC, "YCB")):
+        for s in seqs:
+            cells = []
+            for k, nd in (("P1", 3), ("P2", 3), ("cov", 0)):
+                for _, _, gname in cols7: cells.append(fmt(geo_cols[gname][s][k], nd))
+            L.append(f"| {s} | " + " | ".join(cells) + " |")
+        L.append(f"| **{label} 평균 ({len(seqs)})** | " + " | ".join(f"**{fmt(mean([geo_cols[gname][s][k] for s in seqs]), nd)}**" for k, nd in (("P1", 3), ("P2", 3), ("cov", 0)) for _, _, gname in cols7) + " |")
+    L.append("")
     open(args.out, "w").write("\n".join(L) + "\n"); print("wrote", args.out)
     for n in names:
         print(f"{n}: HO3D {mean([add_cols[n][s] for s in HO]):.3f} YCB {mean([add_cols[n][s] for s in YC]):.3f}")
