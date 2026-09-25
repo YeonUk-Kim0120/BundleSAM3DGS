@@ -1,0 +1,3 @@
+START stage=stage1 model=M-V ckpt=d15bf50a8615c822 cells=13 2026-09-25 05:01:21
+DONE M-V_I1_ref5-8 ho3d/AP10 kf=178 new=176 rot V/C1/C2=33.80/6.10/5.56 trans=277.5/31.6/27.8 (sgt 245.8) 134s
+DONE M-V_I1_ref5-8 ho3d/AP11 kf=178 new=176 rot V/C1/C2=11.24/7.18/10.27 trans=170.8/83.3/115.0 (sgt 153.5) 136s

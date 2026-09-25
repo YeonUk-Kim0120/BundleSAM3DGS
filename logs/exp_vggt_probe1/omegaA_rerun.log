@@ -1,0 +1,16 @@
+START stage=omegaA_rerun model=M-O ckpt=c02da418b18bb01d cells=6 2026-09-25 15:05:18
+SKIP exists /home/kist/Desktop/BundleSAM3DGS/outputs/exp_vggt_probe1/M-O/I1/ref5-8/ho3d/SB13
+SKIP exists /home/kist/Desktop/BundleSAM3DGS/outputs/exp_vggt_probe1/M-O/I1/chain/ho3d/SB13
+[probe] GT rotations orthonormalized (max element change 3.89e-08)
+DONE M-O/I1/ref1-8 ho3d/SB13 kf=207 new=206 rot online/oracle/C1/C2=16.07/16.02/3.25/3.03 trans=129.2/90.8/24.0/21.9 247s
+[probe] GT rotations orthonormalized (max element change 3.54e-08)
+DONE M-O/I1/ref5-8 ho3d/SM1 kf=279 new=277 rot online/oracle/C1/C2=16.87/18.03/3.90/3.77 trans=64.6/64.3/27.4/26.0 128s
+[probe] GT rotations orthonormalized (max element change 3.54e-08)
+DONE M-O/I1/chain ho3d/SM1 kf=279 new=277 rot online/oracle/C1/C2=67.10/3.16/3.90/3.77 trans=777.1/49.5/27.4/26.0 83s
+[probe] GT rotations orthonormalized (max element change 3.54e-08)
+/home/kist/Desktop/BundleSAM3DGS/experiments/vggt_probe/run_probe.py:97: RuntimeWarning: All-NaN slice encountered
+  log(f"  batch {bi}: ref={b['ref']} new={b['new']} s={s_batch:.3f} s_gt={s_gt:.3f} T1={T1[0]:.2f}deg/{T1[1]:.1f}mm T3={t3:.2f} | new E1 online rot={np.nanmedian([x['rot_online'] for x in nn]):.2f} trans={np.nanmedian([x['trans_online'] for x in nn]):.1f}"
+/home/kist/Desktop/BundleSAM3DGS/experiments/vggt_probe/run_probe.py:98: RuntimeWarning: All-NaN slice encountered
+  f" oracle rot={np.nanmedian([x['rot_oracle'] for x in nn]):.2f} trans={np.nanmedian([x['trans_oracle'] for x in nn]):.1f} | C1 rot={np.nanmedian([x['rot_c1'] for x in nn]):.2f} t={r['time_s']:.2f}s")
+DONE M-O/I1/ref1-8 ho3d/SM1 kf=279 new=277 rot online/oracle/C1/C2=16.63/18.11/3.90/3.77 trans=52.2/45.0/27.4/26.0 321s
+END stage=omegaA_rerun 2026-09-25 15:18:16

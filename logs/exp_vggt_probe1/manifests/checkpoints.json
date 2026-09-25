@@ -1,0 +1,14 @@
+{
+ "M-O": [
+  [
+   "/home/kist/checkpoints/vggt_omega/vggt_omega_1b_512.pt",
+   "c02da418b18bb01d"
+  ]
+ ],
+ "M-V": [
+  [
+   "/home/kist/.cache/huggingface/hub/models--facebook--VGGT-1B/snapshots/860abec7937da0a4c03c41d3c269c366e82abdf9/model.pt",
+   "d15bf50a8615c822"
+  ]
+ ]
+}

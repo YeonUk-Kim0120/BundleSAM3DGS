@@ -1,0 +1,8 @@
+M-O smoke 2026-09-25 08:12:10 ckpt sha256[:16] c02da418b18bb01d
+  batch 0: ref=['0000'] new=['0023', '0044', '0050', '0066'] s=0.304 s_gt=0.130 T1=0.00deg/0.0mm T3=11.08 | new E1 online rot=10.67 trans=150.2 oracle rot=10.67 trans=150.2 | C1 rot=4.23 t=0.45s
+  batch 1: ref=['0066', '0050', '0044', '0023', '0000'] new=['0075', '0077', '0081', '0086', '0089'] s=0.479 s_gt=0.329 T1=3.40deg/33.3mm T3=7.20 | new E1 online rot=2.52 trans=32.2 oracle rot=4.32 trans=38.4 | C1 rot=1.93 t=0.72s
+AP12: s(batch0)=0.304 vs KF0 mean ray dist 0.373 m -> OK; s_i=[0.466, 0.387, 0.304, 0.285, 0.277]; T3(FoV diff)=11.08 deg; new-KF E1 rot online/oracle/C1/C2 = 2.95/5.27/2.05/2.73 deg, trans 47.0/52.7/14.3/21.9 mm; time/batch 0.72s peak 7.2 GB
+  batch 0: ref=['1581120424100262102'] new=['1581120436999520892', '1581120437439012146', '1581120437626133988', '1581120437864176382'] s=0.865 s_gt=0.860 T1=0.00deg/0.0mm T3=9.05 | new E1 online rot=1.73 trans=85.4 oracle rot=1.73 trans=85.4 | C1 rot=4.21 t=0.35s
+  batch 1: ref=['1581120437864176382', '1581120437626133988', '1581120437439012146', '1581120436999520892', '1581120424100262102'] new=['1581120438036608874', '1581120438274577489', '1581120438516685086', '1581120438765581012', '1581120438952289845'] s=0.867 s_gt=0.786 T1=3.12deg/48.7mm T3=6.84 | new E1 online rot=2.40 trans=124.2 oracle rot=3.41 trans=107.5 | C1 rot=6.80 t=0.72s
+mustard0: s(batch0)=0.865 vs KF0 mean ray dist 0.909 m -> OK; s_i=[0.922, 0.846, 0.818, 0.856, 0.93]; T3(FoV diff)=9.05 deg; new-KF E1 rot online/oracle/C1/C2 = 1.88/1.88/6.40/4.12 deg, trans 102.9/89.6/76.2/35.8 mm; time/batch 0.72s peak 7.2 GB
+SMOKE PASS

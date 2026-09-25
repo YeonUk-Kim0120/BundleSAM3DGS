@@ -1,0 +1,20 @@
+START stage=stage4_I2 model=M-O ckpt=c02da418b18bb01d cells=4 2026-09-25 14:15:33
+[probe] GT rotations orthonormalized (max element change 3.97e-08)
+DONE M-O/I2/ref1-8 ho3d/AP12 kf=171 new=170 rot online/oracle/C1/C2=22.97/21.56/2.03/3.07 trans=112.9/110.3/16.4/23.0 212s
+[probe] GT rotations orthonormalized (max element change 3.97e-08)
+DONE M-O/I2/chain ho3d/AP12 kf=171 new=170 rot online/oracle/C1/C2=82.04/4.25/2.03/3.07 trans=348.8/39.4/16.4/23.0 77s
+[probe] GT rotations orthonormalized (max element change 4.09e-08)
+/home/kist/Desktop/BundleSAM3DGS/experiments/vggt_probe/run_probe.py:97: RuntimeWarning: All-NaN slice encountered
+  log(f"  batch {bi}: ref={b['ref']} new={b['new']} s={s_batch:.3f} s_gt={s_gt:.3f} T1={T1[0]:.2f}deg/{T1[1]:.1f}mm T3={t3:.2f} | new E1 online rot={np.nanmedian([x['rot_online'] for x in nn]):.2f} trans={np.nanmedian([x['trans_online'] for x in nn]):.1f}"
+/home/kist/Desktop/BundleSAM3DGS/experiments/vggt_probe/run_probe.py:98: RuntimeWarning: All-NaN slice encountered
+  f" oracle rot={np.nanmedian([x['rot_oracle'] for x in nn]):.2f} trans={np.nanmedian([x['trans_oracle'] for x in nn]):.1f} | C1 rot={np.nanmedian([x['rot_c1'] for x in nn]):.2f} t={r['time_s']:.2f}s")
+DONE M-O/I2/ref1-8 ho3d/MPM10 kf=244 new=236 rot online/oracle/C1/C2=26.99/26.41/5.82/4.85 trans=136.6/118.3/31.0/30.6 297s
+[probe] GT rotations orthonormalized (max element change 4.09e-08)
+DONE M-O/I2/chain ho3d/MPM10 kf=244 new=236 rot online/oracle/C1/C2=147.95/6.85/5.82/4.85 trans=979.5/80.4/31.0/30.6 103s
+END stage=stage4_I2 2026-09-25 14:27:02
+START stage=stage4_I2 model=M-O ckpt=c02da418b18bb01d cells=2 2026-09-25 14:27:14
+[probe] GT rotations orthonormalized (max element change 1.41e-03)
+DONE M-O/I2/ref1-8 ycb/mustard0 kf=37 new=36 rot online/oracle/C1/C2=41.76/43.99/6.40/4.62 trans=225.2/261.4/68.4/44.7 33s
+[probe] GT rotations orthonormalized (max element change 1.41e-03)
+DONE M-O/I2/chain ycb/mustard0 kf=37 new=36 rot online/oracle/C1/C2=90.21/8.09/6.40/4.62 trans=907.3/78.5/68.4/44.7 9s
+END stage=stage4_I2 2026-09-25 14:27:56

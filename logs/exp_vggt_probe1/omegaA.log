@@ -1,0 +1,133 @@
+START stage=omegaA model=M-O ckpt=c02da418b18bb01d cells=39 2026-09-25 08:13:29
+[probe] GT rotations orthonormalized (max element change 4.05e-08)
+DONE M-O/I1/ref5-8 ho3d/AP10 kf=178 new=176 rot online/oracle/C1/C2=22.80/19.17/6.10/5.56 trans=112.3/113.6/31.6/27.8 110s
+[probe] GT rotations orthonormalized (max element change 4.05e-08)
+/home/kist/Desktop/BundleSAM3DGS/experiments/vggt_probe/run_probe.py:98: RuntimeWarning: All-NaN slice encountered
+  f" oracle rot={np.nanmedian([x['rot_oracle'] for x in nn]):.2f} trans={np.nanmedian([x['trans_oracle'] for x in nn]):.1f} | C1 rot={np.nanmedian([x['rot_c1'] for x in nn]):.2f} t={r['time_s']:.2f}s")
+DONE M-O/I1/chain ho3d/AP10 kf=178 new=176 rot online/oracle/C1/C2=95.11/2.82/6.10/5.56 trans=455.1/33.5/31.6/27.8 79s
+[probe] GT rotations orthonormalized (max element change 4.05e-08)
+/home/kist/Desktop/BundleSAM3DGS/experiments/vggt_probe/run_probe.py:97: RuntimeWarning: All-NaN slice encountered
+  log(f"  batch {bi}: ref={b['ref']} new={b['new']} s={s_batch:.3f} s_gt={s_gt:.3f} T1={T1[0]:.2f}deg/{T1[1]:.1f}mm T3={t3:.2f} | new E1 online rot={np.nanmedian([x['rot_online'] for x in nn]):.2f} trans={np.nanmedian([x['trans_online'] for x in nn]):.1f}"
+DONE M-O/I1/ref1-8 ho3d/AP10 kf=178 new=176 rot online/oracle/C1/C2=18.19/16.06/6.10/5.56 trans=71.4/56.7/31.6/27.8 228s
+[probe] GT rotations orthonormalized (max element change 3.82e-08)
+DONE M-O/I1/ref5-8 ho3d/AP11 kf=178 new=176 rot online/oracle/C1/C2=13.21/10.89/7.18/10.27 trans=175.2/141.8/83.3/115.0 111s
+[probe] GT rotations orthonormalized (max element change 3.82e-08)
+DONE M-O/I1/chain ho3d/AP11 kf=178 new=176 rot online/oracle/C1/C2=41.78/2.52/7.18/10.27 trans=479.7/59.9/83.3/115.0 83s
+[probe] GT rotations orthonormalized (max element change 3.82e-08)
+DONE M-O/I1/ref1-8 ho3d/AP11 kf=178 new=176 rot online/oracle/C1/C2=11.15/9.67/7.18/10.27 trans=113.3/79.9/83.3/115.0 231s
+[probe] GT rotations orthonormalized (max element change 3.97e-08)
+DONE M-O/I1/ref5-8 ho3d/AP12 kf=171 new=170 rot online/oracle/C1/C2=11.48/10.23/2.03/3.07 trans=59.1/62.0/16.4/23.0 108s
+[probe] GT rotations orthonormalized (max element change 3.97e-08)
+DONE M-O/I1/chain ho3d/AP12 kf=171 new=170 rot online/oracle/C1/C2=25.74/2.63/2.03/3.07 trans=390.2/29.0/16.4/23.0 80s
+[probe] GT rotations orthonormalized (max element change 3.97e-08)
+DONE M-O/I1/ref1-8 ho3d/AP12 kf=171 new=170 rot online/oracle/C1/C2=11.44/10.20/2.03/3.07 trans=54.8/51.6/16.4/23.0 224s
+[probe] GT rotations orthonormalized (max element change 3.92e-08)
+DONE M-O/I1/ref5-8 ho3d/AP13 kf=166 new=165 rot online/oracle/C1/C2=14.36/14.36/2.31/2.19 trans=69.5/73.0/19.8/18.7 105s
+[probe] GT rotations orthonormalized (max element change 3.92e-08)
+DONE M-O/I1/chain ho3d/AP13 kf=166 new=165 rot online/oracle/C1/C2=80.17/2.22/2.31/2.19 trans=620.8/32.8/19.8/18.7 78s
+[probe] GT rotations orthonormalized (max element change 3.92e-08)
+DONE M-O/I1/ref1-8 ho3d/AP13 kf=166 new=165 rot online/oracle/C1/C2=13.31/13.46/2.31/2.19 trans=60.2/54.5/19.8/18.7 216s
+[probe] GT rotations orthonormalized (max element change 3.86e-08)
+DONE M-O/I1/ref5-8 ho3d/AP14 kf=168 new=166 rot online/oracle/C1/C2=10.88/13.74/1.81/2.05 trans=86.7/86.2/12.5/13.7 105s
+[probe] GT rotations orthonormalized (max element change 3.86e-08)
+DONE M-O/I1/chain ho3d/AP14 kf=168 new=166 rot online/oracle/C1/C2=15.86/2.71/1.81/2.05 trans=126.9/32.6/12.5/13.7 78s
+[probe] GT rotations orthonormalized (max element change 3.86e-08)
+DONE M-O/I1/ref1-8 ho3d/AP14 kf=168 new=166 rot online/oracle/C1/C2=16.10/15.29/1.81/2.05 trans=60.7/63.0/12.5/13.7 219s
+[probe] GT rotations orthonormalized (max element change 4.09e-08)
+DONE M-O/I1/ref5-8 ho3d/MPM10 kf=244 new=236 rot online/oracle/C1/C2=43.69/44.48/5.82/4.85 trans=228.3/232.3/31.0/30.6 146s
+[probe] GT rotations orthonormalized (max element change 4.09e-08)
+DONE M-O/I1/chain ho3d/MPM10 kf=244 new=236 rot online/oracle/C1/C2=146.88/6.86/5.82/4.85 trans=759.5/93.3/31.0/30.6 107s
+[probe] GT rotations orthonormalized (max element change 4.09e-08)
+DONE M-O/I1/ref1-8 ho3d/MPM10 kf=244 new=236 rot online/oracle/C1/C2=31.25/29.76/5.82/4.85 trans=164.2/136.1/31.0/30.6 314s
+[probe] GT rotations orthonormalized (max element change 3.99e-08)
+DONE M-O/I1/ref5-8 ho3d/MPM11 kf=256 new=248 rot online/oracle/C1/C2=17.53/15.85/5.72/8.01 trans=142.9/128.8/46.6/72.6 155s
+[probe] GT rotations orthonormalized (max element change 3.99e-08)
+DONE M-O/I1/chain ho3d/MPM11 kf=256 new=248 rot online/oracle/C1/C2=114.13/3.51/5.72/8.01 trans=759.8/75.2/46.6/72.6 113s
+[probe] GT rotations orthonormalized (max element change 3.99e-08)
+DONE M-O/I1/ref1-8 ho3d/MPM11 kf=256 new=248 rot online/oracle/C1/C2=18.33/16.04/5.72/8.01 trans=104.5/99.1/46.6/72.6 331s
+[probe] GT rotations orthonormalized (max element change 3.99e-08)
+DONE M-O/I1/ref5-8 ho3d/MPM12 kf=236 new=228 rot online/oracle/C1/C2=34.91/35.64/4.13/5.87 trans=117.0/128.4/19.7/25.7 144s
+[probe] GT rotations orthonormalized (max element change 3.99e-08)
+DONE M-O/I1/chain ho3d/MPM12 kf=236 new=228 rot online/oracle/C1/C2=93.24/2.39/4.13/5.87 trans=471.8/26.0/19.7/25.7 105s
+[probe] GT rotations orthonormalized (max element change 3.99e-08)
+DONE M-O/I1/ref1-8 ho3d/MPM12 kf=236 new=228 rot online/oracle/C1/C2=26.81/28.24/4.13/5.87 trans=100.7/77.9/19.7/25.7 306s
+[probe] GT rotations orthonormalized (max element change 3.66e-08)
+DONE M-O/I1/ref5-8 ho3d/MPM13 kf=222 new=213 rot online/oracle/C1/C2=20.43/23.89/2.67/2.37 trans=107.7/106.1/19.7/18.7 133s
+[probe] GT rotations orthonormalized (max element change 3.66e-08)
+DONE M-O/I1/chain ho3d/MPM13 kf=222 new=213 rot online/oracle/C1/C2=171.87/2.62/2.67/2.37 trans=1272.3/39.0/19.7/18.7 97s
+[probe] GT rotations orthonormalized (max element change 3.66e-08)
+DONE M-O/I1/ref1-8 ho3d/MPM13 kf=222 new=213 rot online/oracle/C1/C2=15.99/16.59/2.67/2.37 trans=81.9/80.2/19.7/18.7 285s
+[probe] GT rotations orthonormalized (max element change 4.03e-08)
+DONE M-O/I1/ref5-8 ho3d/MPM14 kf=231 new=224 rot online/oracle/C1/C2=32.83/36.09/2.73/2.60 trans=212.4/220.0/21.4/20.0 139s
+[probe] GT rotations orthonormalized (max element change 4.03e-08)
+DONE M-O/I1/chain ho3d/MPM14 kf=231 new=224 rot online/oracle/C1/C2=60.05/3.24/2.73/2.60 trans=771.0/53.2/21.4/20.0 102s
+[probe] GT rotations orthonormalized (max element change 4.03e-08)
+DONE M-O/I1/ref1-8 ho3d/MPM14 kf=231 new=224 rot online/oracle/C1/C2=23.77/23.52/2.73/2.60 trans=114.2/109.7/21.4/20.0 298s
+[probe] GT rotations orthonormalized (max element change 3.81e-08)
+DONE M-O/I1/ref5-8 ho3d/SB11 kf=220 new=218 rot online/oracle/C1/C2=26.69/25.60/4.58/3.77 trans=217.2/159.4/45.6/39.9 113s
+[probe] GT rotations orthonormalized (max element change 3.81e-08)
+DONE M-O/I1/chain ho3d/SB11 kf=220 new=218 rot online/oracle/C1/C2=162.97/4.76/4.58/3.77 trans=1295.9/81.4/45.6/39.9 78s
+[probe] GT rotations orthonormalized (max element change 3.81e-08)
+DONE M-O/I1/ref1-8 ho3d/SB11 kf=220 new=218 rot online/oracle/C1/C2=21.08/21.18/4.58/3.77 trans=151.7/120.7/45.6/39.9 265s
+[probe] GT rotations orthonormalized (max element change 3.89e-08)
+DONE M-O/I1/ref5-8 ho3d/SB13 kf=207 new=206 rot online/oracle/C1/C2=17.59/17.59/3.25/3.03 trans=171.4/115.3/24.0/21.9 105s
+[probe] GT rotations orthonormalized (max element change 3.89e-08)
+DONE M-O/I1/chain ho3d/SB13 kf=207 new=206 rot online/oracle/C1/C2=36.27/3.40/3.25/3.03 trans=298.5/45.7/24.0/21.9 73s
+START stage=omegaA model=M-O ckpt=c02da418b18bb01d cells=26 2026-09-25 12:25:17
+[probe] GT rotations orthonormalized (max element change 4.05e-08)
+/home/kist/Desktop/BundleSAM3DGS/experiments/vggt_probe/run_probe.py:97: RuntimeWarning: All-NaN slice encountered
+  log(f"  batch {bi}: ref={b['ref']} new={b['new']} s={s_batch:.3f} s_gt={s_gt:.3f} T1={T1[0]:.2f}deg/{T1[1]:.1f}mm T3={t3:.2f} | new E1 online rot={np.nanmedian([x['rot_online'] for x in nn]):.2f} trans={np.nanmedian([x['trans_online'] for x in nn]):.1f}"
+/home/kist/Desktop/BundleSAM3DGS/experiments/vggt_probe/run_probe.py:98: RuntimeWarning: All-NaN slice encountered
+  f" oracle rot={np.nanmedian([x['rot_oracle'] for x in nn]):.2f} trans={np.nanmedian([x['trans_oracle'] for x in nn]):.1f} | C1 rot={np.nanmedian([x['rot_c1'] for x in nn]):.2f} t={r['time_s']:.2f}s")
+DONE M-O/I1/ref1-4 ho3d/AP10 kf=178 new=176 rot online/oracle/C1/C2=21.51/18.90/6.10/5.56 trans=78.6/64.6/31.6/27.8 146s
+[probe] GT rotations orthonormalized (max element change 4.05e-08)
+DONE M-O/I1/ref5-4 ho3d/AP10 kf=178 new=176 rot online/oracle/C1/C2=31.26/25.59/6.10/5.56 trans=127.2/119.2/31.6/27.8 89s
+[probe] GT rotations orthonormalized (max element change 3.82e-08)
+DONE M-O/I1/ref1-4 ho3d/AP11 kf=178 new=176 rot online/oracle/C1/C2=11.05/8.38/7.18/10.27 trans=120.4/87.6/83.3/115.0 147s
+[probe] GT rotations orthonormalized (max element change 3.82e-08)
+DONE M-O/I1/ref5-4 ho3d/AP11 kf=178 new=176 rot online/oracle/C1/C2=15.14/14.08/7.18/10.27 trans=162.6/118.8/83.3/115.0 92s
+[probe] GT rotations orthonormalized (max element change 3.97e-08)
+DONE M-O/I1/ref1-4 ho3d/AP12 kf=171 new=170 rot online/oracle/C1/C2=16.81/16.03/2.03/3.07 trans=59.9/59.6/16.4/23.0 144s
+[probe] GT rotations orthonormalized (max element change 3.97e-08)
+DONE M-O/I1/ref5-4 ho3d/AP12 kf=171 new=170 rot online/oracle/C1/C2=16.60/16.60/2.03/3.07 trans=76.6/74.3/16.4/23.0 89s
+[probe] GT rotations orthonormalized (max element change 3.92e-08)
+DONE M-O/I1/ref1-4 ho3d/AP13 kf=166 new=165 rot online/oracle/C1/C2=15.42/14.94/2.31/2.19 trans=61.0/63.8/19.8/18.7 139s
+[probe] GT rotations orthonormalized (max element change 3.92e-08)
+DONE M-O/I1/ref5-4 ho3d/AP13 kf=166 new=165 rot online/oracle/C1/C2=16.03/14.93/2.31/2.19 trans=92.6/86.5/19.8/18.7 87s
+[probe] GT rotations orthonormalized (max element change 3.86e-08)
+DONE M-O/I1/ref1-4 ho3d/AP14 kf=168 new=166 rot online/oracle/C1/C2=16.68/17.18/1.81/2.05 trans=80.5/79.8/12.5/13.7 140s
+[probe] GT rotations orthonormalized (max element change 3.86e-08)
+DONE M-O/I1/ref5-4 ho3d/AP14 kf=168 new=166 rot online/oracle/C1/C2=20.63/21.26/1.81/2.05 trans=100.9/101.2/12.5/13.7 87s
+[probe] GT rotations orthonormalized (max element change 4.09e-08)
+DONE M-O/I1/ref1-4 ho3d/MPM10 kf=244 new=236 rot online/oracle/C1/C2=33.23/29.66/5.82/4.85 trans=172.6/149.5/31.0/30.6 199s
+[probe] GT rotations orthonormalized (max element change 4.09e-08)
+DONE M-O/I1/ref5-4 ho3d/MPM10 kf=244 new=236 rot online/oracle/C1/C2=62.43/42.42/5.82/4.85 trans=271.7/236.6/31.0/30.6 119s
+[probe] GT rotations orthonormalized (max element change 3.99e-08)
+DONE M-O/I1/ref1-4 ho3d/MPM11 kf=256 new=248 rot online/oracle/C1/C2=27.59/26.96/5.72/8.01 trans=152.9/143.4/46.6/72.6 209s
+[probe] GT rotations orthonormalized (max element change 3.99e-08)
+DONE M-O/I1/ref5-4 ho3d/MPM11 kf=256 new=248 rot online/oracle/C1/C2=28.47/25.93/5.72/8.01 trans=193.1/157.8/46.6/72.6 127s
+[probe] GT rotations orthonormalized (max element change 3.99e-08)
+DONE M-O/I1/ref1-4 ho3d/MPM12 kf=236 new=228 rot online/oracle/C1/C2=22.98/21.83/4.13/5.87 trans=69.3/65.7/19.7/25.7 194s
+[probe] GT rotations orthonormalized (max element change 3.99e-08)
+DONE M-O/I1/ref5-4 ho3d/MPM12 kf=236 new=228 rot online/oracle/C1/C2=34.51/37.68/4.13/5.87 trans=137.2/153.7/19.7/25.7 118s
+[probe] GT rotations orthonormalized (max element change 3.66e-08)
+DONE M-O/I1/ref1-4 ho3d/MPM13 kf=222 new=213 rot online/oracle/C1/C2=21.05/19.66/2.67/2.37 trans=80.4/90.4/19.7/18.7 180s
+[probe] GT rotations orthonormalized (max element change 3.66e-08)
+DONE M-O/I1/ref5-4 ho3d/MPM13 kf=222 new=213 rot online/oracle/C1/C2=19.74/22.45/2.67/2.37 trans=92.8/92.5/19.7/18.7 108s
+[probe] GT rotations orthonormalized (max element change 4.03e-08)
+DONE M-O/I1/ref1-4 ho3d/MPM14 kf=231 new=224 rot online/oracle/C1/C2=23.00/24.32/2.73/2.60 trans=101.4/101.0/21.4/20.0 187s
+[probe] GT rotations orthonormalized (max element change 4.03e-08)
+DONE M-O/I1/ref5-4 ho3d/MPM14 kf=231 new=224 rot online/oracle/C1/C2=35.11/31.93/2.73/2.60 trans=187.5/183.1/21.4/20.0 114s
+[probe] GT rotations orthonormalized (max element change 3.81e-08)
+DONE M-O/I1/ref1-4 ho3d/SB11 kf=220 new=218 rot online/oracle/C1/C2=21.49/21.58/4.58/3.77 trans=150.9/123.5/45.6/39.9 160s
+[probe] GT rotations orthonormalized (max element change 3.81e-08)
+DONE M-O/I1/ref5-4 ho3d/SB11 kf=220 new=218 rot online/oracle/C1/C2=22.29/22.13/4.58/3.77 trans=190.8/165.2/45.6/39.9 90s
+[probe] GT rotations orthonormalized (max element change 3.89e-08)
+DONE M-O/I1/ref1-4 ho3d/SB13 kf=207 new=206 rot online/oracle/C1/C2=17.59/15.60/3.25/3.03 trans=109.9/77.2/24.0/21.9 149s
+[probe] GT rotations orthonormalized (max element change 3.89e-08)
+DONE M-O/I1/ref5-4 ho3d/SB13 kf=207 new=206 rot online/oracle/C1/C2=18.93/16.16/3.25/3.03 trans=145.3/121.2/24.0/21.9 83s
+[probe] GT rotations orthonormalized (max element change 3.54e-08)
+DONE M-O/I1/ref1-4 ho3d/SM1 kf=279 new=277 rot online/oracle/C1/C2=17.05/17.36/3.90/3.77 trans=59.2/51.5/27.4/26.0 189s
+[probe] GT rotations orthonormalized (max element change 3.54e-08)
+DONE M-O/I1/ref5-4 ho3d/SM1 kf=279 new=277 rot online/oracle/C1/C2=17.76/19.43/3.90/3.77 trans=68.5/62.2/27.4/26.0 98s
+END stage=omegaA 2026-09-25 13:23:23

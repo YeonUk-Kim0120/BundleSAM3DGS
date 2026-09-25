@@ -1,0 +1,56 @@
+START stage=stage2b model=M-V ckpt=d15bf50a8615c822 cells=26 2026-09-25 05:58:21
+DONE M-V/I1/ref1-4 ho3d/AP10 kf=178 new=176 rot online/oracle/C1/C2=16.03/14.55/6.10/5.56 trans=98.9/86.9/31.6/27.8 201s
+DONE M-V/I1/ref5-4 ho3d/AP10 kf=178 new=176 rot online/oracle/C1/C2=25.21/23.82/6.10/5.56 trans=185.2/162.9/31.6/27.8 111s
+DONE M-V/I1/ref1-4 ho3d/AP11 kf=178 new=176 rot online/oracle/C1/C2=9.72/7.78/7.18/10.27 trans=106.8/50.4/83.3/115.0 202s
+DONE M-V/I1/ref5-4 ho3d/AP11 kf=178 new=176 rot online/oracle/C1/C2=11.50/8.25/7.18/10.27 trans=138.4/89.1/83.3/115.0 114s
+DONE M-V/I1/ref1-4 ho3d/AP12 kf=171 new=170 rot online/oracle/C1/C2=15.03/14.01/2.03/3.07 trans=73.1/69.2/16.4/23.0 195s
+DONE M-V/I1/ref5-4 ho3d/AP12 kf=171 new=170 rot online/oracle/C1/C2=17.47/15.74/2.03/3.07 trans=86.5/85.1/16.4/23.0 110s
+DONE M-V/I1/ref1-4 ho3d/AP13 kf=166 new=165 rot online/oracle/C1/C2=11.39/11.54/2.31/2.19 trans=68.9/62.6/19.8/18.7 188s
+DONE M-V/I1/ref5-4 ho3d/AP13 kf=166 new=165 rot online/oracle/C1/C2=13.63/14.11/2.31/2.19 trans=114.8/102.4/19.8/18.7 107s
+DONE M-V/I1/ref1-4 ho3d/AP14 kf=168 new=166 rot online/oracle/C1/C2=15.06/14.70/1.81/2.05 trans=50.9/50.2/12.5/13.7 191s
+DONE M-V/I1/ref5-4 ho3d/AP14 kf=168 new=166 rot online/oracle/C1/C2=17.26/16.63/1.81/2.05 trans=114.0/111.8/12.5/13.7 107s
+DONE M-V/I1/ref1-4 ho3d/MPM10 kf=244 new=236 rot online/oracle/C1/C2=34.33/29.96/5.82/4.85 trans=244.6/250.0/31.0/30.6 273s
+DONE M-V/I1/ref5-4 ho3d/MPM10 kf=244 new=236 rot online/oracle/C1/C2=44.89/41.83/5.82/4.85 trans=316.4/332.5/31.0/30.6 151s
+DONE M-V/I1/ref1-4 ho3d/MPM11 kf=256 new=248 rot online/oracle/C1/C2=29.09/28.90/5.72/8.01 trans=253.7/260.9/46.6/72.6 290s
+DONE M-V/I1/ref5-4 ho3d/MPM11 kf=256 new=248 rot online/oracle/C1/C2=28.88/28.83/5.72/8.01 trans=226.5/237.0/46.6/72.6 159s
+DONE M-V/I1/ref1-4 ho3d/MPM12 kf=236 new=228 rot online/oracle/C1/C2=21.14/19.70/4.13/5.87 trans=85.3/75.0/19.7/25.7 268s
+DONE M-V/I1/ref5-4 ho3d/MPM12 kf=236 new=228 rot online/oracle/C1/C2=34.40/31.94/4.13/5.87 trans=177.1/159.1/19.7/25.7 148s
+DONE M-V/I1/ref1-4 ho3d/MPM13 kf=222 new=213 rot online/oracle/C1/C2=22.96/22.17/2.67/2.37 trans=118.6/119.2/19.7/18.7 248s
+DONE M-V/I1/ref5-4 ho3d/MPM13 kf=222 new=213 rot online/oracle/C1/C2=29.14/26.66/2.67/2.37 trans=234.1/215.4/19.7/18.7 137s
+DONE M-V/I1/ref1-4 ho3d/MPM14 kf=231 new=224 rot online/oracle/C1/C2=20.66/19.69/2.73/2.60 trans=187.9/192.3/21.4/20.0 259s
+DONE M-V/I1/ref5-4 ho3d/MPM14 kf=231 new=224 rot online/oracle/C1/C2=23.44/23.52/2.73/2.60 trans=198.0/203.5/21.4/20.0 143s
+DONE M-V/I1/ref1-4 ho3d/SB11 kf=220 new=218 rot online/oracle/C1/C2=13.11/12.17/4.58/3.77 trans=104.0/71.6/45.6/39.9 227s
+DONE M-V/I1/ref5-4 ho3d/SB11 kf=220 new=218 rot online/oracle/C1/C2=13.47/12.65/4.58/3.77 trans=106.5/89.7/45.6/39.9 116s
+DONE M-V/I1/ref1-4 ho3d/SB13 kf=207 new=206 rot online/oracle/C1/C2=15.26/16.49/3.25/3.03 trans=88.2/73.9/24.0/21.9 211s
+DONE M-V/I1/ref5-4 ho3d/SB13 kf=207 new=206 rot online/oracle/C1/C2=22.01/24.54/3.25/3.03 trans=169.9/171.0/24.0/21.9 107s
+DONE M-V/I1/ref1-4 ho3d/SM1 kf=279 new=277 rot online/oracle/C1/C2=17.34/17.29/3.90/3.77 trans=54.3/44.1/27.4/26.0 274s
+DONE M-V/I1/ref5-4 ho3d/SM1 kf=279 new=277 rot online/oracle/C1/C2=17.44/16.04/3.90/3.77 trans=75.9/74.0/27.4/26.0 132s
+END stage=stage2b 2026-09-25 07:16:10
+START stage=stage2b model=M-V ckpt=d15bf50a8615c822 cells=26 2026-09-25 07:16:21
+DONE M-V/I0/chain ho3d/AP10 kf=178 new=176 rot online/oracle/C1/C2=53.52/2.59/6.10/5.56 trans=615.0/21.3/31.6/27.8 92s
+DONE M-V/I0/ref5-8 ho3d/AP10 kf=178 new=176 rot online/oracle/C1/C2=17.00/19.93/6.10/5.56 trans=121.9/126.6/31.6/27.8 134s
+DONE M-V/I0/chain ho3d/AP11 kf=178 new=176 rot online/oracle/C1/C2=17.69/3.20/7.18/10.27 trans=206.8/33.7/83.3/115.0 93s
+DONE M-V/I0/ref5-8 ho3d/AP11 kf=178 new=176 rot online/oracle/C1/C2=9.87/7.06/7.18/10.27 trans=109.3/77.5/83.3/115.0 138s
+DONE M-V/I0/chain ho3d/AP12 kf=171 new=170 rot online/oracle/C1/C2=23.26/3.12/2.03/3.07 trans=218.1/23.0/16.4/23.0 90s
+DONE M-V/I0/ref5-8 ho3d/AP12 kf=171 new=170 rot online/oracle/C1/C2=11.20/10.93/2.03/3.07 trans=85.3/77.7/16.4/23.0 133s
+DONE M-V/I0/chain ho3d/AP13 kf=166 new=165 rot online/oracle/C1/C2=25.88/3.04/2.31/2.19 trans=186.8/28.1/19.8/18.7 87s
+DONE M-V/I0/ref5-8 ho3d/AP13 kf=166 new=165 rot online/oracle/C1/C2=11.29/10.70/2.31/2.19 trans=84.7/86.7/19.8/18.7 129s
+DONE M-V/I0/chain ho3d/AP14 kf=168 new=166 rot online/oracle/C1/C2=32.36/2.36/1.81/2.05 trans=628.3/17.1/12.5/13.7 87s
+DONE M-V/I0/ref5-8 ho3d/AP14 kf=168 new=166 rot online/oracle/C1/C2=17.40/14.92/1.81/2.05 trans=97.7/98.6/12.5/13.7 129s
+DONE M-V/I0/chain ho3d/MPM10 kf=244 new=236 rot online/oracle/C1/C2=110.62/6.54/5.82/4.85 trans=888.3/49.8/31.0/30.6 121s
+DONE M-V/I0/ref5-8 ho3d/MPM10 kf=244 new=236 rot online/oracle/C1/C2=34.56/32.63/5.82/4.85 trans=204.1/254.1/31.0/30.6 182s
+DONE M-V/I0/chain ho3d/MPM11 kf=256 new=248 rot online/oracle/C1/C2=103.58/6.10/5.72/8.01 trans=2247.8/64.1/46.6/72.6 128s
+DONE M-V/I0/ref5-8 ho3d/MPM11 kf=256 new=248 rot online/oracle/C1/C2=25.14/28.37/5.72/8.01 trans=200.9/196.7/46.6/72.6 193s
+DONE M-V/I0/chain ho3d/MPM12 kf=236 new=228 rot online/oracle/C1/C2=20.39/3.27/4.13/5.87 trans=842.1/19.2/19.7/25.7 119s
+DONE M-V/I0/ref5-8 ho3d/MPM12 kf=236 new=228 rot online/oracle/C1/C2=32.25/30.97/4.13/5.87 trans=177.9/173.0/19.7/25.7 179s
+DONE M-V/I0/chain ho3d/MPM13 kf=222 new=213 rot online/oracle/C1/C2=46.30/4.66/2.67/2.37 trans=473.5/40.5/19.7/18.7 110s
+DONE M-V/I0/ref5-8 ho3d/MPM13 kf=222 new=213 rot online/oracle/C1/C2=22.34/22.94/2.67/2.37 trans=216.6/212.0/19.7/18.7 166s
+DONE M-V/I0/chain ho3d/MPM14 kf=231 new=224 rot online/oracle/C1/C2=49.05/5.65/2.73/2.60 trans=518.3/45.8/21.4/20.0 115s
+DONE M-V/I0/ref5-8 ho3d/MPM14 kf=231 new=224 rot online/oracle/C1/C2=34.96/35.43/2.73/2.60 trans=281.2/309.2/21.4/20.0 174s
+DONE M-V/I0/chain ho3d/SB11 kf=220 new=218 rot online/oracle/C1/C2=53.54/6.84/4.58/3.77 trans=546.2/74.7/45.6/39.9 91s
+DONE M-V/I0/ref5-8 ho3d/SB11 kf=220 new=218 rot online/oracle/C1/C2=14.63/12.58/4.58/3.77 trans=176.9/119.8/45.6/39.9 146s
+DONE M-V/I0/chain ho3d/SB13 kf=207 new=206 rot online/oracle/C1/C2=55.92/3.69/3.25/3.03 trans=283.9/30.2/24.0/21.9 83s
+DONE M-V/I0/ref5-8 ho3d/SB13 kf=207 new=206 rot online/oracle/C1/C2=17.36/18.37/3.25/3.03 trans=160.5/126.7/24.0/21.9 135s
+DONE M-V/I0/chain ho3d/SM1 kf=279 new=277 rot online/oracle/C1/C2=33.50/3.89/3.90/3.77 trans=240.5/26.0/27.4/26.0 100s
+DONE M-V/I0/ref5-8 ho3d/SM1 kf=279 new=277 rot online/oracle/C1/C2=14.91/14.52/3.90/3.77 trans=79.3/81.0/27.4/26.0 170s
+END stage=stage2b 2026-09-25 08:11:46

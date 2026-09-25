@@ -1,0 +1,45 @@
+Warp CUDA error 100: no CUDA-capable device is detected (in function init_cuda_driver, /builds/omniverse/warp/warp/native/cuda_util.cpp:308)
+[probe] GT rotations orthonormalized (max element change 4.05e-08)
+M-O/I1 ho3d/AP10: n=176 rot snapref/C1/C2 = 6.89/6.10/5.56  trans = 64.5/31.6/27.8  win 34%
+[probe] GT rotations orthonormalized (max element change 3.82e-08)
+M-O/I1 ho3d/AP11: n=176 rot snapref/C1/C2 = 7.53/7.18/10.27  trans = 107.8/83.3/115.0  win 44%
+[probe] GT rotations orthonormalized (max element change 3.97e-08)
+M-O/I1 ho3d/AP12: n=170 rot snapref/C1/C2 = 3.33/2.03/3.07  trans = 36.8/16.4/23.0  win 29%
+[probe] GT rotations orthonormalized (max element change 3.92e-08)
+M-O/I1 ho3d/AP13: n=165 rot snapref/C1/C2 = 3.11/2.31/2.19  trans = 38.4/19.8/18.7  win 33%
+[probe] GT rotations orthonormalized (max element change 3.86e-08)
+M-O/I1 ho3d/AP14: n=166 rot snapref/C1/C2 = 3.71/1.81/2.05  trans = 33.9/12.5/13.7  win 23%
+[probe] GT rotations orthonormalized (max element change 4.09e-08)
+M-O/I1 ho3d/MPM10: n=236 rot snapref/C1/C2 = 10.37/5.82/4.85  trans = 99.5/31.0/30.6  win 27%
+[probe] GT rotations orthonormalized (max element change 3.99e-08)
+M-O/I1 ho3d/MPM11: n=248 rot snapref/C1/C2 = 6.81/5.72/8.01  trans = 98.4/46.6/72.6  win 34%
+[probe] GT rotations orthonormalized (max element change 3.99e-08)
+M-O/I1 ho3d/MPM12: n=228 rot snapref/C1/C2 = 5.25/4.13/5.87  trans = 36.2/19.7/25.7  win 23%
+[probe] GT rotations orthonormalized (max element change 3.66e-08)
+M-O/I1 ho3d/MPM13: n=213 rot snapref/C1/C2 = 3.43/2.67/2.37  trans = 45.0/19.7/18.7  win 35%
+[probe] GT rotations orthonormalized (max element change 4.03e-08)
+M-O/I1 ho3d/MPM14: n=224 rot snapref/C1/C2 = 4.07/2.73/2.60  trans = 59.9/21.4/20.0  win 28%
+[probe] GT rotations orthonormalized (max element change 4.05e-08)
+M-V/I0 ho3d/AP10: n=176 rot snapref/C1/C2 = 6.79/6.10/5.56  trans = 38.5/31.6/27.8  win 36%
+[probe] GT rotations orthonormalized (max element change 3.82e-08)
+M-V/I0 ho3d/AP11: n=176 rot snapref/C1/C2 = 7.10/7.18/10.27  trans = 79.2/83.3/115.0  win 51%
+[probe] GT rotations orthonormalized (max element change 3.97e-08)
+M-V/I0 ho3d/AP12: n=170 rot snapref/C1/C2 = 4.14/2.03/3.07  trans = 31.3/16.4/23.0  win 21%
+[probe] GT rotations orthonormalized (max element change 3.92e-08)
+M-V/I0 ho3d/AP13: n=165 rot snapref/C1/C2 = 3.71/2.31/2.19  trans = 31.5/19.8/18.7  win 25%
+[probe] GT rotations orthonormalized (max element change 3.86e-08)
+M-V/I0 ho3d/AP14: n=166 rot snapref/C1/C2 = 3.34/1.81/2.05  trans = 22.8/12.5/13.7  win 27%
+[probe] GT rotations orthonormalized (max element change 4.09e-08)
+M-V/I0 ho3d/MPM10: n=236 rot snapref/C1/C2 = 10.66/5.82/4.85  trans = 72.9/31.0/30.6  win 23%
+[probe] GT rotations orthonormalized (max element change 3.99e-08)
+M-V/I0 ho3d/MPM11: n=248 rot snapref/C1/C2 = 8.14/5.72/8.01  trans = 84.7/46.6/72.6  win 27%
+[probe] GT rotations orthonormalized (max element change 3.99e-08)
+M-V/I0 ho3d/MPM12: n=228 rot snapref/C1/C2 = 5.36/4.13/5.87  trans = 27.0/19.7/25.7  win 22%
+[probe] GT rotations orthonormalized (max element change 3.66e-08)
+M-V/I0 ho3d/MPM13: n=213 rot snapref/C1/C2 = 5.13/2.67/2.37  trans = 47.4/19.7/18.7  win 17%
+[probe] GT rotations orthonormalized (max element change 4.03e-08)
+M-V/I0 ho3d/MPM14: n=224 rot snapref/C1/C2 = 6.32/2.73/2.60  trans = 55.3/21.4/20.0  win 17%
+[probe] GT rotations orthonormalized (max element change 3.81e-08)
+M-V/I0 ho3d/SB11: n=218 rot snapref/C1/C2 = 9.48/4.58/3.77  trans = 91.5/45.6/39.9  win 22%
+[probe] GT rotations orthonormalized (max element change 3.89e-08)
+M-V/I0 ho3d/SB13: n=206 rot snapref/C1/C2 = 5.72/3.25/3.03  trans = 44.4/24.0/21.9  win 23%

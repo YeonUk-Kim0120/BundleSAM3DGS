@@ -1,0 +1,20 @@
+START stage=stage4_I2 model=M-V ckpt=d15bf50a8615c822 cells=4 2026-09-25 13:44:09
+DONE M-V/I2/ref1-8 ho3d/AP12 kf=171 new=170 rot online/oracle/C1/C2=11.03/11.08/2.03/3.07 trans=52.9/52.0/16.4/23.0 302s
+DONE M-V/I2/chain ho3d/AP12 kf=171 new=170 rot online/oracle/C1/C2=30.00/4.52/2.03/3.07 trans=196.2/27.3/16.4/23.0 88s
+DONE M-V/I2/ref1-8 ho3d/MPM10 kf=244 new=236 rot online/oracle/C1/C2=23.55/22.62/5.82/4.85 trans=163.7/154.8/31.0/30.6 427s
+DONE M-V/I2/chain ho3d/MPM10 kf=244 new=236 rot online/oracle/C1/C2=39.49/5.54/5.82/4.85 trans=350.4/43.0/31.0/30.6 118s
+END stage=stage4_I2 2026-09-25 13:59:43
+START stage=stage4_I2 model=M-V ckpt=d15bf50a8615c822 cells=2 2026-09-25 13:59:54
+DONE M-V/I2/ref1-8 ycb/mustard0 kf=37 new=36 rot online/oracle/C1/C2=11.12/8.47/6.40/4.62 trans=64.6/69.2/68.4/44.7 51s
+DONE M-V/I2/chain ycb/mustard0 kf=37 new=36 rot online/oracle/C1/C2=24.14/5.09/6.40/4.62 trans=276.4/71.4/68.4/44.7 11s
+END stage=stage4_I2 2026-09-25 14:00:57
+START stage=stage4_I2 model=M-O ckpt=c02da418b18bb01d cells=4 2026-09-25 14:15:33
+DONE M-O/I2/ref1-8 ho3d/AP12 kf=171 new=170 rot online/oracle/C1/C2=22.97/21.56/2.03/3.07 trans=112.9/110.3/16.4/23.0 212s
+DONE M-O/I2/chain ho3d/AP12 kf=171 new=170 rot online/oracle/C1/C2=82.04/4.25/2.03/3.07 trans=348.8/39.4/16.4/23.0 77s
+DONE M-O/I2/ref1-8 ho3d/MPM10 kf=244 new=236 rot online/oracle/C1/C2=26.99/26.41/5.82/4.85 trans=136.6/118.3/31.0/30.6 297s
+DONE M-O/I2/chain ho3d/MPM10 kf=244 new=236 rot online/oracle/C1/C2=147.95/6.85/5.82/4.85 trans=979.5/80.4/31.0/30.6 103s
+END stage=stage4_I2 2026-09-25 14:27:02
+START stage=stage4_I2 model=M-O ckpt=c02da418b18bb01d cells=2 2026-09-25 14:27:14
+DONE M-O/I2/ref1-8 ycb/mustard0 kf=37 new=36 rot online/oracle/C1/C2=41.76/43.99/6.40/4.62 trans=225.2/261.4/68.4/44.7 33s
+DONE M-O/I2/chain ycb/mustard0 kf=37 new=36 rot online/oracle/C1/C2=90.21/8.09/6.40/4.62 trans=907.3/78.5/68.4/44.7 9s
+END stage=stage4_I2 2026-09-25 14:27:56
