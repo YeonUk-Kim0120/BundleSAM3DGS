@@ -1,0 +1,4 @@
+A0 M-V/I0/ref1-8 ho3d/MPM13: new KF 221, max |Δ| online 0.00e+00, oracle 0.00e+00 -> PASS
+A0 M-V/I0/ref5-8 ho3d/AP10: new KF 177, max |Δ| online 0.00e+00, oracle 0.00e+00 -> PASS
+A0 M-O/I0/ref1-4 ho3d/MPM12: new KF 235, max |Δ| online 0.00e+00, oracle 0.00e+00 -> PASS
+A0 PASS

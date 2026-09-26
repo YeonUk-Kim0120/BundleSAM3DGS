@@ -1,0 +1,160 @@
+realign M-O ref1-4 ho3d AP10 1408
+realign M-O ref1-4 ho3d AP11 1408
+realign M-O ref1-4 ho3d AP12 1360
+realign M-O ref1-4 ho3d AP13 1320
+realign M-O ref1-4 ho3d AP14 1328
+realign M-O ref1-4 ho3d MPM10 1888
+realign M-O ref1-4 ho3d MPM11 1984
+realign M-O ref1-4 ho3d MPM12 1824
+realign M-O ref1-4 ho3d MPM13 1704
+realign M-O ref1-4 ho3d MPM14 1792
+realign M-O ref1-4 ho3d SB11 1744
+realign M-O ref1-4 ho3d SB13 1648
+realign M-O ref1-4 ho3d SM1 2216
+realign M-O ref1-8 ho3d AP10 1408
+realign M-O ref1-8 ho3d AP11 1408
+realign M-O ref1-8 ho3d AP12 1360
+realign M-O ref1-8 ho3d AP13 1320
+realign M-O ref1-8 ho3d AP14 1328
+realign M-O ref1-8 ho3d MPM10 1888
+realign M-O ref1-8 ho3d MPM11 1984
+realign M-O ref1-8 ho3d MPM12 1824
+realign M-O ref1-8 ho3d MPM13 1704
+realign M-O ref1-8 ho3d MPM14 1792
+realign M-O ref1-8 ho3d SB11 1744
+realign M-O ref1-8 ho3d SB13 1648
+realign M-O ref1-8 ho3d SM1 2216
+realign M-O ref1-8 ycb bleach0 256
+realign M-O ref1-8 ycb bleach_hard_00_03_chaitanya 280
+realign M-O ref1-8 ycb cracker_box_reorient 152
+realign M-O ref1-8 ycb cracker_box_yalehand0 296
+realign M-O ref1-8 ycb mustard0 288
+realign M-O ref1-8 ycb mustard_easy_00_02 248
+realign M-O ref1-8 ycb sugar_box1 336
+realign M-O ref1-8 ycb sugar_box_yalehand0 336
+realign M-O ref1-8 ycb tomato_soup_can_yalehand0 1720
+realign M-O ref5-4 ho3d AP10 1408
+realign M-O ref5-4 ho3d AP11 1408
+realign M-O ref5-4 ho3d AP12 1360
+realign M-O ref5-4 ho3d AP13 1320
+realign M-O ref5-4 ho3d AP14 1328
+realign M-O ref5-4 ho3d MPM10 1888
+realign M-O ref5-4 ho3d MPM11 1984
+realign M-O ref5-4 ho3d MPM12 1824
+realign M-O ref5-4 ho3d MPM13 1704
+realign M-O ref5-4 ho3d MPM14 1792
+realign M-O ref5-4 ho3d SB11 1744
+realign M-O ref5-4 ho3d SB13 1648
+realign M-O ref5-4 ho3d SM1 2216
+realign M-O ref5-8 ho3d AP10 1408
+realign M-O ref5-8 ho3d AP11 1408
+realign M-O ref5-8 ho3d AP12 1360
+realign M-O ref5-8 ho3d AP13 1320
+realign M-O ref5-8 ho3d AP14 1328
+realign M-O ref5-8 ho3d MPM10 1888
+realign M-O ref5-8 ho3d MPM11 1984
+realign M-O ref5-8 ho3d MPM12 1824
+realign M-O ref5-8 ho3d MPM13 1704
+realign M-O ref5-8 ho3d MPM14 1792
+realign M-O ref5-8 ho3d SB11 1744
+realign M-O ref5-8 ho3d SB13 1648
+realign M-O ref5-8 ho3d SM1 2216
+realign M-O ref5-8 ycb bleach0 256
+realign M-O ref5-8 ycb bleach_hard_00_03_chaitanya 280
+realign M-O ref5-8 ycb cracker_box_reorient 152
+realign M-O ref5-8 ycb cracker_box_yalehand0 296
+realign M-O ref5-8 ycb mustard0 288
+realign M-O ref5-8 ycb mustard_easy_00_02 248
+realign M-O ref5-8 ycb sugar_box1 336
+realign M-O ref5-8 ycb sugar_box_yalehand0 336
+realign M-O ref5-8 ycb tomato_soup_can_yalehand0 1720
+realign M-V ref1-4 ho3d AP10 1408
+realign M-V ref1-4 ho3d AP11 1408
+realign M-V ref1-4 ho3d AP12 1360
+realign M-V ref1-4 ho3d AP13 1320
+realign M-V ref1-4 ho3d AP14 1328
+realign M-V ref1-4 ho3d MPM10 1888
+realign M-V ref1-4 ho3d MPM11 1984
+realign M-V ref1-4 ho3d MPM12 1824
+realign M-V ref1-4 ho3d MPM13 1704
+realign M-V ref1-4 ho3d MPM14 1792
+realign M-V ref1-4 ho3d SB11 1744
+realign M-V ref1-4 ho3d SB13 1648
+realign M-V ref1-4 ho3d SM1 2216
+realign M-V ref1-8 ho3d AP10 1408
+realign M-V ref1-8 ho3d AP11 1408
+realign M-V ref1-8 ho3d AP12 1360
+realign M-V ref1-8 ho3d AP13 1320
+realign M-V ref1-8 ho3d AP14 1328
+realign M-V ref1-8 ho3d MPM10 1888
+realign M-V ref1-8 ho3d MPM11 1984
+realign M-V ref1-8 ho3d MPM12 1824
+realign M-V ref1-8 ho3d MPM13 1704
+realign M-V ref1-8 ho3d MPM14 1792
+realign M-V ref1-8 ho3d SB11 1744
+realign M-V ref1-8 ho3d SB13 1648
+realign M-V ref1-8 ho3d SM1 2216
+realign M-V ref1-8 ycb bleach0 256
+realign M-V ref1-8 ycb bleach_hard_00_03_chaitanya 280
+realign M-V ref1-8 ycb cracker_box_reorient 152
+realign M-V ref1-8 ycb cracker_box_yalehand0 296
+realign M-V ref1-8 ycb mustard0 288
+realign M-V ref1-8 ycb mustard_easy_00_02 248
+realign M-V ref1-8 ycb sugar_box1 336
+realign M-V ref1-8 ycb sugar_box_yalehand0 336
+realign M-V ref1-8 ycb tomato_soup_can_yalehand0 1720
+realign M-V ref5-4 ho3d AP10 1408
+realign M-V ref5-4 ho3d AP11 1408
+realign M-V ref5-4 ho3d AP12 1360
+realign M-V ref5-4 ho3d AP13 1320
+realign M-V ref5-4 ho3d AP14 1328
+realign M-V ref5-4 ho3d MPM10 1888
+realign M-V ref5-4 ho3d MPM11 1984
+realign M-V ref5-4 ho3d MPM12 1824
+realign M-V ref5-4 ho3d MPM13 1704
+realign M-V ref5-4 ho3d MPM14 1792
+realign M-V ref5-4 ho3d SB11 1744
+realign M-V ref5-4 ho3d SB13 1648
+realign M-V ref5-4 ho3d SM1 2216
+realign M-V ref5-8 ho3d AP10 1408
+realign M-V ref5-8 ho3d AP11 1408
+realign M-V ref5-8 ho3d AP12 1360
+realign M-V ref5-8 ho3d AP13 1320
+realign M-V ref5-8 ho3d AP14 1328
+realign M-V ref5-8 ho3d MPM10 1888
+realign M-V ref5-8 ho3d MPM11 1984
+realign M-V ref5-8 ho3d MPM12 1824
+realign M-V ref5-8 ho3d MPM13 1704
+realign M-V ref5-8 ho3d MPM14 1792
+realign M-V ref5-8 ho3d SB11 1744
+realign M-V ref5-8 ho3d SB13 1648
+realign M-V ref5-8 ho3d SM1 2216
+realign M-V ref5-8 ycb bleach0 256
+realign M-V ref5-8 ycb bleach_hard_00_03_chaitanya 280
+realign M-V ref5-8 ycb cracker_box_reorient 152
+realign M-V ref5-8 ycb cracker_box_yalehand0 296
+realign M-V ref5-8 ycb mustard0 288
+realign M-V ref5-8 ycb mustard_easy_00_02 248
+realign M-V ref5-8 ycb sugar_box1 336
+realign M-V ref5-8 ycb sugar_box_yalehand0 336
+realign M-V ref5-8 ycb tomato_soup_can_yalehand0 1720
+/usr/local/lib/python3.10/dist-packages/numpy/core/fromnumeric.py:3504: RuntimeWarning: Mean of empty slice.
+  return _methods._mean(a, axis=axis, dtype=dtype,
+/usr/local/lib/python3.10/dist-packages/numpy/core/_methods.py:129: RuntimeWarning: invalid value encountered in scalar divide
+  ret = ret.dtype.type(ret / rcount)
+Traceback (most recent call last):
+  File "/home/kist/Desktop/BundleSAM3DGS/experiments/vggt_probe/p1b_A2.py", line 68, in <module>
+    doc += [f"## {model} / I1 / {bt} / {ds}", "", table_R(df, model, bt, ds, seqs), ""]
+  File "/home/kist/Desktop/BundleSAM3DGS/experiments/vggt_probe/p1b_A2.py", line 51, in table_R
+    base = g[(g.source == "online") & (g.mode == "a")]; cells = [f"{f(np.median(base.rot_c1))}/{f(np.percentile(base.rot_c1,90))}", f"{f(np.median(base.rot_c2))}/{f(np.percentile(base.rot_c2,90))}"]
+  File "/usr/local/lib/python3.10/dist-packages/numpy/lib/function_base.py", line 4283, in percentile
+    return _quantile_unchecked(
+  File "/usr/local/lib/python3.10/dist-packages/numpy/lib/function_base.py", line 4555, in _quantile_unchecked
+    return _ureduce(a,
+  File "/usr/local/lib/python3.10/dist-packages/numpy/lib/function_base.py", line 3823, in _ureduce
+    r = func(a, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/numpy/lib/function_base.py", line 4722, in _quantile_ureduce_func
+    result = _quantile(arr,
+  File "/usr/local/lib/python3.10/dist-packages/numpy/lib/function_base.py", line 4831, in _quantile
+    slices_having_nans = np.isnan(arr[-1, ...])
+IndexError: index -1 is out of bounds for axis 0 with size 0

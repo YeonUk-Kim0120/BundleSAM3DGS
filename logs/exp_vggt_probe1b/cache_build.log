@@ -1,0 +1,45 @@
+Warp CUDA error 100: no CUDA-capable device is detected (in function init_cuda_driver, /builds/omniverse/warp/warp/native/cuda_util.cpp:308)
+[probe] GT rotations orthonormalized (max element change 4.05e-08)
+cached ho3d AP10
+[probe] GT rotations orthonormalized (max element change 3.82e-08)
+cached ho3d AP11
+[probe] GT rotations orthonormalized (max element change 3.97e-08)
+cached ho3d AP12
+[probe] GT rotations orthonormalized (max element change 3.92e-08)
+cached ho3d AP13
+[probe] GT rotations orthonormalized (max element change 3.86e-08)
+cached ho3d AP14
+[probe] GT rotations orthonormalized (max element change 4.09e-08)
+cached ho3d MPM10
+[probe] GT rotations orthonormalized (max element change 3.99e-08)
+cached ho3d MPM11
+[probe] GT rotations orthonormalized (max element change 3.99e-08)
+cached ho3d MPM12
+[probe] GT rotations orthonormalized (max element change 3.66e-08)
+cached ho3d MPM13
+[probe] GT rotations orthonormalized (max element change 4.03e-08)
+cached ho3d MPM14
+[probe] GT rotations orthonormalized (max element change 3.81e-08)
+cached ho3d SB11
+[probe] GT rotations orthonormalized (max element change 3.89e-08)
+cached ho3d SB13
+[probe] GT rotations orthonormalized (max element change 3.54e-08)
+cached ho3d SM1
+[probe] GT rotations orthonormalized (max element change 3.62e-04)
+cached ycb bleach0
+[probe] GT rotations orthonormalized (max element change 3.41e-07)
+cached ycb bleach_hard_00_03_chaitanya
+[probe] GT rotations orthonormalized (max element change 7.77e-16)
+cached ycb cracker_box_reorient
+[probe] GT rotations orthonormalized (max element change 3.51e-04)
+cached ycb cracker_box_yalehand0
+[probe] GT rotations orthonormalized (max element change 1.41e-03)
+cached ycb mustard0
+[probe] GT rotations orthonormalized (max element change 7.66e-07)
+cached ycb mustard_easy_00_02
+[probe] GT rotations orthonormalized (max element change 3.88e-04)
+cached ycb sugar_box1
+[probe] GT rotations orthonormalized (max element change 1.50e-03)
+cached ycb sugar_box_yalehand0
+[probe] GT rotations orthonormalized (max element change 1.48e-03)
+cached ycb tomato_soup_can_yalehand0

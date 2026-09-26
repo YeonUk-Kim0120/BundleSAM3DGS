@@ -1,0 +1,4 @@
+B3-a synthetic round trip with roll: scale err 0.00e+00, pose err 5.55e-16 -> PASS
+B3-c up-vector -> image up: worst |x|/proj, 1+y/proj = 2.23e-16 -> PASS
+B3-b AP12 KF0-8 warp IoU with roll: min 0.9997 mean 0.9999, max extent 0.400S, f_v 672.3; psi(deg)/proj/flag = -0/0.99/0, -2/0.99/0, -4/0.99/0, -8/0.99/0, -5/0.98/0, -1/0.96/0, 4/0.94/0, 9/0.93/0, 14/0.91/0 -> PASS
+B3 checks PASS
