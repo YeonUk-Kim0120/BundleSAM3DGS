@@ -1,0 +1,50 @@
+## 판독 1: 큰 오차 교정기 (C1 >= 10° 풀, C1 < 3° 악화율)
+MD-prior: C1>=10° n=262, C1 median 16.83° (half 8.41°); C1<3° n=1055
+   E-V2   big: est median 122.82° (> half) | small: worsened   96% | iou-filtered(bottom 20% keep P0): big median  63.96°, small worsened   84%
+   E-V5b  big: est median 119.56° (> half) | small: worsened   96% | iou-filtered(bottom 20% keep P0): big median  66.50°, small worsened   85%
+   E-V5d  big: est median 119.50° (> half) | small: worsened   96% | iou-filtered(bottom 20% keep P0): big median  66.42°, small worsened   85%
+   E-V5x2 big: est median  58.83° (> half) | small: worsened   95% | iou-filtered(bottom 20% keep P0): big median  33.76°, small worsened   83%
+   E-L    big: est median  15.73° (> half) | small: worsened   48% | iou-filtered(bottom 20% keep P0): big median  15.16°, small worsened   41%
+   E-I    big: est median   7.90° (≤ half) | small: worsened   56% | iou-filtered(bottom 20% keep P0): big median  10.81°, small worsened   48%
+   E-VI   big: est median  61.68° (> half) | small: worsened   94% | iou-filtered(bottom 20% keep P0): big median  34.62°, small worsened   83%
+MD-gt: C1>=10° n=262, C1 median 16.83° (half 8.41°); C1<3° n=1055
+   E-V2   big: est median 113.69° (> half) | small: worsened   90% | iou-filtered(bottom 20% keep P0): big median  42.00°, small worsened   79%
+   E-V5b  big: est median  67.81° (> half) | small: worsened   92% | iou-filtered(bottom 20% keep P0): big median  32.97°, small worsened   82%
+   E-V5d  big: est median  67.83° (> half) | small: worsened   92% | iou-filtered(bottom 20% keep P0): big median  32.96°, small worsened   82%
+   E-V5x2 big: est median  41.37° (> half) | small: worsened   88% | iou-filtered(bottom 20% keep P0): big median  21.07°, small worsened   77%
+   E-L    big: est median   8.97° (> half) | small: worsened   34% | iou-filtered(bottom 20% keep P0): big median  13.60°, small worsened   30%
+   E-I    big: est median   3.06° (≤ half) | small: worsened   16% | iou-filtered(bottom 20% keep P0): big median   5.48°, small worsened   13%
+   E-VI   big: est median  54.09° (> half) | small: worsened   85% | iou-filtered(bottom 20% keep P0): big median  23.79°, small worsened   75%
+MD-map: C1>=10° n=262, C1 median 16.83° (half 8.41°); C1<3° n=1055
+   E-V2   big: est median  20.67° (> half) | small: worsened   70% | iou-filtered(bottom 20% keep P0): big median  17.43°, small worsened   54%
+   E-V5b  big: est median  25.11° (> half) | small: worsened   84% | iou-filtered(bottom 20% keep P0): big median  18.53°, small worsened   67%
+   E-V5d  big: est median  25.26° (> half) | small: worsened   84% | iou-filtered(bottom 20% keep P0): big median  18.55°, small worsened   67%
+   E-V5x2 big: est median  20.78° (> half) | small: worsened   83% | iou-filtered(bottom 20% keep P0): big median  17.49°, small worsened   66%
+   E-L    big: est median  13.93° (> half) | small: worsened   22% | iou-filtered(bottom 20% keep P0): big median  14.71°, small worsened   18%
+   E-I    big: est median  10.91° (> half) | small: worsened   30% | iou-filtered(bottom 20% keep P0): big median  13.08°, small worsened   24%
+   E-VI   big: est median  21.75° (> half) | small: worsened   79% | iou-filtered(bottom 20% keep P0): big median  17.41°, small worsened   62%
+
+## 판독 3: 조합(E-VI) vs max(E-I, E-V5x2) by C1 bin (success rate / rot median)
+  MD-gt [0,3): E-VI 8% (36.2°), E-I 61% (2.2°), E-V5x2 1% (19.8°) -> E-VI < best
+  MD-gt [3,10): E-VI 7% (19.5°), E-I 45% (3.0°), E-V5x2 1% (14.3°) -> E-VI < best
+  MD-gt [10,30): E-VI 3% (53.8°), E-I 38% (3.0°), E-V5x2 0% (39.0°) -> E-VI < best
+  MD-gt [30,180]: E-VI 8% (56.9°), E-I 41% (4.0°), E-V5x2 0% (56.9°) -> E-VI < best
+  MD-prior [0,3): E-VI 2% (43.7°), E-I 23% (4.1°), E-V5x2 1% (34.8°) -> E-VI < best
+  MD-prior [3,10): E-VI 1% (69.1°), E-I 7% (8.0°), E-V5x2 0% (59.2°) -> E-VI < best
+  MD-prior [10,30): E-VI 1% (60.9°), E-I 8% (7.8°), E-V5x2 0% (56.8°) -> E-VI < best
+  MD-prior [30,180]: E-VI 0% (70.8°), E-I 0% (8.4°), E-V5x2 0% (70.8°) -> E-VI ≥ best
+  MD-map [0,3): E-VI 13% (18.7°), E-I 47% (2.9°), E-V5x2 2% (14.1°) -> E-VI < best
+  MD-map [3,10): E-VI 4% (17.9°), E-I 11% (6.4°), E-V5x2 1% (14.1°) -> E-VI < best
+  MD-map [10,30): E-VI 1% (19.7°), E-I 6% (11.0°), E-V5x2 0% (19.7°) -> E-VI < best
+  MD-map [30,180]: E-VI 3% (68.6°), E-I 16% (9.7°), E-V5x2 0% (74.0°) -> E-VI < best
+
+## 판독 4: 도메인 차이 (성공률 MD-gt − MD-prior, 시퀀스 평균)
+  E-V2   MD-gt 1%  MD-prior 1%  MD-map 8%  gt−prior +0pp
+  E-V5b  MD-gt 2%  MD-prior 1%  MD-map 3%  gt−prior +1pp
+  E-V5d  MD-gt 1%  MD-prior 1%  MD-map 3%  gt−prior +1pp
+  E-V5x2 MD-gt 1%  MD-prior 1%  MD-map 1%  gt−prior +0pp
+  E-L    MD-gt 36%  MD-prior 20%  MD-map 29%  gt−prior +16pp
+  E-I    MD-gt 52%  MD-prior 13%  MD-map 25%  gt−prior +39pp
+  E-VI   MD-gt 7%  MD-prior 1%  MD-map 8%  gt−prior +6pp
+
+## 신뢰 신호: 무작위 20 % 버림 시 기대 악화율 = 전체 × 0.8

@@ -1,0 +1,42 @@
+[probe] GT rotations orthonormalized (max element change 3.97e-08)
+/home/kist/Desktop/BundleSAM3DGS/experiments/vggt_probe/models.py:30: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(dtype=torch.bfloat16):
+/home/kist/venvs/vggt_probe/lib/python3.10/site-packages/vggt/models/vggt.py:65: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=False):
+D AP12: frames 171, hole ratio 0.034, 35s
+[probe] GT rotations orthonormalized (max element change 4.09e-08)
+/home/kist/Desktop/BundleSAM3DGS/experiments/vggt_probe/models.py:30: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(dtype=torch.bfloat16):
+/home/kist/venvs/vggt_probe/lib/python3.10/site-packages/vggt/models/vggt.py:65: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=False):
+D MPM10: frames 237, hole ratio 0.092, 49s
+[probe] GT rotations orthonormalized (max element change 3.99e-08)
+/home/kist/Desktop/BundleSAM3DGS/experiments/vggt_probe/models.py:30: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(dtype=torch.bfloat16):
+/home/kist/venvs/vggt_probe/lib/python3.10/site-packages/vggt/models/vggt.py:65: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=False):
+D MPM12: frames 229, hole ratio 0.031, 49s
+[probe] GT rotations orthonormalized (max element change 3.81e-08)
+/home/kist/Desktop/BundleSAM3DGS/experiments/vggt_probe/models.py:30: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(dtype=torch.bfloat16):
+/home/kist/venvs/vggt_probe/lib/python3.10/site-packages/vggt/models/vggt.py:65: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=False):
+D SB11: frames 219, hole ratio 0.017, 45s
+[probe] GT rotations orthonormalized (max element change 3.54e-08)
+/home/kist/Desktop/BundleSAM3DGS/experiments/vggt_probe/models.py:30: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(dtype=torch.bfloat16):
+/home/kist/venvs/vggt_probe/lib/python3.10/site-packages/vggt/models/vggt.py:65: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=False):
+D SM1: frames 278, hole ratio 0.014, 58s
+[probe] GT rotations orthonormalized (max element change 1.41e-03)
+/home/kist/Desktop/BundleSAM3DGS/experiments/vggt_probe/models.py:30: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(dtype=torch.bfloat16):
+/home/kist/venvs/vggt_probe/lib/python3.10/site-packages/vggt/models/vggt.py:65: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=False):
+D mustard0: frames 37, hole ratio 0.022, 8s
+[probe] GT rotations orthonormalized (max element change 1.48e-03)
+/home/kist/Desktop/BundleSAM3DGS/experiments/vggt_probe/models.py:30: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(dtype=torch.bfloat16):
+/home/kist/venvs/vggt_probe/lib/python3.10/site-packages/vggt/models/vggt.py:65: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=False):
+D tomato_soup_can_yalehand0: frames 216, hole ratio 0.045, 44s

@@ -1,0 +1,8 @@
+0-c E-I: n 40, init rot median 10.00°, est rot median 0.02° (p90 0.09), trans median 0.2 mm (init 71.4), success 100 %
+0-c E-L: n 40, init rot median 10.00°, est rot median 0.31° (p90 0.55), trans median 1.5 mm (init 71.4), success 100 %
+0-c E-V2: n 40, init rot median 10.00°, est rot median 0.67° (p90 1.85), trans median 4.3 mm (init 71.4), success 100 %
+0-c E-V5b: n 40, init rot median 10.00°, est rot median 0.99° (p90 2.65), trans median 4.3 mm (init 71.4), success 95 %
+0-c E-V5d: n 40, init rot median 10.00°, est rot median 1.02° (p90 2.35), trans median 4.2 mm (init 71.4), success 95 %
+0-c E-V5x2: n 40, init rot median 10.00°, est rot median 0.36° (p90 0.78), trans median 3.5 mm (init 71.4), success 100 %
+0-c E-VI: n 40, init rot median 10.00°, est rot median 0.01° (p90 0.02), trans median 0.1 mm (init 71.4), success 100 %
+0-c criterion E-V5x2 median 0.36° < 2° -> PASS

@@ -1,0 +1,4 @@
+0-b MD-map AP12: KF 171, |render - sensor| depth median of per-KF medians 5.51 mm (signed -5.40 mm), IoU(silhouette, SAM2 mask) median 0.593 (p10 0.488), mask/silhouette area median 0.594
+0-b MD-map SM1: KF 278, |render - sensor| depth median of per-KF medians 3.12 mm (signed -2.50 mm), IoU(silhouette, SAM2 mask) median 0.555 (p10 0.372), mask/silhouette area median 0.558
+0-b MD-prior AP12: KF 171, |render - sensor| depth median of per-KF medians 3.75 mm (signed -0.84 mm), IoU(silhouette, SAM2 mask) median 0.806 (p10 0.760), mask/silhouette area median 0.952
+0-b MD-prior SM1: KF 278, |render - sensor| depth median of per-KF medians 2.61 mm (signed -1.11 mm), IoU(silhouette, SAM2 mask) median 0.605 (p10 0.444), mask/silhouette area median 0.608

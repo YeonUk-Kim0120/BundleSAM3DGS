@@ -1,0 +1,3 @@
+0-a MD-gt AP12: KF 171, |render - sensor| depth median of per-KF medians 1.30 mm (signed +0.45 mm), IoU(silhouette, SAM2 mask) median 0.945 (p10 0.901), mask/silhouette area median 0.981
+0-a MD-gt SM1: KF 278, |render - sensor| depth median of per-KF medians 1.72 mm (signed +0.13 mm), IoU(silhouette, SAM2 mask) median 0.732 (p10 0.487), mask/silhouette area median 0.754
+0-a PASS

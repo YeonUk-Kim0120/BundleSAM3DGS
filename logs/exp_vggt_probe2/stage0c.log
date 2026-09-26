@@ -1,0 +1,258 @@
+default_cfg {'backbone_type': 'ResNetFPN', 'resolution': (8, 2), 'fine_window_size': 5, 'fine_concat_coarse_feat': True, 'resnetfpn': {'initial_dim': 128, 'block_dims': [128, 196, 256]}, 'coarse': {'d_model': 256, 'd_ffn': 256, 'nhead': 8, 'layer_names': ['self', 'cross', 'self', 'cross', 'self', 'cross', 'self', 'cross'], 'attention': 'linear', 'temp_bug_fix': False}, 'match_coarse': {'thr': 0.2, 'border_rm': 2, 'match_type': 'dual_softmax', 'dsmax_temperature': 0.1, 'skh_iters': 3, 'skh_init_bin_score': 1.0, 'skh_prefilter': True, 'train_coarse_percent': 0.4, 'train_pad_num_gt_min': 200}, 'fine': {'d_model': 128, 'd_ffn': 128, 'nhead': 8, 'layer_names': ['self', 'cross'], 'attention': 'linear'}}
+[acceleratesupport.py] No OpenGL_accelerate module loaded: No module named 'OpenGL_accelerate'
+[probe] GT rotations orthonormalized (max element change 3.97e-08)
+/home/kist/Desktop/BundleSAM3DGS/experiments/vggt_probe/models.py:30: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(dtype=torch.bfloat16):
+/home/kist/venvs/vggt_probe/lib/python3.10/site-packages/vggt/models/vggt.py:65: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=False):
+[loftr_wrapper.py] image0: torch.Size([1, 1, 400, 400])
+/home/kist/Desktop/BundleSAM3DGS/loftr_wrapper.py:45: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=True):
+[loftr_wrapper.py] net forward
+[loftr_wrapper.py] mconf, 0.20115049183368683 0.9993157386779785
+[loftr_wrapper.py] pair_ids (957,)
+[loftr_wrapper.py] corres: (957, 5)
+AP12 0044 E-V2=1.28 E-L=0.11 E-I=0.02 E-V5b=3.81 E-V5d=3.51 E-V5x2=0.29 E-VI=0.00 2.7s
+[loftr_wrapper.py] image0: torch.Size([1, 1, 400, 400])
+[loftr_wrapper.py] net forward
+[loftr_wrapper.py] mconf, 0.20025594532489777 0.9987772107124329
+[loftr_wrapper.py] pair_ids (863,)
+[loftr_wrapper.py] corres: (863, 5)
+AP12 0077 E-V2=0.61 E-L=0.14 E-I=0.01 E-V5b=1.20 E-V5d=1.09 E-V5x2=0.62 E-VI=0.01 2.4s
+[loftr_wrapper.py] image0: torch.Size([1, 1, 400, 400])
+[loftr_wrapper.py] net forward
+[loftr_wrapper.py] mconf, 0.20062123239040375 0.9982552528381348
+[loftr_wrapper.py] pair_ids (698,)
+[loftr_wrapper.py] corres: (698, 5)
+AP12 0099 E-V2=0.61 E-L=0.21 E-I=0.63 E-V5b=1.70 E-V5d=1.76 E-V5x2=0.37 E-VI=0.02 2.4s
+[loftr_wrapper.py] image0: torch.Size([1, 1, 400, 400])
+[loftr_wrapper.py] net forward
+[loftr_wrapper.py] mconf, 0.20031961798667908 0.9993611574172974
+[loftr_wrapper.py] pair_ids (772,)
+[loftr_wrapper.py] corres: (772, 5)
+AP12 0223 E-V2=0.32 E-L=0.22 E-I=0.41 E-V5b=0.62 E-V5d=0.40 E-V5x2=0.47 E-VI=0.00 2.4s
+[loftr_wrapper.py] image0: torch.Size([1, 1, 400, 400])
+[loftr_wrapper.py] net forward
+[loftr_wrapper.py] mconf, 0.20071931183338165 0.9938607215881348
+[loftr_wrapper.py] pair_ids (1020,)
+[loftr_wrapper.py] corres: (1020, 5)
+AP12 0266 E-V2=0.47 E-L=0.20 E-I=0.02 E-V5b=0.38 E-V5d=0.41 E-V5x2=0.03 E-VI=0.02 2.4s
+[loftr_wrapper.py] image0: torch.Size([1, 1, 400, 400])
+[loftr_wrapper.py] net forward
+[loftr_wrapper.py] mconf, 0.20024557411670685 0.9987321496009827
+[loftr_wrapper.py] pair_ids (1048,)
+[loftr_wrapper.py] corres: (1048, 5)
+AP12 0308 E-V2=0.14 E-L=0.37 E-I=0.03 E-V5b=0.49 E-V5d=0.46 E-V5x2=0.20 E-VI=0.01 2.5s
+[loftr_wrapper.py] image0: torch.Size([1, 1, 400, 400])
+[loftr_wrapper.py] net forward
+[loftr_wrapper.py] mconf, 0.20118770003318787 0.9996074438095093
+[loftr_wrapper.py] pair_ids (1011,)
+[loftr_wrapper.py] corres: (1011, 5)
+AP12 0678 E-V2=0.46 E-L=0.19 E-I=0.00 E-V5b=0.58 E-V5d=0.66 E-V5x2=0.08 E-VI=0.00 2.4s
+[loftr_wrapper.py] image0: torch.Size([1, 1, 400, 400])
+[loftr_wrapper.py] net forward
+[loftr_wrapper.py] mconf, 0.20035627484321594 0.9988613128662109
+[loftr_wrapper.py] pair_ids (858,)
+[loftr_wrapper.py] corres: (858, 5)
+AP12 0697 E-V2=0.66 E-L=0.30 E-I=0.03 E-V5b=0.52 E-V5d=0.61 E-V5x2=0.31 E-VI=0.02 2.4s
+[loftr_wrapper.py] image0: torch.Size([1, 1, 400, 400])
+[loftr_wrapper.py] net forward
+[loftr_wrapper.py] mconf, 0.2008482813835144 0.9973233342170715
+[loftr_wrapper.py] pair_ids (787,)
+[loftr_wrapper.py] corres: (787, 5)
+AP12 0739 E-V2=0.83 E-L=0.32 E-I=0.02 E-V5b=0.84 E-V5d=0.95 E-V5x2=0.35 E-VI=0.02 2.4s
+[loftr_wrapper.py] image0: torch.Size([1, 1, 400, 400])
+[loftr_wrapper.py] net forward
+[loftr_wrapper.py] mconf, 0.20022372901439667 0.9989639520645142
+[loftr_wrapper.py] pair_ids (1201,)
+[loftr_wrapper.py] corres: (1201, 5)
+AP12 0758 E-V2=0.49 E-L=0.07 E-I=0.02 E-V5b=0.53 E-V5d=0.52 E-V5x2=0.31 E-VI=0.01 2.5s
+[loftr_wrapper.py] image0: torch.Size([1, 1, 400, 400])
+[loftr_wrapper.py] net forward
+[loftr_wrapper.py] mconf, 0.20065827667713165 0.9987885355949402
+[loftr_wrapper.py] pair_ids (1175,)
+[loftr_wrapper.py] corres: (1175, 5)
+AP12 0768 E-V2=0.28 E-L=0.20 E-I=0.03 E-V5b=0.41 E-V5d=0.34 E-V5x2=0.34 E-VI=0.02 2.5s
+[loftr_wrapper.py] image0: torch.Size([1, 1, 400, 400])
+[loftr_wrapper.py] net forward
+[loftr_wrapper.py] mconf, 0.20204736292362213 0.9990067481994629
+[loftr_wrapper.py] pair_ids (1119,)
+[loftr_wrapper.py] corres: (1119, 5)
+AP12 0789 E-V2=0.61 E-L=0.23 E-I=0.01 E-V5b=0.32 E-V5d=0.32 E-V5x2=0.06 E-VI=0.01 2.5s
+[loftr_wrapper.py] image0: torch.Size([1, 1, 400, 400])
+[loftr_wrapper.py] net forward
+[loftr_wrapper.py] mconf, 0.20110225677490234 0.9984062314033508
+[loftr_wrapper.py] pair_ids (1071,)
+[loftr_wrapper.py] corres: (1071, 5)
+AP12 0815 E-V2=0.72 E-L=0.12 E-I=0.02 E-V5b=0.66 E-V5d=0.75 E-V5x2=0.36 E-VI=0.01 2.4s
+[loftr_wrapper.py] image0: torch.Size([1, 1, 400, 400])
+[loftr_wrapper.py] net forward
+[loftr_wrapper.py] mconf, 0.20000366866588593 0.9980640411376953
+[loftr_wrapper.py] pair_ids (899,)
+[loftr_wrapper.py] corres: (899, 5)
+AP12 0819 E-V2=1.01 E-L=0.08 E-I=0.03 E-V5b=2.69 E-V5d=2.67 E-V5x2=0.19 E-VI=0.00 2.4s
+[loftr_wrapper.py] image0: torch.Size([1, 1, 400, 400])
+[loftr_wrapper.py] net forward
+[loftr_wrapper.py] mconf, 0.20027606189250946 0.9982824921607971
+[loftr_wrapper.py] pair_ids (1103,)
+[loftr_wrapper.py] corres: (1103, 5)
+AP12 0958 E-V2=1.59 E-L=0.10 E-I=0.02 E-V5b=2.24 E-V5d=2.19 E-V5x2=0.34 E-VI=0.01 2.4s
+[loftr_wrapper.py] image0: torch.Size([1, 1, 400, 400])
+[loftr_wrapper.py] net forward
+[loftr_wrapper.py] mconf, 0.20013990998268127 0.9954606890678406
+[loftr_wrapper.py] pair_ids (887,)
+[loftr_wrapper.py] corres: (887, 5)
+AP12 1173 E-V2=2.19 E-L=0.10 E-I=0.03 E-V5b=2.71 E-V5d=2.54 E-V5x2=0.53 E-VI=0.02 2.4s
+[loftr_wrapper.py] image0: torch.Size([1, 1, 400, 400])
+[loftr_wrapper.py] net forward
+[loftr_wrapper.py] mconf, 0.20256011188030243 0.9978547096252441
+[loftr_wrapper.py] pair_ids (937,)
+[loftr_wrapper.py] corres: (937, 5)
+AP12 1178 E-V2=0.73 E-L=0.16 E-I=0.03 E-V5b=1.66 E-V5d=1.69 E-V5x2=1.24 E-VI=0.01 2.4s
+[loftr_wrapper.py] image0: torch.Size([1, 1, 400, 400])
+[loftr_wrapper.py] net forward
+[loftr_wrapper.py] mconf, 0.2000049203634262 0.9991087913513184
+[loftr_wrapper.py] pair_ids (871,)
+[loftr_wrapper.py] corres: (871, 5)
+AP12 1277 E-V2=0.50 E-L=0.37 E-I=0.43 E-V5b=0.67 E-V5d=0.67 E-V5x2=0.41 E-VI=0.01 2.4s
+[loftr_wrapper.py] image0: torch.Size([1, 1, 400, 400])
+[loftr_wrapper.py] net forward
+[loftr_wrapper.py] mconf, 0.2004479020833969 0.9991979002952576
+[loftr_wrapper.py] pair_ids (1063,)
+[loftr_wrapper.py] corres: (1063, 5)
+AP12 1378 E-V2=0.33 E-L=0.10 E-I=0.03 E-V5b=1.65 E-V5d=1.61 E-V5x2=0.07 E-VI=0.01 2.5s
+[loftr_wrapper.py] image0: torch.Size([1, 1, 400, 400])
+[loftr_wrapper.py] net forward
+[loftr_wrapper.py] mconf, 0.20026333630084991 0.9990150928497314
+[loftr_wrapper.py] pair_ids (974,)
+[loftr_wrapper.py] corres: (974, 5)
+AP12 1387 E-V2=0.72 E-L=0.18 E-I=0.01 E-V5b=0.71 E-V5d=0.43 E-V5x2=0.29 E-VI=0.00 2.5s
+[probe] GT rotations orthonormalized (max element change 3.54e-08)
+[loftr_wrapper.py] image0: torch.Size([1, 1, 400, 400])
+[loftr_wrapper.py] net forward
+[loftr_wrapper.py] mconf, 0.2016264796257019 0.9964935779571533
+[loftr_wrapper.py] pair_ids (501,)
+[loftr_wrapper.py] corres: (501, 5)
+SM1 0016 E-V2=2.06 E-L=0.65 E-I=0.09 E-V5b=2.26 E-V5d=2.25 E-V5x2=0.77 E-VI=0.02 2.3s
+[loftr_wrapper.py] image0: torch.Size([1, 1, 400, 400])
+[loftr_wrapper.py] net forward
+[loftr_wrapper.py] mconf, 0.20167246460914612 0.9998499155044556
+[loftr_wrapper.py] pair_ids (854,)
+[loftr_wrapper.py] corres: (854, 5)
+SM1 0063 E-V2=2.08 E-L=0.45 E-I=0.01 E-V5b=2.65 E-V5d=2.33 E-V5x2=0.62 E-VI=0.00 2.4s
+[loftr_wrapper.py] image0: torch.Size([1, 1, 400, 400])
+[loftr_wrapper.py] net forward
+[loftr_wrapper.py] mconf, 0.2006220817565918 0.999940037727356
+[loftr_wrapper.py] pair_ids (1021,)
+[loftr_wrapper.py] corres: (1021, 5)
+SM1 0088 E-V2=0.25 E-L=0.37 E-I=0.03 E-V5b=0.30 E-V5d=0.31 E-V5x2=0.21 E-VI=0.01 2.4s
+[loftr_wrapper.py] image0: torch.Size([1, 1, 400, 400])
+[loftr_wrapper.py] net forward
+[loftr_wrapper.py] mconf, 0.20011872053146362 0.9984236359596252
+[loftr_wrapper.py] pair_ids (1369,)
+[loftr_wrapper.py] corres: (1369, 5)
+SM1 0159 E-V2=0.91 E-L=0.54 E-I=0.02 E-V5b=1.15 E-V5d=1.13 E-V5x2=0.66 E-VI=0.01 2.4s
+[loftr_wrapper.py] image0: torch.Size([1, 1, 400, 400])
+[loftr_wrapper.py] net forward
+[loftr_wrapper.py] mconf, 0.20001815259456635 0.999764084815979
+[loftr_wrapper.py] pair_ids (1000,)
+[loftr_wrapper.py] corres: (1000, 5)
+SM1 0232 E-V2=0.51 E-L=0.46 E-I=0.04 E-V5b=0.45 E-V5d=0.61 E-V5x2=0.44 E-VI=0.01 2.4s
+[loftr_wrapper.py] image0: torch.Size([1, 1, 400, 400])
+[loftr_wrapper.py] net forward
+[loftr_wrapper.py] mconf, 0.2022002786397934 0.9994086027145386
+[loftr_wrapper.py] pair_ids (814,)
+[loftr_wrapper.py] corres: (814, 5)
+SM1 0256 E-V2=0.61 E-L=0.51 E-I=0.01 E-V5b=0.46 E-V5d=0.35 E-V5x2=0.26 E-VI=0.02 2.4s
+[loftr_wrapper.py] image0: torch.Size([1, 1, 400, 400])
+[loftr_wrapper.py] net forward
+[loftr_wrapper.py] mconf, 0.20145756006240845 0.9987930655479431
+[loftr_wrapper.py] pair_ids (858,)
+[loftr_wrapper.py] corres: (858, 5)
+SM1 0478 E-V2=0.42 E-L=0.33 E-I=0.02 E-V5b=0.80 E-V5d=0.80 E-V5x2=0.39 E-VI=0.01 2.4s
+[loftr_wrapper.py] image0: torch.Size([1, 1, 400, 400])
+[loftr_wrapper.py] net forward
+[loftr_wrapper.py] mconf, 0.20108632743358612 0.999630331993103
+[loftr_wrapper.py] pair_ids (1133,)
+[loftr_wrapper.py] corres: (1133, 5)
+SM1 0484 E-V2=0.62 E-L=0.51 E-I=0.01 E-V5b=0.68 E-V5d=0.62 E-V5x2=0.32 E-VI=0.01 2.4s
+[loftr_wrapper.py] image0: torch.Size([1, 1, 400, 400])
+[loftr_wrapper.py] net forward
+[loftr_wrapper.py] mconf, 0.2001914232969284 0.9994825720787048
+[loftr_wrapper.py] pair_ids (1083,)
+[loftr_wrapper.py] corres: (1083, 5)
+SM1 0515 E-V2=1.22 E-L=0.44 E-I=0.05 E-V5b=1.61 E-V5d=1.54 E-V5x2=0.80 E-VI=0.02 2.4s
+[loftr_wrapper.py] image0: torch.Size([1, 1, 400, 400])
+[loftr_wrapper.py] net forward
+[loftr_wrapper.py] mconf, 0.20025089383125305 0.9994004964828491
+[loftr_wrapper.py] pair_ids (1275,)
+[loftr_wrapper.py] corres: (1275, 5)
+SM1 0526 E-V2=0.51 E-L=0.31 E-I=0.02 E-V5b=0.76 E-V5d=0.73 E-V5x2=0.36 E-VI=0.00 2.4s
+[loftr_wrapper.py] image0: torch.Size([1, 1, 400, 400])
+[loftr_wrapper.py] net forward
+[loftr_wrapper.py] mconf, 0.20047254860401154 0.9998462200164795
+[loftr_wrapper.py] pair_ids (1149,)
+[loftr_wrapper.py] corres: (1149, 5)
+SM1 0554 E-V2=1.84 E-L=0.31 E-I=0.07 E-V5b=1.45 E-V5d=1.43 E-V5x2=0.83 E-VI=0.01 2.4s
+[loftr_wrapper.py] image0: torch.Size([1, 1, 400, 400])
+[loftr_wrapper.py] net forward
+[loftr_wrapper.py] mconf, 0.20187675952911377 0.998971700668335
+[loftr_wrapper.py] pair_ids (1106,)
+[loftr_wrapper.py] corres: (1106, 5)
+SM1 0572 E-V2=1.15 E-L=0.22 E-I=0.02 E-V5b=0.65 E-V5d=0.56 E-V5x2=0.19 E-VI=0.01 2.4s
+[loftr_wrapper.py] image0: torch.Size([1, 1, 400, 400])
+[loftr_wrapper.py] net forward
+[loftr_wrapper.py] mconf, 0.20026132464408875 0.998555064201355
+[loftr_wrapper.py] pair_ids (1116,)
+[loftr_wrapper.py] corres: (1116, 5)
+SM1 0574 E-V2=1.78 E-L=0.12 E-I=0.01 E-V5b=1.28 E-V5d=1.33 E-V5x2=0.64 E-VI=0.00 2.4s
+[loftr_wrapper.py] image0: torch.Size([1, 1, 400, 400])
+[loftr_wrapper.py] net forward
+[loftr_wrapper.py] mconf, 0.20161929726600647 0.9996536374092102
+[loftr_wrapper.py] pair_ids (984,)
+[loftr_wrapper.py] corres: (984, 5)
+SM1 0641 E-V2=0.97 E-L=0.32 E-I=0.03 E-V5b=3.29 E-V5d=3.17 E-V5x2=0.33 E-VI=0.01 2.4s
+[loftr_wrapper.py] image0: torch.Size([1, 1, 400, 400])
+[loftr_wrapper.py] net forward
+[loftr_wrapper.py] mconf, 0.2014545351266861 0.9996477365493774
+[loftr_wrapper.py] pair_ids (744,)
+[loftr_wrapper.py] corres: (744, 5)
+SM1 0706 E-V2=0.67 E-L=0.12 E-I=0.01 E-V5b=1.16 E-V5d=1.19 E-V5x2=0.77 E-VI=0.01 2.4s
+[loftr_wrapper.py] image0: torch.Size([1, 1, 400, 400])
+[loftr_wrapper.py] net forward
+[loftr_wrapper.py] mconf, 0.20182831585407257 0.9991530776023865
+[loftr_wrapper.py] pair_ids (705,)
+[loftr_wrapper.py] corres: (705, 5)
+SM1 0716 E-V2=1.84 E-L=0.95 E-I=0.04 E-V5b=1.26 E-V5d=1.09 E-V5x2=0.61 E-VI=0.02 2.4s
+[loftr_wrapper.py] image0: torch.Size([1, 1, 400, 400])
+[loftr_wrapper.py] net forward
+[loftr_wrapper.py] mconf, 0.2006545215845108 0.9986881613731384
+[loftr_wrapper.py] pair_ids (1119,)
+[loftr_wrapper.py] corres: (1119, 5)
+SM1 0798 E-V2=1.94 E-L=0.39 E-I=0.05 E-V5b=2.12 E-V5d=2.04 E-V5x2=0.48 E-VI=0.01 2.4s
+[loftr_wrapper.py] image0: torch.Size([1, 1, 400, 400])
+[loftr_wrapper.py] net forward
+[loftr_wrapper.py] mconf, 0.20150963962078094 0.9908748269081116
+[loftr_wrapper.py] pair_ids (690,)
+[loftr_wrapper.py] corres: (690, 5)
+SM1 0834 E-V2=0.67 E-L=0.56 E-I=0.04 E-V5b=0.28 E-V5d=0.35 E-V5x2=0.24 E-VI=0.01 2.4s
+[loftr_wrapper.py] image0: torch.Size([1, 1, 400, 400])
+[loftr_wrapper.py] net forward
+[loftr_wrapper.py] mconf, 0.20049694180488586 0.9997273087501526
+[loftr_wrapper.py] pair_ids (800,)
+[loftr_wrapper.py] corres: (800, 5)
+SM1 0848 E-V2=1.72 E-L=0.79 E-I=0.09 E-V5b=1.53 E-V5d=1.49 E-V5x2=0.54 E-VI=0.01 2.4s
+[loftr_wrapper.py] image0: torch.Size([1, 1, 400, 400])
+[loftr_wrapper.py] net forward
+[loftr_wrapper.py] mconf, 0.20025674998760223 0.9996766448020935
+[loftr_wrapper.py] pair_ids (1189,)
+[loftr_wrapper.py] corres: (1189, 5)
+SM1 0875 E-V2=0.51 E-L=0.49 E-I=0.02 E-V5b=1.57 E-V5d=1.63 E-V5x2=0.91 E-VI=0.01 2.4s
+0-c E-I: n 40, init rot median 10.00°, est rot median 0.02° (p90 0.09), trans median 0.2 mm (init 71.4), success 100 %
+0-c E-L: n 40, init rot median 10.00°, est rot median 0.31° (p90 0.55), trans median 1.5 mm (init 71.4), success 100 %
+0-c E-V2: n 40, init rot median 10.00°, est rot median 0.67° (p90 1.85), trans median 4.3 mm (init 71.4), success 100 %
+0-c E-V5b: n 40, init rot median 10.00°, est rot median 0.99° (p90 2.65), trans median 4.3 mm (init 71.4), success 95 %
+0-c E-V5d: n 40, init rot median 10.00°, est rot median 1.02° (p90 2.35), trans median 4.2 mm (init 71.4), success 95 %
+0-c E-V5x2: n 40, init rot median 10.00°, est rot median 0.36° (p90 0.78), trans median 3.5 mm (init 71.4), success 100 %
+0-c E-VI: n 40, init rot median 10.00°, est rot median 0.01° (p90 0.02), trans median 0.1 mm (init 71.4), success 100 %
+0-c criterion E-V5x2 median 0.36° < 2° -> PASS

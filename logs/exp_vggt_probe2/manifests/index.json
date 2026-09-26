@@ -1,0 +1,4754 @@
+[
+ {
+  "stage": "A",
+  "model": "MD-gt",
+  "model_source": "eval_mesh_cd.load_gt_mesh + GroundTruth.align",
+  "model_center": [
+   -0.011204401244410885,
+   -0.024346491611643366,
+   0.021749600137567285
+  ],
+  "seq": "AP10",
+  "n_jobs": 177,
+  "every": 1,
+  "vggt_ckpt": "/home/kist/.cache/huggingface/hub/models--facebook--VGGT-1B/snapshots/860abec7937da0a4c03c41d3c269c366e82abdf9/model.pt",
+  "vggt_ckpt_sha256_16": "d15bf50a8615c822",
+  "seconds": 453.96322226524353,
+  "rot0_median": 6.100427556763077,
+  "summary": {
+   "E-I": {
+    "rot_med": 2.838375869117712,
+    "success": 0.5028248587570622,
+    "worsened": 0.14124293785310735
+   },
+   "E-L": {
+    "rot_med": 6.910998773703001,
+    "success": 0.22033898305084745,
+    "worsened": 0.4180790960451977
+   },
+   "E-V2": {
+    "rot_med": 150.68260985771695,
+    "success": 0.0,
+    "worsened": 0.9717514124293786
+   },
+   "E-V5b": {
+    "rot_med": 99.06269984834671,
+    "success": 0.0,
+    "worsened": 0.9322033898305084
+   },
+   "E-V5d": {
+    "rot_med": 99.08819680750247,
+    "success": 0.0,
+    "worsened": 0.9322033898305084
+   },
+   "E-V5x2": {
+    "rot_med": 23.992676607998817,
+    "success": 0.0,
+    "worsened": 0.807909604519774
+   },
+   "E-VI": {
+    "rot_med": 47.592038308576,
+    "success": 0.05649717514124294,
+    "worsened": 0.8192090395480226
+   }
+  },
+  "finished": "2026-09-26 00:41:36",
+  "path": "outputs/exp_vggt_probe2/A/MD-gt/AP10/manifest.json"
+ },
+ {
+  "stage": "A",
+  "model": "MD-gt",
+  "model_source": "eval_mesh_cd.load_gt_mesh + GroundTruth.align",
+  "model_center": [
+   0.001985630697163757,
+   -0.04026918215618495,
+   0.047110974664309455
+  ],
+  "seq": "AP11",
+  "n_jobs": 177,
+  "every": 1,
+  "vggt_ckpt": "/home/kist/.cache/huggingface/hub/models--facebook--VGGT-1B/snapshots/860abec7937da0a4c03c41d3c269c366e82abdf9/model.pt",
+  "vggt_ckpt_sha256_16": "d15bf50a8615c822",
+  "seconds": 448.24803161621094,
+  "rot0_median": 7.157556282796421,
+  "summary": {
+   "E-I": {
+    "rot_med": 1.9939101924766307,
+    "success": 0.4350282485875706,
+    "worsened": 0.05649717514124294
+   },
+   "E-L": {
+    "rot_med": 7.952904497711576,
+    "success": 0.10734463276836158,
+    "worsened": 0.4293785310734463
+   },
+   "E-V2": {
+    "rot_med": 28.71492014232287,
+    "success": 0.0,
+    "worsened": 0.6779661016949152
+   },
+   "E-V5b": {
+    "rot_med": 24.082789534687258,
+    "success": 0.0,
+    "worsened": 0.7231638418079096
+   },
+   "E-V5d": {
+    "rot_med": 24.170934715855566,
+    "success": 0.0,
+    "worsened": 0.7231638418079096
+   },
+   "E-V5x2": {
+    "rot_med": 15.020805273857688,
+    "success": 0.0,
+    "worsened": 0.5932203389830508
+   },
+   "E-VI": {
+    "rot_med": 16.940949443126815,
+    "success": 0.02824858757062147,
+    "worsened": 0.6101694915254238
+   }
+  },
+  "finished": "2026-09-26 00:49:04",
+  "path": "outputs/exp_vggt_probe2/A/MD-gt/AP11/manifest.json"
+ },
+ {
+  "stage": "A",
+  "model": "MD-gt",
+  "model_source": "eval_mesh_cd.load_gt_mesh + GroundTruth.align",
+  "model_center": [
+   -0.013617761030091727,
+   0.00041798800810058986,
+   0.04606290814411184
+  ],
+  "seq": "AP12",
+  "n_jobs": 171,
+  "every": 1,
+  "vggt_ckpt": "/home/kist/.cache/huggingface/hub/models--facebook--VGGT-1B/snapshots/860abec7937da0a4c03c41d3c269c366e82abdf9/model.pt",
+  "vggt_ckpt_sha256_16": "d15bf50a8615c822",
+  "seconds": 442.9176049232483,
+  "rot0_median": 2.0255419004165143,
+  "summary": {
+   "E-I": {
+    "rot_med": 1.7605835856711392,
+    "success": 0.8362573099415205,
+    "worsened": 0.029239766081871343
+   },
+   "E-L": {
+    "rot_med": 5.782393767760454,
+    "success": 0.25146198830409355,
+    "worsened": 0.5847953216374269
+   },
+   "E-V2": {
+    "rot_med": 69.6742315586986,
+    "success": 0.017543859649122806,
+    "worsened": 0.8771929824561403
+   },
+   "E-V5b": {
+    "rot_med": 48.769652411629735,
+    "success": 0.0,
+    "worsened": 0.9064327485380117
+   },
+   "E-V5d": {
+    "rot_med": 48.81711019270251,
+    "success": 0.0,
+    "worsened": 0.9064327485380117
+   },
+   "E-V5x2": {
+    "rot_med": 13.335110856205189,
+    "success": 0.0,
+    "worsened": 0.8011695906432749
+   },
+   "E-VI": {
+    "rot_med": 17.50428163249019,
+    "success": 0.10526315789473684,
+    "worsened": 0.7660818713450293
+   }
+  },
+  "finished": "2026-09-26 00:56:28",
+  "path": "outputs/exp_vggt_probe2/A/MD-gt/AP12/manifest.json"
+ },
+ {
+  "stage": "A",
+  "model": "MD-gt",
+  "model_source": "eval_mesh_cd.load_gt_mesh + GroundTruth.align",
+  "model_center": [
+   0.009982267832882705,
+   -0.029006127755706244,
+   0.020432653289222374
+  ],
+  "seq": "AP13",
+  "n_jobs": 166,
+  "every": 1,
+  "vggt_ckpt": "/home/kist/.cache/huggingface/hub/models--facebook--VGGT-1B/snapshots/860abec7937da0a4c03c41d3c269c366e82abdf9/model.pt",
+  "vggt_ckpt_sha256_16": "d15bf50a8615c822",
+  "seconds": 421.40371441841125,
+  "rot0_median": 2.3126499334755453,
+  "summary": {
+   "E-I": {
+    "rot_med": 2.7690376590613637,
+    "success": 0.536144578313253,
+    "worsened": 0.0963855421686747
+   },
+   "E-L": {
+    "rot_med": 3.8353059613668785,
+    "success": 0.3132530120481928,
+    "worsened": 0.3855421686746988
+   },
+   "E-V2": {
+    "rot_med": 89.94065362485844,
+    "success": 0.018072289156626505,
+    "worsened": 0.8253012048192772
+   },
+   "E-V5b": {
+    "rot_med": 56.662996815753104,
+    "success": 0.006024096385542169,
+    "worsened": 0.8674698795180723
+   },
+   "E-V5d": {
+    "rot_med": 56.667743377910654,
+    "success": 0.006024096385542169,
+    "worsened": 0.8674698795180723
+   },
+   "E-V5x2": {
+    "rot_med": 39.68297008320626,
+    "success": 0.006024096385542169,
+    "worsened": 0.8433734939759037
+   },
+   "E-VI": {
+    "rot_med": 63.82716557081578,
+    "success": 0.05421686746987952,
+    "worsened": 0.891566265060241
+   }
+  },
+  "finished": "2026-09-26 01:03:29",
+  "path": "outputs/exp_vggt_probe2/A/MD-gt/AP13/manifest.json"
+ },
+ {
+  "stage": "A",
+  "model": "MD-gt",
+  "model_source": "eval_mesh_cd.load_gt_mesh + GroundTruth.align",
+  "model_center": [
+   0.009318450902928401,
+   -0.022616196781490933,
+   0.0288805176744645
+  ],
+  "seq": "AP14",
+  "n_jobs": 167,
+  "every": 1,
+  "vggt_ckpt": "/home/kist/.cache/huggingface/hub/models--facebook--VGGT-1B/snapshots/860abec7937da0a4c03c41d3c269c366e82abdf9/model.pt",
+  "vggt_ckpt_sha256_16": "d15bf50a8615c822",
+  "seconds": 418.2318639755249,
+  "rot0_median": 1.799029782143685,
+  "summary": {
+   "E-I": {
+    "rot_med": 1.9173650297105167,
+    "success": 0.7604790419161677,
+    "worsened": 0.16766467065868262
+   },
+   "E-L": {
+    "rot_med": 4.692568141125619,
+    "success": 0.30538922155688625,
+    "worsened": 0.592814371257485
+   },
+   "E-V2": {
+    "rot_med": 104.94671624627647,
+    "success": 0.0,
+    "worsened": 0.9580838323353293
+   },
+   "E-V5b": {
+    "rot_med": 75.91495168905442,
+    "success": 0.0,
+    "worsened": 0.9820359281437125
+   },
+   "E-V5d": {
+    "rot_med": 76.03650814768591,
+    "success": 0.0,
+    "worsened": 0.9820359281437125
+   },
+   "E-V5x2": {
+    "rot_med": 40.415710992856,
+    "success": 0.0,
+    "worsened": 0.9281437125748503
+   },
+   "E-VI": {
+    "rot_med": 54.54334678208923,
+    "success": 0.0658682634730539,
+    "worsened": 0.9101796407185628
+   }
+  },
+  "finished": "2026-09-26 01:10:28",
+  "path": "outputs/exp_vggt_probe2/A/MD-gt/AP14/manifest.json"
+ },
+ {
+  "stage": "A",
+  "model": "MD-gt",
+  "model_source": "eval_mesh_cd.load_gt_mesh + GroundTruth.align",
+  "model_center": [
+   -0.002498820606073152,
+   0.00022378259474109156,
+   0.021285246566211804
+  ],
+  "seq": "MPM10",
+  "n_jobs": 237,
+  "every": 1,
+  "vggt_ckpt": "/home/kist/.cache/huggingface/hub/models--facebook--VGGT-1B/snapshots/860abec7937da0a4c03c41d3c269c366e82abdf9/model.pt",
+  "vggt_ckpt_sha256_16": "d15bf50a8615c822",
+  "seconds": 565.8230650424957,
+  "rot0_median": 5.812542768035745,
+  "summary": {
+   "E-I": {
+    "rot_med": 3.755347698371757,
+    "success": 0.38396624472573837,
+    "worsened": 0.20675105485232068
+   },
+   "E-L": {
+    "rot_med": 3.365584307617465,
+    "success": 0.43037974683544306,
+    "worsened": 0.10126582278481013
+   },
+   "E-V2": {
+    "rot_med": 97.9545310669292,
+    "success": 0.004219409282700422,
+    "worsened": 0.9113924050632911
+   },
+   "E-V5b": {
+    "rot_med": 104.74636424276966,
+    "success": 0.008438818565400843,
+    "worsened": 0.9156118143459916
+   },
+   "E-V5d": {
+    "rot_med": 104.7048316045903,
+    "success": 0.008438818565400843,
+    "worsened": 0.9156118143459916
+   },
+   "E-V5x2": {
+    "rot_med": 33.6548828762196,
+    "success": 0.008438818565400843,
+    "worsened": 0.8185654008438819
+   },
+   "E-VI": {
+    "rot_med": 55.4580707544655,
+    "success": 0.06329113924050633,
+    "worsened": 0.8143459915611815
+   }
+  },
+  "finished": "2026-09-26 01:19:54",
+  "path": "outputs/exp_vggt_probe2/A/MD-gt/MPM10/manifest.json"
+ },
+ {
+  "stage": "A",
+  "model": "MD-gt",
+  "model_source": "eval_mesh_cd.load_gt_mesh + GroundTruth.align",
+  "model_center": [
+   -8.395844856686441e-05,
+   -0.0038674231959718607,
+   0.014823803764452788
+  ],
+  "seq": "MPM11",
+  "n_jobs": 249,
+  "every": 1,
+  "vggt_ckpt": "/home/kist/.cache/huggingface/hub/models--facebook--VGGT-1B/snapshots/860abec7937da0a4c03c41d3c269c366e82abdf9/model.pt",
+  "vggt_ckpt_sha256_16": "d15bf50a8615c822",
+  "seconds": 588.4090926647186,
+  "rot0_median": 5.711564668251257,
+  "summary": {
+   "E-I": {
+    "rot_med": 3.2340938283207024,
+    "success": 0.26506024096385544,
+    "worsened": 0.060240963855421686
+   },
+   "E-L": {
+    "rot_med": 3.452636342527683,
+    "success": 0.18473895582329317,
+    "worsened": 0.11646586345381527
+   },
+   "E-V2": {
+    "rot_med": 52.42881529256173,
+    "success": 0.012048192771084338,
+    "worsened": 0.7751004016064257
+   },
+   "E-V5b": {
+    "rot_med": 58.527463311828356,
+    "success": 0.012048192771084338,
+    "worsened": 0.7951807228915663
+   },
+   "E-V5d": {
+    "rot_med": 58.5550358080429,
+    "success": 0.004016064257028112,
+    "worsened": 0.7951807228915663
+   },
+   "E-V5x2": {
+    "rot_med": 13.026405481480845,
+    "success": 0.008032128514056224,
+    "worsened": 0.6224899598393574
+   },
+   "E-VI": {
+    "rot_med": 19.27462657836089,
+    "success": 0.05220883534136546,
+    "worsened": 0.6465863453815262
+   }
+  },
+  "finished": "2026-09-26 01:29:43",
+  "path": "outputs/exp_vggt_probe2/A/MD-gt/MPM11/manifest.json"
+ },
+ {
+  "stage": "A",
+  "model": "MD-gt",
+  "model_source": "eval_mesh_cd.load_gt_mesh + GroundTruth.align",
+  "model_center": [
+   -0.001852279606019705,
+   0.014009578880390425,
+   0.017036826477141994
+  ],
+  "seq": "MPM12",
+  "n_jobs": 229,
+  "every": 1,
+  "vggt_ckpt": "/home/kist/.cache/huggingface/hub/models--facebook--VGGT-1B/snapshots/860abec7937da0a4c03c41d3c269c366e82abdf9/model.pt",
+  "vggt_ckpt_sha256_16": "d15bf50a8615c822",
+  "seconds": 560.2743165493011,
+  "rot0_median": 4.128723663253713,
+  "summary": {
+   "E-I": {
+    "rot_med": 2.4125699043561895,
+    "success": 0.7510917030567685,
+    "worsened": 0.026200873362445413
+   },
+   "E-L": {
+    "rot_med": 2.3896677883516206,
+    "success": 0.7685589519650655,
+    "worsened": 0.008733624454148471
+   },
+   "E-V2": {
+    "rot_med": 56.02325194916054,
+    "success": 0.048034934497816595,
+    "worsened": 0.7641921397379913
+   },
+   "E-V5b": {
+    "rot_med": 90.00809438510062,
+    "success": 0.056768558951965066,
+    "worsened": 0.8733624454148472
+   },
+   "E-V5d": {
+    "rot_med": 89.95253563945032,
+    "success": 0.056768558951965066,
+    "worsened": 0.8733624454148472
+   },
+   "E-V5x2": {
+    "rot_med": 9.601187794802264,
+    "success": 0.039301310043668124,
+    "worsened": 0.6855895196506551
+   },
+   "E-VI": {
+    "rot_med": 11.32089922007646,
+    "success": 0.15283842794759825,
+    "worsened": 0.6550218340611353
+   }
+  },
+  "finished": "2026-09-26 01:39:04",
+  "path": "outputs/exp_vggt_probe2/A/MD-gt/MPM12/manifest.json"
+ },
+ {
+  "stage": "A",
+  "model": "MD-gt",
+  "model_source": "eval_mesh_cd.load_gt_mesh + GroundTruth.align",
+  "model_center": [
+   -0.019741064476189913,
+   -0.047681688780896556,
+   -0.12885875195934912
+  ],
+  "seq": "MPM13",
+  "n_jobs": 214,
+  "every": 1,
+  "vggt_ckpt": "/home/kist/.cache/huggingface/hub/models--facebook--VGGT-1B/snapshots/860abec7937da0a4c03c41d3c269c366e82abdf9/model.pt",
+  "vggt_ckpt_sha256_16": "d15bf50a8615c822",
+  "seconds": 514.8278939723969,
+  "rot0_median": 2.659764781634597,
+  "summary": {
+   "E-I": {
+    "rot_med": 2.67518803318202,
+    "success": 0.5233644859813084,
+    "worsened": 0.06542056074766354
+   },
+   "E-L": {
+    "rot_med": 2.381707975855016,
+    "success": 0.5887850467289719,
+    "worsened": 0.14018691588785046
+   },
+   "E-V2": {
+    "rot_med": 57.781662752986136,
+    "success": 0.03271028037383177,
+    "worsened": 0.719626168224299
+   },
+   "E-V5b": {
+    "rot_med": 86.82356340380043,
+    "success": 0.07476635514018691,
+    "worsened": 0.7336448598130841
+   },
+   "E-V5d": {
+    "rot_med": 86.88081197815305,
+    "success": 0.07476635514018691,
+    "worsened": 0.7289719626168224
+   },
+   "E-V5x2": {
+    "rot_med": 6.741947451484358,
+    "success": 0.03271028037383177,
+    "worsened": 0.5934579439252337
+   },
+   "E-VI": {
+    "rot_med": 8.050669342959926,
+    "success": 0.14485981308411214,
+    "worsened": 0.5841121495327103
+   }
+  },
+  "finished": "2026-09-26 01:47:39",
+  "path": "outputs/exp_vggt_probe2/A/MD-gt/MPM13/manifest.json"
+ },
+ {
+  "stage": "A",
+  "model": "MD-gt",
+  "model_source": "eval_mesh_cd.load_gt_mesh + GroundTruth.align",
+  "model_center": [
+   -0.003758160283370047,
+   -0.002823963880807264,
+   -0.1546854650143163
+  ],
+  "seq": "MPM14",
+  "n_jobs": 225,
+  "every": 1,
+  "vggt_ckpt": "/home/kist/.cache/huggingface/hub/models--facebook--VGGT-1B/snapshots/860abec7937da0a4c03c41d3c269c366e82abdf9/model.pt",
+  "vggt_ckpt_sha256_16": "d15bf50a8615c822",
+  "seconds": 534.3910706043243,
+  "rot0_median": 2.7231095208677227,
+  "summary": {
+   "E-I": {
+    "rot_med": 2.591676127386356,
+    "success": 0.44,
+    "worsened": 0.044444444444444446
+   },
+   "E-L": {
+    "rot_med": 2.7231765306882934,
+    "success": 0.4622222222222222,
+    "worsened": 0.14666666666666667
+   },
+   "E-V2": {
+    "rot_med": 72.57545238158534,
+    "success": 0.017777777777777778,
+    "worsened": 0.8755555555555555
+   },
+   "E-V5b": {
+    "rot_med": 70.49309200499576,
+    "success": 0.03111111111111111,
+    "worsened": 0.8533333333333334
+   },
+   "E-V5d": {
+    "rot_med": 70.41056095782484,
+    "success": 0.02666666666666667,
+    "worsened": 0.8622222222222222
+   },
+   "E-V5x2": {
+    "rot_med": 14.396512835491242,
+    "success": 0.022222222222222223,
+    "worsened": 0.7955555555555556
+   },
+   "E-VI": {
+    "rot_med": 23.364487131274732,
+    "success": 0.057777777777777775,
+    "worsened": 0.76
+   }
+  },
+  "finished": "2026-09-26 01:56:34",
+  "path": "outputs/exp_vggt_probe2/A/MD-gt/MPM14/manifest.json"
+ },
+ {
+  "stage": "A",
+  "model": "MD-gt",
+  "model_source": "eval_mesh_cd.load_gt_mesh + GroundTruth.align",
+  "model_center": [
+   -0.00510666718927574,
+   0.006299198909473978,
+   0.016427636406940286
+  ],
+  "seq": "SB11",
+  "n_jobs": 219,
+  "every": 1,
+  "vggt_ckpt": "/home/kist/.cache/huggingface/hub/models--facebook--VGGT-1B/snapshots/860abec7937da0a4c03c41d3c269c366e82abdf9/model.pt",
+  "vggt_ckpt_sha256_16": "d15bf50a8615c822",
+  "seconds": 521.3414807319641,
+  "rot0_median": 4.570358653850176,
+  "summary": {
+   "E-I": {
+    "rot_med": 3.248036805737623,
+    "success": 0.2557077625570776,
+    "worsened": 0.2146118721461187
+   },
+   "E-L": {
+    "rot_med": 4.726103197880968,
+    "success": 0.1278538812785388,
+    "worsened": 0.319634703196347
+   },
+   "E-V2": {
+    "rot_med": 96.33243573336264,
+    "success": 0.0,
+    "worsened": 0.9680365296803652
+   },
+   "E-V5b": {
+    "rot_med": 73.70794210704925,
+    "success": 0.0,
+    "worsened": 0.8493150684931506
+   },
+   "E-V5d": {
+    "rot_med": 73.69524100627525,
+    "success": 0.0,
+    "worsened": 0.8493150684931506
+   },
+   "E-V5x2": {
+    "rot_med": 21.327484671196842,
+    "success": 0.0,
+    "worsened": 0.7899543378995434
+   },
+   "E-VI": {
+    "rot_med": 21.896635440961987,
+    "success": 0.0182648401826484,
+    "worsened": 0.7853881278538812
+   }
+  },
+  "finished": "2026-09-26 02:05:16",
+  "path": "outputs/exp_vggt_probe2/A/MD-gt/SB11/manifest.json"
+ },
+ {
+  "stage": "A",
+  "model": "MD-gt",
+  "model_source": "eval_mesh_cd.load_gt_mesh + GroundTruth.align",
+  "model_center": [
+   0.002096463071505976,
+   0.020401715927486835,
+   0.021390683935489426
+  ],
+  "seq": "SB13",
+  "n_jobs": 207,
+  "every": 1,
+  "vggt_ckpt": "/home/kist/.cache/huggingface/hub/models--facebook--VGGT-1B/snapshots/860abec7937da0a4c03c41d3c269c366e82abdf9/model.pt",
+  "vggt_ckpt_sha256_16": "d15bf50a8615c822",
+  "seconds": 501.9758229255676,
+  "rot0_median": 3.2428711274046735,
+  "summary": {
+   "E-I": {
+    "rot_med": 2.2930682585228324,
+    "success": 0.5700483091787439,
+    "worsened": 0.00966183574879227
+   },
+   "E-L": {
+    "rot_med": 3.1478592788167576,
+    "success": 0.3864734299516908,
+    "worsened": 0.16908212560386474
+   },
+   "E-V2": {
+    "rot_med": 113.59866112293712,
+    "success": 0.0,
+    "worsened": 0.9855072463768116
+   },
+   "E-V5b": {
+    "rot_med": 91.10059864596286,
+    "success": 0.0,
+    "worsened": 0.9565217391304348
+   },
+   "E-V5d": {
+    "rot_med": 91.10344693411272,
+    "success": 0.0,
+    "worsened": 0.9565217391304348
+   },
+   "E-V5x2": {
+    "rot_med": 62.39971062188552,
+    "success": 0.0,
+    "worsened": 0.8502415458937198
+   },
+   "E-VI": {
+    "rot_med": 78.45222914331579,
+    "success": 0.014492753623188406,
+    "worsened": 0.8502415458937198
+   }
+  },
+  "finished": "2026-09-26 02:13:38",
+  "path": "outputs/exp_vggt_probe2/A/MD-gt/SB13/manifest.json"
+ },
+ {
+  "stage": "A",
+  "model": "MD-gt",
+  "model_source": "eval_mesh_cd.load_gt_mesh + GroundTruth.align",
+  "model_center": [
+   -0.0015801525765273563,
+   -0.00565684341842895,
+   0.015584799608713057
+  ],
+  "seq": "SM1",
+  "n_jobs": 278,
+  "every": 1,
+  "vggt_ckpt": "/home/kist/.cache/huggingface/hub/models--facebook--VGGT-1B/snapshots/860abec7937da0a4c03c41d3c269c366e82abdf9/model.pt",
+  "vggt_ckpt_sha256_16": "d15bf50a8615c822",
+  "seconds": 666.8100168704987,
+  "rot0_median": 3.896515902569498,
+  "summary": {
+   "E-I": {
+    "rot_med": 3.363597757096824,
+    "success": 0.4856115107913669,
+    "worsened": 0.15467625899280577
+   },
+   "E-L": {
+    "rot_med": 3.123981310284154,
+    "success": 0.539568345323741,
+    "worsened": 0.1510791366906475
+   },
+   "E-V2": {
+    "rot_med": 54.685008125599154,
+    "success": 0.0035971223021582736,
+    "worsened": 0.8345323741007195
+   },
+   "E-V5b": {
+    "rot_med": 33.551692413735864,
+    "success": 0.01079136690647482,
+    "worsened": 0.8453237410071942
+   },
+   "E-V5d": {
+    "rot_med": 33.41044125399539,
+    "success": 0.014388489208633094,
+    "worsened": 0.841726618705036
+   },
+   "E-V5x2": {
+    "rot_med": 14.10930229105848,
+    "success": 0.0035971223021582736,
+    "worsened": 0.7841726618705036
+   },
+   "E-VI": {
+    "rot_med": 16.25480579056447,
+    "success": 0.08992805755395683,
+    "worsened": 0.762589928057554
+   }
+  },
+  "finished": "2026-09-26 02:24:46",
+  "path": "outputs/exp_vggt_probe2/A/MD-gt/SM1/manifest.json"
+ },
+ {
+  "stage": "A",
+  "model": "MD-map",
+  "model_source": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_batch_20260922/reanchor_v2/ho3d/AP10/final/gs_online0/checkpoint_global.pt",
+  "model_center": [
+   -0.017134080175729243,
+   0.014891694416897762,
+   0.019132829513504458
+  ],
+  "seq": "AP10",
+  "n_jobs": 177,
+  "every": 1,
+  "vggt_ckpt": "/home/kist/.cache/huggingface/hub/models--facebook--VGGT-1B/snapshots/860abec7937da0a4c03c41d3c269c366e82abdf9/model.pt",
+  "vggt_ckpt_sha256_16": "d15bf50a8615c822",
+  "seconds": 533.007453918457,
+  "rot0_median": 6.100427556763077,
+  "summary": {
+   "E-I": {
+    "rot_med": 5.327706580028873,
+    "success": 0.3615819209039548,
+    "worsened": 0.03954802259887006
+   },
+   "E-L": {
+    "rot_med": 5.258155276007825,
+    "success": 0.327683615819209,
+    "worsened": 0.07344632768361582
+   },
+   "E-V2": {
+    "rot_med": 10.356619633796049,
+    "success": 0.05084745762711865,
+    "worsened": 0.6214689265536724
+   },
+   "E-V5b": {
+    "rot_med": 21.833208235130744,
+    "success": 0.011299435028248588,
+    "worsened": 0.8757062146892656
+   },
+   "E-V5d": {
+    "rot_med": 21.842515323032202,
+    "success": 0.011299435028248588,
+    "worsened": 0.8757062146892656
+   },
+   "E-V5x2": {
+    "rot_med": 21.157410704171994,
+    "success": 0.0,
+    "worsened": 0.7909604519774012
+   },
+   "E-VI": {
+    "rot_med": 25.774435009717426,
+    "success": 0.10734463276836158,
+    "worsened": 0.7401129943502824
+   }
+  },
+  "finished": "2026-09-26 02:33:39",
+  "path": "outputs/exp_vggt_probe2/A/MD-map/AP10/manifest.json"
+ },
+ {
+  "stage": "A",
+  "model": "MD-map",
+  "model_source": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_batch_20260922/reanchor_v2/ho3d/AP11/final/gs_online0/checkpoint_global.pt",
+  "model_center": [
+   -0.02188823089101568,
+   -0.024330662452626085,
+   0.031369914627666695
+  ],
+  "seq": "AP11",
+  "n_jobs": 177,
+  "every": 1,
+  "vggt_ckpt": "/home/kist/.cache/huggingface/hub/models--facebook--VGGT-1B/snapshots/860abec7937da0a4c03c41d3c269c366e82abdf9/model.pt",
+  "vggt_ckpt_sha256_16": "d15bf50a8615c822",
+  "seconds": 487.84702944755554,
+  "rot0_median": 7.157556282796421,
+  "summary": {
+   "E-I": {
+    "rot_med": 11.12927672057616,
+    "success": 0.011299435028248588,
+    "worsened": 0.7570621468926554
+   },
+   "E-L": {
+    "rot_med": 11.254175027438112,
+    "success": 0.0,
+    "worsened": 0.615819209039548
+   },
+   "E-V2": {
+    "rot_med": 11.950866143500422,
+    "success": 0.011299435028248588,
+    "worsened": 0.6440677966101694
+   },
+   "E-V5b": {
+    "rot_med": 13.39458040936281,
+    "success": 0.0,
+    "worsened": 0.751412429378531
+   },
+   "E-V5d": {
+    "rot_med": 13.463226669888671,
+    "success": 0.0,
+    "worsened": 0.7344632768361582
+   },
+   "E-V5x2": {
+    "rot_med": 14.462065033087505,
+    "success": 0.0,
+    "worsened": 0.7344632768361582
+   },
+   "E-VI": {
+    "rot_med": 17.4496899164329,
+    "success": 0.0,
+    "worsened": 0.8305084745762712
+   }
+  },
+  "finished": "2026-09-26 02:41:48",
+  "path": "outputs/exp_vggt_probe2/A/MD-map/AP11/manifest.json"
+ },
+ {
+  "stage": "A",
+  "model": "MD-map",
+  "model_source": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_batch_20260922/reanchor_v2/ho3d/AP12/final/gs_online0/checkpoint_global.pt",
+  "model_center": [
+   -0.03215319357507521,
+   0.017618129885593737,
+   0.02061680455417277
+  ],
+  "seq": "AP12",
+  "n_jobs": 171,
+  "every": 1,
+  "vggt_ckpt": "/home/kist/.cache/huggingface/hub/models--facebook--VGGT-1B/snapshots/860abec7937da0a4c03c41d3c269c366e82abdf9/model.pt",
+  "vggt_ckpt_sha256_16": "d15bf50a8615c822",
+  "seconds": 472.90950107574463,
+  "rot0_median": 2.0255419004165143,
+  "summary": {
+   "E-I": {
+    "rot_med": 3.3512622278523816,
+    "success": 0.3216374269005848,
+    "worsened": 0.1695906432748538
+   },
+   "E-L": {
+    "rot_med": 3.322009470685027,
+    "success": 0.3567251461988304,
+    "worsened": 0.26900584795321636
+   },
+   "E-V2": {
+    "rot_med": 5.774590725963299,
+    "success": 0.19883040935672514,
+    "worsened": 0.6666666666666666
+   },
+   "E-V5b": {
+    "rot_med": 24.95065839243042,
+    "success": 0.017543859649122806,
+    "worsened": 0.8654970760233918
+   },
+   "E-V5d": {
+    "rot_med": 25.258584997027846,
+    "success": 0.011695906432748537,
+    "worsened": 0.8771929824561403
+   },
+   "E-V5x2": {
+    "rot_med": 26.061014501118645,
+    "success": 0.011695906432748537,
+    "worsened": 0.8245614035087719
+   },
+   "E-VI": {
+    "rot_med": 28.454868854461843,
+    "success": 0.08771929824561403,
+    "worsened": 0.7602339181286549
+   }
+  },
+  "finished": "2026-09-26 02:49:41",
+  "path": "outputs/exp_vggt_probe2/A/MD-map/AP12/manifest.json"
+ },
+ {
+  "stage": "A",
+  "model": "MD-map",
+  "model_source": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_batch_20260922/reanchor_v2/ho3d/AP13/final/gs_online0/checkpoint_global.pt",
+  "model_center": [
+   -0.032239033731654515,
+   -0.01721926090127819,
+   0.014993122066976764
+  ],
+  "seq": "AP13",
+  "n_jobs": 166,
+  "every": 1,
+  "vggt_ckpt": "/home/kist/.cache/huggingface/hub/models--facebook--VGGT-1B/snapshots/860abec7937da0a4c03c41d3c269c366e82abdf9/model.pt",
+  "vggt_ckpt_sha256_16": "d15bf50a8615c822",
+  "seconds": 456.12460923194885,
+  "rot0_median": 2.3126499334755453,
+  "summary": {
+   "E-I": {
+    "rot_med": 2.8125024970656494,
+    "success": 0.3795180722891566,
+    "worsened": 0.1927710843373494
+   },
+   "E-L": {
+    "rot_med": 2.539979374485915,
+    "success": 0.5301204819277109,
+    "worsened": 0.08433734939759036
+   },
+   "E-V2": {
+    "rot_med": 4.442650255928951,
+    "success": 0.0963855421686747,
+    "worsened": 0.42168674698795183
+   },
+   "E-V5b": {
+    "rot_med": 8.998068551204677,
+    "success": 0.024096385542168676,
+    "worsened": 0.6807228915662651
+   },
+   "E-V5d": {
+    "rot_med": 9.046077007946412,
+    "success": 0.012048192771084338,
+    "worsened": 0.6927710843373494
+   },
+   "E-V5x2": {
+    "rot_med": 8.369115302608929,
+    "success": 0.0,
+    "worsened": 0.7228915662650602
+   },
+   "E-VI": {
+    "rot_med": 8.939626577158096,
+    "success": 0.12048192771084337,
+    "worsened": 0.6325301204819277
+   }
+  },
+  "finished": "2026-09-26 02:57:17",
+  "path": "outputs/exp_vggt_probe2/A/MD-map/AP13/manifest.json"
+ },
+ {
+  "stage": "A",
+  "model": "MD-map",
+  "model_source": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_batch_20260922/reanchor_v2/ho3d/AP14/final/gs_online0/checkpoint_global.pt",
+  "model_center": [
+   -0.018770279709321887,
+   -0.013965451531715597,
+   0.03830624428847295
+  ],
+  "seq": "AP14",
+  "n_jobs": 167,
+  "every": 1,
+  "vggt_ckpt": "/home/kist/.cache/huggingface/hub/models--facebook--VGGT-1B/snapshots/860abec7937da0a4c03c41d3c269c366e82abdf9/model.pt",
+  "vggt_ckpt_sha256_16": "d15bf50a8615c822",
+  "seconds": 476.30679988861084,
+  "rot0_median": 1.799029782143685,
+  "summary": {
+   "E-I": {
+    "rot_med": 3.1795542041369758,
+    "success": 0.5329341317365269,
+    "worsened": 0.20958083832335328
+   },
+   "E-L": {
+    "rot_med": 2.008369293179417,
+    "success": 0.6646706586826348,
+    "worsened": 0.05389221556886228
+   },
+   "E-V2": {
+    "rot_med": 4.187956479431766,
+    "success": 0.2694610778443114,
+    "worsened": 0.4311377245508982
+   },
+   "E-V5b": {
+    "rot_med": 8.959852282788653,
+    "success": 0.04790419161676647,
+    "worsened": 0.7904191616766467
+   },
+   "E-V5d": {
+    "rot_med": 8.612158263741406,
+    "success": 0.03592814371257485,
+    "worsened": 0.7485029940119761
+   },
+   "E-V5x2": {
+    "rot_med": 13.695093474521336,
+    "success": 0.029940119760479042,
+    "worsened": 0.8083832335329342
+   },
+   "E-VI": {
+    "rot_med": 26.1281971430043,
+    "success": 0.1317365269461078,
+    "worsened": 0.7365269461077845
+   }
+  },
+  "finished": "2026-09-26 03:05:14",
+  "path": "outputs/exp_vggt_probe2/A/MD-map/AP14/manifest.json"
+ },
+ {
+  "stage": "A",
+  "model": "MD-map",
+  "model_source": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_batch_20260922/reanchor_v2/ho3d/MPM10/final/gs_online0/checkpoint_global.pt",
+  "model_center": [
+   0.0010419522760732641,
+   -0.006620020805271287,
+   0.014304314621414578
+  ],
+  "seq": "MPM10",
+  "n_jobs": 237,
+  "every": 1,
+  "vggt_ckpt": "/home/kist/.cache/huggingface/hub/models--facebook--VGGT-1B/snapshots/860abec7937da0a4c03c41d3c269c366e82abdf9/model.pt",
+  "vggt_ckpt_sha256_16": "d15bf50a8615c822",
+  "seconds": 618.6727046966553,
+  "rot0_median": 5.812542768035745,
+  "summary": {
+   "E-I": {
+    "rot_med": 8.067789271634496,
+    "success": 0.08016877637130802,
+    "worsened": 0.6118143459915611
+   },
+   "E-L": {
+    "rot_med": 7.087313585791413,
+    "success": 0.1308016877637131,
+    "worsened": 0.24472573839662448
+   },
+   "E-V2": {
+    "rot_med": 58.41482807011486,
+    "success": 0.0,
+    "worsened": 0.9367088607594937
+   },
+   "E-V5b": {
+    "rot_med": 86.01308682105783,
+    "success": 0.0,
+    "worsened": 0.9746835443037974
+   },
+   "E-V5d": {
+    "rot_med": 85.80764485525918,
+    "success": 0.0,
+    "worsened": 0.9746835443037974
+   },
+   "E-V5x2": {
+    "rot_med": 97.52683754678468,
+    "success": 0.0,
+    "worsened": 0.9873417721518988
+   },
+   "E-VI": {
+    "rot_med": 104.99736252472003,
+    "success": 0.0,
+    "worsened": 0.9746835443037974
+   }
+  },
+  "finished": "2026-09-26 03:15:33",
+  "path": "outputs/exp_vggt_probe2/A/MD-map/MPM10/manifest.json"
+ },
+ {
+  "stage": "A",
+  "model": "MD-map",
+  "model_source": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_batch_20260922/reanchor_v2/ho3d/MPM11/final/gs_online0/checkpoint_global.pt",
+  "model_center": [
+   -0.00403743553077879,
+   0.0032883426922971086,
+   0.0258535991393626
+  ],
+  "seq": "MPM11",
+  "n_jobs": 249,
+  "every": 1,
+  "vggt_ckpt": "/home/kist/.cache/huggingface/hub/models--facebook--VGGT-1B/snapshots/860abec7937da0a4c03c41d3c269c366e82abdf9/model.pt",
+  "vggt_ckpt_sha256_16": "d15bf50a8615c822",
+  "seconds": 622.2820272445679,
+  "rot0_median": 5.711564668251257,
+  "summary": {
+   "E-I": {
+    "rot_med": 8.962143193576944,
+    "success": 0.004016064257028112,
+    "worsened": 0.6345381526104418
+   },
+   "E-L": {
+    "rot_med": 8.11661498882403,
+    "success": 0.020080321285140562,
+    "worsened": 0.5100401606425703
+   },
+   "E-V2": {
+    "rot_med": 16.826517086772288,
+    "success": 0.0,
+    "worsened": 0.8433734939759037
+   },
+   "E-V5b": {
+    "rot_med": 14.605339839465284,
+    "success": 0.0,
+    "worsened": 0.8072289156626506
+   },
+   "E-V5d": {
+    "rot_med": 14.68688287807821,
+    "success": 0.0,
+    "worsened": 0.8112449799196787
+   },
+   "E-V5x2": {
+    "rot_med": 14.60396034987537,
+    "success": 0.0,
+    "worsened": 0.7951807228915663
+   },
+   "E-VI": {
+    "rot_med": 16.764800683455054,
+    "success": 0.0,
+    "worsened": 0.8232931726907631
+   }
+  },
+  "finished": "2026-09-26 03:25:56",
+  "path": "outputs/exp_vggt_probe2/A/MD-map/MPM11/manifest.json"
+ },
+ {
+  "stage": "A",
+  "model": "MD-map",
+  "model_source": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_batch_20260922/reanchor_v2/ho3d/MPM12/final/gs_online0/checkpoint_global.pt",
+  "model_center": [
+   -0.003058061392837746,
+   0.027996093183226267,
+   0.01584779480232816
+  ],
+  "seq": "MPM12",
+  "n_jobs": 229,
+  "every": 1,
+  "vggt_ckpt": "/home/kist/.cache/huggingface/hub/models--facebook--VGGT-1B/snapshots/860abec7937da0a4c03c41d3c269c366e82abdf9/model.pt",
+  "vggt_ckpt_sha256_16": "d15bf50a8615c822",
+  "seconds": 576.4018721580505,
+  "rot0_median": 4.128723663253713,
+  "summary": {
+   "E-I": {
+    "rot_med": 6.852936872953988,
+    "success": 0.043668122270742356,
+    "worsened": 0.5938864628820961
+   },
+   "E-L": {
+    "rot_med": 6.296769960937892,
+    "success": 0.11353711790393013,
+    "worsened": 0.537117903930131
+   },
+   "E-V2": {
+    "rot_med": 9.736837967387942,
+    "success": 0.013100436681222707,
+    "worsened": 0.7641921397379913
+   },
+   "E-V5b": {
+    "rot_med": 10.84837973250067,
+    "success": 0.034934497816593885,
+    "worsened": 0.7816593886462883
+   },
+   "E-V5d": {
+    "rot_med": 10.950748447051222,
+    "success": 0.026200873362445413,
+    "worsened": 0.7947598253275109
+   },
+   "E-V5x2": {
+    "rot_med": 12.175051465283406,
+    "success": 0.013100436681222707,
+    "worsened": 0.8078602620087336
+   },
+   "E-VI": {
+    "rot_med": 11.335671052492689,
+    "success": 0.03056768558951965,
+    "worsened": 0.7336244541484717
+   }
+  },
+  "finished": "2026-09-26 03:35:33",
+  "path": "outputs/exp_vggt_probe2/A/MD-map/MPM12/manifest.json"
+ },
+ {
+  "stage": "A",
+  "model": "MD-map",
+  "model_source": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_batch_20260922/reanchor_v2/ho3d/MPM13/final/gs_online0/checkpoint_global.pt",
+  "model_center": [
+   -0.015470781873417331,
+   -0.04422262056248765,
+   -0.12408144103886845
+  ],
+  "seq": "MPM13",
+  "n_jobs": 214,
+  "every": 1,
+  "vggt_ckpt": "/home/kist/.cache/huggingface/hub/models--facebook--VGGT-1B/snapshots/860abec7937da0a4c03c41d3c269c366e82abdf9/model.pt",
+  "vggt_ckpt_sha256_16": "d15bf50a8615c822",
+  "seconds": 536.4821970462799,
+  "rot0_median": 2.659764781634597,
+  "summary": {
+   "E-I": {
+    "rot_med": 2.732907130783419,
+    "success": 0.48598130841121495,
+    "worsened": 0.11214953271028037
+   },
+   "E-L": {
+    "rot_med": 2.9301833981957195,
+    "success": 0.4158878504672897,
+    "worsened": 0.1588785046728972
+   },
+   "E-V2": {
+    "rot_med": 7.865874154099792,
+    "success": 0.13551401869158877,
+    "worsened": 0.6121495327102804
+   },
+   "E-V5b": {
+    "rot_med": 9.332530143366558,
+    "success": 0.1261682242990654,
+    "worsened": 0.6121495327102804
+   },
+   "E-V5d": {
+    "rot_med": 9.111678077516455,
+    "success": 0.1308411214953271,
+    "worsened": 0.5981308411214953
+   },
+   "E-V5x2": {
+    "rot_med": 10.993376469344579,
+    "success": 0.06074766355140187,
+    "worsened": 0.6401869158878505
+   },
+   "E-VI": {
+    "rot_med": 16.510432982650325,
+    "success": 0.21495327102803738,
+    "worsened": 0.6121495327102804
+   }
+  },
+  "finished": "2026-09-26 03:44:30",
+  "path": "outputs/exp_vggt_probe2/A/MD-map/MPM13/manifest.json"
+ },
+ {
+  "stage": "A",
+  "model": "MD-map",
+  "model_source": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_batch_20260922/reanchor_v2/ho3d/MPM14/final/gs_online0/checkpoint_global.pt",
+  "model_center": [
+   -0.013978634834010918,
+   0.0042007331861159125,
+   -0.15661585181698576
+  ],
+  "seq": "MPM14",
+  "n_jobs": 225,
+  "every": 1,
+  "vggt_ckpt": "/home/kist/.cache/huggingface/hub/models--facebook--VGGT-1B/snapshots/860abec7937da0a4c03c41d3c269c366e82abdf9/model.pt",
+  "vggt_ckpt_sha256_16": "d15bf50a8615c822",
+  "seconds": 564.6787464618683,
+  "rot0_median": 2.7231095208677227,
+  "summary": {
+   "E-I": {
+    "rot_med": 3.3875339569011453,
+    "success": 0.43555555555555553,
+    "worsened": 0.17333333333333334
+   },
+   "E-L": {
+    "rot_med": 2.9434884155349854,
+    "success": 0.4488888888888889,
+    "worsened": 0.13333333333333333
+   },
+   "E-V2": {
+    "rot_med": 25.380596767723365,
+    "success": 0.0,
+    "worsened": 0.96
+   },
+   "E-V5b": {
+    "rot_med": 26.057155322411212,
+    "success": 0.0,
+    "worsened": 0.9333333333333333
+   },
+   "E-V5d": {
+    "rot_med": 26.090431228580503,
+    "success": 0.0,
+    "worsened": 0.9377777777777778
+   },
+   "E-V5x2": {
+    "rot_med": 45.34393971904864,
+    "success": 0.0044444444444444444,
+    "worsened": 0.9466666666666667
+   },
+   "E-VI": {
+    "rot_med": 60.310776320644344,
+    "success": 0.022222222222222223,
+    "worsened": 0.9333333333333333
+   }
+  },
+  "finished": "2026-09-26 03:53:55",
+  "path": "outputs/exp_vggt_probe2/A/MD-map/MPM14/manifest.json"
+ },
+ {
+  "stage": "A",
+  "model": "MD-map",
+  "model_source": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_batch_20260922/reanchor_v2/ho3d/SB11/final/gs_online0/checkpoint_global.pt",
+  "model_center": [
+   -0.013192424646161823,
+   -0.0028282946741521875,
+   -0.0066211806443955525
+  ],
+  "seq": "SB11",
+  "n_jobs": 219,
+  "every": 1,
+  "vggt_ckpt": "/home/kist/.cache/huggingface/hub/models--facebook--VGGT-1B/snapshots/860abec7937da0a4c03c41d3c269c366e82abdf9/model.pt",
+  "vggt_ckpt_sha256_16": "d15bf50a8615c822",
+  "seconds": 563.9221572875977,
+  "rot0_median": 4.570358653850176,
+  "summary": {
+   "E-I": {
+    "rot_med": 4.3601877492854415,
+    "success": 0.1735159817351598,
+    "worsened": 0.2100456621004566
+   },
+   "E-L": {
+    "rot_med": 4.861801074822729,
+    "success": 0.136986301369863,
+    "worsened": 0.228310502283105
+   },
+   "E-V2": {
+    "rot_med": 16.04097453918606,
+    "success": 0.0091324200913242,
+    "worsened": 0.7625570776255708
+   },
+   "E-V5b": {
+    "rot_med": 12.794910377813645,
+    "success": 0.0045662100456621,
+    "worsened": 0.7168949771689498
+   },
+   "E-V5d": {
+    "rot_med": 12.950023439398587,
+    "success": 0.0091324200913242,
+    "worsened": 0.7168949771689498
+   },
+   "E-V5x2": {
+    "rot_med": 11.151131213221175,
+    "success": 0.0045662100456621,
+    "worsened": 0.6575342465753424
+   },
+   "E-VI": {
+    "rot_med": 12.886999451350135,
+    "success": 0.0091324200913242,
+    "worsened": 0.6712328767123288
+   }
+  },
+  "finished": "2026-09-26 04:03:19",
+  "path": "outputs/exp_vggt_probe2/A/MD-map/SB11/manifest.json"
+ },
+ {
+  "stage": "A",
+  "model": "MD-map",
+  "model_source": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_batch_20260922/reanchor_v2/ho3d/SB13/final/gs_online0/checkpoint_global.pt",
+  "model_center": [
+   -0.01398511273668888,
+   0.0175266296313824,
+   0.016018170790742924
+  ],
+  "seq": "SB13",
+  "n_jobs": 207,
+  "every": 1,
+  "vggt_ckpt": "/home/kist/.cache/huggingface/hub/models--facebook--VGGT-1B/snapshots/860abec7937da0a4c03c41d3c269c366e82abdf9/model.pt",
+  "vggt_ckpt_sha256_16": "d15bf50a8615c822",
+  "seconds": 520.8816862106323,
+  "rot0_median": 3.2428711274046735,
+  "summary": {
+   "E-I": {
+    "rot_med": 4.070949075180306,
+    "success": 0.21256038647342995,
+    "worsened": 0.28502415458937197
+   },
+   "E-L": {
+    "rot_med": 3.5916308754041237,
+    "success": 0.357487922705314,
+    "worsened": 0.06763285024154589
+   },
+   "E-V2": {
+    "rot_med": 7.666726951416798,
+    "success": 0.18357487922705315,
+    "worsened": 0.33816425120772947
+   },
+   "E-V5b": {
+    "rot_med": 7.162608046604546,
+    "success": 0.10144927536231885,
+    "worsened": 0.41545893719806765
+   },
+   "E-V5d": {
+    "rot_med": 7.246815989699319,
+    "success": 0.11594202898550725,
+    "worsened": 0.4492753623188406
+   },
+   "E-V5x2": {
+    "rot_med": 7.178512468903599,
+    "success": 0.033816425120772944,
+    "worsened": 0.4492753623188406
+   },
+   "E-VI": {
+    "rot_med": 5.546694515086284,
+    "success": 0.18840579710144928,
+    "worsened": 0.45410628019323673
+   }
+  },
+  "finished": "2026-09-26 04:12:00",
+  "path": "outputs/exp_vggt_probe2/A/MD-map/SB13/manifest.json"
+ },
+ {
+  "stage": "A",
+  "model": "MD-map",
+  "model_source": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_batch_20260922/reanchor_v2/ho3d/SM1/final/gs_online0/checkpoint_global.pt",
+  "model_center": [
+   -0.00016073534541600942,
+   -0.012837560178100569,
+   0.004204590776846073
+  ],
+  "seq": "SM1",
+  "n_jobs": 278,
+  "every": 1,
+  "vggt_ckpt": "/home/kist/.cache/huggingface/hub/models--facebook--VGGT-1B/snapshots/860abec7937da0a4c03c41d3c269c366e82abdf9/model.pt",
+  "vggt_ckpt_sha256_16": "d15bf50a8615c822",
+  "seconds": 680.6483037471771,
+  "rot0_median": 3.896515902569498,
+  "summary": {
+   "E-I": {
+    "rot_med": 4.843004453551639,
+    "success": 0.2697841726618705,
+    "worsened": 0.26258992805755393
+   },
+   "E-L": {
+    "rot_med": 3.9712251678045805,
+    "success": 0.26618705035971224,
+    "worsened": 0.08633093525179857
+   },
+   "E-V2": {
+    "rot_med": 7.447316026732121,
+    "success": 0.03597122302158273,
+    "worsened": 0.5503597122302158
+   },
+   "E-V5b": {
+    "rot_med": 12.039095109455253,
+    "success": 0.03597122302158273,
+    "worsened": 0.6906474820143885
+   },
+   "E-V5d": {
+    "rot_med": 11.890347082104736,
+    "success": 0.03237410071942446,
+    "worsened": 0.697841726618705
+   },
+   "E-V5x2": {
+    "rot_med": 11.005189483709662,
+    "success": 0.02158273381294964,
+    "worsened": 0.7194244604316546
+   },
+   "E-VI": {
+    "rot_med": 12.52136212862629,
+    "success": 0.06474820143884892,
+    "worsened": 0.7158273381294964
+   }
+  },
+  "finished": "2026-09-26 04:23:21",
+  "path": "outputs/exp_vggt_probe2/A/MD-map/SM1/manifest.json"
+ },
+ {
+  "stage": "A",
+  "model": "MD-prior",
+  "model_source": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_vggt_probe2/models/prior/AP10/checkpoint_prior.pt",
+  "model_center": [
+   0.0015891841499323758,
+   0.008182397773790902,
+   0.017589581357084924
+  ],
+  "seq": "AP10",
+  "n_jobs": 177,
+  "every": 1,
+  "vggt_ckpt": "/home/kist/.cache/huggingface/hub/models--facebook--VGGT-1B/snapshots/860abec7937da0a4c03c41d3c269c366e82abdf9/model.pt",
+  "vggt_ckpt_sha256_16": "d15bf50a8615c822",
+  "seconds": 442.9950907230377,
+  "rot0_median": 6.100427556763077,
+  "summary": {
+   "E-I": {
+    "rot_med": 5.490819760123452,
+    "success": 0.20903954802259886,
+    "worsened": 0.0903954802259887
+   },
+   "E-L": {
+    "rot_med": 7.441099285551914,
+    "success": 0.192090395480226,
+    "worsened": 0.423728813559322
+   },
+   "E-V2": {
+    "rot_med": 145.04496678392834,
+    "success": 0.0,
+    "worsened": 0.9887005649717514
+   },
+   "E-V5b": {
+    "rot_med": 128.402288702361,
+    "success": 0.0,
+    "worsened": 0.9887005649717514
+   },
+   "E-V5d": {
+    "rot_med": 128.92939805375053,
+    "success": 0.0,
+    "worsened": 0.9887005649717514
+   },
+   "E-V5x2": {
+    "rot_med": 35.571223572854905,
+    "success": 0.0,
+    "worsened": 0.9322033898305084
+   },
+   "E-VI": {
+    "rot_med": 56.9507794217228,
+    "success": 0.05649717514124294,
+    "worsened": 0.8248587570621468
+   }
+  },
+  "finished": "2026-09-26 00:41:24",
+  "path": "outputs/exp_vggt_probe2/A/MD-prior/AP10/manifest.json"
+ },
+ {
+  "stage": "A",
+  "model": "MD-prior",
+  "model_source": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_vggt_probe2/models/prior/AP11/checkpoint_prior.pt",
+  "model_center": [
+   0.0050403603087017645,
+   -0.01711017702785583,
+   0.04458364807596135
+  ],
+  "seq": "AP11",
+  "n_jobs": 177,
+  "every": 1,
+  "vggt_ckpt": "/home/kist/.cache/huggingface/hub/models--facebook--VGGT-1B/snapshots/860abec7937da0a4c03c41d3c269c366e82abdf9/model.pt",
+  "vggt_ckpt_sha256_16": "d15bf50a8615c822",
+  "seconds": 437.93536829948425,
+  "rot0_median": 7.157556282796421,
+  "summary": {
+   "E-I": {
+    "rot_med": 11.133064959892046,
+    "success": 0.03389830508474576,
+    "worsened": 0.711864406779661
+   },
+   "E-L": {
+    "rot_med": 7.284933008779663,
+    "success": 0.07344632768361582,
+    "worsened": 0.2994350282485876
+   },
+   "E-V2": {
+    "rot_med": 85.7824277535931,
+    "success": 0.005649717514124294,
+    "worsened": 0.9322033898305084
+   },
+   "E-V5b": {
+    "rot_med": 77.98604729769457,
+    "success": 0.0,
+    "worsened": 0.9830508474576272
+   },
+   "E-V5d": {
+    "rot_med": 78.10134256285544,
+    "success": 0.0,
+    "worsened": 0.9774011299435028
+   },
+   "E-V5x2": {
+    "rot_med": 51.86970825684901,
+    "success": 0.0,
+    "worsened": 0.903954802259887
+   },
+   "E-VI": {
+    "rot_med": 55.264786666298754,
+    "success": 0.005649717514124294,
+    "worsened": 0.9096045197740112
+   }
+  },
+  "finished": "2026-09-26 00:48:43",
+  "path": "outputs/exp_vggt_probe2/A/MD-prior/AP11/manifest.json"
+ },
+ {
+  "stage": "A",
+  "model": "MD-prior",
+  "model_source": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_vggt_probe2/models/prior/AP12/checkpoint_prior.pt",
+  "model_center": [
+   -0.005688726120705585,
+   0.024018331152737993,
+   0.022820294944618166
+  ],
+  "seq": "AP12",
+  "n_jobs": 171,
+  "every": 1,
+  "vggt_ckpt": "/home/kist/.cache/huggingface/hub/models--facebook--VGGT-1B/snapshots/860abec7937da0a4c03c41d3c269c366e82abdf9/model.pt",
+  "vggt_ckpt_sha256_16": "d15bf50a8615c822",
+  "seconds": 448.1740620136261,
+  "rot0_median": 2.0255419004165143,
+  "summary": {
+   "E-I": {
+    "rot_med": 6.773909056394613,
+    "success": 0.05263157894736842,
+    "worsened": 0.9005847953216374
+   },
+   "E-L": {
+    "rot_med": 5.738840234194612,
+    "success": 0.29239766081871343,
+    "worsened": 0.5906432748538012
+   },
+   "E-V2": {
+    "rot_med": 104.35181142845701,
+    "success": 0.0,
+    "worsened": 0.9707602339181286
+   },
+   "E-V5b": {
+    "rot_med": 71.92355271866555,
+    "success": 0.0,
+    "worsened": 0.9941520467836257
+   },
+   "E-V5d": {
+    "rot_med": 72.08085529052488,
+    "success": 0.0,
+    "worsened": 0.9941520467836257
+   },
+   "E-V5x2": {
+    "rot_med": 59.93670347899037,
+    "success": 0.0,
+    "worsened": 0.9824561403508771
+   },
+   "E-VI": {
+    "rot_med": 68.16319467669861,
+    "success": 0.0,
+    "worsened": 0.9941520467836257
+   }
+  },
+  "finished": "2026-09-26 00:56:11",
+  "path": "outputs/exp_vggt_probe2/A/MD-prior/AP12/manifest.json"
+ },
+ {
+  "stage": "A",
+  "model": "MD-prior",
+  "model_source": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_vggt_probe2/models/prior/AP13/checkpoint_prior.pt",
+  "model_center": [
+   -0.002487389021794865,
+   0.010865708105547794,
+   0.017813454923583185
+  ],
+  "seq": "AP13",
+  "n_jobs": 166,
+  "every": 1,
+  "vggt_ckpt": "/home/kist/.cache/huggingface/hub/models--facebook--VGGT-1B/snapshots/860abec7937da0a4c03c41d3c269c366e82abdf9/model.pt",
+  "vggt_ckpt_sha256_16": "d15bf50a8615c822",
+  "seconds": 424.88122630119324,
+  "rot0_median": 2.3126499334755453,
+  "summary": {
+   "E-I": {
+    "rot_med": 3.8258660452706224,
+    "success": 0.10843373493975904,
+    "worsened": 0.41566265060240964
+   },
+   "E-L": {
+    "rot_med": 3.6265785479079455,
+    "success": 0.29518072289156627,
+    "worsened": 0.3795180722891566
+   },
+   "E-V2": {
+    "rot_med": 106.6446656274347,
+    "success": 0.018072289156626505,
+    "worsened": 0.9698795180722891
+   },
+   "E-V5b": {
+    "rot_med": 80.96692949103415,
+    "success": 0.018072289156626505,
+    "worsened": 0.9759036144578314
+   },
+   "E-V5d": {
+    "rot_med": 81.21902872733867,
+    "success": 0.018072289156626505,
+    "worsened": 0.9759036144578314
+   },
+   "E-V5x2": {
+    "rot_med": 43.311849079646336,
+    "success": 0.012048192771084338,
+    "worsened": 0.9397590361445783
+   },
+   "E-VI": {
+    "rot_med": 54.321907212772054,
+    "success": 0.012048192771084338,
+    "worsened": 0.963855421686747
+   }
+  },
+  "finished": "2026-09-26 01:03:16",
+  "path": "outputs/exp_vggt_probe2/A/MD-prior/AP13/manifest.json"
+ },
+ {
+  "stage": "A",
+  "model": "MD-prior",
+  "model_source": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_vggt_probe2/models/prior/AP14/checkpoint_prior.pt",
+  "model_center": [
+   0.001131262381310949,
+   -0.00035984549600760155,
+   0.04464693418004518
+  ],
+  "seq": "AP14",
+  "n_jobs": 167,
+  "every": 1,
+  "vggt_ckpt": "/home/kist/.cache/huggingface/hub/models--facebook--VGGT-1B/snapshots/860abec7937da0a4c03c41d3c269c366e82abdf9/model.pt",
+  "vggt_ckpt_sha256_16": "d15bf50a8615c822",
+  "seconds": 409.95955872535706,
+  "rot0_median": 1.799029782143685,
+  "summary": {
+   "E-I": {
+    "rot_med": 5.241953673040797,
+    "success": 0.25149700598802394,
+    "worsened": 0.6646706586826348
+   },
+   "E-L": {
+    "rot_med": 5.100229238036823,
+    "success": 0.31137724550898205,
+    "worsened": 0.5508982035928144
+   },
+   "E-V2": {
+    "rot_med": 106.6414918525343,
+    "success": 0.023952095808383235,
+    "worsened": 0.9580838323353293
+   },
+   "E-V5b": {
+    "rot_med": 100.28744273130073,
+    "success": 0.0,
+    "worsened": 1.0
+   },
+   "E-V5d": {
+    "rot_med": 100.36127016288103,
+    "success": 0.0,
+    "worsened": 1.0
+   },
+   "E-V5x2": {
+    "rot_med": 75.8382835547535,
+    "success": 0.0,
+    "worsened": 0.9940119760479041
+   },
+   "E-VI": {
+    "rot_med": 82.72702310224618,
+    "success": 0.011976047904191617,
+    "worsened": 0.9760479041916168
+   }
+  },
+  "finished": "2026-09-26 01:10:06",
+  "path": "outputs/exp_vggt_probe2/A/MD-prior/AP14/manifest.json"
+ },
+ {
+  "stage": "A",
+  "model": "MD-prior",
+  "model_source": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_vggt_probe2/models/prior/MPM10/checkpoint_prior.pt",
+  "model_center": [
+   0.000983311700264556,
+   0.009937890477506667,
+   0.017360310163759704
+  ],
+  "seq": "MPM10",
+  "n_jobs": 237,
+  "every": 1,
+  "vggt_ckpt": "/home/kist/.cache/huggingface/hub/models--facebook--VGGT-1B/snapshots/860abec7937da0a4c03c41d3c269c366e82abdf9/model.pt",
+  "vggt_ckpt_sha256_16": "d15bf50a8615c822",
+  "seconds": 535.4220430850983,
+  "rot0_median": 5.812542768035745,
+  "summary": {
+   "E-I": {
+    "rot_med": 8.992705942582129,
+    "success": 0.012658227848101266,
+    "worsened": 0.679324894514768
+   },
+   "E-L": {
+    "rot_med": 10.556707134537685,
+    "success": 0.06751054852320675,
+    "worsened": 0.620253164556962
+   },
+   "E-V2": {
+    "rot_med": 105.30489474265408,
+    "success": 0.0,
+    "worsened": 0.9831223628691983
+   },
+   "E-V5b": {
+    "rot_med": 94.8640221976271,
+    "success": 0.0,
+    "worsened": 0.9746835443037974
+   },
+   "E-V5d": {
+    "rot_med": 94.81661973061944,
+    "success": 0.0,
+    "worsened": 0.9746835443037974
+   },
+   "E-V5x2": {
+    "rot_med": 71.04490010001228,
+    "success": 0.0,
+    "worsened": 0.9493670886075949
+   },
+   "E-VI": {
+    "rot_med": 74.85370518353646,
+    "success": 0.0,
+    "worsened": 0.9578059071729957
+   }
+  },
+  "finished": "2026-09-26 01:19:01",
+  "path": "outputs/exp_vggt_probe2/A/MD-prior/MPM10/manifest.json"
+ },
+ {
+  "stage": "A",
+  "model": "MD-prior",
+  "model_source": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_vggt_probe2/models/prior/MPM11/checkpoint_prior.pt",
+  "model_center": [
+   0.005851278733708179,
+   -0.00041316578190413227,
+   0.019211933062591804
+  ],
+  "seq": "MPM11",
+  "n_jobs": 249,
+  "every": 1,
+  "vggt_ckpt": "/home/kist/.cache/huggingface/hub/models--facebook--VGGT-1B/snapshots/860abec7937da0a4c03c41d3c269c366e82abdf9/model.pt",
+  "vggt_ckpt_sha256_16": "d15bf50a8615c822",
+  "seconds": 543.3552033901215,
+  "rot0_median": 5.711564668251257,
+  "summary": {
+   "E-I": {
+    "rot_med": 13.792360332210896,
+    "success": 0.0,
+    "worsened": 0.9076305220883534
+   },
+   "E-L": {
+    "rot_med": 14.954224155135078,
+    "success": 0.012048192771084338,
+    "worsened": 0.6706827309236948
+   },
+   "E-V2": {
+    "rot_med": 108.93393005027356,
+    "success": 0.004016064257028112,
+    "worsened": 0.9759036144578314
+   },
+   "E-V5b": {
+    "rot_med": 89.07326343773173,
+    "success": 0.004016064257028112,
+    "worsened": 0.963855421686747
+   },
+   "E-V5d": {
+    "rot_med": 88.65691245261574,
+    "success": 0.004016064257028112,
+    "worsened": 0.9678714859437751
+   },
+   "E-V5x2": {
+    "rot_med": 80.04609136050068,
+    "success": 0.0,
+    "worsened": 0.9518072289156626
+   },
+   "E-VI": {
+    "rot_med": 81.89790435066755,
+    "success": 0.0,
+    "worsened": 0.9718875502008032
+   }
+  },
+  "finished": "2026-09-26 01:28:05",
+  "path": "outputs/exp_vggt_probe2/A/MD-prior/MPM11/manifest.json"
+ },
+ {
+  "stage": "A",
+  "model": "MD-prior",
+  "model_source": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_vggt_probe2/models/prior/MPM12/checkpoint_prior.pt",
+  "model_center": [
+   0.00048352173828152765,
+   0.02466533672577158,
+   0.006222371986186162
+  ],
+  "seq": "MPM12",
+  "n_jobs": 229,
+  "every": 1,
+  "vggt_ckpt": "/home/kist/.cache/huggingface/hub/models--facebook--VGGT-1B/snapshots/860abec7937da0a4c03c41d3c269c366e82abdf9/model.pt",
+  "vggt_ckpt_sha256_16": "d15bf50a8615c822",
+  "seconds": 532.4500985145569,
+  "rot0_median": 4.128723663253713,
+  "summary": {
+   "E-I": {
+    "rot_med": 10.486675253957156,
+    "success": 0.0,
+    "worsened": 0.982532751091703
+   },
+   "E-L": {
+    "rot_med": 8.052460119536148,
+    "success": 0.026200873362445413,
+    "worsened": 0.7292576419213974
+   },
+   "E-V2": {
+    "rot_med": 109.15981330943679,
+    "success": 0.008733624454148471,
+    "worsened": 0.9737991266375546
+   },
+   "E-V5b": {
+    "rot_med": 98.93631265401162,
+    "success": 0.008733624454148471,
+    "worsened": 0.9868995633187773
+   },
+   "E-V5d": {
+    "rot_med": 98.97629627714932,
+    "success": 0.008733624454148471,
+    "worsened": 0.9868995633187773
+   },
+   "E-V5x2": {
+    "rot_med": 62.75903650839945,
+    "success": 0.004366812227074236,
+    "worsened": 0.9781659388646288
+   },
+   "E-VI": {
+    "rot_med": 70.74032834309473,
+    "success": 0.0,
+    "worsened": 0.9868995633187773
+   }
+  },
+  "finished": "2026-09-26 01:36:58",
+  "path": "outputs/exp_vggt_probe2/A/MD-prior/MPM12/manifest.json"
+ },
+ {
+  "stage": "A",
+  "model": "MD-prior",
+  "model_source": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_vggt_probe2/models/prior/MPM13/checkpoint_prior.pt",
+  "model_center": [
+   -0.01841179198614209,
+   -0.04325565036453671,
+   -0.12681116728972788
+  ],
+  "seq": "MPM13",
+  "n_jobs": 214,
+  "every": 1,
+  "vggt_ckpt": "/home/kist/.cache/huggingface/hub/models--facebook--VGGT-1B/snapshots/860abec7937da0a4c03c41d3c269c366e82abdf9/model.pt",
+  "vggt_ckpt_sha256_16": "d15bf50a8615c822",
+  "seconds": 496.69566202163696,
+  "rot0_median": 2.659764781634597,
+  "summary": {
+   "E-I": {
+    "rot_med": 4.76518897953043,
+    "success": 0.24766355140186916,
+    "worsened": 0.35046728971962615
+   },
+   "E-L": {
+    "rot_med": 3.997651958719854,
+    "success": 0.3364485981308411,
+    "worsened": 0.3364485981308411
+   },
+   "E-V2": {
+    "rot_med": 129.25959673345574,
+    "success": 0.037383177570093455,
+    "worsened": 0.8738317757009346
+   },
+   "E-V5b": {
+    "rot_med": 109.55761765484534,
+    "success": 0.028037383177570093,
+    "worsened": 0.8925233644859814
+   },
+   "E-V5d": {
+    "rot_med": 109.5875860254641,
+    "success": 0.028037383177570093,
+    "worsened": 0.8925233644859814
+   },
+   "E-V5x2": {
+    "rot_med": 23.05506098169822,
+    "success": 0.03271028037383177,
+    "worsened": 0.780373831775701
+   },
+   "E-VI": {
+    "rot_med": 34.583222985238606,
+    "success": 0.014018691588785047,
+    "worsened": 0.7757009345794392
+   }
+  },
+  "finished": "2026-09-26 01:45:14",
+  "path": "outputs/exp_vggt_probe2/A/MD-prior/MPM13/manifest.json"
+ },
+ {
+  "stage": "A",
+  "model": "MD-prior",
+  "model_source": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_vggt_probe2/models/prior/MPM14/checkpoint_prior.pt",
+  "model_center": [
+   0.0004994605416296251,
+   -0.0020690740203568366,
+   -0.152548945464695
+  ],
+  "seq": "MPM14",
+  "n_jobs": 225,
+  "every": 1,
+  "vggt_ckpt": "/home/kist/.cache/huggingface/hub/models--facebook--VGGT-1B/snapshots/860abec7937da0a4c03c41d3c269c366e82abdf9/model.pt",
+  "vggt_ckpt_sha256_16": "d15bf50a8615c822",
+  "seconds": 507.09727358818054,
+  "rot0_median": 2.7231095208677227,
+  "summary": {
+   "E-I": {
+    "rot_med": 4.096373588405859,
+    "success": 0.10666666666666667,
+    "worsened": 0.38666666666666666
+   },
+   "E-L": {
+    "rot_med": 4.312788834755618,
+    "success": 0.19111111111111112,
+    "worsened": 0.4088888888888889
+   },
+   "E-V2": {
+    "rot_med": 91.74852383178529,
+    "success": 0.022222222222222223,
+    "worsened": 0.9688888888888889
+   },
+   "E-V5b": {
+    "rot_med": 97.21248534884555,
+    "success": 0.013333333333333334,
+    "worsened": 0.9555555555555556
+   },
+   "E-V5d": {
+    "rot_med": 97.31392352901757,
+    "success": 0.017777777777777778,
+    "worsened": 0.96
+   },
+   "E-V5x2": {
+    "rot_med": 38.01131205988576,
+    "success": 0.013333333333333334,
+    "worsened": 0.9288888888888889
+   },
+   "E-VI": {
+    "rot_med": 41.138978126359895,
+    "success": 0.008888888888888889,
+    "worsened": 0.92
+   }
+  },
+  "finished": "2026-09-26 01:53:42",
+  "path": "outputs/exp_vggt_probe2/A/MD-prior/MPM14/manifest.json"
+ },
+ {
+  "stage": "A",
+  "model": "MD-prior",
+  "model_source": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_vggt_probe2/models/prior/SB11/checkpoint_prior.pt",
+  "model_center": [
+   -0.003122211495323809,
+   0.011956693615057055,
+   0.019884006176317307
+  ],
+  "seq": "SB11",
+  "n_jobs": 219,
+  "every": 1,
+  "vggt_ckpt": "/home/kist/.cache/huggingface/hub/models--facebook--VGGT-1B/snapshots/860abec7937da0a4c03c41d3c269c366e82abdf9/model.pt",
+  "vggt_ckpt_sha256_16": "d15bf50a8615c822",
+  "seconds": 508.7782049179077,
+  "rot0_median": 4.570358653850176,
+  "summary": {
+   "E-I": {
+    "rot_med": 4.406744538409011,
+    "success": 0.1689497716894977,
+    "worsened": 0.182648401826484
+   },
+   "E-L": {
+    "rot_med": 5.765485178751787,
+    "success": 0.1461187214611872,
+    "worsened": 0.2922374429223744
+   },
+   "E-V2": {
+    "rot_med": 101.44825823277846,
+    "success": 0.0182648401826484,
+    "worsened": 0.9360730593607306
+   },
+   "E-V5b": {
+    "rot_med": 106.60855213230742,
+    "success": 0.0182648401826484,
+    "worsened": 0.9315068493150684
+   },
+   "E-V5d": {
+    "rot_med": 106.72067984573191,
+    "success": 0.0182648401826484,
+    "worsened": 0.9269406392694064
+   },
+   "E-V5x2": {
+    "rot_med": 24.85533459014514,
+    "success": 0.0182648401826484,
+    "worsened": 0.8721461187214612
+   },
+   "E-VI": {
+    "rot_med": 26.323916954259623,
+    "success": 0.0228310502283105,
+    "worsened": 0.8538812785388128
+   }
+  },
+  "finished": "2026-09-26 02:02:10",
+  "path": "outputs/exp_vggt_probe2/A/MD-prior/SB11/manifest.json"
+ },
+ {
+  "stage": "A",
+  "model": "MD-prior",
+  "model_source": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_vggt_probe2/models/prior/SB13/checkpoint_prior.pt",
+  "model_center": [
+   -0.0002691045856438795,
+   0.0208658771908841,
+   0.013651274100014554
+  ],
+  "seq": "SB13",
+  "n_jobs": 207,
+  "every": 1,
+  "vggt_ckpt": "/home/kist/.cache/huggingface/hub/models--facebook--VGGT-1B/snapshots/860abec7937da0a4c03c41d3c269c366e82abdf9/model.pt",
+  "vggt_ckpt_sha256_16": "d15bf50a8615c822",
+  "seconds": 480.8390645980835,
+  "rot0_median": 3.2428711274046735,
+  "summary": {
+   "E-I": {
+    "rot_med": 3.954102774311294,
+    "success": 0.2608695652173913,
+    "worsened": 0.2608695652173913
+   },
+   "E-L": {
+    "rot_med": 3.1511716861801338,
+    "success": 0.4444444444444444,
+    "worsened": 0.14492753623188406
+   },
+   "E-V2": {
+    "rot_med": 76.62725094574405,
+    "success": 0.004830917874396135,
+    "worsened": 0.961352657004831
+   },
+   "E-V5b": {
+    "rot_med": 85.44805375820582,
+    "success": 0.0,
+    "worsened": 0.9565217391304348
+   },
+   "E-V5d": {
+    "rot_med": 85.32630898496672,
+    "success": 0.0,
+    "worsened": 0.9516908212560387
+   },
+   "E-V5x2": {
+    "rot_med": 22.90514723031998,
+    "success": 0.0,
+    "worsened": 0.9130434782608695
+   },
+   "E-VI": {
+    "rot_med": 24.6149528207176,
+    "success": 0.00966183574879227,
+    "worsened": 0.8985507246376812
+   }
+  },
+  "finished": "2026-09-26 02:10:11",
+  "path": "outputs/exp_vggt_probe2/A/MD-prior/SB13/manifest.json"
+ },
+ {
+  "stage": "A",
+  "model": "MD-prior",
+  "model_source": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_vggt_probe2/models/prior/SM1/checkpoint_prior.pt",
+  "model_center": [
+   -3.175447180626427e-05,
+   0.004989527204442591,
+   0.016776916564663485
+  ],
+  "seq": "SM1",
+  "n_jobs": 278,
+  "every": 1,
+  "vggt_ckpt": "/home/kist/.cache/huggingface/hub/models--facebook--VGGT-1B/snapshots/860abec7937da0a4c03c41d3c269c366e82abdf9/model.pt",
+  "vggt_ckpt_sha256_16": "d15bf50a8615c822",
+  "seconds": 642.2897608280182,
+  "rot0_median": 3.896515902569498,
+  "summary": {
+   "E-I": {
+    "rot_med": 5.055815621120191,
+    "success": 0.2733812949640288,
+    "worsened": 0.27697841726618705
+   },
+   "E-L": {
+    "rot_med": 7.939711961944276,
+    "success": 0.2014388489208633,
+    "worsened": 0.5971223021582733
+   },
+   "E-V2": {
+    "rot_med": 102.75846066831241,
+    "success": 0.0,
+    "worsened": 0.9964028776978417
+   },
+   "E-V5b": {
+    "rot_med": 84.89926627346355,
+    "success": 0.0035971223021582736,
+    "worsened": 0.9820143884892086
+   },
+   "E-V5d": {
+    "rot_med": 84.81537747666228,
+    "success": 0.0035971223021582736,
+    "worsened": 0.9820143884892086
+   },
+   "E-V5x2": {
+    "rot_med": 52.10237837695749,
+    "success": 0.0,
+    "worsened": 0.935251798561151
+   },
+   "E-VI": {
+    "rot_med": 55.73003733673447,
+    "success": 0.03597122302158273,
+    "worsened": 0.8884892086330936
+   }
+  },
+  "finished": "2026-09-26 02:20:54",
+  "path": "outputs/exp_vggt_probe2/A/MD-prior/SM1/manifest.json"
+ },
+ {
+  "stage": "B",
+  "model": "MD-gt",
+  "model_source": "eval_mesh_cd.load_gt_mesh + GroundTruth.align",
+  "model_center": [
+   -0.013617761030091727,
+   0.00041798800810058986,
+   0.04606290814411184
+  ],
+  "seq": "AP12",
+  "n_jobs": 240,
+  "every": 1,
+  "vggt_ckpt": "/home/kist/.cache/huggingface/hub/models--facebook--VGGT-1B/snapshots/860abec7937da0a4c03c41d3c269c366e82abdf9/model.pt",
+  "vggt_ckpt_sha256_16": "d15bf50a8615c822",
+  "seconds": 1079.7426207065582,
+  "rot0_median": 25.000000000000128,
+  "summary": {
+   "E-I": {
+    "rot_med": 1.9173615471492644,
+    "success": 0.6625,
+    "worsened": 0.10416666666666667
+   },
+   "E-L": {
+    "rot_med": 20.395493347096757,
+    "success": 0.05416666666666667,
+    "worsened": 0.2625
+   },
+   "E-V2": {
+    "rot_med": 54.20512464125947,
+    "success": 0.0,
+    "worsened": 0.6
+   },
+   "E-V5b": {
+    "rot_med": 47.97877300300569,
+    "success": 0.0,
+    "worsened": 0.6416666666666667
+   },
+   "E-V5b_r20": {
+    "rot_med": 75.37138854845676,
+    "success": 0.0,
+    "worsened": 0.8041666666666667
+   },
+   "E-V5d": {
+    "rot_med": 48.072341000180415,
+    "success": 0.0,
+    "worsened": 0.6416666666666667
+   },
+   "E-V5d_r20": {
+    "rot_med": 75.49315419998513,
+    "success": 0.0,
+    "worsened": 0.8041666666666667
+   },
+   "E-V5x2": {
+    "rot_med": 23.648364422137632,
+    "success": 0.0,
+    "worsened": 0.5333333333333333
+   },
+   "E-V5x2_r20": {
+    "rot_med": 67.19735808187568,
+    "success": 0.0,
+    "worsened": 0.7416666666666667
+   },
+   "E-VI": {
+    "rot_med": 38.83172741104328,
+    "success": 0.058333333333333334,
+    "worsened": 0.5958333333333333
+   },
+   "E-VI_r20": {
+    "rot_med": 77.76046455913334,
+    "success": 0.05416666666666667,
+    "worsened": 0.7416666666666667
+   }
+  },
+  "finished": "2026-09-26 02:39:09",
+  "path": "outputs/exp_vggt_probe2/B/MD-gt/AP12/manifest.json"
+ },
+ {
+  "stage": "B",
+  "model": "MD-gt",
+  "model_source": "eval_mesh_cd.load_gt_mesh + GroundTruth.align",
+  "model_center": [
+   -0.001852279606019705,
+   0.014009578880390425,
+   0.017036826477141994
+  ],
+  "seq": "MPM12",
+  "n_jobs": 240,
+  "every": 1,
+  "vggt_ckpt": "/home/kist/.cache/huggingface/hub/models--facebook--VGGT-1B/snapshots/860abec7937da0a4c03c41d3c269c366e82abdf9/model.pt",
+  "vggt_ckpt_sha256_16": "d15bf50a8615c822",
+  "seconds": 1007.2458543777466,
+  "rot0_median": 24.999999999999833,
+  "summary": {
+   "E-I": {
+    "rot_med": 2.8439522131062462,
+    "success": 0.6375,
+    "worsened": 0.14166666666666666
+   },
+   "E-L": {
+    "rot_med": 2.7204374494570516,
+    "success": 0.5916666666666667,
+    "worsened": 0.09166666666666666
+   },
+   "E-V2": {
+    "rot_med": 28.853395793591496,
+    "success": 0.0125,
+    "worsened": 0.5
+   },
+   "E-V5b": {
+    "rot_med": 66.03363615306276,
+    "success": 0.016666666666666666,
+    "worsened": 0.7
+   },
+   "E-V5b_r20": {
+    "rot_med": 68.5520498018436,
+    "success": 0.0125,
+    "worsened": 0.7333333333333333
+   },
+   "E-V5d": {
+    "rot_med": 66.03277464713634,
+    "success": 0.0125,
+    "worsened": 0.7
+   },
+   "E-V5d_r20": {
+    "rot_med": 68.54974096180896,
+    "success": 0.016666666666666666,
+    "worsened": 0.7333333333333333
+   },
+   "E-V5x2": {
+    "rot_med": 21.942610393347493,
+    "success": 0.008333333333333333,
+    "worsened": 0.475
+   },
+   "E-V5x2_r20": {
+    "rot_med": 36.85823859129927,
+    "success": 0.0125,
+    "worsened": 0.625
+   },
+   "E-VI": {
+    "rot_med": 28.14866368973466,
+    "success": 0.07083333333333333,
+    "worsened": 0.5416666666666666
+   },
+   "E-VI_r20": {
+    "rot_med": 44.21169205494517,
+    "success": 0.09166666666666666,
+    "worsened": 0.6291666666666667
+   }
+  },
+  "finished": "2026-09-26 02:55:57",
+  "path": "outputs/exp_vggt_probe2/B/MD-gt/MPM12/manifest.json"
+ },
+ {
+  "stage": "B",
+  "model": "MD-gt",
+  "model_source": "eval_mesh_cd.load_gt_mesh + GroundTruth.align",
+  "model_center": [
+   -0.0015801525765273563,
+   -0.00565684341842895,
+   0.015584799608713057
+  ],
+  "seq": "SM1",
+  "n_jobs": 240,
+  "every": 1,
+  "vggt_ckpt": "/home/kist/.cache/huggingface/hub/models--facebook--VGGT-1B/snapshots/860abec7937da0a4c03c41d3c269c366e82abdf9/model.pt",
+  "vggt_ckpt_sha256_16": "d15bf50a8615c822",
+  "seconds": 1000.2418599128723,
+  "rot0_median": 25.000000000000014,
+  "summary": {
+   "E-I": {
+    "rot_med": 3.6328082208519668,
+    "success": 0.4125,
+    "worsened": 0.07916666666666666
+   },
+   "E-L": {
+    "rot_med": 4.29092507895626,
+    "success": 0.425,
+    "worsened": 0.058333333333333334
+   },
+   "E-V2": {
+    "rot_med": 43.217951956936616,
+    "success": 0.008333333333333333,
+    "worsened": 0.6125
+   },
+   "E-V5b": {
+    "rot_med": 44.035328089935234,
+    "success": 0.004166666666666667,
+    "worsened": 0.6083333333333333
+   },
+   "E-V5b_r20": {
+    "rot_med": 73.99292105749711,
+    "success": 0.008333333333333333,
+    "worsened": 0.7375
+   },
+   "E-V5d": {
+    "rot_med": 44.03610270384506,
+    "success": 0.004166666666666667,
+    "worsened": 0.6083333333333333
+   },
+   "E-V5d_r20": {
+    "rot_med": 74.04107626185754,
+    "success": 0.008333333333333333,
+    "worsened": 0.7333333333333333
+   },
+   "E-V5x2": {
+    "rot_med": 22.581870598475803,
+    "success": 0.0,
+    "worsened": 0.4791666666666667
+   },
+   "E-V5x2_r20": {
+    "rot_med": 52.97312331127617,
+    "success": 0.0,
+    "worsened": 0.675
+   },
+   "E-VI": {
+    "rot_med": 24.44907957409313,
+    "success": 0.07083333333333333,
+    "worsened": 0.4875
+   },
+   "E-VI_r20": {
+    "rot_med": 57.25552385450115,
+    "success": 0.06666666666666667,
+    "worsened": 0.6791666666666667
+   }
+  },
+  "finished": "2026-09-26 03:12:37",
+  "path": "outputs/exp_vggt_probe2/B/MD-gt/SM1/manifest.json"
+ },
+ {
+  "stage": "B",
+  "model": "MD-prior",
+  "model_source": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_vggt_probe2/models/prior/AP12/checkpoint_prior.pt",
+  "model_center": [
+   -0.005688726120705585,
+   0.024018331152737993,
+   0.022820294944618166
+  ],
+  "seq": "AP12",
+  "n_jobs": 240,
+  "every": 1,
+  "vggt_ckpt": "/home/kist/.cache/huggingface/hub/models--facebook--VGGT-1B/snapshots/860abec7937da0a4c03c41d3c269c366e82abdf9/model.pt",
+  "vggt_ckpt_sha256_16": "d15bf50a8615c822",
+  "seconds": 1106.0439314842224,
+  "rot0_median": 25.000000000000128,
+  "summary": {
+   "E-I": {
+    "rot_med": 9.00926975464966,
+    "success": 0.016666666666666666,
+    "worsened": 0.21666666666666667
+   },
+   "E-L": {
+    "rot_med": 25.88740792493377,
+    "success": 0.020833333333333332,
+    "worsened": 0.25833333333333336
+   },
+   "E-V2": {
+    "rot_med": 94.05580591615426,
+    "success": 0.0,
+    "worsened": 0.8791666666666667
+   },
+   "E-V5b": {
+    "rot_med": 81.50520407506791,
+    "success": 0.0,
+    "worsened": 0.8583333333333333
+   },
+   "E-V5b_r20": {
+    "rot_med": 73.51184944772531,
+    "success": 0.0,
+    "worsened": 0.8333333333333334
+   },
+   "E-V5d": {
+    "rot_med": 82.04504957488604,
+    "success": 0.0,
+    "worsened": 0.8583333333333333
+   },
+   "E-V5d_r20": {
+    "rot_med": 73.68784830236237,
+    "success": 0.0,
+    "worsened": 0.8333333333333334
+   },
+   "E-V5x2": {
+    "rot_med": 61.66680261261082,
+    "success": 0.0,
+    "worsened": 0.775
+   },
+   "E-V5x2_r20": {
+    "rot_med": 73.43204507381608,
+    "success": 0.0,
+    "worsened": 0.85
+   },
+   "E-VI": {
+    "rot_med": 65.91517305989545,
+    "success": 0.0,
+    "worsened": 0.7916666666666666
+   },
+   "E-VI_r20": {
+    "rot_med": 75.72364575634448,
+    "success": 0.0,
+    "worsened": 0.8541666666666666
+   }
+  },
+  "finished": "2026-09-26 03:31:03",
+  "path": "outputs/exp_vggt_probe2/B/MD-prior/AP12/manifest.json"
+ },
+ {
+  "stage": "B",
+  "model": "MD-prior",
+  "model_source": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_vggt_probe2/models/prior/MPM12/checkpoint_prior.pt",
+  "model_center": [
+   0.00048352173828152765,
+   0.02466533672577158,
+   0.006222371986186162
+  ],
+  "seq": "MPM12",
+  "n_jobs": 240,
+  "every": 1,
+  "vggt_ckpt": "/home/kist/.cache/huggingface/hub/models--facebook--VGGT-1B/snapshots/860abec7937da0a4c03c41d3c269c366e82abdf9/model.pt",
+  "vggt_ckpt_sha256_16": "d15bf50a8615c822",
+  "seconds": 991.5830008983612,
+  "rot0_median": 24.999999999999833,
+  "summary": {
+   "E-I": {
+    "rot_med": 10.760054113473622,
+    "success": 0.0,
+    "worsened": 0.3333333333333333
+   },
+   "E-L": {
+    "rot_med": 12.276429079722039,
+    "success": 0.025,
+    "worsened": 0.3541666666666667
+   },
+   "E-V2": {
+    "rot_med": 114.79161091415342,
+    "success": 0.0,
+    "worsened": 0.8916666666666667
+   },
+   "E-V5b": {
+    "rot_med": 103.48054519716072,
+    "success": 0.0,
+    "worsened": 0.8791666666666667
+   },
+   "E-V5b_r20": {
+    "rot_med": 91.12795045287518,
+    "success": 0.0,
+    "worsened": 0.8625
+   },
+   "E-V5d": {
+    "rot_med": 103.64934036377531,
+    "success": 0.0,
+    "worsened": 0.8791666666666667
+   },
+   "E-V5d_r20": {
+    "rot_med": 91.05368261187047,
+    "success": 0.0,
+    "worsened": 0.8625
+   },
+   "E-V5x2": {
+    "rot_med": 75.83105682719486,
+    "success": 0.0,
+    "worsened": 0.8166666666666667
+   },
+   "E-V5x2_r20": {
+    "rot_med": 73.15465896670645,
+    "success": 0.0,
+    "worsened": 0.8291666666666667
+   },
+   "E-VI": {
+    "rot_med": 85.05879374725103,
+    "success": 0.0,
+    "worsened": 0.8291666666666667
+   },
+   "E-VI_r20": {
+    "rot_med": 82.50746611016312,
+    "success": 0.0,
+    "worsened": 0.8458333333333333
+   }
+  },
+  "finished": "2026-09-26 03:47:35",
+  "path": "outputs/exp_vggt_probe2/B/MD-prior/MPM12/manifest.json"
+ },
+ {
+  "stage": "B",
+  "model": "MD-prior",
+  "model_source": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_vggt_probe2/models/prior/SM1/checkpoint_prior.pt",
+  "model_center": [
+   -3.175447180626427e-05,
+   0.004989527204442591,
+   0.016776916564663485
+  ],
+  "seq": "SM1",
+  "n_jobs": 240,
+  "every": 1,
+  "vggt_ckpt": "/home/kist/.cache/huggingface/hub/models--facebook--VGGT-1B/snapshots/860abec7937da0a4c03c41d3c269c366e82abdf9/model.pt",
+  "vggt_ckpt_sha256_16": "d15bf50a8615c822",
+  "seconds": 998.8699979782104,
+  "rot0_median": 25.000000000000014,
+  "summary": {
+   "E-I": {
+    "rot_med": 5.863881270538776,
+    "success": 0.16666666666666666,
+    "worsened": 0.12083333333333333
+   },
+   "E-L": {
+    "rot_med": 15.808327194909843,
+    "success": 0.06666666666666667,
+    "worsened": 0.275
+   },
+   "E-V2": {
+    "rot_med": 109.68200950668327,
+    "success": 0.0,
+    "worsened": 0.875
+   },
+   "E-V5b": {
+    "rot_med": 99.11275806625534,
+    "success": 0.0,
+    "worsened": 0.8583333333333333
+   },
+   "E-V5b_r20": {
+    "rot_med": 92.39445530057654,
+    "success": 0.0,
+    "worsened": 0.8625
+   },
+   "E-V5d": {
+    "rot_med": 99.08502008249883,
+    "success": 0.0,
+    "worsened": 0.8625
+   },
+   "E-V5d_r20": {
+    "rot_med": 92.59299608181448,
+    "success": 0.0,
+    "worsened": 0.8625
+   },
+   "E-V5x2": {
+    "rot_med": 78.251361396856,
+    "success": 0.0,
+    "worsened": 0.8208333333333333
+   },
+   "E-V5x2_r20": {
+    "rot_med": 97.71541893320173,
+    "success": 0.0,
+    "worsened": 0.875
+   },
+   "E-VI": {
+    "rot_med": 86.33538638431708,
+    "success": 0.0,
+    "worsened": 0.8208333333333333
+   },
+   "E-VI_r20": {
+    "rot_med": 99.86063044092049,
+    "success": 0.0,
+    "worsened": 0.8583333333333333
+   }
+  },
+  "finished": "2026-09-26 04:04:14",
+  "path": "outputs/exp_vggt_probe2/B/MD-prior/SM1/manifest.json"
+ },
+ {
+  "seq": "AP10",
+  "prior_paths": {
+   "mesh_npz": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/AP10_mesh_depth.npz",
+   "pose_json": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/AP10_mesh_depth.json",
+   "gaussian_ply": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/AP10_splat_depth.ply"
+  },
+  "runner_config": "/home/kist/Desktop/BundleSAM3DGS/config_gs_2dgs_1mm_lifecycle.yml",
+  "init_frames": [
+   "0000",
+   "0024",
+   "0046",
+   "0054",
+   "0066"
+  ],
+  "init_pose_source": "snapshot of KF4 (as exp_hybrid_realistic_replay)",
+  "cam_in_obs0": [
+   [
+    1.0,
+    0.0,
+    0.0,
+    -0.0561489537358284
+   ],
+   [
+    0.0,
+    1.0,
+    0.0,
+    -0.036340855062007904
+   ],
+   [
+    0.0,
+    0.0,
+    1.0,
+    -0.5042648315429688
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "refined_sim3_canonical_to_cv_camera_of_KF0": {
+   "scale": [
+    0.24389222264289856,
+    0.24389222264289856,
+    0.24389222264289856
+   ],
+   "R_row": [
+    [
+     0.3185615837574005,
+     -0.19247376918792725,
+     0.9281517863273621
+    ],
+    [
+     0.9475818872451782,
+     0.09163820743560791,
+     -0.3062910735607147
+    ],
+    [
+     -0.032859645783901215,
+     0.9738726615905762,
+     0.22496624290943146
+    ]
+   ],
+   "T": [
+    -0.047711435705423355,
+    -0.04574686288833618,
+    0.5187714099884033
+   ]
+  },
+  "align_status": "refined",
+  "gaussians": 19989,
+  "initial_steps": 500,
+  "checkpoint": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_vggt_probe2/models/prior/AP10/checkpoint_prior.pt",
+  "finished": "2026-09-26 00:26:07",
+  "path": "outputs/exp_vggt_probe2/models/prior/AP10/manifest.json"
+ },
+ {
+  "seq": "AP11",
+  "prior_paths": {
+   "mesh_npz": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/AP11_mesh_depth.npz",
+   "pose_json": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/AP11_mesh_depth.json",
+   "gaussian_ply": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/AP11_splat_depth.ply"
+  },
+  "runner_config": "/home/kist/Desktop/BundleSAM3DGS/config_gs_2dgs_1mm_lifecycle.yml",
+  "init_frames": [
+   "0000",
+   "0023",
+   "0041",
+   "0048",
+   "0060"
+  ],
+  "init_pose_source": "snapshot of KF4 (as exp_hybrid_realistic_replay)",
+  "cam_in_obs0": [
+   [
+    1.0,
+    0.0,
+    0.0,
+    0.06562496721744537
+   ],
+   [
+    0.0,
+    1.0,
+    0.0,
+    0.02857554703950882
+   ],
+   [
+    0.0,
+    0.0,
+    1.0,
+    -0.6286425590515137
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "refined_sim3_canonical_to_cv_camera_of_KF0": {
+   "scale": [
+    0.23024126887321472,
+    0.23024126887321472,
+    0.23024126887321472
+   ],
+   "R_row": [
+    [
+     -0.979961097240448,
+     0.021945958957076073,
+     -0.1972951740026474
+    ],
+    [
+     -0.17306169867515564,
+     0.3914370834827423,
+     0.9040232300758362
+    ],
+    [
+     0.08292552828788757,
+     0.9143608808517456,
+     -0.3966430127620697
+    ]
+   ],
+   "T": [
+    0.05972292646765709,
+    0.03796942159533501,
+    0.6755185723304749
+   ]
+  },
+  "align_status": "refined",
+  "gaussians": 19636,
+  "initial_steps": 500,
+  "checkpoint": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_vggt_probe2/models/prior/AP11/checkpoint_prior.pt",
+  "finished": "2026-09-26 00:26:12",
+  "path": "outputs/exp_vggt_probe2/models/prior/AP11/manifest.json"
+ },
+ {
+  "seq": "AP12",
+  "prior_paths": {
+   "mesh_npz": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/AP12_mesh_depth.npz",
+   "pose_json": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/AP12_mesh_depth.json",
+   "gaussian_ply": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/AP12_splat_depth.ply"
+  },
+  "runner_config": "/home/kist/Desktop/BundleSAM3DGS/config_gs_2dgs_1mm_lifecycle.yml",
+  "init_frames": [
+   "0000",
+   "0023",
+   "0044",
+   "0050",
+   "0066"
+  ],
+  "init_pose_source": "snapshot of KF4 (as exp_hybrid_realistic_replay)",
+  "cam_in_obs0": [
+   [
+    1.0,
+    0.0,
+    0.0,
+    -0.052266925573349
+   ],
+   [
+    0.0,
+    1.0,
+    0.0,
+    -0.03411341458559036
+   ],
+   [
+    0.0,
+    0.0,
+    1.0,
+    -0.39155009388923645
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "refined_sim3_canonical_to_cv_camera_of_KF0": {
+   "scale": [
+    0.2110181450843811,
+    0.2110181450843811,
+    0.2110181450843811
+   ],
+   "R_row": [
+    [
+     -0.8779376149177551,
+     -0.18521469831466675,
+     0.44123148918151855
+    ],
+    [
+     0.47492432594299316,
+     -0.22117550671100616,
+     0.852107584476471
+    ],
+    [
+     -0.07759146392345428,
+     0.9584046006202698,
+     0.2749848961830139
+    ]
+   ],
+   "T": [
+    -0.04674849286675453,
+    -0.051600757986307144,
+    0.4167289733886719
+   ]
+  },
+  "align_status": "refined",
+  "gaussians": 19999,
+  "initial_steps": 500,
+  "checkpoint": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_vggt_probe2/models/prior/AP12/checkpoint_prior.pt",
+  "finished": "2026-09-26 00:26:18",
+  "path": "outputs/exp_vggt_probe2/models/prior/AP12/manifest.json"
+ },
+ {
+  "seq": "AP13",
+  "prior_paths": {
+   "mesh_npz": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/AP13_mesh_depth.npz",
+   "pose_json": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/AP13_mesh_depth.json",
+   "gaussian_ply": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/AP13_splat_depth.ply"
+  },
+  "runner_config": "/home/kist/Desktop/BundleSAM3DGS/config_gs_2dgs_1mm_lifecycle.yml",
+  "init_frames": [
+   "0000",
+   "0022",
+   "0040",
+   "0046",
+   "0058"
+  ],
+  "init_pose_source": "snapshot of KF4 (as exp_hybrid_realistic_replay)",
+  "cam_in_obs0": [
+   [
+    1.0,
+    0.0,
+    0.0,
+    -0.012085475027561188
+   ],
+   [
+    0.0,
+    1.0,
+    0.0,
+    -0.06052437052130699
+   ],
+   [
+    0.0,
+    0.0,
+    1.0,
+    -0.4706314206123352
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "refined_sim3_canonical_to_cv_camera_of_KF0": {
+   "scale": [
+    0.24655835330486298,
+    0.24655835330486298,
+    0.24655835330486298
+   ],
+   "R_row": [
+    [
+     -0.9356583952903748,
+     0.04492998868227005,
+     0.3509625196456909
+    ],
+    [
+     0.34499025344848633,
+     -0.1062498688697815,
+     0.9323968291282654
+    ],
+    [
+     0.051758307963609695,
+     0.9965447187423706,
+     0.06867777556180954
+    ]
+   ],
+   "T": [
+    -0.011150853708386421,
+    -0.0715005099773407,
+    0.48889878392219543
+   ]
+  },
+  "align_status": "refined",
+  "gaussians": 19969,
+  "initial_steps": 500,
+  "checkpoint": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_vggt_probe2/models/prior/AP13/checkpoint_prior.pt",
+  "finished": "2026-09-26 00:26:24",
+  "path": "outputs/exp_vggt_probe2/models/prior/AP13/manifest.json"
+ },
+ {
+  "seq": "AP14",
+  "prior_paths": {
+   "mesh_npz": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/AP14_mesh_depth.npz",
+   "pose_json": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/AP14_mesh_depth.json",
+   "gaussian_ply": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/AP14_splat_depth.ply"
+  },
+  "runner_config": "/home/kist/Desktop/BundleSAM3DGS/config_gs_2dgs_1mm_lifecycle.yml",
+  "init_frames": [
+   "0000",
+   "0023",
+   "0039",
+   "0046",
+   "0055"
+  ],
+  "init_pose_source": "snapshot of KF4 (as exp_hybrid_realistic_replay)",
+  "cam_in_obs0": [
+   [
+    1.0,
+    0.0,
+    0.0,
+    -0.030584096908569336
+   ],
+   [
+    0.0,
+    1.0,
+    0.0,
+    -0.04910050332546234
+   ],
+   [
+    0.0,
+    0.0,
+    1.0,
+    -0.42317959666252136
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "refined_sim3_canonical_to_cv_camera_of_KF0": {
+   "scale": [
+    0.22714117169380188,
+    0.22714117169380188,
+    0.22714117169380188
+   ],
+   "R_row": [
+    [
+     -0.5862461924552917,
+     -0.3232630491256714,
+     -0.7428325414657593
+    ],
+    [
+     -0.8098206520080566,
+     0.2603667080402374,
+     0.5258596539497375
+    ],
+    [
+     0.02030780166387558,
+     0.9154000282287598,
+     -0.40215161442756653
+    ]
+   ],
+   "T": [
+    -0.03658385947346687,
+    -0.05311413109302521,
+    0.46573323011398315
+   ]
+  },
+  "align_status": "refined",
+  "gaussians": 19666,
+  "initial_steps": 500,
+  "checkpoint": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_vggt_probe2/models/prior/AP14/checkpoint_prior.pt",
+  "finished": "2026-09-26 00:26:30",
+  "path": "outputs/exp_vggt_probe2/models/prior/AP14/manifest.json"
+ },
+ {
+  "seq": "MPM10",
+  "prior_paths": {
+   "mesh_npz": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/MPM10_mesh_depth.npz",
+   "pose_json": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/MPM10_mesh_depth.json",
+   "gaussian_ply": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/MPM10_splat_depth.ply"
+  },
+  "runner_config": "/home/kist/Desktop/BundleSAM3DGS/config_gs_2dgs_1mm_lifecycle.yml",
+  "init_frames": [
+   "0000",
+   "0079",
+   "0082",
+   "0086",
+   "0090"
+  ],
+  "init_pose_source": "snapshot of KF4 (as exp_hybrid_realistic_replay)",
+  "cam_in_obs0": [
+   [
+    1.0,
+    0.0,
+    0.0,
+    -0.05279792845249176
+   ],
+   [
+    0.0,
+    1.0,
+    0.0,
+    -0.11237294971942902
+   ],
+   [
+    0.0,
+    0.0,
+    1.0,
+    -0.47118139266967773
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "refined_sim3_canonical_to_cv_camera_of_KF0": {
+   "scale": [
+    0.10269894450902939,
+    0.10269894450902939,
+    0.10269894450902939
+   ],
+   "R_row": [
+    [
+     -0.8841681480407715,
+     -0.12931832671165466,
+     0.44886794686317444
+    ],
+    [
+     0.46600621938705444,
+     -0.3112652897834778,
+     0.8282533884048462
+    ],
+    [
+     0.035392437130212784,
+     0.9410743713378906,
+     0.3363493084907532
+    ]
+   ],
+   "T": [
+    -0.05323146656155586,
+    -0.12104199081659317,
+    0.48910611867904663
+   ]
+  },
+  "align_status": "refined",
+  "gaussians": 19989,
+  "initial_steps": 500,
+  "checkpoint": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_vggt_probe2/models/prior/MPM10/checkpoint_prior.pt",
+  "finished": "2026-09-26 00:26:36",
+  "path": "outputs/exp_vggt_probe2/models/prior/MPM10/manifest.json"
+ },
+ {
+  "seq": "MPM11",
+  "prior_paths": {
+   "mesh_npz": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/MPM11_mesh_depth.npz",
+   "pose_json": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/MPM11_mesh_depth.json",
+   "gaussian_ply": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/MPM11_splat_depth.ply"
+  },
+  "runner_config": "/home/kist/Desktop/BundleSAM3DGS/config_gs_2dgs_1mm_lifecycle.yml",
+  "init_frames": [
+   "0000",
+   "0075",
+   "0081",
+   "0085",
+   "0089"
+  ],
+  "init_pose_source": "snapshot of KF4 (as exp_hybrid_realistic_replay)",
+  "cam_in_obs0": [
+   [
+    1.0,
+    0.0,
+    0.0,
+    0.06585225462913513
+   ],
+   [
+    0.0,
+    1.0,
+    0.0,
+    -0.032244134694337845
+   ],
+   [
+    0.0,
+    0.0,
+    1.0,
+    -0.703563928604126
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "refined_sim3_canonical_to_cv_camera_of_KF0": {
+   "scale": [
+    0.1124037578701973,
+    0.1124037578701973,
+    0.1124037578701973
+   ],
+   "R_row": [
+    [
+     0.05625607445836067,
+     -0.5202639698982239,
+     -0.8538437485694885
+    ],
+    [
+     -0.9858760237693787,
+     0.1009146198630333,
+     -0.12661594152450562
+    ],
+    [
+     0.1709756851196289,
+     0.8356142044067383,
+     -0.5223944187164307
+    ]
+   ],
+   "T": [
+    0.0599895678460598,
+    -0.032669730484485626,
+    0.72346031665802
+   ]
+  },
+  "align_status": "refined",
+  "gaussians": 20000,
+  "initial_steps": 500,
+  "checkpoint": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_vggt_probe2/models/prior/MPM11/checkpoint_prior.pt",
+  "finished": "2026-09-26 00:26:42",
+  "path": "outputs/exp_vggt_probe2/models/prior/MPM11/manifest.json"
+ },
+ {
+  "seq": "MPM12",
+  "prior_paths": {
+   "mesh_npz": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/MPM12_mesh_depth.npz",
+   "pose_json": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/MPM12_mesh_depth.json",
+   "gaussian_ply": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/MPM12_splat_depth.ply"
+  },
+  "runner_config": "/home/kist/Desktop/BundleSAM3DGS/config_gs_2dgs_1mm_lifecycle.yml",
+  "init_frames": [
+   "0000",
+   "0077",
+   "0081",
+   "0085",
+   "0090"
+  ],
+  "init_pose_source": "snapshot of KF4 (as exp_hybrid_realistic_replay)",
+  "cam_in_obs0": [
+   [
+    1.0,
+    0.0,
+    0.0,
+    -0.028161603957414627
+   ],
+   [
+    0.0,
+    1.0,
+    0.0,
+    -0.11728070676326752
+   ],
+   [
+    0.0,
+    0.0,
+    1.0,
+    -0.378618985414505
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "refined_sim3_canonical_to_cv_camera_of_KF0": {
+   "scale": [
+    0.09650770574808121,
+    0.09650770574808121,
+    0.09650770574808121
+   ],
+   "R_row": [
+    [
+     -0.8123273849487305,
+     0.16789282858371735,
+     -0.5586569309234619
+    ],
+    [
+     -0.573900580406189,
+     -0.4010410010814667,
+     0.7139515280723572
+    ],
+    [
+     -0.10192859917879105,
+     0.8974013924598694,
+     0.42931875586509705
+    ]
+   ],
+   "T": [
+    -0.027870137244462967,
+    -0.14103926718235016,
+    0.385453462600708
+   ]
+  },
+  "align_status": "refined",
+  "gaussians": 19910,
+  "initial_steps": 500,
+  "checkpoint": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_vggt_probe2/models/prior/MPM12/checkpoint_prior.pt",
+  "finished": "2026-09-26 00:26:48",
+  "path": "outputs/exp_vggt_probe2/models/prior/MPM12/manifest.json"
+ },
+ {
+  "seq": "MPM13",
+  "prior_paths": {
+   "mesh_npz": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/MPM13_mesh_depth.npz",
+   "pose_json": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/MPM13_mesh_depth.json",
+   "gaussian_ply": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/MPM13_splat_depth.ply"
+  },
+  "runner_config": "/home/kist/Desktop/BundleSAM3DGS/config_gs_2dgs_1mm_lifecycle.yml",
+  "init_frames": [
+   "0000",
+   "0077",
+   "0081",
+   "0086",
+   "0090"
+  ],
+  "init_pose_source": "snapshot of KF4 (as exp_hybrid_realistic_replay)",
+  "cam_in_obs0": [
+   [
+    1.0,
+    0.0,
+    0.0,
+    -0.0387713685631752
+   ],
+   [
+    0.0,
+    1.0,
+    0.0,
+    -0.1853237748146057
+   ],
+   [
+    0.0,
+    0.0,
+    1.0,
+    -0.6180615425109863
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "refined_sim3_canonical_to_cv_camera_of_KF0": {
+   "scale": [
+    0.10729018598794937,
+    0.10729018598794937,
+    0.10729018598794937
+   ],
+   "R_row": [
+    [
+     -0.7775246500968933,
+     -0.016238149255514145,
+     0.6284477114677429
+    ],
+    [
+     0.6276184916496277,
+     -0.08267209678888321,
+     0.7743248343467712
+    ],
+    [
+     0.05027967691421509,
+     0.9958908557891846,
+     0.075721874833107
+    ]
+   ],
+   "T": [
+    -0.020002273842692375,
+    -0.1433754712343216,
+    0.491283655166626
+   ]
+  },
+  "align_status": "refined",
+  "gaussians": 19988,
+  "initial_steps": 500,
+  "checkpoint": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_vggt_probe2/models/prior/MPM13/checkpoint_prior.pt",
+  "finished": "2026-09-26 00:26:54",
+  "path": "outputs/exp_vggt_probe2/models/prior/MPM13/manifest.json"
+ },
+ {
+  "seq": "MPM14",
+  "prior_paths": {
+   "mesh_npz": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/MPM14_mesh_depth.npz",
+   "pose_json": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/MPM14_mesh_depth.json",
+   "gaussian_ply": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/MPM14_splat_depth.ply"
+  },
+  "runner_config": "/home/kist/Desktop/BundleSAM3DGS/config_gs_2dgs_1mm_lifecycle.yml",
+  "init_frames": [
+   "0000",
+   "0074",
+   "0081",
+   "0085",
+   "0088"
+  ],
+  "init_pose_source": "snapshot of KF4 (as exp_hybrid_realistic_replay)",
+  "cam_in_obs0": [
+   [
+    1.0,
+    0.0,
+    0.0,
+    -0.051988646388053894
+   ],
+   [
+    0.0,
+    1.0,
+    0.0,
+    -0.12231428176164627
+   ],
+   [
+    0.0,
+    0.0,
+    1.0,
+    -0.6572973728179932
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "refined_sim3_canonical_to_cv_camera_of_KF0": {
+   "scale": [
+    0.10396686941385269,
+    0.10396686941385269,
+    0.10396686941385269
+   ],
+   "R_row": [
+    [
+     -0.7617284059524536,
+     -0.2952333986759186,
+     -0.5764813423156738
+    ],
+    [
+     -0.6470081806182861,
+     0.3934021592140198,
+     0.6541532874107361
+    ],
+    [
+     0.035653144121170044,
+     0.8914165496826172,
+     -0.45279988646507263
+    ]
+   ],
+   "T": [
+    -0.05254906788468361,
+    -0.12153439223766327,
+    0.5053653717041016
+   ]
+  },
+  "align_status": "refined",
+  "gaussians": 19995,
+  "initial_steps": 500,
+  "checkpoint": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_vggt_probe2/models/prior/MPM14/checkpoint_prior.pt",
+  "finished": "2026-09-26 00:26:59",
+  "path": "outputs/exp_vggt_probe2/models/prior/MPM14/manifest.json"
+ },
+ {
+  "seq": "SB11",
+  "prior_paths": {
+   "mesh_npz": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/SB11_mesh_depth.npz",
+   "pose_json": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/SB11_mesh_depth.json",
+   "gaussian_ply": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/SB11_splat_depth.ply"
+  },
+  "runner_config": "/home/kist/Desktop/BundleSAM3DGS/config_gs_2dgs_1mm_lifecycle.yml",
+  "init_frames": [
+   "0000",
+   "0412",
+   "0428",
+   "0439",
+   "0450"
+  ],
+  "init_pose_source": "snapshot of KF4 (as exp_hybrid_realistic_replay)",
+  "cam_in_obs0": [
+   [
+    1.0,
+    0.0,
+    0.0,
+    0.0848611444234848
+   ],
+   [
+    0.0,
+    1.0,
+    0.0,
+    0.02065929025411606
+   ],
+   [
+    0.0,
+    0.0,
+    1.0,
+    -0.6599384546279907
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "refined_sim3_canonical_to_cv_camera_of_KF0": {
+   "scale": [
+    0.25296565890312195,
+    0.25296565890312195,
+    0.25296565890312195
+   ],
+   "R_row": [
+    [
+     0.37645745277404785,
+     -0.3596248924732208,
+     -0.8527204990386963
+    ],
+    [
+     -0.9280224442481995,
+     -0.13733898103237152,
+     -0.3517850339412689
+    ],
+    [
+     0.052422866225242615,
+     0.9167351126670837,
+     -0.3973235487937927
+    ]
+   ],
+   "T": [
+    0.08918359130620956,
+    0.030682068318128586,
+    0.6708001494407654
+   ]
+  },
+  "align_status": "refined",
+  "gaussians": 19998,
+  "initial_steps": 500,
+  "checkpoint": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_vggt_probe2/models/prior/SB11/checkpoint_prior.pt",
+  "finished": "2026-09-26 00:27:05",
+  "path": "outputs/exp_vggt_probe2/models/prior/SB11/manifest.json"
+ },
+ {
+  "seq": "SB13",
+  "prior_paths": {
+   "mesh_npz": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/SB13_mesh_depth.npz",
+   "pose_json": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/SB13_mesh_depth.json",
+   "gaussian_ply": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/SB13_splat_depth.ply"
+  },
+  "runner_config": "/home/kist/Desktop/BundleSAM3DGS/config_gs_2dgs_1mm_lifecycle.yml",
+  "init_frames": [
+   "0000",
+   "0412",
+   "0429",
+   "0441",
+   "0451"
+  ],
+  "init_pose_source": "snapshot of KF4 (as exp_hybrid_realistic_replay)",
+  "cam_in_obs0": [
+   [
+    1.0,
+    0.0,
+    0.0,
+    0.011347847059369087
+   ],
+   [
+    0.0,
+    1.0,
+    0.0,
+    -0.06118196249008179
+   ],
+   [
+    0.0,
+    0.0,
+    1.0,
+    -0.4828910231590271
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "refined_sim3_canonical_to_cv_camera_of_KF0": {
+   "scale": [
+    0.2492998242378235,
+    0.2492998242378235,
+    0.2492998242378235
+   ],
+   "R_row": [
+    [
+     -0.9951637983322144,
+     0.0008817489142529666,
+     0.09922035038471222
+    ],
+    [
+     0.09881099313497543,
+     -0.09346826374530792,
+     0.9907194375991821
+    ],
+    [
+     0.026402300223708153,
+     0.9940678477287292,
+     0.10657715797424316
+    ]
+   ],
+   "T": [
+    0.016419241204857826,
+    -0.06482232362031937,
+    0.4984150230884552
+   ]
+  },
+  "align_status": "refined",
+  "gaussians": 19997,
+  "initial_steps": 500,
+  "checkpoint": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_vggt_probe2/models/prior/SB13/checkpoint_prior.pt",
+  "finished": "2026-09-26 00:27:11",
+  "path": "outputs/exp_vggt_probe2/models/prior/SB13/manifest.json"
+ },
+ {
+  "seq": "SM1",
+  "prior_paths": {
+   "mesh_npz": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/SM1_mesh_depth.npz",
+   "pose_json": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/SM1_mesh_depth.json",
+   "gaussian_ply": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/SM1_splat_depth.ply"
+  },
+  "runner_config": "/home/kist/Desktop/BundleSAM3DGS/config_gs_2dgs_1mm_lifecycle.yml",
+  "init_frames": [
+   "0000",
+   "0003",
+   "0008",
+   "0012",
+   "0016"
+  ],
+  "init_pose_source": "snapshot of KF4 (as exp_hybrid_realistic_replay)",
+  "cam_in_obs0": [
+   [
+    1.0,
+    0.0,
+    0.0,
+    -0.03417489305138588
+   ],
+   [
+    0.0,
+    1.0,
+    0.0,
+    -0.011456958949565887
+   ],
+   [
+    0.0,
+    0.0,
+    1.0,
+    -0.41517311334609985
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "refined_sim3_canonical_to_cv_camera_of_KF0": {
+   "scale": [
+    0.19781914353370667,
+    0.19781914353370667,
+    0.19781914353370667
+   ],
+   "R_row": [
+    [
+     0.7570966482162476,
+     -0.4386253356933594,
+     -0.48460903763771057
+    ],
+    [
+     -0.6299505233764648,
+     -0.28738006949424744,
+     -0.7222419381141663
+    ],
+    [
+     0.12091678380966187,
+     0.85904860496521,
+     -0.4990541338920593
+    ]
+   ],
+   "T": [
+    -0.03259603679180145,
+    -0.0038589457981288433,
+    0.42457330226898193
+   ]
+  },
+  "align_status": "refined",
+  "gaussians": 19997,
+  "initial_steps": 500,
+  "checkpoint": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_vggt_probe2/models/prior/SM1/checkpoint_prior.pt",
+  "finished": "2026-09-26 00:27:16",
+  "path": "outputs/exp_vggt_probe2/models/prior/SM1/manifest.json"
+ },
+ {
+  "seq": "AP12",
+  "dataset": "ho3d",
+  "frames": 171,
+  "hole_ratio_pooled": 0.03404532556195868,
+  "hole_ratio_median": 0.025145856156531043,
+  "n_sample": 3000,
+  "vggt_ckpt_sha256_16": "d15bf50a8615c822",
+  "seconds": 35.138248682022095,
+  "finished": "2026-09-26 04:24:22",
+  "path": "outputs/exp_vggt_probe2/D/AP12/manifest.json"
+ },
+ {
+  "seq": "MPM10",
+  "dataset": "ho3d",
+  "frames": 237,
+  "hole_ratio_pooled": 0.09160929887181456,
+  "hole_ratio_median": 0.08055529322882236,
+  "n_sample": 3000,
+  "vggt_ckpt_sha256_16": "d15bf50a8615c822",
+  "seconds": 49.17513060569763,
+  "finished": "2026-09-26 04:25:12",
+  "path": "outputs/exp_vggt_probe2/D/MPM10/manifest.json"
+ },
+ {
+  "seq": "MPM12",
+  "dataset": "ho3d",
+  "frames": 229,
+  "hole_ratio_pooled": 0.03123699648900233,
+  "hole_ratio_median": 0.01616210085499913,
+  "n_sample": 3000,
+  "vggt_ckpt_sha256_16": "d15bf50a8615c822",
+  "seconds": 48.58503794670105,
+  "finished": "2026-09-26 04:26:01",
+  "path": "outputs/exp_vggt_probe2/D/MPM12/manifest.json"
+ },
+ {
+  "seq": "SB11",
+  "dataset": "ho3d",
+  "frames": 219,
+  "hole_ratio_pooled": 0.01696115222201509,
+  "hole_ratio_median": 0.004600544150383378,
+  "n_sample": 3000,
+  "vggt_ckpt_sha256_16": "d15bf50a8615c822",
+  "seconds": 45.17273235321045,
+  "finished": "2026-09-26 04:26:46",
+  "path": "outputs/exp_vggt_probe2/D/SB11/manifest.json"
+ },
+ {
+  "seq": "SM1",
+  "dataset": "ho3d",
+  "frames": 278,
+  "hole_ratio_pooled": 0.013925900416107475,
+  "hole_ratio_median": 0.008776531846828943,
+  "n_sample": 3000,
+  "vggt_ckpt_sha256_16": "d15bf50a8615c822",
+  "seconds": 57.828697204589844,
+  "finished": "2026-09-26 04:27:44",
+  "path": "outputs/exp_vggt_probe2/D/SM1/manifest.json"
+ },
+ {
+  "seq": "mustard0",
+  "dataset": "ycb",
+  "frames": 37,
+  "hole_ratio_pooled": 0.02192205350962424,
+  "hole_ratio_median": 0.022619177286424864,
+  "n_sample": 3000,
+  "vggt_ckpt_sha256_16": "d15bf50a8615c822",
+  "seconds": 7.563096046447754,
+  "finished": "2026-09-26 04:27:52",
+  "path": "outputs/exp_vggt_probe2/D/mustard0/manifest.json"
+ },
+ {
+  "seq": "tomato_soup_can_yalehand0",
+  "dataset": "ycb",
+  "frames": 216,
+  "hole_ratio_pooled": 0.04531190827216593,
+  "hole_ratio_median": 0.031042342795608205,
+  "n_sample": 3000,
+  "vggt_ckpt_sha256_16": "d15bf50a8615c822",
+  "seconds": 44.34931135177612,
+  "finished": "2026-09-26 04:28:37",
+  "path": "outputs/exp_vggt_probe2/D/tomato_soup_can_yalehand0/manifest.json"
+ },
+ {
+  "seq": "AP10",
+  "prior_paths": {
+   "mesh_npz": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/AP10_mesh_depth.npz",
+   "pose_json": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/AP10_mesh_depth.json",
+   "gaussian_ply": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/AP10_splat_depth.ply"
+  },
+  "runner_config": "/home/kist/Desktop/BundleSAM3DGS/config_gs_2dgs_1mm_lifecycle.yml",
+  "init_frames": [
+   "0000",
+   "0024",
+   "0046",
+   "0054",
+   "0066"
+  ],
+  "init_pose_source": "snapshot of KF4 (as exp_hybrid_realistic_replay)",
+  "cam_in_obs0": [
+   [
+    1.0,
+    0.0,
+    0.0,
+    -0.0561489537358284
+   ],
+   [
+    0.0,
+    1.0,
+    0.0,
+    -0.036340855062007904
+   ],
+   [
+    0.0,
+    0.0,
+    1.0,
+    -0.5042648315429688
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "refined_sim3_canonical_to_cv_camera_of_KF0": {
+   "scale": [
+    0.24389222264289856,
+    0.24389222264289856,
+    0.24389222264289856
+   ],
+   "R_row": [
+    [
+     0.3185615837574005,
+     -0.19247376918792725,
+     0.9281517863273621
+    ],
+    [
+     0.9475818872451782,
+     0.09163820743560791,
+     -0.3062910735607147
+    ],
+    [
+     -0.032859645783901215,
+     0.9738726615905762,
+     0.22496624290943146
+    ]
+   ],
+   "T": [
+    -0.047711435705423355,
+    -0.04574686288833618,
+    0.5187714099884033
+   ]
+  },
+  "align_status": "refined",
+  "gaussians": 19989,
+  "initial_steps": 500,
+  "checkpoint": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_vggt_probe2/models/prior/AP10/checkpoint_prior.pt",
+  "finished": "2026-09-26 00:26:07",
+  "path": "outputs/exp_vggt_probe2/models/prior/AP10/manifest.json"
+ },
+ {
+  "seq": "AP11",
+  "prior_paths": {
+   "mesh_npz": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/AP11_mesh_depth.npz",
+   "pose_json": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/AP11_mesh_depth.json",
+   "gaussian_ply": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/AP11_splat_depth.ply"
+  },
+  "runner_config": "/home/kist/Desktop/BundleSAM3DGS/config_gs_2dgs_1mm_lifecycle.yml",
+  "init_frames": [
+   "0000",
+   "0023",
+   "0041",
+   "0048",
+   "0060"
+  ],
+  "init_pose_source": "snapshot of KF4 (as exp_hybrid_realistic_replay)",
+  "cam_in_obs0": [
+   [
+    1.0,
+    0.0,
+    0.0,
+    0.06562496721744537
+   ],
+   [
+    0.0,
+    1.0,
+    0.0,
+    0.02857554703950882
+   ],
+   [
+    0.0,
+    0.0,
+    1.0,
+    -0.6286425590515137
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "refined_sim3_canonical_to_cv_camera_of_KF0": {
+   "scale": [
+    0.23024126887321472,
+    0.23024126887321472,
+    0.23024126887321472
+   ],
+   "R_row": [
+    [
+     -0.979961097240448,
+     0.021945958957076073,
+     -0.1972951740026474
+    ],
+    [
+     -0.17306169867515564,
+     0.3914370834827423,
+     0.9040232300758362
+    ],
+    [
+     0.08292552828788757,
+     0.9143608808517456,
+     -0.3966430127620697
+    ]
+   ],
+   "T": [
+    0.05972292646765709,
+    0.03796942159533501,
+    0.6755185723304749
+   ]
+  },
+  "align_status": "refined",
+  "gaussians": 19636,
+  "initial_steps": 500,
+  "checkpoint": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_vggt_probe2/models/prior/AP11/checkpoint_prior.pt",
+  "finished": "2026-09-26 00:26:12",
+  "path": "outputs/exp_vggt_probe2/models/prior/AP11/manifest.json"
+ },
+ {
+  "seq": "AP12",
+  "prior_paths": {
+   "mesh_npz": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/AP12_mesh_depth.npz",
+   "pose_json": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/AP12_mesh_depth.json",
+   "gaussian_ply": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/AP12_splat_depth.ply"
+  },
+  "runner_config": "/home/kist/Desktop/BundleSAM3DGS/config_gs_2dgs_1mm_lifecycle.yml",
+  "init_frames": [
+   "0000",
+   "0023",
+   "0044",
+   "0050",
+   "0066"
+  ],
+  "init_pose_source": "snapshot of KF4 (as exp_hybrid_realistic_replay)",
+  "cam_in_obs0": [
+   [
+    1.0,
+    0.0,
+    0.0,
+    -0.052266925573349
+   ],
+   [
+    0.0,
+    1.0,
+    0.0,
+    -0.03411341458559036
+   ],
+   [
+    0.0,
+    0.0,
+    1.0,
+    -0.39155009388923645
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "refined_sim3_canonical_to_cv_camera_of_KF0": {
+   "scale": [
+    0.2110181450843811,
+    0.2110181450843811,
+    0.2110181450843811
+   ],
+   "R_row": [
+    [
+     -0.8779376149177551,
+     -0.18521469831466675,
+     0.44123148918151855
+    ],
+    [
+     0.47492432594299316,
+     -0.22117550671100616,
+     0.852107584476471
+    ],
+    [
+     -0.07759146392345428,
+     0.9584046006202698,
+     0.2749848961830139
+    ]
+   ],
+   "T": [
+    -0.04674849286675453,
+    -0.051600757986307144,
+    0.4167289733886719
+   ]
+  },
+  "align_status": "refined",
+  "gaussians": 19999,
+  "initial_steps": 500,
+  "checkpoint": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_vggt_probe2/models/prior/AP12/checkpoint_prior.pt",
+  "finished": "2026-09-26 00:26:18",
+  "path": "outputs/exp_vggt_probe2/models/prior/AP12/manifest.json"
+ },
+ {
+  "seq": "AP13",
+  "prior_paths": {
+   "mesh_npz": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/AP13_mesh_depth.npz",
+   "pose_json": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/AP13_mesh_depth.json",
+   "gaussian_ply": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/AP13_splat_depth.ply"
+  },
+  "runner_config": "/home/kist/Desktop/BundleSAM3DGS/config_gs_2dgs_1mm_lifecycle.yml",
+  "init_frames": [
+   "0000",
+   "0022",
+   "0040",
+   "0046",
+   "0058"
+  ],
+  "init_pose_source": "snapshot of KF4 (as exp_hybrid_realistic_replay)",
+  "cam_in_obs0": [
+   [
+    1.0,
+    0.0,
+    0.0,
+    -0.012085475027561188
+   ],
+   [
+    0.0,
+    1.0,
+    0.0,
+    -0.06052437052130699
+   ],
+   [
+    0.0,
+    0.0,
+    1.0,
+    -0.4706314206123352
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "refined_sim3_canonical_to_cv_camera_of_KF0": {
+   "scale": [
+    0.24655835330486298,
+    0.24655835330486298,
+    0.24655835330486298
+   ],
+   "R_row": [
+    [
+     -0.9356583952903748,
+     0.04492998868227005,
+     0.3509625196456909
+    ],
+    [
+     0.34499025344848633,
+     -0.1062498688697815,
+     0.9323968291282654
+    ],
+    [
+     0.051758307963609695,
+     0.9965447187423706,
+     0.06867777556180954
+    ]
+   ],
+   "T": [
+    -0.011150853708386421,
+    -0.0715005099773407,
+    0.48889878392219543
+   ]
+  },
+  "align_status": "refined",
+  "gaussians": 19969,
+  "initial_steps": 500,
+  "checkpoint": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_vggt_probe2/models/prior/AP13/checkpoint_prior.pt",
+  "finished": "2026-09-26 00:26:24",
+  "path": "outputs/exp_vggt_probe2/models/prior/AP13/manifest.json"
+ },
+ {
+  "seq": "AP14",
+  "prior_paths": {
+   "mesh_npz": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/AP14_mesh_depth.npz",
+   "pose_json": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/AP14_mesh_depth.json",
+   "gaussian_ply": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/AP14_splat_depth.ply"
+  },
+  "runner_config": "/home/kist/Desktop/BundleSAM3DGS/config_gs_2dgs_1mm_lifecycle.yml",
+  "init_frames": [
+   "0000",
+   "0023",
+   "0039",
+   "0046",
+   "0055"
+  ],
+  "init_pose_source": "snapshot of KF4 (as exp_hybrid_realistic_replay)",
+  "cam_in_obs0": [
+   [
+    1.0,
+    0.0,
+    0.0,
+    -0.030584096908569336
+   ],
+   [
+    0.0,
+    1.0,
+    0.0,
+    -0.04910050332546234
+   ],
+   [
+    0.0,
+    0.0,
+    1.0,
+    -0.42317959666252136
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "refined_sim3_canonical_to_cv_camera_of_KF0": {
+   "scale": [
+    0.22714117169380188,
+    0.22714117169380188,
+    0.22714117169380188
+   ],
+   "R_row": [
+    [
+     -0.5862461924552917,
+     -0.3232630491256714,
+     -0.7428325414657593
+    ],
+    [
+     -0.8098206520080566,
+     0.2603667080402374,
+     0.5258596539497375
+    ],
+    [
+     0.02030780166387558,
+     0.9154000282287598,
+     -0.40215161442756653
+    ]
+   ],
+   "T": [
+    -0.03658385947346687,
+    -0.05311413109302521,
+    0.46573323011398315
+   ]
+  },
+  "align_status": "refined",
+  "gaussians": 19666,
+  "initial_steps": 500,
+  "checkpoint": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_vggt_probe2/models/prior/AP14/checkpoint_prior.pt",
+  "finished": "2026-09-26 00:26:30",
+  "path": "outputs/exp_vggt_probe2/models/prior/AP14/manifest.json"
+ },
+ {
+  "seq": "MPM10",
+  "prior_paths": {
+   "mesh_npz": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/MPM10_mesh_depth.npz",
+   "pose_json": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/MPM10_mesh_depth.json",
+   "gaussian_ply": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/MPM10_splat_depth.ply"
+  },
+  "runner_config": "/home/kist/Desktop/BundleSAM3DGS/config_gs_2dgs_1mm_lifecycle.yml",
+  "init_frames": [
+   "0000",
+   "0079",
+   "0082",
+   "0086",
+   "0090"
+  ],
+  "init_pose_source": "snapshot of KF4 (as exp_hybrid_realistic_replay)",
+  "cam_in_obs0": [
+   [
+    1.0,
+    0.0,
+    0.0,
+    -0.05279792845249176
+   ],
+   [
+    0.0,
+    1.0,
+    0.0,
+    -0.11237294971942902
+   ],
+   [
+    0.0,
+    0.0,
+    1.0,
+    -0.47118139266967773
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "refined_sim3_canonical_to_cv_camera_of_KF0": {
+   "scale": [
+    0.10269894450902939,
+    0.10269894450902939,
+    0.10269894450902939
+   ],
+   "R_row": [
+    [
+     -0.8841681480407715,
+     -0.12931832671165466,
+     0.44886794686317444
+    ],
+    [
+     0.46600621938705444,
+     -0.3112652897834778,
+     0.8282533884048462
+    ],
+    [
+     0.035392437130212784,
+     0.9410743713378906,
+     0.3363493084907532
+    ]
+   ],
+   "T": [
+    -0.05323146656155586,
+    -0.12104199081659317,
+    0.48910611867904663
+   ]
+  },
+  "align_status": "refined",
+  "gaussians": 19989,
+  "initial_steps": 500,
+  "checkpoint": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_vggt_probe2/models/prior/MPM10/checkpoint_prior.pt",
+  "finished": "2026-09-26 00:26:36",
+  "path": "outputs/exp_vggt_probe2/models/prior/MPM10/manifest.json"
+ },
+ {
+  "seq": "MPM11",
+  "prior_paths": {
+   "mesh_npz": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/MPM11_mesh_depth.npz",
+   "pose_json": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/MPM11_mesh_depth.json",
+   "gaussian_ply": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/MPM11_splat_depth.ply"
+  },
+  "runner_config": "/home/kist/Desktop/BundleSAM3DGS/config_gs_2dgs_1mm_lifecycle.yml",
+  "init_frames": [
+   "0000",
+   "0075",
+   "0081",
+   "0085",
+   "0089"
+  ],
+  "init_pose_source": "snapshot of KF4 (as exp_hybrid_realistic_replay)",
+  "cam_in_obs0": [
+   [
+    1.0,
+    0.0,
+    0.0,
+    0.06585225462913513
+   ],
+   [
+    0.0,
+    1.0,
+    0.0,
+    -0.032244134694337845
+   ],
+   [
+    0.0,
+    0.0,
+    1.0,
+    -0.703563928604126
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "refined_sim3_canonical_to_cv_camera_of_KF0": {
+   "scale": [
+    0.1124037578701973,
+    0.1124037578701973,
+    0.1124037578701973
+   ],
+   "R_row": [
+    [
+     0.05625607445836067,
+     -0.5202639698982239,
+     -0.8538437485694885
+    ],
+    [
+     -0.9858760237693787,
+     0.1009146198630333,
+     -0.12661594152450562
+    ],
+    [
+     0.1709756851196289,
+     0.8356142044067383,
+     -0.5223944187164307
+    ]
+   ],
+   "T": [
+    0.0599895678460598,
+    -0.032669730484485626,
+    0.72346031665802
+   ]
+  },
+  "align_status": "refined",
+  "gaussians": 20000,
+  "initial_steps": 500,
+  "checkpoint": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_vggt_probe2/models/prior/MPM11/checkpoint_prior.pt",
+  "finished": "2026-09-26 00:26:42",
+  "path": "outputs/exp_vggt_probe2/models/prior/MPM11/manifest.json"
+ },
+ {
+  "seq": "MPM12",
+  "prior_paths": {
+   "mesh_npz": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/MPM12_mesh_depth.npz",
+   "pose_json": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/MPM12_mesh_depth.json",
+   "gaussian_ply": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/MPM12_splat_depth.ply"
+  },
+  "runner_config": "/home/kist/Desktop/BundleSAM3DGS/config_gs_2dgs_1mm_lifecycle.yml",
+  "init_frames": [
+   "0000",
+   "0077",
+   "0081",
+   "0085",
+   "0090"
+  ],
+  "init_pose_source": "snapshot of KF4 (as exp_hybrid_realistic_replay)",
+  "cam_in_obs0": [
+   [
+    1.0,
+    0.0,
+    0.0,
+    -0.028161603957414627
+   ],
+   [
+    0.0,
+    1.0,
+    0.0,
+    -0.11728070676326752
+   ],
+   [
+    0.0,
+    0.0,
+    1.0,
+    -0.378618985414505
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "refined_sim3_canonical_to_cv_camera_of_KF0": {
+   "scale": [
+    0.09650770574808121,
+    0.09650770574808121,
+    0.09650770574808121
+   ],
+   "R_row": [
+    [
+     -0.8123273849487305,
+     0.16789282858371735,
+     -0.5586569309234619
+    ],
+    [
+     -0.573900580406189,
+     -0.4010410010814667,
+     0.7139515280723572
+    ],
+    [
+     -0.10192859917879105,
+     0.8974013924598694,
+     0.42931875586509705
+    ]
+   ],
+   "T": [
+    -0.027870137244462967,
+    -0.14103926718235016,
+    0.385453462600708
+   ]
+  },
+  "align_status": "refined",
+  "gaussians": 19910,
+  "initial_steps": 500,
+  "checkpoint": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_vggt_probe2/models/prior/MPM12/checkpoint_prior.pt",
+  "finished": "2026-09-26 00:26:48",
+  "path": "outputs/exp_vggt_probe2/models/prior/MPM12/manifest.json"
+ },
+ {
+  "seq": "MPM13",
+  "prior_paths": {
+   "mesh_npz": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/MPM13_mesh_depth.npz",
+   "pose_json": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/MPM13_mesh_depth.json",
+   "gaussian_ply": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/MPM13_splat_depth.ply"
+  },
+  "runner_config": "/home/kist/Desktop/BundleSAM3DGS/config_gs_2dgs_1mm_lifecycle.yml",
+  "init_frames": [
+   "0000",
+   "0077",
+   "0081",
+   "0086",
+   "0090"
+  ],
+  "init_pose_source": "snapshot of KF4 (as exp_hybrid_realistic_replay)",
+  "cam_in_obs0": [
+   [
+    1.0,
+    0.0,
+    0.0,
+    -0.0387713685631752
+   ],
+   [
+    0.0,
+    1.0,
+    0.0,
+    -0.1853237748146057
+   ],
+   [
+    0.0,
+    0.0,
+    1.0,
+    -0.6180615425109863
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "refined_sim3_canonical_to_cv_camera_of_KF0": {
+   "scale": [
+    0.10729018598794937,
+    0.10729018598794937,
+    0.10729018598794937
+   ],
+   "R_row": [
+    [
+     -0.7775246500968933,
+     -0.016238149255514145,
+     0.6284477114677429
+    ],
+    [
+     0.6276184916496277,
+     -0.08267209678888321,
+     0.7743248343467712
+    ],
+    [
+     0.05027967691421509,
+     0.9958908557891846,
+     0.075721874833107
+    ]
+   ],
+   "T": [
+    -0.020002273842692375,
+    -0.1433754712343216,
+    0.491283655166626
+   ]
+  },
+  "align_status": "refined",
+  "gaussians": 19988,
+  "initial_steps": 500,
+  "checkpoint": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_vggt_probe2/models/prior/MPM13/checkpoint_prior.pt",
+  "finished": "2026-09-26 00:26:54",
+  "path": "outputs/exp_vggt_probe2/models/prior/MPM13/manifest.json"
+ },
+ {
+  "seq": "MPM14",
+  "prior_paths": {
+   "mesh_npz": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/MPM14_mesh_depth.npz",
+   "pose_json": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/MPM14_mesh_depth.json",
+   "gaussian_ply": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/MPM14_splat_depth.ply"
+  },
+  "runner_config": "/home/kist/Desktop/BundleSAM3DGS/config_gs_2dgs_1mm_lifecycle.yml",
+  "init_frames": [
+   "0000",
+   "0074",
+   "0081",
+   "0085",
+   "0088"
+  ],
+  "init_pose_source": "snapshot of KF4 (as exp_hybrid_realistic_replay)",
+  "cam_in_obs0": [
+   [
+    1.0,
+    0.0,
+    0.0,
+    -0.051988646388053894
+   ],
+   [
+    0.0,
+    1.0,
+    0.0,
+    -0.12231428176164627
+   ],
+   [
+    0.0,
+    0.0,
+    1.0,
+    -0.6572973728179932
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "refined_sim3_canonical_to_cv_camera_of_KF0": {
+   "scale": [
+    0.10396686941385269,
+    0.10396686941385269,
+    0.10396686941385269
+   ],
+   "R_row": [
+    [
+     -0.7617284059524536,
+     -0.2952333986759186,
+     -0.5764813423156738
+    ],
+    [
+     -0.6470081806182861,
+     0.3934021592140198,
+     0.6541532874107361
+    ],
+    [
+     0.035653144121170044,
+     0.8914165496826172,
+     -0.45279988646507263
+    ]
+   ],
+   "T": [
+    -0.05254906788468361,
+    -0.12153439223766327,
+    0.5053653717041016
+   ]
+  },
+  "align_status": "refined",
+  "gaussians": 19995,
+  "initial_steps": 500,
+  "checkpoint": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_vggt_probe2/models/prior/MPM14/checkpoint_prior.pt",
+  "finished": "2026-09-26 00:26:59",
+  "path": "outputs/exp_vggt_probe2/models/prior/MPM14/manifest.json"
+ },
+ {
+  "seq": "SB11",
+  "prior_paths": {
+   "mesh_npz": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/SB11_mesh_depth.npz",
+   "pose_json": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/SB11_mesh_depth.json",
+   "gaussian_ply": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/SB11_splat_depth.ply"
+  },
+  "runner_config": "/home/kist/Desktop/BundleSAM3DGS/config_gs_2dgs_1mm_lifecycle.yml",
+  "init_frames": [
+   "0000",
+   "0412",
+   "0428",
+   "0439",
+   "0450"
+  ],
+  "init_pose_source": "snapshot of KF4 (as exp_hybrid_realistic_replay)",
+  "cam_in_obs0": [
+   [
+    1.0,
+    0.0,
+    0.0,
+    0.0848611444234848
+   ],
+   [
+    0.0,
+    1.0,
+    0.0,
+    0.02065929025411606
+   ],
+   [
+    0.0,
+    0.0,
+    1.0,
+    -0.6599384546279907
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "refined_sim3_canonical_to_cv_camera_of_KF0": {
+   "scale": [
+    0.25296565890312195,
+    0.25296565890312195,
+    0.25296565890312195
+   ],
+   "R_row": [
+    [
+     0.37645745277404785,
+     -0.3596248924732208,
+     -0.8527204990386963
+    ],
+    [
+     -0.9280224442481995,
+     -0.13733898103237152,
+     -0.3517850339412689
+    ],
+    [
+     0.052422866225242615,
+     0.9167351126670837,
+     -0.3973235487937927
+    ]
+   ],
+   "T": [
+    0.08918359130620956,
+    0.030682068318128586,
+    0.6708001494407654
+   ]
+  },
+  "align_status": "refined",
+  "gaussians": 19998,
+  "initial_steps": 500,
+  "checkpoint": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_vggt_probe2/models/prior/SB11/checkpoint_prior.pt",
+  "finished": "2026-09-26 00:27:05",
+  "path": "outputs/exp_vggt_probe2/models/prior/SB11/manifest.json"
+ },
+ {
+  "seq": "SB13",
+  "prior_paths": {
+   "mesh_npz": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/SB13_mesh_depth.npz",
+   "pose_json": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/SB13_mesh_depth.json",
+   "gaussian_ply": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/SB13_splat_depth.ply"
+  },
+  "runner_config": "/home/kist/Desktop/BundleSAM3DGS/config_gs_2dgs_1mm_lifecycle.yml",
+  "init_frames": [
+   "0000",
+   "0412",
+   "0429",
+   "0441",
+   "0451"
+  ],
+  "init_pose_source": "snapshot of KF4 (as exp_hybrid_realistic_replay)",
+  "cam_in_obs0": [
+   [
+    1.0,
+    0.0,
+    0.0,
+    0.011347847059369087
+   ],
+   [
+    0.0,
+    1.0,
+    0.0,
+    -0.06118196249008179
+   ],
+   [
+    0.0,
+    0.0,
+    1.0,
+    -0.4828910231590271
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "refined_sim3_canonical_to_cv_camera_of_KF0": {
+   "scale": [
+    0.2492998242378235,
+    0.2492998242378235,
+    0.2492998242378235
+   ],
+   "R_row": [
+    [
+     -0.9951637983322144,
+     0.0008817489142529666,
+     0.09922035038471222
+    ],
+    [
+     0.09881099313497543,
+     -0.09346826374530792,
+     0.9907194375991821
+    ],
+    [
+     0.026402300223708153,
+     0.9940678477287292,
+     0.10657715797424316
+    ]
+   ],
+   "T": [
+    0.016419241204857826,
+    -0.06482232362031937,
+    0.4984150230884552
+   ]
+  },
+  "align_status": "refined",
+  "gaussians": 19997,
+  "initial_steps": 500,
+  "checkpoint": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_vggt_probe2/models/prior/SB13/checkpoint_prior.pt",
+  "finished": "2026-09-26 00:27:11",
+  "path": "outputs/exp_vggt_probe2/models/prior/SB13/manifest.json"
+ },
+ {
+  "seq": "SM1",
+  "prior_paths": {
+   "mesh_npz": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/SM1_mesh_depth.npz",
+   "pose_json": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/SM1_mesh_depth.json",
+   "gaussian_ply": "/home/kist/Desktop/sam-3d-objects/output_HO3D_sam2mask_mesh/SM1_splat_depth.ply"
+  },
+  "runner_config": "/home/kist/Desktop/BundleSAM3DGS/config_gs_2dgs_1mm_lifecycle.yml",
+  "init_frames": [
+   "0000",
+   "0003",
+   "0008",
+   "0012",
+   "0016"
+  ],
+  "init_pose_source": "snapshot of KF4 (as exp_hybrid_realistic_replay)",
+  "cam_in_obs0": [
+   [
+    1.0,
+    0.0,
+    0.0,
+    -0.03417489305138588
+   ],
+   [
+    0.0,
+    1.0,
+    0.0,
+    -0.011456958949565887
+   ],
+   [
+    0.0,
+    0.0,
+    1.0,
+    -0.41517311334609985
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "refined_sim3_canonical_to_cv_camera_of_KF0": {
+   "scale": [
+    0.19781914353370667,
+    0.19781914353370667,
+    0.19781914353370667
+   ],
+   "R_row": [
+    [
+     0.7570966482162476,
+     -0.4386253356933594,
+     -0.48460903763771057
+    ],
+    [
+     -0.6299505233764648,
+     -0.28738006949424744,
+     -0.7222419381141663
+    ],
+    [
+     0.12091678380966187,
+     0.85904860496521,
+     -0.4990541338920593
+    ]
+   ],
+   "T": [
+    -0.03259603679180145,
+    -0.0038589457981288433,
+    0.42457330226898193
+   ]
+  },
+  "align_status": "refined",
+  "gaussians": 19997,
+  "initial_steps": 500,
+  "checkpoint": "/home/kist/Desktop/BundleSAM3DGS/outputs/exp_vggt_probe2/models/prior/SM1/checkpoint_prior.pt",
+  "finished": "2026-09-26 00:27:16",
+  "path": "outputs/exp_vggt_probe2/models/prior/SM1/manifest.json"
+ }
+]

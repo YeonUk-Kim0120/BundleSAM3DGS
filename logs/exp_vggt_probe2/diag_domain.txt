@@ -1,0 +1,12 @@
+median relative-rotation error (deg) per sequence, 15 KFs each
+       render_real  real_real  render_render  render_realmaskRenderRGB  swing_prev   occ
+seq                                                                                     
+AP12         85.25       1.12           0.47                      0.29        5.64  0.98
+MPM12        67.47       1.20           0.59                      0.23        5.98  0.93
+SM1          35.44       1.88           1.37                      0.63        7.14  0.88
+
+overall medians
+render_real                 67.47
+real_real                    1.28
+render_render                0.72
+render_realmaskRenderRGB     0.29
