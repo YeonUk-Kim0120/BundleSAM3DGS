@@ -1,0 +1,24 @@
+GN unit test (ho3d/AP12, RP reference 20000 centres; synthetic points = reference centres inside the frustum of a known pose, camera coordinates; true pose orthonormalised; angle = 2 asin(|dR|_F / 2 sqrt 2))
+  0000 trial 0: 3.00 deg / 5.0 mm -> cap 8: 0.0002 deg / 0.0010 mm (7 it) OK | cap 30: 0.0002 deg / 0.0010 mm (7 it) OK
+  0000 trial 1: 3.00 deg / 5.0 mm -> cap 8: 0.0000 deg / 0.0000 mm (8 it) OK | cap 30: 0.0000 deg / 0.0000 mm (8 it) OK
+  0000 trial 2: 3.00 deg / 5.0 mm -> cap 8: 0.0000 deg / 0.0000 mm (8 it) OK | cap 30: 0.0000 deg / 0.0000 mm (8 it) OK
+  0000 trial 3: 3.00 deg / 5.0 mm -> cap 8: 0.0000 deg / 0.0000 mm (8 it) OK | cap 30: 0.0000 deg / 0.0000 mm (8 it) OK
+  0000 trial 4: 3.00 deg / 5.0 mm -> cap 8: 0.0000 deg / 0.0000 mm (7 it) OK | cap 30: 0.0000 deg / 0.0000 mm (7 it) OK
+  0000 trial 5: 3.00 deg / 5.0 mm -> cap 8: 0.3647 deg / 2.5827 mm (8 it) over | cap 30: 0.0000 deg / 0.0000 mm (10 it) OK
+  0000 zero perturbation: moved 0.000000 deg / 0.000000 mm OK
+  0023 trial 0: 3.00 deg / 5.0 mm -> cap 8: 0.0545 deg / 0.8909 mm (8 it) over | cap 30: 0.0000 deg / 0.0000 mm (11 it) OK
+  0023 trial 1: 3.00 deg / 5.0 mm -> cap 8: 0.0391 deg / 0.5608 mm (8 it) over | cap 30: 0.0000 deg / 0.0001 mm (10 it) OK
+  0023 trial 2: 3.00 deg / 5.0 mm -> cap 8: 0.0199 deg / 0.1169 mm (8 it) OK | cap 30: 0.0000 deg / 0.0000 mm (9 it) OK
+  0023 trial 3: 3.00 deg / 5.0 mm -> cap 8: 0.0003 deg / 0.0019 mm (8 it) OK | cap 30: 0.0000 deg / 0.0000 mm (9 it) OK
+  0023 trial 4: 3.00 deg / 5.0 mm -> cap 8: 0.0000 deg / 0.0000 mm (7 it) OK | cap 30: 0.0000 deg / 0.0000 mm (7 it) OK
+  0023 trial 5: 3.00 deg / 5.0 mm -> cap 8: 0.0000 deg / 0.0000 mm (8 it) OK | cap 30: 0.0000 deg / 0.0000 mm (8 it) OK
+  0023 zero perturbation: moved 0.000000 deg / 0.000000 mm OK
+  0044 trial 0: 3.00 deg / 5.0 mm -> cap 8: 0.0006 deg / 0.0033 mm (8 it) OK | cap 30: 0.0000 deg / 0.0000 mm (9 it) OK
+  0044 trial 1: 3.00 deg / 5.0 mm -> cap 8: 0.0000 deg / 0.0000 mm (8 it) OK | cap 30: 0.0000 deg / 0.0000 mm (8 it) OK
+  0044 trial 2: 3.00 deg / 5.0 mm -> cap 8: 0.0044 deg / 0.0160 mm (8 it) OK | cap 30: 0.0000 deg / 0.0000 mm (9 it) OK
+  0044 trial 3: 3.00 deg / 5.0 mm -> cap 8: 0.1235 deg / 0.7369 mm (8 it) over | cap 30: 0.0000 deg / 0.0000 mm (11 it) OK
+  0044 trial 4: 3.00 deg / 5.0 mm -> cap 8: 0.0002 deg / 0.0018 mm (7 it) OK | cap 30: 0.0002 deg / 0.0018 mm (7 it) OK
+  0044 trial 5: 3.00 deg / 5.0 mm -> cap 8: 0.0378 deg / 0.1151 mm (8 it) OK | cap 30: 0.0000 deg / 0.0002 mm (9 it) OK
+  0044 zero perturbation: moved 0.000000 deg / 0.000000 mm OK
+implementation check (cap 30): PASS; with the brief's cap 8: 14/18 trials within 0.1 deg / 0.3 mm
+GN unit test PASS

@@ -1,0 +1,22 @@
+{
+ "cfg": "noop",
+ "dataset": "ho3d",
+ "seq": "MPM12",
+ "gpu": "1",
+ "command": "/usr/bin/python3 run_ho3d.py --video_dirs datasets/HO3D_v3/evaluation/MPM12 --out_dir outputs/exp_batch_20260927/noop/ho3d --mask_dir masks_SAM2 --backend gaussian --gs_feedback noop --gs_initial_steps 500 --gs_update_steps 500",
+ "env": {
+  "CUDA_VISIBLE_DEVICES": "1",
+  "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+ },
+ "feedback": "noop",
+ "initial_steps": 500,
+ "update_steps": 500,
+ "runner_config": "config_gs_2dgs_1mm_lifecycle.yml (default)",
+ "runner_config_text": "# 2DGS + observation-gated prior lifecycle (milestone \u2462 v1, adopted\n# 2026-09-01 \u2014 see PRIOR_LIFECYCLE_RESULTS.md).\n#\n# Built on config_gs_2dgs_1mm.yml. The lifecycle requires densification and\n# opacity reset disabled (v1 constraint) and manages a SAM3D surfel prior:\n# UNSEEN frozen/protected, VERIFIED trained, CONTRADICTED removed.\nvoxel_size: 0.001\nnovelty_distance: 0.001\n\nrenderer: 2dgs\n\ndepth_loss_weight: 1.0\ndepth_huber_delta_m: 0.03\ndepth_alpha_threshold: 0.05\n\nnormal_consistency_weight: 0.05\nnormal_consistency_start_step: 7000\ndistortion_weight: 0.0\n\nstrategy:\n  refine_start_iter: 100000000\n  refine_stop_iter: 100000001\n  reset_every: 100000000\n\nupdate_strategy:\n  refine_start_iter: 100000000\n  refine_stop_iter: 100000001\n\nprior_lifecycle:\n  enabled: true\n",
+ "start": "2026-09-27 01:45:35",
+ "end": "2026-09-27 02:13:29",
+ "rc": 0,
+ "git_head": "",
+ "git_status_main_code": "",
+ "note": "pose source for EXP_BATCH_20260927 (batch-1 ctrl outputs lack color/depth/mask/per-frame poses_before_gs after cleanup)"
+}

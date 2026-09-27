@@ -1,0 +1,12 @@
+[
+  {
+    "run_dir": "outputs/exp_batch_20260927/noop/ho3d/AP12",
+    "frames": 1607,
+    "ADDS_err_cm": 0.36273683909717014,
+    "ADD_err_cm": 0.8902337522825975,
+    "ADDS_AUC": 96.37674299147999,
+    "ADD_AUC": 91.10956691523417,
+    "ADD_err_cm_median": 0.9121456125555596,
+    "ADD_err_cm_p90": 1.2057710922225693
+  }
+]

@@ -1,0 +1,12 @@
+[
+  {
+    "run_dir": "outputs/exp_batch_20260927/noop/ycb/mustard0",
+    "frames": 737,
+    "ADDS_err_cm": 0.3231426733563599,
+    "ADD_err_cm": 0.7440478036486898,
+    "ADDS_AUC": 96.77698522409807,
+    "ADD_AUC": 92.5742327042295,
+    "ADD_err_cm_median": 0.811509262544278,
+    "ADD_err_cm_p90": 0.9330670485894338
+  }
+]

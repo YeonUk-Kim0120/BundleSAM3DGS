@@ -1,0 +1,5 @@
+(3) switch off vs main code, both from one initial checkpoint, 10 GT-pose updates x 500 steps: max |dGaussians| 0, max |d final loss| 7.751e-05 (main vs main from the same checkpoint: 0, 1.315e-04) -> PASS
+    counts main [22417, 24466, 26436, 27728, 29303, 30527, 31760, 33394, 34669, 35560]
+    counts off  [22417, 24466, 26436, 27728, 29303, 30527, 31760, 33394, 34669, 35560]
+    final loss main [0.043329, 0.043981, 0.088025, 0.036642, 0.068954, 0.042461, 0.038327, 0.046745, 0.042635, 0.044318]
+    final loss off  [0.043329, 0.043981, 0.088021, 0.036639, 0.068957, 0.042435, 0.038341, 0.046772, 0.042699, 0.044395]

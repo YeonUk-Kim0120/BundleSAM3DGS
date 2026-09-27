@@ -1,0 +1,4 @@
+run_probe.sh R0 ho3d MPM12
+run_probe.sh R0 ycb mustard0
+run_probe.sh R0 ho3d AP12
+run_probe.sh R0 ho3d SM1

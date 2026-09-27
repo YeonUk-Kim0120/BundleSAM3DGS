@@ -1,0 +1,12 @@
+[
+  {
+    "run_dir": "outputs/exp_batch_20260927/noop/ho3d/SM1",
+    "frames": 895,
+    "ADDS_err_cm": 1.2657807437455226,
+    "ADD_err_cm": 4.486348705948624,
+    "ADDS_AUC": 87.36074305865628,
+    "ADD_AUC": 55.207191094329175,
+    "ADD_err_cm_median": 4.6763948495010705,
+    "ADD_err_cm_p90": 5.59161614388373
+  }
+]

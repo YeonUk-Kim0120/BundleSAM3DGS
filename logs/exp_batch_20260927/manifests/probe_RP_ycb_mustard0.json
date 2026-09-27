@@ -1,0 +1,23 @@
+{
+ "tag": "probe_RP_ycb_mustard0",
+ "reference": "RP",
+ "dataset": "ycb",
+ "seq": "mustard0",
+ "gpu": "0",
+ "command": "/usr/bin/python3 experiments/exp_reference_optimizer_probe.py --dataset ycb --seq mustard0 --run-dir outputs/exp_batch_20260927/noop/ycb/mustard0 --reference RP --output-dir outputs/exp_batch_20260927/probe_RP/ycb/mustard0",
+ "env": {
+  "CUDA_VISIBLE_DEVICES": "0",
+  "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+ },
+ "noop_run": "outputs/exp_batch_20260927/noop/ycb/mustard0",
+ "start": "2026-09-27 05:31:41",
+ "end": "2026-09-27 05:37:01",
+ "rc": 0,
+ "git_head": "",
+ "git_status_main_code": "",
+ "scripts_sha1": {
+  "experiments/exp_reference_optimizer_probe.py": "97b284c194fca2835b4615312bdd16e60e0c0cea",
+  "experiments/hygiene_runner.py": "c618adeff5019a55e798b991ba1c2c61b6bac14e",
+  "experiments/exp_feedback_gradient_probe_gtmap.py": "f902ea1eb6f5e4541a7f97a9ec6ef5d44eb00566"
+ }
+}

@@ -1,0 +1,23 @@
+{
+ "tag": "probe_A1_ho3d_SM1",
+ "reference": "A1",
+ "dataset": "ho3d",
+ "seq": "SM1",
+ "gpu": "1",
+ "command": "/usr/bin/python3 experiments/exp_reference_optimizer_probe.py --dataset ho3d --seq SM1 --run-dir outputs/exp_batch_20260927/noop/ho3d/SM1 --reference A1 --output-dir outputs/exp_batch_20260927/probe_A1/ho3d/SM1",
+ "env": {
+  "CUDA_VISIBLE_DEVICES": "1",
+  "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+ },
+ "noop_run": "outputs/exp_batch_20260927/noop/ho3d/SM1",
+ "start": "2026-09-27 05:42:40",
+ "end": "2026-09-27 06:30:21",
+ "rc": 0,
+ "git_head": "",
+ "git_status_main_code": "",
+ "scripts_sha1": {
+  "experiments/exp_reference_optimizer_probe.py": "97b284c194fca2835b4615312bdd16e60e0c0cea",
+  "experiments/hygiene_runner.py": "c618adeff5019a55e798b991ba1c2c61b6bac14e",
+  "experiments/exp_feedback_gradient_probe_gtmap.py": "f902ea1eb6f5e4541a7f97a9ec6ef5d44eb00566"
+ }
+}

@@ -1,0 +1,7 @@
+[probe] GT rotations orthonormalized (max element change 1.41e-03)
+[probe] prior alignment refined; normalization scale 7.880; gaussians 19969
+[probe] GT rotations orthonormalized (max element change 1.41e-03)
+[probe] prior alignment refined; normalization scale 7.877; gaussians 19966
+diagnostic for unit test (2) (A1 thresholds as specified: depth tol 2 cm, spread 5 mm, >= 4 obs, streak >= 3, angle >= 5 deg)
+KF5 perturbed 3 deg: its candidates displaced by median 2.60 mm (p90 4.47) from their true position; promoted/born 2071/2510 -> discard rate 0.175
+KF5 perturbed 10 deg: its candidates displaced by median 8.71 mm (p90 14.84) from their true position; promoted/born 1945/2537 -> discard rate 0.233

@@ -1,0 +1,2 @@
+run_noop.sh ho3d MPM12
+run_noop.sh ycb mustard0

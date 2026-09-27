@@ -1,0 +1,66 @@
+[2026-09-27 01:45:35] START noop ho3d AP12 gpu=0 fb=noop init=500 upd=500 free=547G
+[2026-09-27 01:45:35] START noop ho3d MPM12 gpu=1 fb=noop init=500 upd=500 free=547G
+[2026-09-27 02:13:29] END   noop ho3d MPM12 rc=0
+[2026-09-27 02:13:37] DONE  noop ho3d MPM12 ADD 0.536 ADD-S 0.231
+[2026-09-27 02:13:37] START noop ycb mustard0 gpu=1 fb=noop init=500 upd=500 free=541G
+[2026-09-27 02:20:12] END   noop ycb mustard0 rc=0
+[2026-09-27 02:20:19] DONE  noop ycb mustard0 ADD 0.744 ADD-S 0.323
+[2026-09-27 02:20:19] CHAIN noop_gpu1 DONE
+[2026-09-27 02:20:36] START probe_R0_ho3d_MPM12 gpu=1
+[2026-09-27 02:23:27] END   noop ho3d AP12 rc=0
+[2026-09-27 02:23:36] DONE  noop ho3d AP12 ADD 0.890 ADD-S 0.363
+[2026-09-27 02:23:36] START noop ho3d SM1 gpu=0 fb=noop init=500 upd=500 free=538G
+[2026-09-27 02:52:32] DONE  probe_R0_ho3d_MPM12 probes 1848 cycles 77 1911s
+[2026-09-27 02:52:32] START probe_R0_ycb_mustard0 gpu=1
+[2026-09-27 02:52:37] END   noop ho3d SM1 rc=0
+[2026-09-27 02:52:46] DONE  noop ho3d SM1 ADD 4.486 ADD-S 1.266
+[2026-09-27 02:52:46] CHAIN noop_gpu0 DONE
+[2026-09-27 02:53:36] START probe_RG_ho3d_AP12 gpu=0
+[2026-09-27 03:00:42] DONE  probe_R0_ycb_mustard0 probes 744 cycles 31 488s
+[2026-09-27 03:00:42] START probe_R0_ho3d_AP12 gpu=1
+[2026-09-27 03:28:58] DONE  probe_RG_ho3d_AP12 probes 1272 cycles 53 2117s
+[2026-09-27 03:28:58] START probe_RG_ho3d_SM1 gpu=0
+[2026-09-27 03:36:44] DONE  probe_R0_ho3d_AP12 probes 1272 cycles 53 2157s
+[2026-09-27 03:36:44] START probe_R0_ho3d_SM1 gpu=1
+[2026-09-27 04:10:17] DONE  probe_RG_ho3d_SM1 probes 2280 cycles 95 2473s
+[2026-09-27 04:10:17] START probe_RG_ho3d_MPM12 gpu=0
+[2026-09-27 04:20:58] DONE  probe_R0_ho3d_SM1 probes 2280 cycles 95 2649s
+[2026-09-27 04:20:58] CHAIN stage1_gpu1 DONE
+[2026-09-27 04:21:41] START probe_A1_ho3d_AP12 gpu=1
+[2026-09-27 04:43:35] DONE  probe_RG_ho3d_MPM12 probes 1848 cycles 77 1994s
+[2026-09-27 04:43:35] START probe_RG_ycb_mustard0 gpu=0
+[2026-09-27 04:51:56] DONE  probe_RG_ycb_mustard0 probes 744 cycles 31 499s
+[2026-09-27 04:51:56] START probe_RP_ho3d_AP12 gpu=0
+[2026-09-27 05:01:17] DONE  probe_RP_ho3d_AP12 probes 1272 cycles 53 557s
+[2026-09-27 05:01:17] START probe_RP_ho3d_SM1 gpu=0
+[2026-09-27 05:01:23] DONE  probe_A1_ho3d_AP12 probes 1272 cycles 53 2377s
+[2026-09-27 05:01:23] START probe_A1_ycb_mustard0 gpu=1
+[2026-09-27 05:09:19] DONE  probe_A1_ycb_mustard0 probes 744 cycles 31 474s
+[2026-09-27 05:09:19] START probe_A1_ho3d_MPM12 gpu=1
+[2026-09-27 05:18:04] DONE  probe_RP_ho3d_SM1 probes 2280 cycles 95 1002s
+[2026-09-27 05:18:04] START probe_RP_ho3d_MPM12 gpu=0
+[2026-09-27 05:31:41] DONE  probe_RP_ho3d_MPM12 probes 1848 cycles 77 812s
+[2026-09-27 05:31:41] START probe_RP_ycb_mustard0 gpu=0
+[2026-09-27 05:37:01] DONE  probe_RP_ycb_mustard0 probes 744 cycles 31 318s
+[2026-09-27 05:37:01] CHAIN stage1_gpu0 DONE
+[2026-09-27 05:37:41] START probe_A3_ho3d_AP12 gpu=0
+[2026-09-27 05:42:40] DONE  probe_A1_ho3d_MPM12 probes 1848 cycles 77 1997s
+[2026-09-27 05:42:40] START probe_A1_ho3d_SM1 gpu=1
+[2026-09-27 06:17:46] DONE  probe_A3_ho3d_AP12 probes 1272 cycles 53 2400s
+[2026-09-27 06:17:46] START probe_A3_ycb_mustard0 gpu=0
+[2026-09-27 06:25:34] DONE  probe_A3_ycb_mustard0 probes 744 cycles 31 467s
+[2026-09-27 06:25:34] START probe_A3_ho3d_MPM12 gpu=0
+[2026-09-27 06:30:21] DONE  probe_A1_ho3d_SM1 probes 2280 cycles 95 2855s
+[2026-09-27 06:30:21] START probe_A2_ho3d_AP12 gpu=1
+[2026-09-27 06:58:27] DONE  probe_A3_ho3d_MPM12 probes 1848 cycles 77 1968s
+[2026-09-27 06:58:27] START probe_A3_ho3d_SM1 gpu=0
+[2026-09-27 07:09:56] DONE  probe_A2_ho3d_AP12 probes 1272 cycles 53 2370s
+[2026-09-27 07:09:56] START probe_A2_ycb_mustard0 gpu=1
+[2026-09-27 07:17:44] DONE  probe_A2_ycb_mustard0 probes 744 cycles 31 467s
+[2026-09-27 07:17:44] START probe_A2_ho3d_MPM12 gpu=1
+[2026-09-27 07:45:43] DONE  probe_A3_ho3d_SM1 probes 2280 cycles 95 2832s
+[2026-09-27 07:45:43] CHAIN stage1A_gpu0 DONE
+[2026-09-27 07:50:58] DONE  probe_A2_ho3d_MPM12 probes 1848 cycles 77 1989s
+[2026-09-27 07:50:58] START probe_A2_ho3d_SM1 gpu=1
+[2026-09-27 08:38:16] DONE  probe_A2_ho3d_SM1 probes 2280 cycles 95 2834s
+[2026-09-27 08:38:16] CHAIN stage1A_gpu1 DONE

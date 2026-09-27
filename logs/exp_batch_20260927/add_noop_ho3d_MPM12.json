@@ -1,0 +1,12 @@
+[
+  {
+    "run_dir": "outputs/exp_batch_20260927/noop/ho3d/MPM12",
+    "frames": 1571,
+    "ADDS_err_cm": 0.23117598096054748,
+    "ADD_err_cm": 0.536404463066613,
+    "ADDS_AUC": 97.69088493593199,
+    "ADD_AUC": 94.64254231476971,
+    "ADD_err_cm_median": 0.5184715287793531,
+    "ADD_err_cm_p90": 0.7750055482658121
+  }
+]
