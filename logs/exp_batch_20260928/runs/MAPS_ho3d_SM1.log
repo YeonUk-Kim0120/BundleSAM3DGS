@@ -1,0 +1,4 @@
+[probe] prior alignment refined; normalization scale 7.309; gaussians 19998
+[maps] SM1 K=40: cycle 0137 views 40 gaussians 46009
+[maps] SM1 K=80: cycle 0242 views 80 gaussians 92437
+[maps] SM1 K=last: cycle 0896 views 291 gaussians 161135

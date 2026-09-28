@@ -1,0 +1,27 @@
+N ho3d AP12 S 40 500
+N ho3d AP12 S 80 500
+N ho3d AP12 S last 500
+N ycb mustard0 S 20 500
+N ycb mustard0 S last 500
+N ho3d SM1 S 40 500
+N ho3d SM1 S 80 500
+N ho3d SM1 S last 500
+N ho3d MPM12 S 40 500
+N ho3d MPM12 S 80 500
+N ho3d MPM12 S last 500
+N ho3d AP12 S 40 2000
+N ho3d AP12 S 80 2000
+N ho3d AP12 S last 2000
+N ycb mustard0 S 20 2000
+N ycb mustard0 S last 2000
+N ho3d SM1 S 40 2000
+N ho3d SM1 S 80 2000
+N ho3d SM1 S last 2000
+N ho3d MPM12 S 40 2000
+N ho3d MPM12 S 80 2000
+N ho3d MPM12 S last 2000
+N ho3d SM1 I - 500
+N ho3d AP12 I - 500
+N ho3d MPM12 I - 500
+N ycb mustard0 I - 500
+N ho3d AP12 S last 500 rep1

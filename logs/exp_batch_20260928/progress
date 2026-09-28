@@ -1,0 +1,230 @@
+[2026-09-28 01:42:11] CHAIN gpu1_maps_AP12 START gpu=1 container=BundleSAM3DGS-gsplat-smoke jobs=logs/exp_batch_20260928/jobs/gpu1_maps_AP12.txt
+[2026-09-28 01:42:11] CHAIN gpu1_maps_SM1 START gpu=1 container=BundleSAM3DGS-gsplat-smoke jobs=logs/exp_batch_20260928/jobs/gpu1_maps_SM1.txt
+[2026-09-28 01:42:11] START MAPS_ho3d_AP12 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 01:42:11] CHAIN gpu1_maps_MPM12 START gpu=1 container=BundleSAM3DGS-gsplat-smoke jobs=logs/exp_batch_20260928/jobs/gpu1_maps_MPM12.txt
+[2026-09-28 01:42:11] START MAPS_ho3d_SM1 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 01:42:11] START MAPS_ho3d_MPM12 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 01:42:12] CHAIN gpu1_maps_mustard0 START gpu=1 container=BundleSAM3DGS-gsplat-smoke jobs=logs/exp_batch_20260928/jobs/gpu1_maps_mustard0.txt
+[2026-09-28 01:42:12] START MAPS_ycb_mustard0 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 01:43:26] CHAIN gpu0_N START gpu=0 container=bundlesdf jobs=logs/exp_batch_20260928/jobs/gpu0_N.txt
+[2026-09-28 01:43:26] START N_S_K40_s500_ho3d_AP12 gpu=0 container=bundlesdf
+[2026-09-28 01:43:48] DONE  N_S_K40_s500_ho3d_AP12 [nerf_runner.py] Running Marching Cubes [nerf_runner.py] done V:(20747, 3), F:(41486, 3) [N] AP12 S K=40 steps 500: 17.6s peak 2.9 GB 
+[2026-09-28 01:43:48] START N_S_K80_s500_ho3d_AP12 gpu=0 container=bundlesdf
+[2026-09-28 01:44:13] DONE  N_S_K80_s500_ho3d_AP12 [nerf_runner.py] Running Marching Cubes [nerf_runner.py] done V:(26848, 3), F:(53712, 3) [N] AP12 S K=80 steps 500: 20.3s peak 3.1 GB 
+[2026-09-28 01:44:13] START N_S_Klast_s500_ho3d_AP12 gpu=0 container=bundlesdf
+[2026-09-28 01:44:45] DONE  N_S_Klast_s500_ho3d_AP12 [nerf_runner.py] Running Marching Cubes [nerf_runner.py] done V:(27465, 3), F:(54806, 3) [N] AP12 S K=169 steps 500: 26.2s peak 3.5 GB 
+[2026-09-28 01:44:45] START N_S_K20_s500_ycb_mustard0 gpu=0 container=bundlesdf
+[2026-09-28 01:45:05] DONE  N_S_K20_s500_ycb_mustard0 [nerf_runner.py] train progress 450/501 [nerf_runner.py] train progress 500/501 [N] mustard0 S K=20 steps 500: 15.4s peak 1.7 GB 
+[2026-09-28 01:45:05] START N_S_Klast_s500_ycb_mustard0 gpu=0 container=bundlesdf
+[2026-09-28 01:45:26] DONE  N_S_Klast_s500_ycb_mustard0 [nerf_runner.py] train progress 450/501 [nerf_runner.py] train progress 500/501 [N] mustard0 S K=36 steps 500: 15.8s peak 1.7 GB 
+[2026-09-28 01:45:26] START N_S_K40_s500_ho3d_SM1 gpu=0 container=bundlesdf
+[2026-09-28 01:45:47] DONE  N_S_K40_s500_ho3d_SM1 [nerf_runner.py] Running Marching Cubes [nerf_runner.py] done V:(8568, 3), F:(17088, 3) [N] SM1 S K=40 steps 500: 16.2s peak 2.1 GB 
+[2026-09-28 01:45:47] START N_S_K80_s500_ho3d_SM1 gpu=0 container=bundlesdf
+[2026-09-28 01:46:10] DONE  N_S_K80_s500_ho3d_SM1 [nerf_runner.py] Running Marching Cubes [nerf_runner.py] done V:(13122, 3), F:(26220, 3) [N] SM1 S K=80 steps 500: 17.9s peak 2.2 GB 
+[2026-09-28 01:46:10] START N_S_Klast_s500_ho3d_SM1 gpu=0 container=bundlesdf
+[2026-09-28 01:46:43] DONE  N_S_Klast_s500_ho3d_SM1 [nerf_runner.py] Running Marching Cubes [nerf_runner.py] done V:(14090, 3), F:(28128, 3) [N] SM1 S K=291 steps 500: 26.7s peak 2.6 GB 
+[2026-09-28 01:46:43] START N_S_K40_s500_ho3d_MPM12 gpu=0 container=bundlesdf
+[2026-09-28 01:47:04] DONE  N_S_K40_s500_ho3d_MPM12 [nerf_runner.py] Running Marching Cubes [nerf_runner.py] done V:(7138, 3), F:(14276, 3) [N] MPM12 S K=40 steps 500: 16.1s peak 2.1 GB 
+[2026-09-28 01:47:04] START N_S_K80_s500_ho3d_MPM12 gpu=0 container=bundlesdf
+[2026-09-28 01:47:27] DONE  N_S_K80_s500_ho3d_MPM12 [nerf_runner.py] Running Marching Cubes [nerf_runner.py] done V:(7536, 3), F:(15044, 3) [N] MPM12 S K=80 steps 500: 18.1s peak 2.1 GB 
+[2026-09-28 01:47:27] START N_S_Klast_s500_ho3d_MPM12 gpu=0 container=bundlesdf
+[2026-09-28 01:47:58] DONE  N_S_Klast_s500_ho3d_MPM12 [nerf_runner.py] Running Marching Cubes [nerf_runner.py] done V:(8449, 3), F:(16870, 3) [N] MPM12 S K=242 steps 500: 25.0s peak 2.4 GB 
+[2026-09-28 01:47:58] START N_S_K40_s2000_ho3d_AP12 gpu=0 container=bundlesdf
+[2026-09-28 01:49:01] DONE  N_S_K40_s2000_ho3d_AP12 [nerf_runner.py] Running Marching Cubes [nerf_runner.py] done V:(21351, 3), F:(42694, 3) [N] AP12 S K=40 steps 2000: 58.3s peak 2.9 GB 
+[2026-09-28 01:49:01] START N_S_K80_s2000_ho3d_AP12 gpu=0 container=bundlesdf
+[2026-09-28 01:50:08] DONE  N_S_K80_s2000_ho3d_AP12 [nerf_runner.py] Running Marching Cubes [nerf_runner.py] done V:(28259, 3), F:(56506, 3) [N] AP12 S K=80 steps 2000: 61.8s peak 3.1 GB 
+[2026-09-28 01:50:08] START N_S_Klast_s2000_ho3d_AP12 gpu=0 container=bundlesdf
+[2026-09-28 01:50:12] DONE  MAPS_ycb_mustard0 [probe] prior alignment refined; normalization scale 7.894; gaussians 19862 [maps] mustard0 K=20: cycle 1581120475332355572 views 20 gaussians 37295 [maps] mustard0 K=last: cycle 1581120486083460357 views 36 gaussians 51254 
+[2026-09-28 01:50:12] CHAIN gpu1_maps_mustard0 DONE
+[2026-09-28 01:51:22] DONE  N_S_Klast_s2000_ho3d_AP12 [nerf_runner.py] Running Marching Cubes [nerf_runner.py] done V:(29399, 3), F:(58594, 3) [N] AP12 S K=169 steps 2000: 67.6s peak 3.5 GB 
+[2026-09-28 01:51:22] START N_S_K20_s2000_ycb_mustard0 gpu=0 container=bundlesdf
+[2026-09-28 01:52:23] DONE  N_S_K20_s2000_ycb_mustard0 [nerf_runner.py] train progress 1800/2001 [nerf_runner.py] train progress 2000/2001 [N] mustard0 S K=20 steps 2000: 57.1s peak 1.7 GB 
+[2026-09-28 01:52:24] START N_S_Klast_s2000_ycb_mustard0 gpu=0 container=bundlesdf
+[2026-09-28 01:53:26] DONE  N_S_Klast_s2000_ycb_mustard0 [nerf_runner.py] train progress 1800/2001 [nerf_runner.py] train progress 2000/2001 [N] mustard0 S K=36 steps 2000: 58.0s peak 1.7 GB 
+[2026-09-28 01:53:26] START N_S_K40_s2000_ho3d_SM1 gpu=0 container=bundlesdf
+[2026-09-28 01:54:28] DONE  N_S_K40_s2000_ho3d_SM1 [nerf_runner.py] Running Marching Cubes [nerf_runner.py] done V:(9111, 3), F:(18142, 3) [N] SM1 S K=40 steps 2000: 57.3s peak 2.1 GB 
+[2026-09-28 01:54:28] START N_S_K80_s2000_ho3d_SM1 gpu=0 container=bundlesdf
+[2026-09-28 01:55:32] DONE  N_S_K80_s2000_ho3d_SM1 [nerf_runner.py] Running Marching Cubes [nerf_runner.py] done V:(13646, 3), F:(27204, 3) [N] SM1 S K=80 steps 2000: 58.9s peak 2.2 GB 
+[2026-09-28 01:55:32] START N_S_Klast_s2000_ho3d_SM1 gpu=0 container=bundlesdf
+[2026-09-28 01:56:45] DONE  N_S_Klast_s2000_ho3d_SM1 [nerf_runner.py] Running Marching Cubes [nerf_runner.py] done V:(15121, 3), F:(30166, 3) [N] SM1 S K=291 steps 2000: 65.8s peak 2.6 GB 
+[2026-09-28 01:56:45] START N_S_K40_s2000_ho3d_MPM12 gpu=0 container=bundlesdf
+[2026-09-28 01:57:47] DONE  N_S_K40_s2000_ho3d_MPM12 [nerf_runner.py] Running Marching Cubes [nerf_runner.py] done V:(7388, 3), F:(14776, 3) [N] MPM12 S K=40 steps 2000: 57.7s peak 2.1 GB 
+[2026-09-28 01:57:47] START N_S_K80_s2000_ho3d_MPM12 gpu=0 container=bundlesdf
+[2026-09-28 01:58:51] DONE  N_S_K80_s2000_ho3d_MPM12 [nerf_runner.py] Running Marching Cubes [nerf_runner.py] done V:(7768, 3), F:(15520, 3) [N] MPM12 S K=80 steps 2000: 59.1s peak 2.1 GB 
+[2026-09-28 01:58:51] START N_S_Klast_s2000_ho3d_MPM12 gpu=0 container=bundlesdf
+[2026-09-28 02:00:03] DONE  N_S_Klast_s2000_ho3d_MPM12 [nerf_runner.py] Running Marching Cubes [nerf_runner.py] done V:(8766, 3), F:(17492, 3) [N] MPM12 S K=242 steps 2000: 65.9s peak 2.4 GB 
+[2026-09-28 02:00:03] START N_I_s500_ho3d_SM1 gpu=0 container=bundlesdf
+[2026-09-28 02:19:16] DONE  N_I_s500_ho3d_SM1 [nerf_runner.py] query_pts:torch.Size([804357, 3]), valid:294965 [nerf_runner.py] Running Marching Cubes [nerf_runner.py] done V:(12752, 3), F:(25424, 3) 
+[2026-09-28 02:19:16] START N_I_s500_ho3d_AP12 gpu=0 container=bundlesdf
+[2026-09-28 02:28:36] DONE  MAPS_ho3d_AP12 [maps] AP12 K=40: cycle 0263 views 40 gaussians 187837 [maps] AP12 K=80: cycle 0696 views 80 gaussians 292717 [maps] AP12 K=last: cycle 1600 views 169 gaussians 451301 
+[2026-09-28 02:28:36] CHAIN gpu1_maps_AP12 DONE
+[2026-09-28 02:30:21] DONE  N_I_s500_ho3d_AP12 [nerf_runner.py] query_pts:torch.Size([1906624, 3]), valid:306405 [nerf_runner.py] Running Marching Cubes [nerf_runner.py] done V:(28547, 3), F:(56888, 3) 
+[2026-09-28 02:30:21] START N_I_s500_ho3d_MPM12 gpu=0 container=bundlesdf
+[2026-09-28 02:34:30] DONE  MAPS_ho3d_MPM12 [maps] MPM12 K=40: cycle 0232 views 40 gaussians 58179 [maps] MPM12 K=80: cycle 0409 views 80 gaussians 74586 [maps] MPM12 K=last: cycle 1616 views 242 gaussians 112256 
+[2026-09-28 02:34:30] CHAIN gpu1_maps_MPM12 DONE
+[2026-09-28 02:39:04] DONE  MAPS_ho3d_SM1 [maps] SM1 K=40: cycle 0137 views 40 gaussians 46009 [maps] SM1 K=80: cycle 0242 views 80 gaussians 92437 [maps] SM1 K=last: cycle 0896 views 291 gaussians 161135 
+[2026-09-28 02:39:04] CHAIN gpu1_maps_SM1 DONE
+[2026-09-28 02:39:39] CHAIN gpu1_S500 START gpu=1 container=BundleSAM3DGS-gsplat-smoke jobs=logs/exp_batch_20260928/jobs/gpu1_S500.txt
+[2026-09-28 02:39:39] START G0_S_K40_s500_ho3d_AP12 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 02:39:48] DONE  G0_S_K40_s500_ho3d_AP12 [G0] AP12 S K=40 steps 500: 7.5s peak 0.3 GB gaussians 187837->187837 
+[2026-09-28 02:39:48] START G0_S_K80_s500_ho3d_AP12 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 02:39:58] DONE  G0_S_K80_s500_ho3d_AP12 [G0] AP12 S K=80 steps 500: 9.1s peak 0.4 GB gaussians 292717->292717 
+[2026-09-28 02:39:58] START G0_S_Klast_s500_ho3d_AP12 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 02:40:12] DONE  G0_S_Klast_s500_ho3d_AP12 [G0] AP12 S K=169 steps 500: 12.0s peak 0.7 GB gaussians 451301->451301 
+[2026-09-28 02:40:12] START G0_S_K20_s500_ycb_mustard0 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 02:40:18] DONE  G0_S_K20_s500_ycb_mustard0 [G0] mustard0 S K=20 steps 500: 5.4s peak 0.1 GB gaussians 37295->37295 
+[2026-09-28 02:40:18] START G0_S_Klast_s500_ycb_mustard0 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 02:40:26] DONE  G0_S_Klast_s500_ycb_mustard0 [G0] mustard0 S K=36 steps 500: 6.0s peak 0.1 GB gaussians 51254->51254 
+[2026-09-28 02:40:26] START G0_S_K40_s500_ho3d_SM1 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 02:40:32] DONE  G0_S_K40_s500_ho3d_SM1 [G0] SM1 S K=40 steps 500: 5.6s peak 0.1 GB gaussians 46009->46009 
+[2026-09-28 02:40:32] START G0_S_K80_s500_ho3d_SM1 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 02:40:40] DONE  G0_S_K80_s500_ho3d_SM1 [G0] SM1 S K=80 steps 500: 6.1s peak 0.2 GB gaussians 92437->92437 
+[2026-09-28 02:40:40] START G0_S_Klast_s500_ho3d_SM1 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 02:40:50] DONE  G0_S_Klast_s500_ho3d_SM1 [G0] SM1 S K=291 steps 500: 9.2s peak 0.2 GB gaussians 161135->161135 
+[2026-09-28 02:40:50] START G0_S_K40_s500_ho3d_MPM12 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 02:40:57] DONE  G0_S_K40_s500_ho3d_MPM12 [G0] MPM12 S K=40 steps 500: 5.2s peak 0.1 GB gaussians 58179->58179 
+[2026-09-28 02:40:57] START G0_S_K80_s500_ho3d_MPM12 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 02:41:04] DONE  G0_S_K80_s500_ho3d_MPM12 [G0] MPM12 S K=80 steps 500: 5.9s peak 0.1 GB gaussians 74586->74586 
+[2026-09-28 02:41:04] START G0_S_Klast_s500_ho3d_MPM12 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 02:41:13] DONE  G0_S_Klast_s500_ho3d_MPM12 [G0] MPM12 S K=242 steps 500: 8.0s peak 0.2 GB gaussians 112256->112256 
+[2026-09-28 02:41:13] START G0B_S_K40_s500_ho3d_AP12 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 02:41:56] DONE  G0B_S_K40_s500_ho3d_AP12 [G0B] AP12 S K=40 steps 500: 42.0s peak 0.4 GB gaussians 187837->187837 
+[2026-09-28 02:41:57] START G0B_S_K80_s500_ho3d_AP12 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 02:42:49] DONE  G0B_S_K80_s500_ho3d_AP12 [G0B] AP12 S K=80 steps 500: 51.6s peak 0.5 GB gaussians 292717->292717 
+[2026-09-28 02:42:49] START G0B_S_Klast_s500_ho3d_AP12 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 02:43:56] DONE  G0B_S_Klast_s500_ho3d_AP12 [G0B] AP12 S K=169 steps 500: 65.4s peak 0.8 GB gaussians 451301->451301 
+[2026-09-28 02:43:56] START G0B_S_K20_s500_ycb_mustard0 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 02:44:29] DONE  G0B_S_K20_s500_ycb_mustard0 [G0B] mustard0 S K=20 steps 500: 32.0s peak 0.1 GB gaussians 37295->37295 
+[2026-09-28 02:44:29] START G0B_S_Klast_s500_ycb_mustard0 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 02:45:04] DONE  G0B_S_Klast_s500_ycb_mustard0 [G0B] mustard0 S K=36 steps 500: 33.7s peak 0.1 GB gaussians 51254->51254 
+[2026-09-28 02:45:04] START G0B_S_K40_s500_ho3d_SM1 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 02:45:33] DONE  G0B_S_K40_s500_ho3d_SM1 [G0B] SM1 S K=40 steps 500: 27.5s peak 0.1 GB gaussians 46009->46009 
+[2026-09-28 02:45:33] START G0B_S_K80_s500_ho3d_SM1 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 02:45:50] DONE  N_I_s500_ho3d_MPM12 [nerf_runner.py] query_pts:torch.Size([91125, 3]), valid:87132 [nerf_runner.py] Running Marching Cubes [nerf_runner.py] done V:(8517, 3), F:(16844, 3) 
+[2026-09-28 02:45:50] START N_I_s500_ycb_mustard0 gpu=0 container=bundlesdf
+[2026-09-28 02:46:05] DONE  G0B_S_K80_s500_ho3d_SM1 [G0B] SM1 S K=80 steps 500: 30.7s peak 0.2 GB gaussians 92437->92437 
+[2026-09-28 02:46:05] START G0B_S_Klast_s500_ho3d_SM1 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 02:46:46] DONE  G0B_S_Klast_s500_ho3d_SM1 [G0B] SM1 S K=291 steps 500: 39.9s peak 0.3 GB gaussians 161135->161135 
+[2026-09-28 02:46:46] START G0B_S_K40_s500_ho3d_MPM12 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 02:47:15] DONE  G0B_S_K40_s500_ho3d_MPM12 [G0B] MPM12 S K=40 steps 500: 27.6s peak 0.1 GB gaussians 58179->58179 
+[2026-09-28 02:47:15] START G0B_S_K80_s500_ho3d_MPM12 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 02:47:46] DONE  G0B_S_K80_s500_ho3d_MPM12 [G0B] MPM12 S K=80 steps 500: 30.2s peak 0.2 GB gaussians 74586->74586 
+[2026-09-28 02:47:46] START G0B_S_Klast_s500_ho3d_MPM12 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 02:47:52] DONE  N_I_s500_ycb_mustard0 [nerf_runner.py] train progress 400/501 [nerf_runner.py] train progress 450/501 [nerf_runner.py] train progress 500/501 
+[2026-09-28 02:47:52] START N_S_Klast_s500_rep1_ho3d_AP12 gpu=0 container=bundlesdf
+[2026-09-28 02:48:22] DONE  G0B_S_Klast_s500_ho3d_MPM12 [G0B] MPM12 S K=242 steps 500: 34.4s peak 0.2 GB gaussians 112256->112256 
+[2026-09-28 02:48:22] START G1_S_K40_s500_ho3d_AP12 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 02:48:24] DONE  N_S_Klast_s500_rep1_ho3d_AP12 [nerf_runner.py] Running Marching Cubes [nerf_runner.py] done V:(27391, 3), F:(54666, 3) [N] AP12 S K=169 steps 500: 26.2s peak 3.5 GB 
+[2026-09-28 02:48:24] CHAIN gpu0_N DONE
+[2026-09-28 02:48:48] DONE  G1_S_K40_s500_ho3d_AP12 [probe] prior alignment refined; normalization scale 6.281; gaussians 20000 [G1] AP12 S K=40 steps 500: 24.9s peak 0.1 GB gaussians 20000->20000 
+[2026-09-28 02:48:48] START G1_S_K80_s500_ho3d_AP12 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 02:49:13] DONE  G1_S_K80_s500_ho3d_AP12 [probe] prior alignment refined; normalization scale 6.280; gaussians 20000 [G1] AP12 S K=80 steps 500: 24.2s peak 0.1 GB gaussians 20000->20000 
+[2026-09-28 02:49:14] START G1_S_Klast_s500_ho3d_AP12 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 02:49:40] DONE  G1_S_Klast_s500_ho3d_AP12 [probe] prior alignment refined; normalization scale 6.280; gaussians 20000 [G1] AP12 S K=169 steps 500: 25.4s peak 0.1 GB gaussians 20000->20000 
+[2026-09-28 02:49:40] START G1_S_K20_s500_ycb_mustard0 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 02:50:07] DONE  G1_S_K20_s500_ycb_mustard0 [probe] prior alignment refined; normalization scale 7.900; gaussians 20000 [G1] mustard0 S K=20 steps 500: 25.3s peak 0.1 GB gaussians 20000->20000 
+[2026-09-28 02:50:07] START G1_S_Klast_s500_ycb_mustard0 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 02:50:32] DONE  G1_S_Klast_s500_ycb_mustard0 [probe] prior alignment refined; normalization scale 7.906; gaussians 20000 [G1] mustard0 S K=36 steps 500: 24.4s peak 0.1 GB gaussians 20000->20000 
+[2026-09-28 02:50:32] START G1_S_K40_s500_ho3d_SM1 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 02:50:57] DONE  G1_S_K40_s500_ho3d_SM1 [probe] prior alignment refined; normalization scale 7.308; gaussians 20000 [G1] SM1 S K=40 steps 500: 23.1s peak 0.1 GB gaussians 20000->20000 
+[2026-09-28 02:50:57] START G1_S_K80_s500_ho3d_SM1 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 02:51:22] DONE  G1_S_K80_s500_ho3d_SM1 [probe] prior alignment refined; normalization scale 7.309; gaussians 20000 [G1] SM1 S K=80 steps 500: 23.8s peak 0.1 GB gaussians 20000->20000 
+[2026-09-28 02:51:22] START G1_S_Klast_s500_ho3d_SM1 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 02:51:48] DONE  G1_S_Klast_s500_ho3d_SM1 [probe] prior alignment refined; normalization scale 7.309; gaussians 20000 [G1] SM1 S K=291 steps 500: 25.5s peak 0.1 GB gaussians 20000->20000 
+[2026-09-28 02:51:49] START G1_S_K40_s500_ho3d_MPM12 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 02:52:14] DONE  G1_S_K40_s500_ho3d_MPM12 [probe] prior alignment refined; normalization scale 12.090; gaussians 20000 [G1] MPM12 S K=40 steps 500: 23.9s peak 0.1 GB gaussians 20000->20000 
+[2026-09-28 02:52:14] START G1_S_K80_s500_ho3d_MPM12 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 02:52:39] DONE  G1_S_K80_s500_ho3d_MPM12 [probe] prior alignment refined; normalization scale 12.139; gaussians 20000 [G1] MPM12 S K=80 steps 500: 24.2s peak 0.1 GB gaussians 20000->20000 
+[2026-09-28 02:52:39] START G1_S_Klast_s500_ho3d_MPM12 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 02:53:05] DONE  G1_S_Klast_s500_ho3d_MPM12 [probe] prior alignment refined; normalization scale 12.140; gaussians 20000 [G1] MPM12 S K=242 steps 500: 25.1s peak 0.1 GB gaussians 20000->20000 
+[2026-09-28 02:53:05] START G3_S_K40_s500_ho3d_AP12 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 02:53:30] DONE  G3_S_K40_s500_ho3d_AP12 [G3] AP12 S K=40 steps 500: 23.2s peak 0.1 GB gaussians 20000->20000 
+[2026-09-28 02:53:30] START G3_S_K80_s500_ho3d_AP12 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 02:53:55] DONE  G3_S_K80_s500_ho3d_AP12 [G3] AP12 S K=80 steps 500: 23.8s peak 0.1 GB gaussians 20000->20000 
+[2026-09-28 02:53:55] START G3_S_Klast_s500_ho3d_AP12 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 02:54:22] DONE  G3_S_Klast_s500_ho3d_AP12 [G3] AP12 S K=169 steps 500: 25.4s peak 0.1 GB gaussians 20000->20000 
+[2026-09-28 02:54:22] START G3_S_K20_s500_ycb_mustard0 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 02:54:49] DONE  G3_S_K20_s500_ycb_mustard0 [G3] mustard0 S K=20 steps 500: 26.1s peak 0.1 GB gaussians 20000->20000 
+[2026-09-28 02:54:50] START G3_S_Klast_s500_ycb_mustard0 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 02:55:15] DONE  G3_S_Klast_s500_ycb_mustard0 [G3] mustard0 S K=36 steps 500: 24.6s peak 0.1 GB gaussians 20000->20000 
+[2026-09-28 02:55:16] START G3_S_K40_s500_ho3d_SM1 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 02:55:39] DONE  G3_S_K40_s500_ho3d_SM1 [G3] SM1 S K=40 steps 500: 22.3s peak 0.1 GB gaussians 20000->20000 
+[2026-09-28 02:55:39] START G3_S_K80_s500_ho3d_SM1 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 02:56:03] DONE  G3_S_K80_s500_ho3d_SM1 [G3] SM1 S K=80 steps 500: 22.2s peak 0.1 GB gaussians 20000->20000 
+[2026-09-28 02:56:03] START G3_S_Klast_s500_ho3d_SM1 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 02:56:28] DONE  G3_S_Klast_s500_ho3d_SM1 [G3] SM1 S K=291 steps 500: 23.8s peak 0.1 GB gaussians 20000->20000 
+[2026-09-28 02:56:28] START G3_S_K40_s500_ho3d_MPM12 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 02:56:50] DONE  G3_S_K40_s500_ho3d_MPM12 [G3] MPM12 S K=40 steps 500: 20.9s peak 0.1 GB gaussians 20000->20000 
+[2026-09-28 02:56:51] START G3_S_K80_s500_ho3d_MPM12 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 02:57:13] DONE  G3_S_K80_s500_ho3d_MPM12 [G3] MPM12 S K=80 steps 500: 21.5s peak 0.1 GB gaussians 20000->20000 
+[2026-09-28 02:57:13] START G3_S_Klast_s500_ho3d_MPM12 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 02:57:38] DONE  G3_S_Klast_s500_ho3d_MPM12 [G3] MPM12 S K=242 steps 500: 22.7s peak 0.1 GB gaussians 20000->20000 
+[2026-09-28 02:57:38] CHAIN gpu1_S500 DONE
+[2026-09-28 02:57:39] PRE gpu1_after: /usr/bin/python3 logs/exp_batch_20260928/pick_best_g.py
+best G = G3 (mean d-median reduction G1 -0.114 over 11 cells, G3 -0.034 over 11; worsened G1 0.43, G3 0.24)
+[2026-09-28 02:57:41] CHAIN gpu1_after START gpu=1 container=BundleSAM3DGS-gsplat-smoke jobs=logs/exp_batch_20260928/jobs/gpu1_after.txt
+[2026-09-28 02:57:41] START G3_I_s500_ho3d_SM1 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 02:58:22] CHAIN gpu0_after START gpu=0 container=BundleSAM3DGS-gsplat-smoke jobs=logs/exp_batch_20260928/jobs/gpu0_after.txt
+[2026-09-28 02:58:22] START G3_S_K40_s2000_ho3d_AP12 gpu=0 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 02:59:44] DONE  G3_S_K40_s2000_ho3d_AP12 [G3] AP12 S K=40 steps 2000: 80.3s peak 0.1 GB gaussians 20000->20000 
+[2026-09-28 02:59:44] START G3_S_K80_s2000_ho3d_AP12 gpu=0 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 03:01:05] DONE  G3_S_K80_s2000_ho3d_AP12 [G3] AP12 S K=80 steps 2000: 80.4s peak 0.1 GB gaussians 20000->20000 
+[2026-09-28 03:01:05] START G3_S_Klast_s2000_ho3d_AP12 gpu=0 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 03:02:28] DONE  G3_S_Klast_s2000_ho3d_AP12 [G3] AP12 S K=169 steps 2000: 81.6s peak 0.1 GB gaussians 20000->20000 
+[2026-09-28 03:02:28] START G3_S_K20_s2000_ycb_mustard0 gpu=0 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 03:04:05] DONE  G3_S_K20_s2000_ycb_mustard0 [G3] mustard0 S K=20 steps 2000: 95.0s peak 0.1 GB gaussians 20000->20000 
+[2026-09-28 03:04:05] START G3_S_Klast_s2000_ycb_mustard0 gpu=0 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 03:05:36] DONE  G3_S_Klast_s2000_ycb_mustard0 [G3] mustard0 S K=36 steps 2000: 90.1s peak 0.1 GB gaussians 20000->20000 
+[2026-09-28 03:05:36] START G3_S_K40_s2000_ho3d_SM1 gpu=0 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 03:06:56] DONE  G3_S_K40_s2000_ho3d_SM1 [G3] SM1 S K=40 steps 2000: 78.6s peak 0.1 GB gaussians 20000->20000 
+[2026-09-28 03:06:56] START G3_S_K80_s2000_ho3d_SM1 gpu=0 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 03:08:15] DONE  G3_S_K80_s2000_ho3d_SM1 [G3] SM1 S K=80 steps 2000: 77.1s peak 0.1 GB gaussians 20000->20000 
+[2026-09-28 03:08:15] START G3_S_Klast_s2000_ho3d_SM1 gpu=0 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 03:09:34] DONE  G3_S_Klast_s2000_ho3d_SM1 [G3] SM1 S K=291 steps 2000: 77.6s peak 0.1 GB gaussians 20000->20000 
+[2026-09-28 03:09:34] START G3_S_K40_s2000_ho3d_MPM12 gpu=0 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 03:10:52] DONE  G3_S_K40_s2000_ho3d_MPM12 [G3] MPM12 S K=40 steps 2000: 76.9s peak 0.1 GB gaussians 20000->20000 
+[2026-09-28 03:10:52] START G3_S_K80_s2000_ho3d_MPM12 gpu=0 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 03:12:08] DONE  G3_S_K80_s2000_ho3d_MPM12 [G3] MPM12 S K=80 steps 2000: 74.4s peak 0.1 GB gaussians 20000->20000 
+[2026-09-28 03:12:08] START G3_S_Klast_s2000_ho3d_MPM12 gpu=0 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 03:13:22] DONE  G3_S_Klast_s2000_ho3d_MPM12 [G3] MPM12 S K=242 steps 2000: 72.4s peak 0.1 GB gaussians 20000->20000 
+[2026-09-28 03:13:22] START G1_I_s500_ho3d_SM1 gpu=0 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 03:17:39] DONE  G3_I_s500_ho3d_SM1 
+[2026-09-28 03:17:39] START G3_I_s500_ho3d_AP12 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 03:29:39] DONE  G3_I_s500_ho3d_AP12 
+[2026-09-28 03:29:39] START G1_S_K40_s2000_ho3d_AP12 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 03:31:06] DONE  G1_S_K40_s2000_ho3d_AP12 [probe] prior alignment refined; normalization scale 6.280; gaussians 20000 [G1] AP12 S K=40 steps 2000: 86.3s peak 0.1 GB gaussians 20000->20000 
+[2026-09-28 03:31:06] START G1_S_K80_s2000_ho3d_AP12 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 03:32:12] DONE  G1_I_s500_ho3d_SM1 [probe] prior alignment refined; normalization scale 7.308; gaussians 20000 
+[2026-09-28 03:32:12] START G1_I_s500_ho3d_AP12 gpu=0 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 03:32:32] DONE  G1_S_K80_s2000_ho3d_AP12 [probe] prior alignment refined; normalization scale 6.280; gaussians 20000 [G1] AP12 S K=80 steps 2000: 84.4s peak 0.1 GB gaussians 20000->20000 
+[2026-09-28 03:32:32] START G1_S_Klast_s2000_ho3d_AP12 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 03:33:58] DONE  G1_S_Klast_s2000_ho3d_AP12 [probe] prior alignment refined; normalization scale 6.280; gaussians 20000 [G1] AP12 S K=169 steps 2000: 84.8s peak 0.1 GB gaussians 20000->20000 
+[2026-09-28 03:33:58] START G1_S_K20_s2000_ycb_mustard0 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 03:35:30] DONE  G1_S_K20_s2000_ycb_mustard0 [probe] prior alignment refined; normalization scale 7.901; gaussians 20000 [G1] mustard0 S K=20 steps 2000: 90.5s peak 0.1 GB gaussians 20000->20000 
+[2026-09-28 03:35:30] START G1_S_Klast_s2000_ycb_mustard0 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 03:36:58] DONE  G1_S_Klast_s2000_ycb_mustard0 [probe] prior alignment refined; normalization scale 7.880; gaussians 20000 [G1] mustard0 S K=36 steps 2000: 86.7s peak 0.1 GB gaussians 20000->20000 
+[2026-09-28 03:36:58] START G1_S_K40_s2000_ho3d_SM1 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 03:38:18] DONE  G1_S_K40_s2000_ho3d_SM1 [probe] prior alignment refined; normalization scale 7.308; gaussians 20000 [G1] SM1 S K=40 steps 2000: 79.4s peak 0.1 GB gaussians 20000->20000 
+[2026-09-28 03:38:18] START G1_S_K80_s2000_ho3d_SM1 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 03:39:39] DONE  G1_S_K80_s2000_ho3d_SM1 [probe] prior alignment refined; normalization scale 7.307; gaussians 20000 [G1] SM1 S K=80 steps 2000: 78.9s peak 0.1 GB gaussians 20000->20000 
+[2026-09-28 03:39:39] START G1_S_Klast_s2000_ho3d_SM1 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 03:41:02] DONE  G1_S_Klast_s2000_ho3d_SM1 [probe] prior alignment refined; normalization scale 7.308; gaussians 20000 [G1] SM1 S K=291 steps 2000: 82.0s peak 0.1 GB gaussians 20000->20000 
+[2026-09-28 03:41:02] START G1_S_K40_s2000_ho3d_MPM12 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 03:42:22] DONE  G1_S_K40_s2000_ho3d_MPM12 [probe] prior alignment refined; normalization scale 12.124; gaussians 20000 [G1] MPM12 S K=40 steps 2000: 79.3s peak 0.1 GB gaussians 20000->20000 
+[2026-09-28 03:42:22] START G1_S_K80_s2000_ho3d_MPM12 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 03:43:20] DONE  G1_I_s500_ho3d_AP12 [probe] prior alignment refined; normalization scale 6.284; gaussians 20000 
+[2026-09-28 03:43:20] START G1_I_s500_ho3d_MPM12 gpu=0 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 03:43:45] DONE  G1_S_K80_s2000_ho3d_MPM12 [probe] prior alignment refined; normalization scale 12.144; gaussians 20000 [G1] MPM12 S K=80 steps 2000: 81.9s peak 0.1 GB gaussians 20000->20000 
+[2026-09-28 03:43:45] START G1_S_Klast_s2000_ho3d_MPM12 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 03:45:09] DONE  G1_S_Klast_s2000_ho3d_MPM12 [probe] prior alignment refined; normalization scale 12.127; gaussians 20000 [G1] MPM12 S K=242 steps 2000: 82.0s peak 0.1 GB gaussians 20000->20000 
+[2026-09-28 03:45:09] START G3_I_s500_ho3d_MPM12 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 03:58:54] DONE  G1_I_s500_ho3d_MPM12 [probe] prior alignment refined; normalization scale 12.620; gaussians 20000 
+[2026-09-28 03:58:54] START G1_I_s500_ycb_mustard0 gpu=0 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 04:01:02] DONE  G3_I_s500_ho3d_MPM12 
+[2026-09-28 04:01:02] START G1_S_Klast_s500_rep1_ho3d_AP12 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 04:01:30] DONE  G1_S_Klast_s500_rep1_ho3d_AP12 [probe] prior alignment refined; normalization scale 6.280; gaussians 20000 [G1] AP12 S K=169 steps 500: 26.0s peak 0.1 GB gaussians 20000->20000 
+[2026-09-28 04:01:30] START G3_I_s500_ycb_mustard0 gpu=1 container=BundleSAM3DGS-gsplat-smoke
+[2026-09-28 04:01:40] DONE  G1_I_s500_ycb_mustard0 [probe] prior alignment refined; normalization scale 7.891; gaussians 20000 
+[2026-09-28 04:01:40] CHAIN gpu0_after DONE
+[2026-09-28 04:04:31] DONE  G3_I_s500_ycb_mustard0 
+[2026-09-28 04:04:31] CHAIN gpu1_after DONE

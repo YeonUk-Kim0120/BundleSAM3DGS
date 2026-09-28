@@ -1,0 +1,9 @@
+[probe] prior alignment refined; normalization scale 7.891; gaussians 20000
+[G1] mustard0 I round 1 n=5: 18.4s
+[G1] mustard0 I round 2 n=10: 22.2s
+[G1] mustard0 I round 3 n=15: 21.4s
+[G1] mustard0 I round 4 n=20: 21.5s
+[G1] mustard0 I round 5 n=25: 20.5s
+[G1] mustard0 I round 6 n=30: 20.3s
+[G1] mustard0 I round 7 n=35: 20.0s
+[G1] mustard0 I round 8 n=36: 20.5s

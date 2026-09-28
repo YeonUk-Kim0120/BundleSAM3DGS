@@ -1,0 +1,2 @@
+[probe] prior alignment refined; normalization scale 6.280; gaussians 20000
+[G1] AP12 S K=40 steps 2000: 86.3s peak 0.1 GB gaussians 20000->20000

@@ -1,0 +1,2508 @@
+[tool.py] compute_scene_bounds_worker start
+[tool.py] compute_scene_bounds_worker done
+[tool.py] merge pcd
+[tool.py] compute_translation_scales done
+translation_cvcam=[ 0.00231164 -0.0063575   0.00410788], sc_factor=21.214556624539185
+[nerf_runner.py] Octree voxel dilate_radius:1
+/home/kist/Desktop/BundleSAM3DGS/mycuda/torch_ngp_grid_encoder/grid.py:34: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, inputs, embeddings, offsets, per_level_scale, base_resolution, calc_grad_inputs=False, gridtype=0, align_corners=False):
+/home/kist/Desktop/BundleSAM3DGS/mycuda/torch_ngp_grid_encoder/grid.py:76: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, grad):
+level 0, resolution: 16
+level 1, resolution: 21
+level 2, resolution: 26
+level 3, resolution: 32
+level 4, resolution: 41
+level 5, resolution: 51
+level 6, resolution: 65
+level 7, resolution: 81
+level 8, resolution: 102
+level 9, resolution: 129
+level 10, resolution: 162
+level 11, resolution: 204
+level 12, resolution: 257
+level 13, resolution: 323
+level 14, resolution: 407
+level 15, resolution: 513
+GridEncoder: input_dim=3 n_levels=16 level_dim=2 resolution=16 -> 512 per_level_scale=1.2599 params=(29580312, 2) gridtype=hash align_corners=False
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:159: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.amp_scaler = torch.cuda.amp.GradScaler(enabled=self.cfg['amp'])
+sc_factor 14.850189637177428
+translation [ 0.00231164 -0.0063575   0.00410788]
+[nerf_runner.py] denoise cloud
+[nerf_runner.py] Denoising rays based on octree cloud
+[nerf_runner.py] bad_mask#=102
+rays torch.Size([161347, 12])
+[nerf_runner.py] train progress 0/501
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1259: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1293: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Iter: 0, valid_samples: 393216/393216, valid_rays: 2048/2048, loss: 21.5946331, rgb_loss: 5.6578064, rgb0_loss: 0.0000000, fs_rgb_loss: 0.0000000, depth_loss: 0.0000000, depth_loss0: 0.0000000, fs_loss: 0.4766059, point_cloud_loss: 0.0000000, point_cloud_normal_loss: 0.0000000, sdf_loss: 15.4602203, eikonal_loss: 0.0000000, variation_loss: 0.0000000, truncation(meter): 0.0100000, pose_reg: 0.0000000, reg_features: 0.0000000, 
+
+[nerf_runner.py] train progress 50/501
+[nerf_runner.py] train progress 100/501
+[nerf_runner.py] train progress 150/501
+[nerf_runner.py] train progress 200/501
+[nerf_runner.py] train progress 250/501
+[nerf_runner.py] train progress 300/501
+[nerf_runner.py] train progress 350/501
+[nerf_runner.py] train progress 400/501
+[nerf_runner.py] train progress 450/501
+[nerf_runner.py] train progress 500/501
+[nerf_runner.py] query_pts:torch.Size([91125, 3]), valid:70181
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1323: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1338: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Running Marching Cubes
+[nerf_runner.py] done V:(7126, 3), F:(12850, 3)
+[N] MPM12 I round 1 n=5: 15.1s
+[nerf_runner.py] Octree voxel dilate_radius:1
+level 0, resolution: 16
+level 1, resolution: 21
+level 2, resolution: 26
+level 3, resolution: 32
+level 4, resolution: 41
+level 5, resolution: 51
+level 6, resolution: 65
+level 7, resolution: 81
+level 8, resolution: 102
+level 9, resolution: 129
+level 10, resolution: 162
+level 11, resolution: 204
+level 12, resolution: 257
+level 13, resolution: 323
+level 14, resolution: 407
+level 15, resolution: 513
+GridEncoder: input_dim=3 n_levels=16 level_dim=2 resolution=16 -> 512 per_level_scale=1.2599 params=(29580312, 2) gridtype=hash align_corners=False
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:159: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.amp_scaler = torch.cuda.amp.GradScaler(enabled=self.cfg['amp'])
+sc_factor 14.850189637177428
+translation [ 0.00231164 -0.0063575   0.00410788]
+[nerf_runner.py] denoise cloud
+[nerf_runner.py] Denoising rays based on octree cloud
+[nerf_runner.py] bad_mask#=204
+rays torch.Size([340926, 12])
+[nerf_runner.py] train progress 0/501
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1259: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1293: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Iter: 0, valid_samples: 393216/393216, valid_rays: 2048/2048, loss: 14.6500921, rgb_loss: 3.2850876, rgb0_loss: 0.0000000, fs_rgb_loss: 0.0000000, depth_loss: 0.0000000, depth_loss0: 0.0000000, fs_loss: 0.3418472, point_cloud_loss: 0.0000000, point_cloud_normal_loss: 0.0000000, sdf_loss: 11.0231571, eikonal_loss: 0.0000000, variation_loss: 0.0000000, truncation(meter): 0.0100000, pose_reg: 0.0000000, reg_features: 0.0000000, 
+
+[nerf_runner.py] train progress 50/501
+[nerf_runner.py] train progress 100/501
+[nerf_runner.py] train progress 150/501
+[nerf_runner.py] train progress 200/501
+[nerf_runner.py] train progress 250/501
+[nerf_runner.py] train progress 300/501
+[nerf_runner.py] train progress 350/501
+[nerf_runner.py] train progress 400/501
+[nerf_runner.py] train progress 450/501
+[nerf_runner.py] train progress 500/501
+[nerf_runner.py] query_pts:torch.Size([91125, 3]), valid:75747
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1323: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1338: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Running Marching Cubes
+[nerf_runner.py] done V:(5478, 3), F:(10920, 3)
+[N] MPM12 I round 2 n=10: 14.8s
+[nerf_runner.py] Octree voxel dilate_radius:1
+level 0, resolution: 16
+level 1, resolution: 21
+level 2, resolution: 26
+level 3, resolution: 32
+level 4, resolution: 41
+level 5, resolution: 51
+level 6, resolution: 65
+level 7, resolution: 81
+level 8, resolution: 102
+level 9, resolution: 129
+level 10, resolution: 162
+level 11, resolution: 204
+level 12, resolution: 257
+level 13, resolution: 323
+level 14, resolution: 407
+level 15, resolution: 513
+GridEncoder: input_dim=3 n_levels=16 level_dim=2 resolution=16 -> 512 per_level_scale=1.2599 params=(29580312, 2) gridtype=hash align_corners=False
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:159: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.amp_scaler = torch.cuda.amp.GradScaler(enabled=self.cfg['amp'])
+sc_factor 14.850189637177428
+translation [ 0.00231164 -0.0063575   0.00410788]
+[nerf_runner.py] denoise cloud
+[nerf_runner.py] Denoising rays based on octree cloud
+[nerf_runner.py] bad_mask#=1021
+rays torch.Size([526439, 12])
+[nerf_runner.py] train progress 0/501
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1259: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1293: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Iter: 0, valid_samples: 393100/393216, valid_rays: 2048/2048, loss: 12.2359591, rgb_loss: 2.6792989, rgb0_loss: 0.0000000, fs_rgb_loss: 0.0000000, depth_loss: 0.0000000, depth_loss0: 0.0000000, fs_loss: 0.2869994, point_cloud_loss: 0.0000000, point_cloud_normal_loss: 0.0000000, sdf_loss: 9.2696609, eikonal_loss: 0.0000000, variation_loss: 0.0000000, truncation(meter): 0.0100000, pose_reg: 0.0000000, reg_features: 0.0000000, 
+
+[nerf_runner.py] train progress 50/501
+[nerf_runner.py] train progress 100/501
+[nerf_runner.py] train progress 150/501
+[nerf_runner.py] train progress 200/501
+[nerf_runner.py] train progress 250/501
+[nerf_runner.py] train progress 300/501
+[nerf_runner.py] train progress 350/501
+[nerf_runner.py] train progress 400/501
+[nerf_runner.py] train progress 450/501
+[nerf_runner.py] train progress 500/501
+[nerf_runner.py] query_pts:torch.Size([91125, 3]), valid:77331
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1323: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1338: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Running Marching Cubes
+[nerf_runner.py] done V:(5842, 3), F:(11636, 3)
+[N] MPM12 I round 3 n=15: 14.9s
+[nerf_runner.py] Octree voxel dilate_radius:1
+level 0, resolution: 16
+level 1, resolution: 21
+level 2, resolution: 26
+level 3, resolution: 32
+level 4, resolution: 41
+level 5, resolution: 51
+level 6, resolution: 65
+level 7, resolution: 81
+level 8, resolution: 102
+level 9, resolution: 129
+level 10, resolution: 162
+level 11, resolution: 204
+level 12, resolution: 257
+level 13, resolution: 323
+level 14, resolution: 407
+level 15, resolution: 513
+GridEncoder: input_dim=3 n_levels=16 level_dim=2 resolution=16 -> 512 per_level_scale=1.2599 params=(29580312, 2) gridtype=hash align_corners=False
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:159: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.amp_scaler = torch.cuda.amp.GradScaler(enabled=self.cfg['amp'])
+sc_factor 14.850189637177428
+translation [ 0.00231164 -0.0063575   0.00410788]
+[nerf_runner.py] denoise cloud
+[nerf_runner.py] Denoising rays based on octree cloud
+[nerf_runner.py] bad_mask#=1099
+rays torch.Size([690245, 12])
+[nerf_runner.py] train progress 0/501
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1259: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1293: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Iter: 0, valid_samples: 393083/393216, valid_rays: 2048/2048, loss: 10.6603031, rgb_loss: 2.7261293, rgb0_loss: 0.0000000, fs_rgb_loss: 0.0000000, depth_loss: 0.0000000, depth_loss0: 0.0000000, fs_loss: 0.2450878, point_cloud_loss: 0.0000000, point_cloud_normal_loss: 0.0000000, sdf_loss: 7.6890864, eikonal_loss: 0.0000000, variation_loss: 0.0000000, truncation(meter): 0.0100000, pose_reg: 0.0000000, reg_features: 0.0000000, 
+
+[nerf_runner.py] train progress 50/501
+[nerf_runner.py] train progress 100/501
+[nerf_runner.py] train progress 150/501
+[nerf_runner.py] train progress 200/501
+[nerf_runner.py] train progress 250/501
+[nerf_runner.py] train progress 300/501
+[nerf_runner.py] train progress 350/501
+[nerf_runner.py] train progress 400/501
+[nerf_runner.py] train progress 450/501
+[nerf_runner.py] train progress 500/501
+[nerf_runner.py] query_pts:torch.Size([91125, 3]), valid:74669
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1323: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1338: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Running Marching Cubes
+[nerf_runner.py] done V:(6026, 3), F:(11980, 3)
+[N] MPM12 I round 4 n=20: 15.1s
+[nerf_runner.py] Octree voxel dilate_radius:1
+level 0, resolution: 16
+level 1, resolution: 21
+level 2, resolution: 26
+level 3, resolution: 32
+level 4, resolution: 41
+level 5, resolution: 51
+level 6, resolution: 65
+level 7, resolution: 81
+level 8, resolution: 102
+level 9, resolution: 129
+level 10, resolution: 162
+level 11, resolution: 204
+level 12, resolution: 257
+level 13, resolution: 323
+level 14, resolution: 407
+level 15, resolution: 513
+GridEncoder: input_dim=3 n_levels=16 level_dim=2 resolution=16 -> 512 per_level_scale=1.2599 params=(29580312, 2) gridtype=hash align_corners=False
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:159: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.amp_scaler = torch.cuda.amp.GradScaler(enabled=self.cfg['amp'])
+sc_factor 14.850189637177428
+translation [ 0.00231164 -0.0063575   0.00410788]
+[nerf_runner.py] denoise cloud
+[nerf_runner.py] Denoising rays based on octree cloud
+[nerf_runner.py] bad_mask#=1436
+rays torch.Size([875618, 12])
+[nerf_runner.py] train progress 0/501
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1259: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1293: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Iter: 0, valid_samples: 393009/393216, valid_rays: 2048/2048, loss: 10.2979126, rgb_loss: 2.3171945, rgb0_loss: 0.0000000, fs_rgb_loss: 0.0000000, depth_loss: 0.0000000, depth_loss0: 0.0000000, fs_loss: 0.2371726, point_cloud_loss: 0.0000000, point_cloud_normal_loss: 0.0000000, sdf_loss: 7.7435451, eikonal_loss: 0.0000000, variation_loss: 0.0000000, truncation(meter): 0.0100000, pose_reg: 0.0000000, reg_features: 0.0000000, 
+
+[nerf_runner.py] train progress 50/501
+[nerf_runner.py] train progress 100/501
+[nerf_runner.py] train progress 150/501
+[nerf_runner.py] train progress 200/501
+[nerf_runner.py] train progress 250/501
+[nerf_runner.py] train progress 300/501
+[nerf_runner.py] train progress 350/501
+[nerf_runner.py] train progress 400/501
+[nerf_runner.py] train progress 450/501
+[nerf_runner.py] train progress 500/501
+[nerf_runner.py] query_pts:torch.Size([91125, 3]), valid:76121
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1323: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1338: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Running Marching Cubes
+[nerf_runner.py] done V:(6645, 3), F:(13222, 3)
+[N] MPM12 I round 5 n=25: 15.1s
+[nerf_runner.py] Octree voxel dilate_radius:1
+level 0, resolution: 16
+level 1, resolution: 21
+level 2, resolution: 26
+level 3, resolution: 32
+level 4, resolution: 41
+level 5, resolution: 51
+level 6, resolution: 65
+level 7, resolution: 81
+level 8, resolution: 102
+level 9, resolution: 129
+level 10, resolution: 162
+level 11, resolution: 204
+level 12, resolution: 257
+level 13, resolution: 323
+level 14, resolution: 407
+level 15, resolution: 513
+GridEncoder: input_dim=3 n_levels=16 level_dim=2 resolution=16 -> 512 per_level_scale=1.2599 params=(29580312, 2) gridtype=hash align_corners=False
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:159: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.amp_scaler = torch.cuda.amp.GradScaler(enabled=self.cfg['amp'])
+sc_factor 14.850189637177428
+translation [ 0.00231164 -0.0063575   0.00410788]
+[nerf_runner.py] denoise cloud
+[nerf_runner.py] Denoising rays based on octree cloud
+[nerf_runner.py] bad_mask#=2297
+rays torch.Size([1090920, 12])
+[nerf_runner.py] train progress 0/501
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1259: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1293: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Iter: 0, valid_samples: 393083/393216, valid_rays: 2048/2048, loss: 9.1689701, rgb_loss: 2.4286711, rgb0_loss: 0.0000000, fs_rgb_loss: 0.0000000, depth_loss: 0.0000000, depth_loss0: 0.0000000, fs_loss: 0.1906463, point_cloud_loss: 0.0000000, point_cloud_normal_loss: 0.0000000, sdf_loss: 6.5496526, eikonal_loss: 0.0000000, variation_loss: 0.0000000, truncation(meter): 0.0100000, pose_reg: 0.0000000, reg_features: 0.0000000, 
+
+[nerf_runner.py] train progress 50/501
+[nerf_runner.py] train progress 100/501
+[nerf_runner.py] train progress 150/501
+[nerf_runner.py] train progress 200/501
+[nerf_runner.py] train progress 250/501
+[nerf_runner.py] train progress 300/501
+[nerf_runner.py] train progress 350/501
+[nerf_runner.py] train progress 400/501
+[nerf_runner.py] train progress 450/501
+[nerf_runner.py] train progress 500/501
+[nerf_runner.py] query_pts:torch.Size([91125, 3]), valid:80235
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1323: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1338: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Running Marching Cubes
+[nerf_runner.py] done V:(7142, 3), F:(14194, 3)
+[N] MPM12 I round 6 n=30: 15.4s
+[nerf_runner.py] Octree voxel dilate_radius:1
+level 0, resolution: 16
+level 1, resolution: 21
+level 2, resolution: 26
+level 3, resolution: 32
+level 4, resolution: 41
+level 5, resolution: 51
+level 6, resolution: 65
+level 7, resolution: 81
+level 8, resolution: 102
+level 9, resolution: 129
+level 10, resolution: 162
+level 11, resolution: 204
+level 12, resolution: 257
+level 13, resolution: 323
+level 14, resolution: 407
+level 15, resolution: 513
+GridEncoder: input_dim=3 n_levels=16 level_dim=2 resolution=16 -> 512 per_level_scale=1.2599 params=(29580312, 2) gridtype=hash align_corners=False
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:159: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.amp_scaler = torch.cuda.amp.GradScaler(enabled=self.cfg['amp'])
+sc_factor 14.850189637177428
+translation [ 0.00231164 -0.0063575   0.00410788]
+[nerf_runner.py] denoise cloud
+[nerf_runner.py] Denoising rays based on octree cloud
+[nerf_runner.py] bad_mask#=2398
+rays torch.Size([1332802, 12])
+[nerf_runner.py] train progress 0/501
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1259: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1293: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Iter: 0, valid_samples: 393176/393216, valid_rays: 2048/2048, loss: 9.3650208, rgb_loss: 2.1400168, rgb0_loss: 0.0000000, fs_rgb_loss: 0.0000000, depth_loss: 0.0000000, depth_loss0: 0.0000000, fs_loss: 0.2163208, point_cloud_loss: 0.0000000, point_cloud_normal_loss: 0.0000000, sdf_loss: 7.0086832, eikonal_loss: 0.0000000, variation_loss: 0.0000000, truncation(meter): 0.0100000, pose_reg: 0.0000000, reg_features: 0.0000000, 
+
+[nerf_runner.py] train progress 50/501
+[nerf_runner.py] train progress 100/501
+[nerf_runner.py] train progress 150/501
+[nerf_runner.py] train progress 200/501
+[nerf_runner.py] train progress 250/501
+[nerf_runner.py] train progress 300/501
+[nerf_runner.py] train progress 350/501
+[nerf_runner.py] train progress 400/501
+[nerf_runner.py] train progress 450/501
+[nerf_runner.py] train progress 500/501
+[nerf_runner.py] query_pts:torch.Size([91125, 3]), valid:80235
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1323: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1338: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Running Marching Cubes
+[nerf_runner.py] done V:(7201, 3), F:(14302, 3)
+[N] MPM12 I round 7 n=35: 15.8s
+[nerf_runner.py] Octree voxel dilate_radius:1
+level 0, resolution: 16
+level 1, resolution: 21
+level 2, resolution: 26
+level 3, resolution: 32
+level 4, resolution: 41
+level 5, resolution: 51
+level 6, resolution: 65
+level 7, resolution: 81
+level 8, resolution: 102
+level 9, resolution: 129
+level 10, resolution: 162
+level 11, resolution: 204
+level 12, resolution: 257
+level 13, resolution: 323
+level 14, resolution: 407
+level 15, resolution: 513
+GridEncoder: input_dim=3 n_levels=16 level_dim=2 resolution=16 -> 512 per_level_scale=1.2599 params=(29580312, 2) gridtype=hash align_corners=False
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:159: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.amp_scaler = torch.cuda.amp.GradScaler(enabled=self.cfg['amp'])
+sc_factor 14.850189637177428
+translation [ 0.00231164 -0.0063575   0.00410788]
+[nerf_runner.py] denoise cloud
+[nerf_runner.py] Denoising rays based on octree cloud
+[nerf_runner.py] bad_mask#=2646
+rays torch.Size([1576075, 12])
+[nerf_runner.py] train progress 0/501
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1259: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1293: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Iter: 0, valid_samples: 393193/393216, valid_rays: 2048/2048, loss: 9.1416388, rgb_loss: 2.0445607, rgb0_loss: 0.0000000, fs_rgb_loss: 0.0000000, depth_loss: 0.0000000, depth_loss0: 0.0000000, fs_loss: 0.2177525, point_cloud_loss: 0.0000000, point_cloud_normal_loss: 0.0000000, sdf_loss: 6.8793254, eikonal_loss: 0.0000000, variation_loss: 0.0000000, truncation(meter): 0.0100000, pose_reg: 0.0000000, reg_features: 0.0000000, 
+
+[nerf_runner.py] train progress 50/501
+[nerf_runner.py] train progress 100/501
+[nerf_runner.py] train progress 150/501
+[nerf_runner.py] train progress 200/501
+[nerf_runner.py] train progress 250/501
+[nerf_runner.py] train progress 300/501
+[nerf_runner.py] train progress 350/501
+[nerf_runner.py] train progress 400/501
+[nerf_runner.py] train progress 450/501
+[nerf_runner.py] train progress 500/501
+[nerf_runner.py] query_pts:torch.Size([91125, 3]), valid:80235
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1323: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1338: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Running Marching Cubes
+[nerf_runner.py] done V:(7267, 3), F:(14436, 3)
+[N] MPM12 I round 8 n=40: 15.9s
+[nerf_runner.py] Octree voxel dilate_radius:1
+level 0, resolution: 16
+level 1, resolution: 21
+level 2, resolution: 26
+level 3, resolution: 32
+level 4, resolution: 41
+level 5, resolution: 51
+level 6, resolution: 65
+level 7, resolution: 81
+level 8, resolution: 102
+level 9, resolution: 129
+level 10, resolution: 162
+level 11, resolution: 204
+level 12, resolution: 257
+level 13, resolution: 323
+level 14, resolution: 407
+level 15, resolution: 513
+GridEncoder: input_dim=3 n_levels=16 level_dim=2 resolution=16 -> 512 per_level_scale=1.2599 params=(29580312, 2) gridtype=hash align_corners=False
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:159: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.amp_scaler = torch.cuda.amp.GradScaler(enabled=self.cfg['amp'])
+sc_factor 14.850189637177428
+translation [ 0.00231164 -0.0063575   0.00410788]
+[nerf_runner.py] denoise cloud
+[nerf_runner.py] Denoising rays based on octree cloud
+[nerf_runner.py] bad_mask#=3027
+rays torch.Size([1803254, 12])
+[nerf_runner.py] train progress 0/501
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1259: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1293: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Iter: 0, valid_samples: 393216/393216, valid_rays: 2048/2048, loss: 8.8123684, rgb_loss: 2.0202284, rgb0_loss: 0.0000000, fs_rgb_loss: 0.0000000, depth_loss: 0.0000000, depth_loss0: 0.0000000, fs_loss: 0.2038528, point_cloud_loss: 0.0000000, point_cloud_normal_loss: 0.0000000, sdf_loss: 6.5882878, eikonal_loss: 0.0000000, variation_loss: 0.0000000, truncation(meter): 0.0100000, pose_reg: 0.0000000, reg_features: 0.0000000, 
+
+[nerf_runner.py] train progress 50/501
+[nerf_runner.py] train progress 100/501
+[nerf_runner.py] train progress 150/501
+[nerf_runner.py] train progress 200/501
+[nerf_runner.py] train progress 250/501
+[nerf_runner.py] train progress 300/501
+[nerf_runner.py] train progress 350/501
+[nerf_runner.py] train progress 400/501
+[nerf_runner.py] train progress 450/501
+[nerf_runner.py] train progress 500/501
+[nerf_runner.py] query_pts:torch.Size([91125, 3]), valid:80235
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1323: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1338: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Running Marching Cubes
+[nerf_runner.py] done V:(7293, 3), F:(14478, 3)
+[N] MPM12 I round 9 n=45: 16.1s
+[nerf_runner.py] Octree voxel dilate_radius:1
+level 0, resolution: 16
+level 1, resolution: 21
+level 2, resolution: 26
+level 3, resolution: 32
+level 4, resolution: 41
+level 5, resolution: 51
+level 6, resolution: 65
+level 7, resolution: 81
+level 8, resolution: 102
+level 9, resolution: 129
+level 10, resolution: 162
+level 11, resolution: 204
+level 12, resolution: 257
+level 13, resolution: 323
+level 14, resolution: 407
+level 15, resolution: 513
+GridEncoder: input_dim=3 n_levels=16 level_dim=2 resolution=16 -> 512 per_level_scale=1.2599 params=(29580312, 2) gridtype=hash align_corners=False
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:159: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.amp_scaler = torch.cuda.amp.GradScaler(enabled=self.cfg['amp'])
+sc_factor 14.850189637177428
+translation [ 0.00231164 -0.0063575   0.00410788]
+[nerf_runner.py] denoise cloud
+[nerf_runner.py] Denoising rays based on octree cloud
+[nerf_runner.py] bad_mask#=3270
+rays torch.Size([2018999, 12])
+[nerf_runner.py] train progress 0/501
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1259: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1293: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Iter: 0, valid_samples: 393035/393216, valid_rays: 2048/2048, loss: 9.0362415, rgb_loss: 1.9182477, rgb0_loss: 0.0000000, fs_rgb_loss: 0.0000000, depth_loss: 0.0000000, depth_loss0: 0.0000000, fs_loss: 0.2148558, point_cloud_loss: 0.0000000, point_cloud_normal_loss: 0.0000000, sdf_loss: 6.9031386, eikonal_loss: 0.0000000, variation_loss: 0.0000000, truncation(meter): 0.0100000, pose_reg: 0.0000000, reg_features: 0.0000000, 
+
+[nerf_runner.py] train progress 50/501
+[nerf_runner.py] train progress 100/501
+[nerf_runner.py] train progress 150/501
+[nerf_runner.py] train progress 200/501
+[nerf_runner.py] train progress 250/501
+[nerf_runner.py] train progress 300/501
+[nerf_runner.py] train progress 350/501
+[nerf_runner.py] train progress 400/501
+[nerf_runner.py] train progress 450/501
+[nerf_runner.py] train progress 500/501
+[nerf_runner.py] query_pts:torch.Size([91125, 3]), valid:80235
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1323: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1338: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Running Marching Cubes
+[nerf_runner.py] done V:(7525, 3), F:(14930, 3)
+[N] MPM12 I round 10 n=50: 16.3s
+[nerf_runner.py] Octree voxel dilate_radius:1
+level 0, resolution: 16
+level 1, resolution: 21
+level 2, resolution: 26
+level 3, resolution: 32
+level 4, resolution: 41
+level 5, resolution: 51
+level 6, resolution: 65
+level 7, resolution: 81
+level 8, resolution: 102
+level 9, resolution: 129
+level 10, resolution: 162
+level 11, resolution: 204
+level 12, resolution: 257
+level 13, resolution: 323
+level 14, resolution: 407
+level 15, resolution: 513
+GridEncoder: input_dim=3 n_levels=16 level_dim=2 resolution=16 -> 512 per_level_scale=1.2599 params=(29580312, 2) gridtype=hash align_corners=False
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:159: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.amp_scaler = torch.cuda.amp.GradScaler(enabled=self.cfg['amp'])
+sc_factor 14.850189637177428
+translation [ 0.00231164 -0.0063575   0.00410788]
+[nerf_runner.py] denoise cloud
+[nerf_runner.py] Denoising rays based on octree cloud
+[nerf_runner.py] bad_mask#=3614
+rays torch.Size([2254640, 12])
+[nerf_runner.py] train progress 0/501
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1259: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1293: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Iter: 0, valid_samples: 393035/393216, valid_rays: 2048/2048, loss: 9.8683701, rgb_loss: 1.8872075, rgb0_loss: 0.0000000, fs_rgb_loss: 0.0000000, depth_loss: 0.0000000, depth_loss0: 0.0000000, fs_loss: 0.2339510, point_cloud_loss: 0.0000000, point_cloud_normal_loss: 0.0000000, sdf_loss: 7.7472115, eikonal_loss: 0.0000000, variation_loss: 0.0000000, truncation(meter): 0.0100000, pose_reg: 0.0000000, reg_features: 0.0000000, 
+
+[nerf_runner.py] train progress 50/501
+[nerf_runner.py] train progress 100/501
+[nerf_runner.py] train progress 150/501
+[nerf_runner.py] train progress 200/501
+[nerf_runner.py] train progress 250/501
+[nerf_runner.py] train progress 300/501
+[nerf_runner.py] train progress 350/501
+[nerf_runner.py] train progress 400/501
+[nerf_runner.py] train progress 450/501
+[nerf_runner.py] train progress 500/501
+[nerf_runner.py] query_pts:torch.Size([91125, 3]), valid:80235
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1323: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1338: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Running Marching Cubes
+[nerf_runner.py] done V:(7616, 3), F:(15122, 3)
+[N] MPM12 I round 11 n=55: 16.4s
+[nerf_runner.py] Octree voxel dilate_radius:1
+level 0, resolution: 16
+level 1, resolution: 21
+level 2, resolution: 26
+level 3, resolution: 32
+level 4, resolution: 41
+level 5, resolution: 51
+level 6, resolution: 65
+level 7, resolution: 81
+level 8, resolution: 102
+level 9, resolution: 129
+level 10, resolution: 162
+level 11, resolution: 204
+level 12, resolution: 257
+level 13, resolution: 323
+level 14, resolution: 407
+level 15, resolution: 513
+GridEncoder: input_dim=3 n_levels=16 level_dim=2 resolution=16 -> 512 per_level_scale=1.2599 params=(29580312, 2) gridtype=hash align_corners=False
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:159: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.amp_scaler = torch.cuda.amp.GradScaler(enabled=self.cfg['amp'])
+sc_factor 14.850189637177428
+translation [ 0.00231164 -0.0063575   0.00410788]
+[nerf_runner.py] denoise cloud
+[nerf_runner.py] Denoising rays based on octree cloud
+[nerf_runner.py] bad_mask#=3931
+rays torch.Size([2487760, 12])
+[nerf_runner.py] train progress 0/501
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1259: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1293: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Iter: 0, valid_samples: 392796/393216, valid_rays: 2048/2048, loss: 8.8249855, rgb_loss: 1.8659961, rgb0_loss: 0.0000000, fs_rgb_loss: 0.0000000, depth_loss: 0.0000000, depth_loss0: 0.0000000, fs_loss: 0.1920372, point_cloud_loss: 0.0000000, point_cloud_normal_loss: 0.0000000, sdf_loss: 6.7669520, eikonal_loss: 0.0000000, variation_loss: 0.0000000, truncation(meter): 0.0100000, pose_reg: 0.0000000, reg_features: 0.0000000, 
+
+[nerf_runner.py] train progress 50/501
+[nerf_runner.py] train progress 100/501
+[nerf_runner.py] train progress 150/501
+[nerf_runner.py] train progress 200/501
+[nerf_runner.py] train progress 250/501
+[nerf_runner.py] train progress 300/501
+[nerf_runner.py] train progress 350/501
+[nerf_runner.py] train progress 400/501
+[nerf_runner.py] train progress 450/501
+[nerf_runner.py] train progress 500/501
+[nerf_runner.py] query_pts:torch.Size([91125, 3]), valid:80235
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1323: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1338: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Running Marching Cubes
+[nerf_runner.py] done V:(7581, 3), F:(15050, 3)
+[N] MPM12 I round 12 n=60: 16.5s
+[nerf_runner.py] Octree voxel dilate_radius:1
+level 0, resolution: 16
+level 1, resolution: 21
+level 2, resolution: 26
+level 3, resolution: 32
+level 4, resolution: 41
+level 5, resolution: 51
+level 6, resolution: 65
+level 7, resolution: 81
+level 8, resolution: 102
+level 9, resolution: 129
+level 10, resolution: 162
+level 11, resolution: 204
+level 12, resolution: 257
+level 13, resolution: 323
+level 14, resolution: 407
+level 15, resolution: 513
+GridEncoder: input_dim=3 n_levels=16 level_dim=2 resolution=16 -> 512 per_level_scale=1.2599 params=(29580312, 2) gridtype=hash align_corners=False
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:159: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.amp_scaler = torch.cuda.amp.GradScaler(enabled=self.cfg['amp'])
+sc_factor 14.850189637177428
+translation [ 0.00231164 -0.0063575   0.00410788]
+[nerf_runner.py] denoise cloud
+[nerf_runner.py] Denoising rays based on octree cloud
+[nerf_runner.py] bad_mask#=4041
+rays torch.Size([2731403, 12])
+[nerf_runner.py] train progress 0/501
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1259: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1293: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Iter: 0, valid_samples: 392872/393216, valid_rays: 2048/2048, loss: 9.4321365, rgb_loss: 1.8592006, rgb0_loss: 0.0000000, fs_rgb_loss: 0.0000000, depth_loss: 0.0000000, depth_loss0: 0.0000000, fs_loss: 0.2046367, point_cloud_loss: 0.0000000, point_cloud_normal_loss: 0.0000000, sdf_loss: 7.3682990, eikonal_loss: 0.0000000, variation_loss: 0.0000000, truncation(meter): 0.0100000, pose_reg: 0.0000000, reg_features: 0.0000000, 
+
+[nerf_runner.py] train progress 50/501
+[nerf_runner.py] train progress 100/501
+[nerf_runner.py] train progress 150/501
+[nerf_runner.py] train progress 200/501
+[nerf_runner.py] train progress 250/501
+[nerf_runner.py] train progress 300/501
+[nerf_runner.py] train progress 350/501
+[nerf_runner.py] train progress 400/501
+[nerf_runner.py] train progress 450/501
+[nerf_runner.py] train progress 500/501
+[nerf_runner.py] query_pts:torch.Size([91125, 3]), valid:80235
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1323: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1338: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Running Marching Cubes
+[nerf_runner.py] done V:(7653, 3), F:(15170, 3)
+[N] MPM12 I round 13 n=65: 16.7s
+[nerf_runner.py] Octree voxel dilate_radius:1
+level 0, resolution: 16
+level 1, resolution: 21
+level 2, resolution: 26
+level 3, resolution: 32
+level 4, resolution: 41
+level 5, resolution: 51
+level 6, resolution: 65
+level 7, resolution: 81
+level 8, resolution: 102
+level 9, resolution: 129
+level 10, resolution: 162
+level 11, resolution: 204
+level 12, resolution: 257
+level 13, resolution: 323
+level 14, resolution: 407
+level 15, resolution: 513
+GridEncoder: input_dim=3 n_levels=16 level_dim=2 resolution=16 -> 512 per_level_scale=1.2599 params=(29580312, 2) gridtype=hash align_corners=False
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:159: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.amp_scaler = torch.cuda.amp.GradScaler(enabled=self.cfg['amp'])
+sc_factor 14.850189637177428
+translation [ 0.00231164 -0.0063575   0.00410788]
+[nerf_runner.py] denoise cloud
+[nerf_runner.py] Denoising rays based on octree cloud
+[nerf_runner.py] bad_mask#=4694
+rays torch.Size([2995017, 12])
+[nerf_runner.py] train progress 0/501
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1259: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1293: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Iter: 0, valid_samples: 392646/393216, valid_rays: 2047/2048, loss: 8.6226234, rgb_loss: 1.8205938, rgb0_loss: 0.0000000, fs_rgb_loss: 0.0000000, depth_loss: 0.0000000, depth_loss0: 0.0000000, fs_loss: 0.1826473, point_cloud_loss: 0.0000000, point_cloud_normal_loss: 0.0000000, sdf_loss: 6.6193819, eikonal_loss: 0.0000000, variation_loss: 0.0000000, truncation(meter): 0.0100000, pose_reg: 0.0000000, reg_features: 0.0000000, 
+
+[nerf_runner.py] train progress 50/501
+[nerf_runner.py] train progress 100/501
+[nerf_runner.py] train progress 150/501
+[nerf_runner.py] train progress 200/501
+[nerf_runner.py] train progress 250/501
+[nerf_runner.py] train progress 300/501
+[nerf_runner.py] train progress 350/501
+[nerf_runner.py] train progress 400/501
+[nerf_runner.py] train progress 450/501
+[nerf_runner.py] train progress 500/501
+[nerf_runner.py] query_pts:torch.Size([91125, 3]), valid:80235
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1323: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1338: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Running Marching Cubes
+[nerf_runner.py] done V:(7677, 3), F:(15198, 3)
+[N] MPM12 I round 14 n=70: 16.9s
+[nerf_runner.py] Octree voxel dilate_radius:1
+level 0, resolution: 16
+level 1, resolution: 21
+level 2, resolution: 26
+level 3, resolution: 32
+level 4, resolution: 41
+level 5, resolution: 51
+level 6, resolution: 65
+level 7, resolution: 81
+level 8, resolution: 102
+level 9, resolution: 129
+level 10, resolution: 162
+level 11, resolution: 204
+level 12, resolution: 257
+level 13, resolution: 323
+level 14, resolution: 407
+level 15, resolution: 513
+GridEncoder: input_dim=3 n_levels=16 level_dim=2 resolution=16 -> 512 per_level_scale=1.2599 params=(29580312, 2) gridtype=hash align_corners=False
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:159: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.amp_scaler = torch.cuda.amp.GradScaler(enabled=self.cfg['amp'])
+sc_factor 14.850189637177428
+translation [ 0.00231164 -0.0063575   0.00410788]
+[nerf_runner.py] denoise cloud
+[nerf_runner.py] Denoising rays based on octree cloud
+[nerf_runner.py] bad_mask#=5899
+rays torch.Size([3249460, 12])
+[nerf_runner.py] train progress 0/501
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1259: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1293: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Iter: 0, valid_samples: 392496/393216, valid_rays: 2047/2048, loss: 9.0790730, rgb_loss: 1.7905169, rgb0_loss: 0.0000000, fs_rgb_loss: 0.0000000, depth_loss: 0.0000000, depth_loss0: 0.0000000, fs_loss: 0.1930218, point_cloud_loss: 0.0000000, point_cloud_normal_loss: 0.0000000, sdf_loss: 7.0955338, eikonal_loss: 0.0000000, variation_loss: 0.0000000, truncation(meter): 0.0100000, pose_reg: 0.0000000, reg_features: 0.0000000, 
+
+[nerf_runner.py] train progress 50/501
+[nerf_runner.py] train progress 100/501
+[nerf_runner.py] train progress 150/501
+[nerf_runner.py] train progress 200/501
+[nerf_runner.py] train progress 250/501
+[nerf_runner.py] train progress 300/501
+[nerf_runner.py] train progress 350/501
+[nerf_runner.py] train progress 400/501
+[nerf_runner.py] train progress 450/501
+[nerf_runner.py] train progress 500/501
+[nerf_runner.py] query_pts:torch.Size([91125, 3]), valid:80235
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1323: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1338: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Running Marching Cubes
+[nerf_runner.py] done V:(7518, 3), F:(14902, 3)
+[N] MPM12 I round 15 n=75: 17.1s
+[nerf_runner.py] Octree voxel dilate_radius:1
+level 0, resolution: 16
+level 1, resolution: 21
+level 2, resolution: 26
+level 3, resolution: 32
+level 4, resolution: 41
+level 5, resolution: 51
+level 6, resolution: 65
+level 7, resolution: 81
+level 8, resolution: 102
+level 9, resolution: 129
+level 10, resolution: 162
+level 11, resolution: 204
+level 12, resolution: 257
+level 13, resolution: 323
+level 14, resolution: 407
+level 15, resolution: 513
+GridEncoder: input_dim=3 n_levels=16 level_dim=2 resolution=16 -> 512 per_level_scale=1.2599 params=(29580312, 2) gridtype=hash align_corners=False
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:159: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.amp_scaler = torch.cuda.amp.GradScaler(enabled=self.cfg['amp'])
+sc_factor 14.850189637177428
+translation [ 0.00231164 -0.0063575   0.00410788]
+[nerf_runner.py] denoise cloud
+[nerf_runner.py] Denoising rays based on octree cloud
+[nerf_runner.py] bad_mask#=6430
+rays torch.Size([3493135, 12])
+[nerf_runner.py] train progress 0/501
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1259: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1293: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Iter: 0, valid_samples: 392859/393216, valid_rays: 2048/2048, loss: 9.0466852, rgb_loss: 1.7525506, rgb0_loss: 0.0000000, fs_rgb_loss: 0.0000000, depth_loss: 0.0000000, depth_loss0: 0.0000000, fs_loss: 0.1975052, point_cloud_loss: 0.0000000, point_cloud_normal_loss: 0.0000000, sdf_loss: 7.0966291, eikonal_loss: 0.0000000, variation_loss: 0.0000000, truncation(meter): 0.0100000, pose_reg: 0.0000000, reg_features: 0.0000000, 
+
+[nerf_runner.py] train progress 50/501
+[nerf_runner.py] train progress 100/501
+[nerf_runner.py] train progress 150/501
+[nerf_runner.py] train progress 200/501
+[nerf_runner.py] train progress 250/501
+[nerf_runner.py] train progress 300/501
+[nerf_runner.py] train progress 350/501
+[nerf_runner.py] train progress 400/501
+[nerf_runner.py] train progress 450/501
+[nerf_runner.py] train progress 500/501
+[nerf_runner.py] query_pts:torch.Size([91125, 3]), valid:80235
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1323: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1338: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Running Marching Cubes
+[nerf_runner.py] done V:(7637, 3), F:(15148, 3)
+[N] MPM12 I round 16 n=80: 17.3s
+[nerf_runner.py] Octree voxel dilate_radius:1
+level 0, resolution: 16
+level 1, resolution: 21
+level 2, resolution: 26
+level 3, resolution: 32
+level 4, resolution: 41
+level 5, resolution: 51
+level 6, resolution: 65
+level 7, resolution: 81
+level 8, resolution: 102
+level 9, resolution: 129
+level 10, resolution: 162
+level 11, resolution: 204
+level 12, resolution: 257
+level 13, resolution: 323
+level 14, resolution: 407
+level 15, resolution: 513
+GridEncoder: input_dim=3 n_levels=16 level_dim=2 resolution=16 -> 512 per_level_scale=1.2599 params=(29580312, 2) gridtype=hash align_corners=False
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:159: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.amp_scaler = torch.cuda.amp.GradScaler(enabled=self.cfg['amp'])
+sc_factor 14.850189637177428
+translation [ 0.00231164 -0.0063575   0.00410788]
+[nerf_runner.py] denoise cloud
+[nerf_runner.py] Denoising rays based on octree cloud
+[nerf_runner.py] bad_mask#=8438
+rays torch.Size([3738540, 12])
+[nerf_runner.py] train progress 0/501
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1259: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1293: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Iter: 0, valid_samples: 392672/393216, valid_rays: 2048/2048, loss: 8.8895407, rgb_loss: 1.8818688, rgb0_loss: 0.0000000, fs_rgb_loss: 0.0000000, depth_loss: 0.0000000, depth_loss0: 0.0000000, fs_loss: 0.1856418, point_cloud_loss: 0.0000000, point_cloud_normal_loss: 0.0000000, sdf_loss: 6.8220301, eikonal_loss: 0.0000000, variation_loss: 0.0000000, truncation(meter): 0.0100000, pose_reg: 0.0000000, reg_features: 0.0000000, 
+
+[nerf_runner.py] train progress 50/501
+[nerf_runner.py] train progress 100/501
+[nerf_runner.py] train progress 150/501
+[nerf_runner.py] train progress 200/501
+[nerf_runner.py] train progress 250/501
+[nerf_runner.py] train progress 300/501
+[nerf_runner.py] train progress 350/501
+[nerf_runner.py] train progress 400/501
+[nerf_runner.py] train progress 450/501
+[nerf_runner.py] train progress 500/501
+[nerf_runner.py] query_pts:torch.Size([91125, 3]), valid:80235
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1323: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1338: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Running Marching Cubes
+[nerf_runner.py] done V:(7779, 3), F:(15444, 3)
+[N] MPM12 I round 17 n=85: 17.4s
+[nerf_runner.py] Octree voxel dilate_radius:1
+level 0, resolution: 16
+level 1, resolution: 21
+level 2, resolution: 26
+level 3, resolution: 32
+level 4, resolution: 41
+level 5, resolution: 51
+level 6, resolution: 65
+level 7, resolution: 81
+level 8, resolution: 102
+level 9, resolution: 129
+level 10, resolution: 162
+level 11, resolution: 204
+level 12, resolution: 257
+level 13, resolution: 323
+level 14, resolution: 407
+level 15, resolution: 513
+GridEncoder: input_dim=3 n_levels=16 level_dim=2 resolution=16 -> 512 per_level_scale=1.2599 params=(29580312, 2) gridtype=hash align_corners=False
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:159: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.amp_scaler = torch.cuda.amp.GradScaler(enabled=self.cfg['amp'])
+sc_factor 14.850189637177428
+translation [ 0.00231164 -0.0063575   0.00410788]
+[nerf_runner.py] denoise cloud
+[nerf_runner.py] Denoising rays based on octree cloud
+[nerf_runner.py] bad_mask#=9890
+rays torch.Size([3987053, 12])
+[nerf_runner.py] train progress 0/501
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1259: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1293: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Iter: 0, valid_samples: 392690/393216, valid_rays: 2048/2048, loss: 8.3167744, rgb_loss: 1.7340541, rgb0_loss: 0.0000000, fs_rgb_loss: 0.0000000, depth_loss: 0.0000000, depth_loss0: 0.0000000, fs_loss: 0.1888132, point_cloud_loss: 0.0000000, point_cloud_normal_loss: 0.0000000, sdf_loss: 6.3939066, eikonal_loss: 0.0000000, variation_loss: 0.0000000, truncation(meter): 0.0100000, pose_reg: 0.0000000, reg_features: 0.0000000, 
+
+[nerf_runner.py] train progress 50/501
+[nerf_runner.py] train progress 100/501
+[nerf_runner.py] train progress 150/501
+[nerf_runner.py] train progress 200/501
+[nerf_runner.py] train progress 250/501
+[nerf_runner.py] train progress 300/501
+[nerf_runner.py] train progress 350/501
+[nerf_runner.py] train progress 400/501
+[nerf_runner.py] train progress 450/501
+[nerf_runner.py] train progress 500/501
+[nerf_runner.py] query_pts:torch.Size([91125, 3]), valid:83018
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1323: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1338: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Running Marching Cubes
+[nerf_runner.py] done V:(7812, 3), F:(15484, 3)
+[N] MPM12 I round 18 n=90: 17.6s
+[nerf_runner.py] Octree voxel dilate_radius:1
+level 0, resolution: 16
+level 1, resolution: 21
+level 2, resolution: 26
+level 3, resolution: 32
+level 4, resolution: 41
+level 5, resolution: 51
+level 6, resolution: 65
+level 7, resolution: 81
+level 8, resolution: 102
+level 9, resolution: 129
+level 10, resolution: 162
+level 11, resolution: 204
+level 12, resolution: 257
+level 13, resolution: 323
+level 14, resolution: 407
+level 15, resolution: 513
+GridEncoder: input_dim=3 n_levels=16 level_dim=2 resolution=16 -> 512 per_level_scale=1.2599 params=(29580312, 2) gridtype=hash align_corners=False
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:159: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.amp_scaler = torch.cuda.amp.GradScaler(enabled=self.cfg['amp'])
+sc_factor 14.850189637177428
+translation [ 0.00231164 -0.0063575   0.00410788]
+[nerf_runner.py] denoise cloud
+[nerf_runner.py] Denoising rays based on octree cloud
+[nerf_runner.py] bad_mask#=10263
+rays torch.Size([4224798, 12])
+[nerf_runner.py] train progress 0/501
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1259: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1293: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Iter: 0, valid_samples: 392697/393216, valid_rays: 2048/2048, loss: 8.6606121, rgb_loss: 1.8016462, rgb0_loss: 0.0000000, fs_rgb_loss: 0.0000000, depth_loss: 0.0000000, depth_loss0: 0.0000000, fs_loss: 0.1942239, point_cloud_loss: 0.0000000, point_cloud_normal_loss: 0.0000000, sdf_loss: 6.6647420, eikonal_loss: 0.0000000, variation_loss: 0.0000000, truncation(meter): 0.0100000, pose_reg: 0.0000000, reg_features: 0.0000000, 
+
+[nerf_runner.py] train progress 50/501
+[nerf_runner.py] train progress 100/501
+[nerf_runner.py] train progress 150/501
+[nerf_runner.py] train progress 200/501
+[nerf_runner.py] train progress 250/501
+[nerf_runner.py] train progress 300/501
+[nerf_runner.py] train progress 350/501
+[nerf_runner.py] train progress 400/501
+[nerf_runner.py] train progress 450/501
+[nerf_runner.py] train progress 500/501
+[nerf_runner.py] query_pts:torch.Size([91125, 3]), valid:80235
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1323: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1338: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Running Marching Cubes
+[nerf_runner.py] done V:(7815, 3), F:(15494, 3)
+[N] MPM12 I round 19 n=95: 17.9s
+[nerf_runner.py] Octree voxel dilate_radius:1
+level 0, resolution: 16
+level 1, resolution: 21
+level 2, resolution: 26
+level 3, resolution: 32
+level 4, resolution: 41
+level 5, resolution: 51
+level 6, resolution: 65
+level 7, resolution: 81
+level 8, resolution: 102
+level 9, resolution: 129
+level 10, resolution: 162
+level 11, resolution: 204
+level 12, resolution: 257
+level 13, resolution: 323
+level 14, resolution: 407
+level 15, resolution: 513
+GridEncoder: input_dim=3 n_levels=16 level_dim=2 resolution=16 -> 512 per_level_scale=1.2599 params=(29580312, 2) gridtype=hash align_corners=False
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:159: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.amp_scaler = torch.cuda.amp.GradScaler(enabled=self.cfg['amp'])
+sc_factor 14.850189637177428
+translation [ 0.00231164 -0.0063575   0.00410788]
+[nerf_runner.py] denoise cloud
+[nerf_runner.py] Denoising rays based on octree cloud
+[nerf_runner.py] bad_mask#=10809
+rays torch.Size([4443822, 12])
+[nerf_runner.py] train progress 0/501
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1259: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1293: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Iter: 0, valid_samples: 392643/393216, valid_rays: 2048/2048, loss: 8.2970943, rgb_loss: 1.8485115, rgb0_loss: 0.0000000, fs_rgb_loss: 0.0000000, depth_loss: 0.0000000, depth_loss0: 0.0000000, fs_loss: 0.1830774, point_cloud_loss: 0.0000000, point_cloud_normal_loss: 0.0000000, sdf_loss: 6.2655053, eikonal_loss: 0.0000000, variation_loss: 0.0000000, truncation(meter): 0.0100000, pose_reg: 0.0000000, reg_features: 0.0000000, 
+
+[nerf_runner.py] train progress 50/501
+[nerf_runner.py] train progress 100/501
+[nerf_runner.py] train progress 150/501
+[nerf_runner.py] train progress 200/501
+[nerf_runner.py] train progress 250/501
+[nerf_runner.py] train progress 300/501
+[nerf_runner.py] train progress 350/501
+[nerf_runner.py] train progress 400/501
+[nerf_runner.py] train progress 450/501
+[nerf_runner.py] train progress 500/501
+[nerf_runner.py] query_pts:torch.Size([91125, 3]), valid:83018
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1323: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1338: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Running Marching Cubes
+[nerf_runner.py] done V:(7860, 3), F:(15584, 3)
+[N] MPM12 I round 20 n=100: 18.0s
+[nerf_runner.py] Octree voxel dilate_radius:1
+level 0, resolution: 16
+level 1, resolution: 21
+level 2, resolution: 26
+level 3, resolution: 32
+level 4, resolution: 41
+level 5, resolution: 51
+level 6, resolution: 65
+level 7, resolution: 81
+level 8, resolution: 102
+level 9, resolution: 129
+level 10, resolution: 162
+level 11, resolution: 204
+level 12, resolution: 257
+level 13, resolution: 323
+level 14, resolution: 407
+level 15, resolution: 513
+GridEncoder: input_dim=3 n_levels=16 level_dim=2 resolution=16 -> 512 per_level_scale=1.2599 params=(29580312, 2) gridtype=hash align_corners=False
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:159: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.amp_scaler = torch.cuda.amp.GradScaler(enabled=self.cfg['amp'])
+sc_factor 14.850189637177428
+translation [ 0.00231164 -0.0063575   0.00410788]
+[nerf_runner.py] denoise cloud
+[nerf_runner.py] Denoising rays based on octree cloud
+[nerf_runner.py] bad_mask#=11576
+rays torch.Size([4643710, 12])
+[nerf_runner.py] train progress 0/501
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1259: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1293: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Iter: 0, valid_samples: 392631/393216, valid_rays: 2048/2048, loss: 8.2873983, rgb_loss: 1.7895656, rgb0_loss: 0.0000000, fs_rgb_loss: 0.0000000, depth_loss: 0.0000000, depth_loss0: 0.0000000, fs_loss: 0.1846667, point_cloud_loss: 0.0000000, point_cloud_normal_loss: 0.0000000, sdf_loss: 6.3131661, eikonal_loss: 0.0000000, variation_loss: 0.0000000, truncation(meter): 0.0100000, pose_reg: 0.0000000, reg_features: 0.0000000, 
+
+[nerf_runner.py] train progress 50/501
+[nerf_runner.py] train progress 100/501
+[nerf_runner.py] train progress 150/501
+[nerf_runner.py] train progress 200/501
+[nerf_runner.py] train progress 250/501
+[nerf_runner.py] train progress 300/501
+[nerf_runner.py] train progress 350/501
+[nerf_runner.py] train progress 400/501
+[nerf_runner.py] train progress 450/501
+[nerf_runner.py] train progress 500/501
+[nerf_runner.py] query_pts:torch.Size([91125, 3]), valid:83018
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1323: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1338: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Running Marching Cubes
+[nerf_runner.py] done V:(8054, 3), F:(15966, 3)
+[N] MPM12 I round 21 n=105: 18.1s
+[nerf_runner.py] Octree voxel dilate_radius:1
+level 0, resolution: 16
+level 1, resolution: 21
+level 2, resolution: 26
+level 3, resolution: 32
+level 4, resolution: 41
+level 5, resolution: 51
+level 6, resolution: 65
+level 7, resolution: 81
+level 8, resolution: 102
+level 9, resolution: 129
+level 10, resolution: 162
+level 11, resolution: 204
+level 12, resolution: 257
+level 13, resolution: 323
+level 14, resolution: 407
+level 15, resolution: 513
+GridEncoder: input_dim=3 n_levels=16 level_dim=2 resolution=16 -> 512 per_level_scale=1.2599 params=(29580312, 2) gridtype=hash align_corners=False
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:159: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.amp_scaler = torch.cuda.amp.GradScaler(enabled=self.cfg['amp'])
+sc_factor 14.850189637177428
+translation [ 0.00231164 -0.0063575   0.00410788]
+[nerf_runner.py] denoise cloud
+[nerf_runner.py] Denoising rays based on octree cloud
+[nerf_runner.py] bad_mask#=12648
+rays torch.Size([4836545, 12])
+[nerf_runner.py] train progress 0/501
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1259: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1293: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Iter: 0, valid_samples: 392266/393216, valid_rays: 2046/2048, loss: 8.0131865, rgb_loss: 1.7789440, rgb0_loss: 0.0000000, fs_rgb_loss: 0.0000000, depth_loss: 0.0000000, depth_loss0: 0.0000000, fs_loss: 0.1822864, point_cloud_loss: 0.0000000, point_cloud_normal_loss: 0.0000000, sdf_loss: 6.0519557, eikonal_loss: 0.0000000, variation_loss: 0.0000000, truncation(meter): 0.0100000, pose_reg: 0.0000000, reg_features: 0.0000000, 
+
+[nerf_runner.py] train progress 50/501
+[nerf_runner.py] train progress 100/501
+[nerf_runner.py] train progress 150/501
+[nerf_runner.py] train progress 200/501
+[nerf_runner.py] train progress 250/501
+[nerf_runner.py] train progress 300/501
+[nerf_runner.py] train progress 350/501
+[nerf_runner.py] train progress 400/501
+[nerf_runner.py] train progress 450/501
+[nerf_runner.py] train progress 500/501
+[nerf_runner.py] query_pts:torch.Size([91125, 3]), valid:83018
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1323: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1338: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Running Marching Cubes
+[nerf_runner.py] done V:(8141, 3), F:(16152, 3)
+[N] MPM12 I round 22 n=110: 18.3s
+[nerf_runner.py] Octree voxel dilate_radius:1
+level 0, resolution: 16
+level 1, resolution: 21
+level 2, resolution: 26
+level 3, resolution: 32
+level 4, resolution: 41
+level 5, resolution: 51
+level 6, resolution: 65
+level 7, resolution: 81
+level 8, resolution: 102
+level 9, resolution: 129
+level 10, resolution: 162
+level 11, resolution: 204
+level 12, resolution: 257
+level 13, resolution: 323
+level 14, resolution: 407
+level 15, resolution: 513
+GridEncoder: input_dim=3 n_levels=16 level_dim=2 resolution=16 -> 512 per_level_scale=1.2599 params=(29580312, 2) gridtype=hash align_corners=False
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:159: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.amp_scaler = torch.cuda.amp.GradScaler(enabled=self.cfg['amp'])
+sc_factor 14.850189637177428
+translation [ 0.00231164 -0.0063575   0.00410788]
+[nerf_runner.py] denoise cloud
+[nerf_runner.py] Denoising rays based on octree cloud
+[nerf_runner.py] bad_mask#=13143
+rays torch.Size([5010544, 12])
+[nerf_runner.py] train progress 0/501
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1259: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1293: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Iter: 0, valid_samples: 392735/393216, valid_rays: 2048/2048, loss: 8.5241766, rgb_loss: 1.7827878, rgb0_loss: 0.0000000, fs_rgb_loss: 0.0000000, depth_loss: 0.0000000, depth_loss0: 0.0000000, fs_loss: 0.1914420, point_cloud_loss: 0.0000000, point_cloud_normal_loss: 0.0000000, sdf_loss: 6.5499468, eikonal_loss: 0.0000000, variation_loss: 0.0000000, truncation(meter): 0.0100000, pose_reg: 0.0000000, reg_features: 0.0000000, 
+
+[nerf_runner.py] train progress 50/501
+[nerf_runner.py] train progress 100/501
+[nerf_runner.py] train progress 150/501
+[nerf_runner.py] train progress 200/501
+[nerf_runner.py] train progress 250/501
+[nerf_runner.py] train progress 300/501
+[nerf_runner.py] train progress 350/501
+[nerf_runner.py] train progress 400/501
+[nerf_runner.py] train progress 450/501
+[nerf_runner.py] train progress 500/501
+[nerf_runner.py] query_pts:torch.Size([91125, 3]), valid:83018
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1323: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1338: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Running Marching Cubes
+[nerf_runner.py] done V:(8208, 3), F:(16268, 3)
+[N] MPM12 I round 23 n=115: 18.5s
+[nerf_runner.py] Octree voxel dilate_radius:1
+level 0, resolution: 16
+level 1, resolution: 21
+level 2, resolution: 26
+level 3, resolution: 32
+level 4, resolution: 41
+level 5, resolution: 51
+level 6, resolution: 65
+level 7, resolution: 81
+level 8, resolution: 102
+level 9, resolution: 129
+level 10, resolution: 162
+level 11, resolution: 204
+level 12, resolution: 257
+level 13, resolution: 323
+level 14, resolution: 407
+level 15, resolution: 513
+GridEncoder: input_dim=3 n_levels=16 level_dim=2 resolution=16 -> 512 per_level_scale=1.2599 params=(29580312, 2) gridtype=hash align_corners=False
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:159: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.amp_scaler = torch.cuda.amp.GradScaler(enabled=self.cfg['amp'])
+sc_factor 14.850189637177428
+translation [ 0.00231164 -0.0063575   0.00410788]
+[nerf_runner.py] denoise cloud
+[nerf_runner.py] Denoising rays based on octree cloud
+[nerf_runner.py] bad_mask#=13261
+rays torch.Size([5204578, 12])
+[nerf_runner.py] train progress 0/501
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1259: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1293: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Iter: 0, valid_samples: 392658/393216, valid_rays: 2047/2048, loss: 8.1925220, rgb_loss: 1.6898987, rgb0_loss: 0.0000000, fs_rgb_loss: 0.0000000, depth_loss: 0.0000000, depth_loss0: 0.0000000, fs_loss: 0.1825444, point_cloud_loss: 0.0000000, point_cloud_normal_loss: 0.0000000, sdf_loss: 6.3200793, eikonal_loss: 0.0000000, variation_loss: 0.0000000, truncation(meter): 0.0100000, pose_reg: 0.0000000, reg_features: 0.0000000, 
+
+[nerf_runner.py] train progress 50/501
+[nerf_runner.py] train progress 100/501
+[nerf_runner.py] train progress 150/501
+[nerf_runner.py] train progress 200/501
+[nerf_runner.py] train progress 250/501
+[nerf_runner.py] train progress 300/501
+[nerf_runner.py] train progress 350/501
+[nerf_runner.py] train progress 400/501
+[nerf_runner.py] train progress 450/501
+[nerf_runner.py] train progress 500/501
+[nerf_runner.py] query_pts:torch.Size([91125, 3]), valid:83018
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1323: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1338: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Running Marching Cubes
+[nerf_runner.py] done V:(8573, 3), F:(17000, 3)
+[N] MPM12 I round 24 n=120: 18.5s
+[nerf_runner.py] Octree voxel dilate_radius:1
+level 0, resolution: 16
+level 1, resolution: 21
+level 2, resolution: 26
+level 3, resolution: 32
+level 4, resolution: 41
+level 5, resolution: 51
+level 6, resolution: 65
+level 7, resolution: 81
+level 8, resolution: 102
+level 9, resolution: 129
+level 10, resolution: 162
+level 11, resolution: 204
+level 12, resolution: 257
+level 13, resolution: 323
+level 14, resolution: 407
+level 15, resolution: 513
+GridEncoder: input_dim=3 n_levels=16 level_dim=2 resolution=16 -> 512 per_level_scale=1.2599 params=(29580312, 2) gridtype=hash align_corners=False
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:159: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.amp_scaler = torch.cuda.amp.GradScaler(enabled=self.cfg['amp'])
+sc_factor 14.850189637177428
+translation [ 0.00231164 -0.0063575   0.00410788]
+[nerf_runner.py] denoise cloud
+[nerf_runner.py] Denoising rays based on octree cloud
+[nerf_runner.py] bad_mask#=13322
+rays torch.Size([5408806, 12])
+[nerf_runner.py] train progress 0/501
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1259: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1293: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Iter: 0, valid_samples: 392865/393216, valid_rays: 2048/2048, loss: 8.3920631, rgb_loss: 1.7575872, rgb0_loss: 0.0000000, fs_rgb_loss: 0.0000000, depth_loss: 0.0000000, depth_loss0: 0.0000000, fs_loss: 0.1845878, point_cloud_loss: 0.0000000, point_cloud_normal_loss: 0.0000000, sdf_loss: 6.4498878, eikonal_loss: 0.0000000, variation_loss: 0.0000000, truncation(meter): 0.0100000, pose_reg: 0.0000000, reg_features: 0.0000000, 
+
+[nerf_runner.py] train progress 50/501
+[nerf_runner.py] train progress 100/501
+[nerf_runner.py] train progress 150/501
+[nerf_runner.py] train progress 200/501
+[nerf_runner.py] train progress 250/501
+[nerf_runner.py] train progress 300/501
+[nerf_runner.py] train progress 350/501
+[nerf_runner.py] train progress 400/501
+[nerf_runner.py] train progress 450/501
+[nerf_runner.py] train progress 500/501
+[nerf_runner.py] query_pts:torch.Size([91125, 3]), valid:84349
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1323: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1338: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Running Marching Cubes
+[nerf_runner.py] done V:(8504, 3), F:(16886, 3)
+[N] MPM12 I round 25 n=125: 18.7s
+[nerf_runner.py] Octree voxel dilate_radius:1
+level 0, resolution: 16
+level 1, resolution: 21
+level 2, resolution: 26
+level 3, resolution: 32
+level 4, resolution: 41
+level 5, resolution: 51
+level 6, resolution: 65
+level 7, resolution: 81
+level 8, resolution: 102
+level 9, resolution: 129
+level 10, resolution: 162
+level 11, resolution: 204
+level 12, resolution: 257
+level 13, resolution: 323
+level 14, resolution: 407
+level 15, resolution: 513
+GridEncoder: input_dim=3 n_levels=16 level_dim=2 resolution=16 -> 512 per_level_scale=1.2599 params=(29580312, 2) gridtype=hash align_corners=False
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:159: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.amp_scaler = torch.cuda.amp.GradScaler(enabled=self.cfg['amp'])
+sc_factor 14.850189637177428
+translation [ 0.00231164 -0.0063575   0.00410788]
+[nerf_runner.py] denoise cloud
+[nerf_runner.py] Denoising rays based on octree cloud
+[nerf_runner.py] bad_mask#=13347
+rays torch.Size([5622132, 12])
+[nerf_runner.py] train progress 0/501
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1259: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1293: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Iter: 0, valid_samples: 392488/393216, valid_rays: 2048/2048, loss: 8.9327030, rgb_loss: 1.8068264, rgb0_loss: 0.0000000, fs_rgb_loss: 0.0000000, depth_loss: 0.0000000, depth_loss0: 0.0000000, fs_loss: 0.1931364, point_cloud_loss: 0.0000000, point_cloud_normal_loss: 0.0000000, sdf_loss: 6.9327407, eikonal_loss: 0.0000000, variation_loss: 0.0000000, truncation(meter): 0.0100000, pose_reg: 0.0000000, reg_features: 0.0000000, 
+
+[nerf_runner.py] train progress 50/501
+[nerf_runner.py] train progress 100/501
+[nerf_runner.py] train progress 150/501
+[nerf_runner.py] train progress 200/501
+[nerf_runner.py] train progress 250/501
+[nerf_runner.py] train progress 300/501
+[nerf_runner.py] train progress 350/501
+[nerf_runner.py] train progress 400/501
+[nerf_runner.py] train progress 450/501
+[nerf_runner.py] train progress 500/501
+[nerf_runner.py] query_pts:torch.Size([91125, 3]), valid:84349
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1323: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1338: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Running Marching Cubes
+[nerf_runner.py] done V:(8582, 3), F:(17036, 3)
+[N] MPM12 I round 26 n=130: 18.9s
+[nerf_runner.py] Octree voxel dilate_radius:1
+level 0, resolution: 16
+level 1, resolution: 21
+level 2, resolution: 26
+level 3, resolution: 32
+level 4, resolution: 41
+level 5, resolution: 51
+level 6, resolution: 65
+level 7, resolution: 81
+level 8, resolution: 102
+level 9, resolution: 129
+level 10, resolution: 162
+level 11, resolution: 204
+level 12, resolution: 257
+level 13, resolution: 323
+level 14, resolution: 407
+level 15, resolution: 513
+GridEncoder: input_dim=3 n_levels=16 level_dim=2 resolution=16 -> 512 per_level_scale=1.2599 params=(29580312, 2) gridtype=hash align_corners=False
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:159: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.amp_scaler = torch.cuda.amp.GradScaler(enabled=self.cfg['amp'])
+sc_factor 14.850189637177428
+translation [ 0.00231164 -0.0063575   0.00410788]
+[nerf_runner.py] denoise cloud
+[nerf_runner.py] Denoising rays based on octree cloud
+[nerf_runner.py] bad_mask#=14059
+rays torch.Size([5840009, 12])
+[nerf_runner.py] train progress 0/501
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1259: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1293: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Iter: 0, valid_samples: 392445/393216, valid_rays: 2047/2048, loss: 8.1738873, rgb_loss: 1.7814994, rgb0_loss: 0.0000000, fs_rgb_loss: 0.0000000, depth_loss: 0.0000000, depth_loss0: 0.0000000, fs_loss: 0.1738930, point_cloud_loss: 0.0000000, point_cloud_normal_loss: 0.0000000, sdf_loss: 6.2184949, eikonal_loss: 0.0000000, variation_loss: 0.0000000, truncation(meter): 0.0100000, pose_reg: 0.0000000, reg_features: 0.0000000, 
+
+[nerf_runner.py] train progress 50/501
+[nerf_runner.py] train progress 100/501
+[nerf_runner.py] train progress 150/501
+[nerf_runner.py] train progress 200/501
+[nerf_runner.py] train progress 250/501
+[nerf_runner.py] train progress 300/501
+[nerf_runner.py] train progress 350/501
+[nerf_runner.py] train progress 400/501
+[nerf_runner.py] train progress 450/501
+[nerf_runner.py] train progress 500/501
+[nerf_runner.py] query_pts:torch.Size([91125, 3]), valid:84349
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1323: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1338: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Running Marching Cubes
+[nerf_runner.py] done V:(8499, 3), F:(16848, 3)
+[N] MPM12 I round 27 n=135: 19.0s
+[nerf_runner.py] Octree voxel dilate_radius:1
+level 0, resolution: 16
+level 1, resolution: 21
+level 2, resolution: 26
+level 3, resolution: 32
+level 4, resolution: 41
+level 5, resolution: 51
+level 6, resolution: 65
+level 7, resolution: 81
+level 8, resolution: 102
+level 9, resolution: 129
+level 10, resolution: 162
+level 11, resolution: 204
+level 12, resolution: 257
+level 13, resolution: 323
+level 14, resolution: 407
+level 15, resolution: 513
+GridEncoder: input_dim=3 n_levels=16 level_dim=2 resolution=16 -> 512 per_level_scale=1.2599 params=(29580312, 2) gridtype=hash align_corners=False
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:159: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.amp_scaler = torch.cuda.amp.GradScaler(enabled=self.cfg['amp'])
+sc_factor 14.850189637177428
+translation [ 0.00231164 -0.0063575   0.00410788]
+[nerf_runner.py] denoise cloud
+[nerf_runner.py] Denoising rays based on octree cloud
+[nerf_runner.py] bad_mask#=14332
+rays torch.Size([6062239, 12])
+[nerf_runner.py] train progress 0/501
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1259: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1293: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Iter: 0, valid_samples: 392466/393216, valid_rays: 2048/2048, loss: 8.5266199, rgb_loss: 1.7937148, rgb0_loss: 0.0000000, fs_rgb_loss: 0.0000000, depth_loss: 0.0000000, depth_loss0: 0.0000000, fs_loss: 0.1904813, point_cloud_loss: 0.0000000, point_cloud_normal_loss: 0.0000000, sdf_loss: 6.5424242, eikonal_loss: 0.0000000, variation_loss: 0.0000000, truncation(meter): 0.0100000, pose_reg: 0.0000000, reg_features: 0.0000000, 
+
+[nerf_runner.py] train progress 50/501
+[nerf_runner.py] train progress 100/501
+[nerf_runner.py] train progress 150/501
+[nerf_runner.py] train progress 200/501
+[nerf_runner.py] train progress 250/501
+[nerf_runner.py] train progress 300/501
+[nerf_runner.py] train progress 350/501
+[nerf_runner.py] train progress 400/501
+[nerf_runner.py] train progress 450/501
+[nerf_runner.py] train progress 500/501
+[nerf_runner.py] query_pts:torch.Size([91125, 3]), valid:87132
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1323: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1338: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Running Marching Cubes
+[nerf_runner.py] done V:(8557, 3), F:(16960, 3)
+[N] MPM12 I round 28 n=140: 19.3s
+[nerf_runner.py] Octree voxel dilate_radius:1
+level 0, resolution: 16
+level 1, resolution: 21
+level 2, resolution: 26
+level 3, resolution: 32
+level 4, resolution: 41
+level 5, resolution: 51
+level 6, resolution: 65
+level 7, resolution: 81
+level 8, resolution: 102
+level 9, resolution: 129
+level 10, resolution: 162
+level 11, resolution: 204
+level 12, resolution: 257
+level 13, resolution: 323
+level 14, resolution: 407
+level 15, resolution: 513
+GridEncoder: input_dim=3 n_levels=16 level_dim=2 resolution=16 -> 512 per_level_scale=1.2599 params=(29580312, 2) gridtype=hash align_corners=False
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:159: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.amp_scaler = torch.cuda.amp.GradScaler(enabled=self.cfg['amp'])
+sc_factor 14.850189637177428
+translation [ 0.00231164 -0.0063575   0.00410788]
+[nerf_runner.py] denoise cloud
+[nerf_runner.py] Denoising rays based on octree cloud
+[nerf_runner.py] bad_mask#=14415
+rays torch.Size([6288096, 12])
+[nerf_runner.py] train progress 0/501
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1259: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1293: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Iter: 0, valid_samples: 392590/393216, valid_rays: 2047/2048, loss: 8.3975086, rgb_loss: 1.7288888, rgb0_loss: 0.0000000, fs_rgb_loss: 0.0000000, depth_loss: 0.0000000, depth_loss0: 0.0000000, fs_loss: 0.1916189, point_cloud_loss: 0.0000000, point_cloud_normal_loss: 0.0000000, sdf_loss: 6.4770012, eikonal_loss: 0.0000000, variation_loss: 0.0000000, truncation(meter): 0.0100000, pose_reg: 0.0000000, reg_features: 0.0000000, 
+
+[nerf_runner.py] train progress 50/501
+[nerf_runner.py] train progress 100/501
+[nerf_runner.py] train progress 150/501
+[nerf_runner.py] train progress 200/501
+[nerf_runner.py] train progress 250/501
+[nerf_runner.py] train progress 300/501
+[nerf_runner.py] train progress 350/501
+[nerf_runner.py] train progress 400/501
+[nerf_runner.py] train progress 450/501
+[nerf_runner.py] train progress 500/501
+[nerf_runner.py] query_pts:torch.Size([91125, 3]), valid:87132
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1323: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1338: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Running Marching Cubes
+[nerf_runner.py] done V:(8578, 3), F:(16998, 3)
+[N] MPM12 I round 29 n=145: 19.5s
+[nerf_runner.py] Octree voxel dilate_radius:1
+level 0, resolution: 16
+level 1, resolution: 21
+level 2, resolution: 26
+level 3, resolution: 32
+level 4, resolution: 41
+level 5, resolution: 51
+level 6, resolution: 65
+level 7, resolution: 81
+level 8, resolution: 102
+level 9, resolution: 129
+level 10, resolution: 162
+level 11, resolution: 204
+level 12, resolution: 257
+level 13, resolution: 323
+level 14, resolution: 407
+level 15, resolution: 513
+GridEncoder: input_dim=3 n_levels=16 level_dim=2 resolution=16 -> 512 per_level_scale=1.2599 params=(29580312, 2) gridtype=hash align_corners=False
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:159: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.amp_scaler = torch.cuda.amp.GradScaler(enabled=self.cfg['amp'])
+sc_factor 14.850189637177428
+translation [ 0.00231164 -0.0063575   0.00410788]
+[nerf_runner.py] denoise cloud
+[nerf_runner.py] Denoising rays based on octree cloud
+[nerf_runner.py] bad_mask#=14633
+rays torch.Size([6521444, 12])
+[nerf_runner.py] train progress 0/501
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1259: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1293: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Iter: 0, valid_samples: 392585/393216, valid_rays: 2047/2048, loss: 8.0491409, rgb_loss: 1.7062984, rgb0_loss: 0.0000000, fs_rgb_loss: 0.0000000, depth_loss: 0.0000000, depth_loss0: 0.0000000, fs_loss: 0.1790170, point_cloud_loss: 0.0000000, point_cloud_normal_loss: 0.0000000, sdf_loss: 6.1638255, eikonal_loss: 0.0000000, variation_loss: 0.0000000, truncation(meter): 0.0100000, pose_reg: 0.0000000, reg_features: 0.0000000, 
+
+[nerf_runner.py] train progress 50/501
+[nerf_runner.py] train progress 100/501
+[nerf_runner.py] train progress 150/501
+[nerf_runner.py] train progress 200/501
+[nerf_runner.py] train progress 250/501
+[nerf_runner.py] train progress 300/501
+[nerf_runner.py] train progress 350/501
+[nerf_runner.py] train progress 400/501
+[nerf_runner.py] train progress 450/501
+[nerf_runner.py] train progress 500/501
+[nerf_runner.py] query_pts:torch.Size([91125, 3]), valid:87132
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1323: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1338: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Running Marching Cubes
+[nerf_runner.py] done V:(8705, 3), F:(17234, 3)
+[N] MPM12 I round 30 n=150: 19.6s
+[nerf_runner.py] Octree voxel dilate_radius:1
+level 0, resolution: 16
+level 1, resolution: 21
+level 2, resolution: 26
+level 3, resolution: 32
+level 4, resolution: 41
+level 5, resolution: 51
+level 6, resolution: 65
+level 7, resolution: 81
+level 8, resolution: 102
+level 9, resolution: 129
+level 10, resolution: 162
+level 11, resolution: 204
+level 12, resolution: 257
+level 13, resolution: 323
+level 14, resolution: 407
+level 15, resolution: 513
+GridEncoder: input_dim=3 n_levels=16 level_dim=2 resolution=16 -> 512 per_level_scale=1.2599 params=(29580312, 2) gridtype=hash align_corners=False
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:159: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.amp_scaler = torch.cuda.amp.GradScaler(enabled=self.cfg['amp'])
+sc_factor 14.850189637177428
+translation [ 0.00231164 -0.0063575   0.00410788]
+[nerf_runner.py] denoise cloud
+[nerf_runner.py] Denoising rays based on octree cloud
+[nerf_runner.py] bad_mask#=15474
+rays torch.Size([6750208, 12])
+[nerf_runner.py] train progress 0/501
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1259: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1293: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Iter: 0, valid_samples: 392599/393216, valid_rays: 2047/2048, loss: 8.2673979, rgb_loss: 1.8312273, rgb0_loss: 0.0000000, fs_rgb_loss: 0.0000000, depth_loss: 0.0000000, depth_loss0: 0.0000000, fs_loss: 0.1825373, point_cloud_loss: 0.0000000, point_cloud_normal_loss: 0.0000000, sdf_loss: 6.2536330, eikonal_loss: 0.0000000, variation_loss: 0.0000000, truncation(meter): 0.0100000, pose_reg: 0.0000000, reg_features: 0.0000000, 
+
+[nerf_runner.py] train progress 50/501
+[nerf_runner.py] train progress 100/501
+[nerf_runner.py] train progress 150/501
+[nerf_runner.py] train progress 200/501
+[nerf_runner.py] train progress 250/501
+[nerf_runner.py] train progress 300/501
+[nerf_runner.py] train progress 350/501
+[nerf_runner.py] train progress 400/501
+[nerf_runner.py] train progress 450/501
+[nerf_runner.py] train progress 500/501
+[nerf_runner.py] query_pts:torch.Size([91125, 3]), valid:87132
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1323: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1338: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Running Marching Cubes
+[nerf_runner.py] done V:(8532, 3), F:(16904, 3)
+[N] MPM12 I round 31 n=155: 19.5s
+[nerf_runner.py] Octree voxel dilate_radius:1
+level 0, resolution: 16
+level 1, resolution: 21
+level 2, resolution: 26
+level 3, resolution: 32
+level 4, resolution: 41
+level 5, resolution: 51
+level 6, resolution: 65
+level 7, resolution: 81
+level 8, resolution: 102
+level 9, resolution: 129
+level 10, resolution: 162
+level 11, resolution: 204
+level 12, resolution: 257
+level 13, resolution: 323
+level 14, resolution: 407
+level 15, resolution: 513
+GridEncoder: input_dim=3 n_levels=16 level_dim=2 resolution=16 -> 512 per_level_scale=1.2599 params=(29580312, 2) gridtype=hash align_corners=False
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:159: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.amp_scaler = torch.cuda.amp.GradScaler(enabled=self.cfg['amp'])
+sc_factor 14.850189637177428
+translation [ 0.00231164 -0.0063575   0.00410788]
+[nerf_runner.py] denoise cloud
+[nerf_runner.py] Denoising rays based on octree cloud
+[nerf_runner.py] bad_mask#=15896
+rays torch.Size([6943195, 12])
+[nerf_runner.py] train progress 0/501
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1259: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1293: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Iter: 0, valid_samples: 392851/393216, valid_rays: 2048/2048, loss: 8.1926899, rgb_loss: 1.7804172, rgb0_loss: 0.0000000, fs_rgb_loss: 0.0000000, depth_loss: 0.0000000, depth_loss0: 0.0000000, fs_loss: 0.1767585, point_cloud_loss: 0.0000000, point_cloud_normal_loss: 0.0000000, sdf_loss: 6.2355142, eikonal_loss: 0.0000000, variation_loss: 0.0000000, truncation(meter): 0.0100000, pose_reg: 0.0000000, reg_features: 0.0000000, 
+
+[nerf_runner.py] train progress 50/501
+[nerf_runner.py] train progress 100/501
+[nerf_runner.py] train progress 150/501
+[nerf_runner.py] train progress 200/501
+[nerf_runner.py] train progress 250/501
+[nerf_runner.py] train progress 300/501
+[nerf_runner.py] train progress 350/501
+[nerf_runner.py] train progress 400/501
+[nerf_runner.py] train progress 450/501
+[nerf_runner.py] train progress 500/501
+[nerf_runner.py] query_pts:torch.Size([91125, 3]), valid:87132
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1323: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1338: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Running Marching Cubes
+[nerf_runner.py] done V:(8531, 3), F:(16908, 3)
+[N] MPM12 I round 32 n=160: 19.6s
+[nerf_runner.py] Octree voxel dilate_radius:1
+level 0, resolution: 16
+level 1, resolution: 21
+level 2, resolution: 26
+level 3, resolution: 32
+level 4, resolution: 41
+level 5, resolution: 51
+level 6, resolution: 65
+level 7, resolution: 81
+level 8, resolution: 102
+level 9, resolution: 129
+level 10, resolution: 162
+level 11, resolution: 204
+level 12, resolution: 257
+level 13, resolution: 323
+level 14, resolution: 407
+level 15, resolution: 513
+GridEncoder: input_dim=3 n_levels=16 level_dim=2 resolution=16 -> 512 per_level_scale=1.2599 params=(29580312, 2) gridtype=hash align_corners=False
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:159: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.amp_scaler = torch.cuda.amp.GradScaler(enabled=self.cfg['amp'])
+sc_factor 14.850189637177428
+translation [ 0.00231164 -0.0063575   0.00410788]
+[nerf_runner.py] denoise cloud
+[nerf_runner.py] Denoising rays based on octree cloud
+[nerf_runner.py] bad_mask#=16234
+rays torch.Size([7057350, 12])
+[nerf_runner.py] train progress 0/501
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1259: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1293: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Iter: 0, valid_samples: 392946/393216, valid_rays: 2048/2048, loss: 8.2816324, rgb_loss: 1.7749677, rgb0_loss: 0.0000000, fs_rgb_loss: 0.0000000, depth_loss: 0.0000000, depth_loss0: 0.0000000, fs_loss: 0.1786561, point_cloud_loss: 0.0000000, point_cloud_normal_loss: 0.0000000, sdf_loss: 6.3280087, eikonal_loss: 0.0000000, variation_loss: 0.0000000, truncation(meter): 0.0100000, pose_reg: 0.0000000, reg_features: 0.0000000, 
+
+[nerf_runner.py] train progress 50/501
+[nerf_runner.py] train progress 100/501
+[nerf_runner.py] train progress 150/501
+[nerf_runner.py] train progress 200/501
+[nerf_runner.py] train progress 250/501
+[nerf_runner.py] train progress 300/501
+[nerf_runner.py] train progress 350/501
+[nerf_runner.py] train progress 400/501
+[nerf_runner.py] train progress 450/501
+[nerf_runner.py] train progress 500/501
+[nerf_runner.py] query_pts:torch.Size([91125, 3]), valid:87132
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1323: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1338: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Running Marching Cubes
+[nerf_runner.py] done V:(8584, 3), F:(17014, 3)
+[N] MPM12 I round 33 n=165: 20.0s
+[nerf_runner.py] Octree voxel dilate_radius:1
+level 0, resolution: 16
+level 1, resolution: 21
+level 2, resolution: 26
+level 3, resolution: 32
+level 4, resolution: 41
+level 5, resolution: 51
+level 6, resolution: 65
+level 7, resolution: 81
+level 8, resolution: 102
+level 9, resolution: 129
+level 10, resolution: 162
+level 11, resolution: 204
+level 12, resolution: 257
+level 13, resolution: 323
+level 14, resolution: 407
+level 15, resolution: 513
+GridEncoder: input_dim=3 n_levels=16 level_dim=2 resolution=16 -> 512 per_level_scale=1.2599 params=(29580312, 2) gridtype=hash align_corners=False
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:159: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.amp_scaler = torch.cuda.amp.GradScaler(enabled=self.cfg['amp'])
+sc_factor 14.850189637177428
+translation [ 0.00231164 -0.0063575   0.00410788]
+[nerf_runner.py] denoise cloud
+[nerf_runner.py] Denoising rays based on octree cloud
+[nerf_runner.py] bad_mask#=16713
+rays torch.Size([7216677, 12])
+[nerf_runner.py] train progress 0/501
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1259: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1293: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Iter: 0, valid_samples: 392269/393216, valid_rays: 2046/2048, loss: 8.3764610, rgb_loss: 1.6835785, rgb0_loss: 0.0000000, fs_rgb_loss: 0.0000000, depth_loss: 0.0000000, depth_loss0: 0.0000000, fs_loss: 0.1869562, point_cloud_loss: 0.0000000, point_cloud_normal_loss: 0.0000000, sdf_loss: 6.5059266, eikonal_loss: 0.0000000, variation_loss: 0.0000000, truncation(meter): 0.0100000, pose_reg: 0.0000000, reg_features: 0.0000000, 
+
+[nerf_runner.py] train progress 50/501
+[nerf_runner.py] train progress 100/501
+[nerf_runner.py] train progress 150/501
+[nerf_runner.py] train progress 200/501
+[nerf_runner.py] train progress 250/501
+[nerf_runner.py] train progress 300/501
+[nerf_runner.py] train progress 350/501
+[nerf_runner.py] train progress 400/501
+[nerf_runner.py] train progress 450/501
+[nerf_runner.py] train progress 500/501
+[nerf_runner.py] query_pts:torch.Size([91125, 3]), valid:87132
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1323: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1338: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Running Marching Cubes
+[nerf_runner.py] done V:(8700, 3), F:(17228, 3)
+[N] MPM12 I round 34 n=170: 20.3s
+[nerf_runner.py] Octree voxel dilate_radius:1
+level 0, resolution: 16
+level 1, resolution: 21
+level 2, resolution: 26
+level 3, resolution: 32
+level 4, resolution: 41
+level 5, resolution: 51
+level 6, resolution: 65
+level 7, resolution: 81
+level 8, resolution: 102
+level 9, resolution: 129
+level 10, resolution: 162
+level 11, resolution: 204
+level 12, resolution: 257
+level 13, resolution: 323
+level 14, resolution: 407
+level 15, resolution: 513
+GridEncoder: input_dim=3 n_levels=16 level_dim=2 resolution=16 -> 512 per_level_scale=1.2599 params=(29580312, 2) gridtype=hash align_corners=False
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:159: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.amp_scaler = torch.cuda.amp.GradScaler(enabled=self.cfg['amp'])
+sc_factor 14.850189637177428
+translation [ 0.00231164 -0.0063575   0.00410788]
+[nerf_runner.py] denoise cloud
+[nerf_runner.py] Denoising rays based on octree cloud
+[nerf_runner.py] bad_mask#=17088
+rays torch.Size([7403280, 12])
+[nerf_runner.py] train progress 0/501
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1259: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1293: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Iter: 0, valid_samples: 392282/393216, valid_rays: 2045/2048, loss: 8.4486704, rgb_loss: 1.7376964, rgb0_loss: 0.0000000, fs_rgb_loss: 0.0000000, depth_loss: 0.0000000, depth_loss0: 0.0000000, fs_loss: 0.1853047, point_cloud_loss: 0.0000000, point_cloud_normal_loss: 0.0000000, sdf_loss: 6.5256691, eikonal_loss: 0.0000000, variation_loss: 0.0000000, truncation(meter): 0.0100000, pose_reg: 0.0000000, reg_features: 0.0000000, 
+
+[nerf_runner.py] train progress 50/501
+[nerf_runner.py] train progress 100/501
+[nerf_runner.py] train progress 150/501
+[nerf_runner.py] train progress 200/501
+[nerf_runner.py] train progress 250/501
+[nerf_runner.py] train progress 300/501
+[nerf_runner.py] train progress 350/501
+[nerf_runner.py] train progress 400/501
+[nerf_runner.py] train progress 450/501
+[nerf_runner.py] train progress 500/501
+[nerf_runner.py] query_pts:torch.Size([91125, 3]), valid:87132
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1323: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1338: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Running Marching Cubes
+[nerf_runner.py] done V:(8654, 3), F:(17148, 3)
+[N] MPM12 I round 35 n=175: 20.6s
+[nerf_runner.py] Octree voxel dilate_radius:1
+level 0, resolution: 16
+level 1, resolution: 21
+level 2, resolution: 26
+level 3, resolution: 32
+level 4, resolution: 41
+level 5, resolution: 51
+level 6, resolution: 65
+level 7, resolution: 81
+level 8, resolution: 102
+level 9, resolution: 129
+level 10, resolution: 162
+level 11, resolution: 204
+level 12, resolution: 257
+level 13, resolution: 323
+level 14, resolution: 407
+level 15, resolution: 513
+GridEncoder: input_dim=3 n_levels=16 level_dim=2 resolution=16 -> 512 per_level_scale=1.2599 params=(29580312, 2) gridtype=hash align_corners=False
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:159: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.amp_scaler = torch.cuda.amp.GradScaler(enabled=self.cfg['amp'])
+sc_factor 14.850189637177428
+translation [ 0.00231164 -0.0063575   0.00410788]
+[nerf_runner.py] denoise cloud
+[nerf_runner.py] Denoising rays based on octree cloud
+[nerf_runner.py] bad_mask#=18700
+rays torch.Size([7593785, 12])
+[nerf_runner.py] train progress 0/501
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1259: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1293: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Iter: 0, valid_samples: 392189/393216, valid_rays: 2046/2048, loss: 8.1467266, rgb_loss: 1.7863154, rgb0_loss: 0.0000000, fs_rgb_loss: 0.0000000, depth_loss: 0.0000000, depth_loss0: 0.0000000, fs_loss: 0.1703010, point_cloud_loss: 0.0000000, point_cloud_normal_loss: 0.0000000, sdf_loss: 6.1901102, eikonal_loss: 0.0000000, variation_loss: 0.0000000, truncation(meter): 0.0100000, pose_reg: 0.0000000, reg_features: 0.0000000, 
+
+[nerf_runner.py] train progress 50/501
+[nerf_runner.py] train progress 100/501
+[nerf_runner.py] train progress 150/501
+[nerf_runner.py] train progress 200/501
+[nerf_runner.py] train progress 250/501
+[nerf_runner.py] train progress 300/501
+[nerf_runner.py] train progress 350/501
+[nerf_runner.py] train progress 400/501
+[nerf_runner.py] train progress 450/501
+[nerf_runner.py] train progress 500/501
+[nerf_runner.py] query_pts:torch.Size([91125, 3]), valid:87132
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1323: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1338: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Running Marching Cubes
+[nerf_runner.py] done V:(8553, 3), F:(16956, 3)
+[N] MPM12 I round 36 n=180: 20.7s
+[nerf_runner.py] Octree voxel dilate_radius:1
+level 0, resolution: 16
+level 1, resolution: 21
+level 2, resolution: 26
+level 3, resolution: 32
+level 4, resolution: 41
+level 5, resolution: 51
+level 6, resolution: 65
+level 7, resolution: 81
+level 8, resolution: 102
+level 9, resolution: 129
+level 10, resolution: 162
+level 11, resolution: 204
+level 12, resolution: 257
+level 13, resolution: 323
+level 14, resolution: 407
+level 15, resolution: 513
+GridEncoder: input_dim=3 n_levels=16 level_dim=2 resolution=16 -> 512 per_level_scale=1.2599 params=(29580312, 2) gridtype=hash align_corners=False
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:159: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.amp_scaler = torch.cuda.amp.GradScaler(enabled=self.cfg['amp'])
+sc_factor 14.850189637177428
+translation [ 0.00231164 -0.0063575   0.00410788]
+[nerf_runner.py] denoise cloud
+[nerf_runner.py] Denoising rays based on octree cloud
+[nerf_runner.py] bad_mask#=19468
+rays torch.Size([7797683, 12])
+[nerf_runner.py] train progress 0/501
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1259: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1293: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Iter: 0, valid_samples: 392261/393216, valid_rays: 2046/2048, loss: 8.2791843, rgb_loss: 1.7485504, rgb0_loss: 0.0000000, fs_rgb_loss: 0.0000000, depth_loss: 0.0000000, depth_loss0: 0.0000000, fs_loss: 0.1732143, point_cloud_loss: 0.0000000, point_cloud_normal_loss: 0.0000000, sdf_loss: 6.3574195, eikonal_loss: 0.0000000, variation_loss: 0.0000000, truncation(meter): 0.0100000, pose_reg: 0.0000000, reg_features: 0.0000000, 
+
+[nerf_runner.py] train progress 50/501
+[nerf_runner.py] train progress 100/501
+[nerf_runner.py] train progress 150/501
+[nerf_runner.py] train progress 200/501
+[nerf_runner.py] train progress 250/501
+[nerf_runner.py] train progress 300/501
+[nerf_runner.py] train progress 350/501
+[nerf_runner.py] train progress 400/501
+[nerf_runner.py] train progress 450/501
+[nerf_runner.py] train progress 500/501
+[nerf_runner.py] query_pts:torch.Size([91125, 3]), valid:87132
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1323: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1338: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Running Marching Cubes
+[nerf_runner.py] done V:(8562, 3), F:(16982, 3)
+[N] MPM12 I round 37 n=185: 20.8s
+[nerf_runner.py] Octree voxel dilate_radius:1
+level 0, resolution: 16
+level 1, resolution: 21
+level 2, resolution: 26
+level 3, resolution: 32
+level 4, resolution: 41
+level 5, resolution: 51
+level 6, resolution: 65
+level 7, resolution: 81
+level 8, resolution: 102
+level 9, resolution: 129
+level 10, resolution: 162
+level 11, resolution: 204
+level 12, resolution: 257
+level 13, resolution: 323
+level 14, resolution: 407
+level 15, resolution: 513
+GridEncoder: input_dim=3 n_levels=16 level_dim=2 resolution=16 -> 512 per_level_scale=1.2599 params=(29580312, 2) gridtype=hash align_corners=False
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:159: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.amp_scaler = torch.cuda.amp.GradScaler(enabled=self.cfg['amp'])
+sc_factor 14.850189637177428
+translation [ 0.00231164 -0.0063575   0.00410788]
+[nerf_runner.py] denoise cloud
+[nerf_runner.py] Denoising rays based on octree cloud
+[nerf_runner.py] bad_mask#=19636
+rays torch.Size([7996576, 12])
+[nerf_runner.py] train progress 0/501
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1259: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1293: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Iter: 0, valid_samples: 392509/393216, valid_rays: 2046/2048, loss: 8.4627056, rgb_loss: 1.6836035, rgb0_loss: 0.0000000, fs_rgb_loss: 0.0000000, depth_loss: 0.0000000, depth_loss0: 0.0000000, fs_loss: 0.1828862, point_cloud_loss: 0.0000000, point_cloud_normal_loss: 0.0000000, sdf_loss: 6.5962157, eikonal_loss: 0.0000000, variation_loss: 0.0000000, truncation(meter): 0.0100000, pose_reg: 0.0000000, reg_features: 0.0000000, 
+
+[nerf_runner.py] train progress 50/501
+[nerf_runner.py] train progress 100/501
+[nerf_runner.py] train progress 150/501
+[nerf_runner.py] train progress 200/501
+[nerf_runner.py] train progress 250/501
+[nerf_runner.py] train progress 300/501
+[nerf_runner.py] train progress 350/501
+[nerf_runner.py] train progress 400/501
+[nerf_runner.py] train progress 450/501
+[nerf_runner.py] train progress 500/501
+[nerf_runner.py] query_pts:torch.Size([91125, 3]), valid:87132
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1323: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1338: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Running Marching Cubes
+[nerf_runner.py] done V:(8621, 3), F:(17082, 3)
+[N] MPM12 I round 38 n=190: 20.8s
+[nerf_runner.py] Octree voxel dilate_radius:1
+level 0, resolution: 16
+level 1, resolution: 21
+level 2, resolution: 26
+level 3, resolution: 32
+level 4, resolution: 41
+level 5, resolution: 51
+level 6, resolution: 65
+level 7, resolution: 81
+level 8, resolution: 102
+level 9, resolution: 129
+level 10, resolution: 162
+level 11, resolution: 204
+level 12, resolution: 257
+level 13, resolution: 323
+level 14, resolution: 407
+level 15, resolution: 513
+GridEncoder: input_dim=3 n_levels=16 level_dim=2 resolution=16 -> 512 per_level_scale=1.2599 params=(29580312, 2) gridtype=hash align_corners=False
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:159: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.amp_scaler = torch.cuda.amp.GradScaler(enabled=self.cfg['amp'])
+sc_factor 14.850189637177428
+translation [ 0.00231164 -0.0063575   0.00410788]
+[nerf_runner.py] denoise cloud
+[nerf_runner.py] Denoising rays based on octree cloud
+[nerf_runner.py] bad_mask#=20066
+rays torch.Size([8190843, 12])
+[nerf_runner.py] train progress 0/501
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1259: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1293: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Iter: 0, valid_samples: 392204/393216, valid_rays: 2046/2048, loss: 8.4955816, rgb_loss: 1.7527316, rgb0_loss: 0.0000000, fs_rgb_loss: 0.0000000, depth_loss: 0.0000000, depth_loss0: 0.0000000, fs_loss: 0.1794423, point_cloud_loss: 0.0000000, point_cloud_normal_loss: 0.0000000, sdf_loss: 6.5634074, eikonal_loss: 0.0000000, variation_loss: 0.0000000, truncation(meter): 0.0100000, pose_reg: 0.0000000, reg_features: 0.0000000, 
+
+[nerf_runner.py] train progress 50/501
+[nerf_runner.py] train progress 100/501
+[nerf_runner.py] train progress 150/501
+[nerf_runner.py] train progress 200/501
+[nerf_runner.py] train progress 250/501
+[nerf_runner.py] train progress 300/501
+[nerf_runner.py] train progress 350/501
+[nerf_runner.py] train progress 400/501
+[nerf_runner.py] train progress 450/501
+[nerf_runner.py] train progress 500/501
+[nerf_runner.py] query_pts:torch.Size([91125, 3]), valid:87132
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1323: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1338: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Running Marching Cubes
+[nerf_runner.py] done V:(8728, 3), F:(17302, 3)
+[N] MPM12 I round 39 n=195: 21.3s
+[nerf_runner.py] Octree voxel dilate_radius:1
+level 0, resolution: 16
+level 1, resolution: 21
+level 2, resolution: 26
+level 3, resolution: 32
+level 4, resolution: 41
+level 5, resolution: 51
+level 6, resolution: 65
+level 7, resolution: 81
+level 8, resolution: 102
+level 9, resolution: 129
+level 10, resolution: 162
+level 11, resolution: 204
+level 12, resolution: 257
+level 13, resolution: 323
+level 14, resolution: 407
+level 15, resolution: 513
+GridEncoder: input_dim=3 n_levels=16 level_dim=2 resolution=16 -> 512 per_level_scale=1.2599 params=(29580312, 2) gridtype=hash align_corners=False
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:159: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.amp_scaler = torch.cuda.amp.GradScaler(enabled=self.cfg['amp'])
+sc_factor 14.850189637177428
+translation [ 0.00231164 -0.0063575   0.00410788]
+[nerf_runner.py] denoise cloud
+[nerf_runner.py] Denoising rays based on octree cloud
+[nerf_runner.py] bad_mask#=20587
+rays torch.Size([8383071, 12])
+[nerf_runner.py] train progress 0/501
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1259: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1293: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Iter: 0, valid_samples: 392289/393216, valid_rays: 2046/2048, loss: 8.2623081, rgb_loss: 1.6904860, rgb0_loss: 0.0000000, fs_rgb_loss: 0.0000000, depth_loss: 0.0000000, depth_loss0: 0.0000000, fs_loss: 0.1730852, point_cloud_loss: 0.0000000, point_cloud_normal_loss: 0.0000000, sdf_loss: 6.3987365, eikonal_loss: 0.0000000, variation_loss: 0.0000000, truncation(meter): 0.0100000, pose_reg: 0.0000000, reg_features: 0.0000000, 
+
+[nerf_runner.py] train progress 50/501
+[nerf_runner.py] train progress 100/501
+[nerf_runner.py] train progress 150/501
+[nerf_runner.py] train progress 200/501
+[nerf_runner.py] train progress 250/501
+[nerf_runner.py] train progress 300/501
+[nerf_runner.py] train progress 350/501
+[nerf_runner.py] train progress 400/501
+[nerf_runner.py] train progress 450/501
+[nerf_runner.py] train progress 500/501
+[nerf_runner.py] query_pts:torch.Size([91125, 3]), valid:87132
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1323: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1338: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Running Marching Cubes
+[nerf_runner.py] done V:(8571, 3), F:(16994, 3)
+[N] MPM12 I round 40 n=200: 21.2s
+[nerf_runner.py] Octree voxel dilate_radius:1
+level 0, resolution: 16
+level 1, resolution: 21
+level 2, resolution: 26
+level 3, resolution: 32
+level 4, resolution: 41
+level 5, resolution: 51
+level 6, resolution: 65
+level 7, resolution: 81
+level 8, resolution: 102
+level 9, resolution: 129
+level 10, resolution: 162
+level 11, resolution: 204
+level 12, resolution: 257
+level 13, resolution: 323
+level 14, resolution: 407
+level 15, resolution: 513
+GridEncoder: input_dim=3 n_levels=16 level_dim=2 resolution=16 -> 512 per_level_scale=1.2599 params=(29580312, 2) gridtype=hash align_corners=False
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:159: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.amp_scaler = torch.cuda.amp.GradScaler(enabled=self.cfg['amp'])
+sc_factor 14.850189637177428
+translation [ 0.00231164 -0.0063575   0.00410788]
+[nerf_runner.py] denoise cloud
+[nerf_runner.py] Denoising rays based on octree cloud
+[nerf_runner.py] bad_mask#=20962
+rays torch.Size([8558309, 12])
+[nerf_runner.py] train progress 0/501
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1259: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1293: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Iter: 0, valid_samples: 391920/393216, valid_rays: 2044/2048, loss: 8.5311823, rgb_loss: 1.7818445, rgb0_loss: 0.0000000, fs_rgb_loss: 0.0000000, depth_loss: 0.0000000, depth_loss0: 0.0000000, fs_loss: 0.1724137, point_cloud_loss: 0.0000000, point_cloud_normal_loss: 0.0000000, sdf_loss: 6.5769238, eikonal_loss: 0.0000000, variation_loss: 0.0000000, truncation(meter): 0.0100000, pose_reg: 0.0000000, reg_features: 0.0000000, 
+
+[nerf_runner.py] train progress 50/501
+[nerf_runner.py] train progress 100/501
+[nerf_runner.py] train progress 150/501
+[nerf_runner.py] train progress 200/501
+[nerf_runner.py] train progress 250/501
+[nerf_runner.py] train progress 300/501
+[nerf_runner.py] train progress 350/501
+[nerf_runner.py] train progress 400/501
+[nerf_runner.py] train progress 450/501
+[nerf_runner.py] train progress 500/501
+[nerf_runner.py] query_pts:torch.Size([91125, 3]), valid:87132
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1323: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1338: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Running Marching Cubes
+[nerf_runner.py] done V:(8524, 3), F:(16882, 3)
+[N] MPM12 I round 41 n=205: 21.1s
+[nerf_runner.py] Octree voxel dilate_radius:1
+level 0, resolution: 16
+level 1, resolution: 21
+level 2, resolution: 26
+level 3, resolution: 32
+level 4, resolution: 41
+level 5, resolution: 51
+level 6, resolution: 65
+level 7, resolution: 81
+level 8, resolution: 102
+level 9, resolution: 129
+level 10, resolution: 162
+level 11, resolution: 204
+level 12, resolution: 257
+level 13, resolution: 323
+level 14, resolution: 407
+level 15, resolution: 513
+GridEncoder: input_dim=3 n_levels=16 level_dim=2 resolution=16 -> 512 per_level_scale=1.2599 params=(29580312, 2) gridtype=hash align_corners=False
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:159: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.amp_scaler = torch.cuda.amp.GradScaler(enabled=self.cfg['amp'])
+sc_factor 14.850189637177428
+translation [ 0.00231164 -0.0063575   0.00410788]
+[nerf_runner.py] denoise cloud
+[nerf_runner.py] Denoising rays based on octree cloud
+[nerf_runner.py] bad_mask#=20971
+rays torch.Size([8719126, 12])
+[nerf_runner.py] train progress 0/501
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1259: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1293: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Iter: 0, valid_samples: 391954/393216, valid_rays: 2045/2048, loss: 8.3259172, rgb_loss: 1.7442017, rgb0_loss: 0.0000000, fs_rgb_loss: 0.0000000, depth_loss: 0.0000000, depth_loss0: 0.0000000, fs_loss: 0.1599934, point_cloud_loss: 0.0000000, point_cloud_normal_loss: 0.0000000, sdf_loss: 6.4217219, eikonal_loss: 0.0000000, variation_loss: 0.0000000, truncation(meter): 0.0100000, pose_reg: 0.0000000, reg_features: 0.0000000, 
+
+[nerf_runner.py] train progress 50/501
+[nerf_runner.py] train progress 100/501
+[nerf_runner.py] train progress 150/501
+[nerf_runner.py] train progress 200/501
+[nerf_runner.py] train progress 250/501
+[nerf_runner.py] train progress 300/501
+[nerf_runner.py] train progress 350/501
+[nerf_runner.py] train progress 400/501
+[nerf_runner.py] train progress 450/501
+[nerf_runner.py] train progress 500/501
+[nerf_runner.py] query_pts:torch.Size([91125, 3]), valid:87132
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1323: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1338: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Running Marching Cubes
+[nerf_runner.py] done V:(8637, 3), F:(17112, 3)
+[N] MPM12 I round 42 n=210: 21.5s
+[nerf_runner.py] Octree voxel dilate_radius:1
+level 0, resolution: 16
+level 1, resolution: 21
+level 2, resolution: 26
+level 3, resolution: 32
+level 4, resolution: 41
+level 5, resolution: 51
+level 6, resolution: 65
+level 7, resolution: 81
+level 8, resolution: 102
+level 9, resolution: 129
+level 10, resolution: 162
+level 11, resolution: 204
+level 12, resolution: 257
+level 13, resolution: 323
+level 14, resolution: 407
+level 15, resolution: 513
+GridEncoder: input_dim=3 n_levels=16 level_dim=2 resolution=16 -> 512 per_level_scale=1.2599 params=(29580312, 2) gridtype=hash align_corners=False
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:159: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.amp_scaler = torch.cuda.amp.GradScaler(enabled=self.cfg['amp'])
+sc_factor 14.850189637177428
+translation [ 0.00231164 -0.0063575   0.00410788]
+[nerf_runner.py] denoise cloud
+[nerf_runner.py] Denoising rays based on octree cloud
+[nerf_runner.py] bad_mask#=20996
+rays torch.Size([8908772, 12])
+[nerf_runner.py] train progress 0/501
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1259: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1293: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Iter: 0, valid_samples: 392513/393216, valid_rays: 2047/2048, loss: 8.5101528, rgb_loss: 1.7386274, rgb0_loss: 0.0000000, fs_rgb_loss: 0.0000000, depth_loss: 0.0000000, depth_loss0: 0.0000000, fs_loss: 0.1729036, point_cloud_loss: 0.0000000, point_cloud_normal_loss: 0.0000000, sdf_loss: 6.5986214, eikonal_loss: 0.0000000, variation_loss: 0.0000000, truncation(meter): 0.0100000, pose_reg: 0.0000000, reg_features: 0.0000000, 
+
+[nerf_runner.py] train progress 50/501
+[nerf_runner.py] train progress 100/501
+[nerf_runner.py] train progress 150/501
+[nerf_runner.py] train progress 200/501
+[nerf_runner.py] train progress 250/501
+[nerf_runner.py] train progress 300/501
+[nerf_runner.py] train progress 350/501
+[nerf_runner.py] train progress 400/501
+[nerf_runner.py] train progress 450/501
+[nerf_runner.py] train progress 500/501
+[nerf_runner.py] query_pts:torch.Size([91125, 3]), valid:87132
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1323: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1338: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Running Marching Cubes
+[nerf_runner.py] done V:(8650, 3), F:(17130, 3)
+[N] MPM12 I round 43 n=215: 21.8s
+[nerf_runner.py] Octree voxel dilate_radius:1
+level 0, resolution: 16
+level 1, resolution: 21
+level 2, resolution: 26
+level 3, resolution: 32
+level 4, resolution: 41
+level 5, resolution: 51
+level 6, resolution: 65
+level 7, resolution: 81
+level 8, resolution: 102
+level 9, resolution: 129
+level 10, resolution: 162
+level 11, resolution: 204
+level 12, resolution: 257
+level 13, resolution: 323
+level 14, resolution: 407
+level 15, resolution: 513
+GridEncoder: input_dim=3 n_levels=16 level_dim=2 resolution=16 -> 512 per_level_scale=1.2599 params=(29580312, 2) gridtype=hash align_corners=False
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:159: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.amp_scaler = torch.cuda.amp.GradScaler(enabled=self.cfg['amp'])
+sc_factor 14.850189637177428
+translation [ 0.00231164 -0.0063575   0.00410788]
+[nerf_runner.py] denoise cloud
+[nerf_runner.py] Denoising rays based on octree cloud
+[nerf_runner.py] bad_mask#=21017
+rays torch.Size([9123747, 12])
+[nerf_runner.py] train progress 0/501
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1259: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1293: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Iter: 0, valid_samples: 392151/393216, valid_rays: 2046/2048, loss: 8.4876556, rgb_loss: 1.6980693, rgb0_loss: 0.0000000, fs_rgb_loss: 0.0000000, depth_loss: 0.0000000, depth_loss0: 0.0000000, fs_loss: 0.1732908, point_cloud_loss: 0.0000000, point_cloud_normal_loss: 0.0000000, sdf_loss: 6.6162958, eikonal_loss: 0.0000000, variation_loss: 0.0000000, truncation(meter): 0.0100000, pose_reg: 0.0000000, reg_features: 0.0000000, 
+
+[nerf_runner.py] train progress 50/501
+[nerf_runner.py] train progress 100/501
+[nerf_runner.py] train progress 150/501
+[nerf_runner.py] train progress 200/501
+[nerf_runner.py] train progress 250/501
+[nerf_runner.py] train progress 300/501
+[nerf_runner.py] train progress 350/501
+[nerf_runner.py] train progress 400/501
+[nerf_runner.py] train progress 450/501
+[nerf_runner.py] train progress 500/501
+[nerf_runner.py] query_pts:torch.Size([91125, 3]), valid:87132
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1323: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1338: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Running Marching Cubes
+[nerf_runner.py] done V:(8556, 3), F:(16940, 3)
+[N] MPM12 I round 44 n=220: 21.7s
+[nerf_runner.py] Octree voxel dilate_radius:1
+level 0, resolution: 16
+level 1, resolution: 21
+level 2, resolution: 26
+level 3, resolution: 32
+level 4, resolution: 41
+level 5, resolution: 51
+level 6, resolution: 65
+level 7, resolution: 81
+level 8, resolution: 102
+level 9, resolution: 129
+level 10, resolution: 162
+level 11, resolution: 204
+level 12, resolution: 257
+level 13, resolution: 323
+level 14, resolution: 407
+level 15, resolution: 513
+GridEncoder: input_dim=3 n_levels=16 level_dim=2 resolution=16 -> 512 per_level_scale=1.2599 params=(29580312, 2) gridtype=hash align_corners=False
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:159: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.amp_scaler = torch.cuda.amp.GradScaler(enabled=self.cfg['amp'])
+sc_factor 14.850189637177428
+translation [ 0.00231164 -0.0063575   0.00410788]
+[nerf_runner.py] denoise cloud
+[nerf_runner.py] Denoising rays based on octree cloud
+[nerf_runner.py] bad_mask#=21119
+rays torch.Size([9342216, 12])
+[nerf_runner.py] train progress 0/501
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1259: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1293: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Iter: 0, valid_samples: 392280/393216, valid_rays: 2046/2048, loss: 8.3430357, rgb_loss: 1.7395091, rgb0_loss: 0.0000000, fs_rgb_loss: 0.0000000, depth_loss: 0.0000000, depth_loss0: 0.0000000, fs_loss: 0.1697107, point_cloud_loss: 0.0000000, point_cloud_normal_loss: 0.0000000, sdf_loss: 6.4338155, eikonal_loss: 0.0000000, variation_loss: 0.0000000, truncation(meter): 0.0100000, pose_reg: 0.0000000, reg_features: 0.0000000, 
+
+[nerf_runner.py] train progress 50/501
+[nerf_runner.py] train progress 100/501
+[nerf_runner.py] train progress 150/501
+[nerf_runner.py] train progress 200/501
+[nerf_runner.py] train progress 250/501
+[nerf_runner.py] train progress 300/501
+[nerf_runner.py] train progress 350/501
+[nerf_runner.py] train progress 400/501
+[nerf_runner.py] train progress 450/501
+[nerf_runner.py] train progress 500/501
+[nerf_runner.py] query_pts:torch.Size([91125, 3]), valid:87132
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1323: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1338: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Running Marching Cubes
+[nerf_runner.py] done V:(8519, 3), F:(16842, 3)
+[N] MPM12 I round 45 n=225: 22.2s
+[nerf_runner.py] Octree voxel dilate_radius:1
+level 0, resolution: 16
+level 1, resolution: 21
+level 2, resolution: 26
+level 3, resolution: 32
+level 4, resolution: 41
+level 5, resolution: 51
+level 6, resolution: 65
+level 7, resolution: 81
+level 8, resolution: 102
+level 9, resolution: 129
+level 10, resolution: 162
+level 11, resolution: 204
+level 12, resolution: 257
+level 13, resolution: 323
+level 14, resolution: 407
+level 15, resolution: 513
+GridEncoder: input_dim=3 n_levels=16 level_dim=2 resolution=16 -> 512 per_level_scale=1.2599 params=(29580312, 2) gridtype=hash align_corners=False
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:159: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.amp_scaler = torch.cuda.amp.GradScaler(enabled=self.cfg['amp'])
+sc_factor 14.850189637177428
+translation [ 0.00231164 -0.0063575   0.00410788]
+[nerf_runner.py] denoise cloud
+[nerf_runner.py] Denoising rays based on octree cloud
+[nerf_runner.py] bad_mask#=21477
+rays torch.Size([9577133, 12])
+[nerf_runner.py] train progress 0/501
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1259: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1293: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Iter: 0, valid_samples: 391491/393216, valid_rays: 2043/2048, loss: 8.3250580, rgb_loss: 1.6927803, rgb0_loss: 0.0000000, fs_rgb_loss: 0.0000000, depth_loss: 0.0000000, depth_loss0: 0.0000000, fs_loss: 0.1753102, point_cloud_loss: 0.0000000, point_cloud_normal_loss: 0.0000000, sdf_loss: 6.4569678, eikonal_loss: 0.0000000, variation_loss: 0.0000000, truncation(meter): 0.0100000, pose_reg: 0.0000000, reg_features: 0.0000000, 
+
+[nerf_runner.py] train progress 50/501
+[nerf_runner.py] train progress 100/501
+[nerf_runner.py] train progress 150/501
+[nerf_runner.py] train progress 200/501
+[nerf_runner.py] train progress 250/501
+[nerf_runner.py] train progress 300/501
+[nerf_runner.py] train progress 350/501
+[nerf_runner.py] train progress 400/501
+[nerf_runner.py] train progress 450/501
+[nerf_runner.py] train progress 500/501
+[nerf_runner.py] query_pts:torch.Size([91125, 3]), valid:87132
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1323: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1338: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Running Marching Cubes
+[nerf_runner.py] done V:(8536, 3), F:(16890, 3)
+[N] MPM12 I round 46 n=230: 22.0s
+[nerf_runner.py] Octree voxel dilate_radius:1
+level 0, resolution: 16
+level 1, resolution: 21
+level 2, resolution: 26
+level 3, resolution: 32
+level 4, resolution: 41
+level 5, resolution: 51
+level 6, resolution: 65
+level 7, resolution: 81
+level 8, resolution: 102
+level 9, resolution: 129
+level 10, resolution: 162
+level 11, resolution: 204
+level 12, resolution: 257
+level 13, resolution: 323
+level 14, resolution: 407
+level 15, resolution: 513
+GridEncoder: input_dim=3 n_levels=16 level_dim=2 resolution=16 -> 512 per_level_scale=1.2599 params=(29580312, 2) gridtype=hash align_corners=False
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:159: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.amp_scaler = torch.cuda.amp.GradScaler(enabled=self.cfg['amp'])
+sc_factor 14.850189637177428
+translation [ 0.00231164 -0.0063575   0.00410788]
+[nerf_runner.py] denoise cloud
+[nerf_runner.py] Denoising rays based on octree cloud
+[nerf_runner.py] bad_mask#=21664
+rays torch.Size([9806207, 12])
+[nerf_runner.py] train progress 0/501
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1259: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1293: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Iter: 0, valid_samples: 392027/393216, valid_rays: 2047/2048, loss: 8.5209732, rgb_loss: 1.6798943, rgb0_loss: 0.0000000, fs_rgb_loss: 0.0000000, depth_loss: 0.0000000, depth_loss0: 0.0000000, fs_loss: 0.1830009, point_cloud_loss: 0.0000000, point_cloud_normal_loss: 0.0000000, sdf_loss: 6.6580782, eikonal_loss: 0.0000000, variation_loss: 0.0000000, truncation(meter): 0.0100000, pose_reg: 0.0000000, reg_features: 0.0000000, 
+
+[nerf_runner.py] train progress 50/501
+[nerf_runner.py] train progress 100/501
+[nerf_runner.py] train progress 150/501
+[nerf_runner.py] train progress 200/501
+[nerf_runner.py] train progress 250/501
+[nerf_runner.py] train progress 300/501
+[nerf_runner.py] train progress 350/501
+[nerf_runner.py] train progress 400/501
+[nerf_runner.py] train progress 450/501
+[nerf_runner.py] train progress 500/501
+[nerf_runner.py] query_pts:torch.Size([91125, 3]), valid:87132
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1323: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1338: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Running Marching Cubes
+[nerf_runner.py] done V:(8480, 3), F:(16746, 3)
+[N] MPM12 I round 47 n=235: 22.5s
+[nerf_runner.py] Octree voxel dilate_radius:1
+level 0, resolution: 16
+level 1, resolution: 21
+level 2, resolution: 26
+level 3, resolution: 32
+level 4, resolution: 41
+level 5, resolution: 51
+level 6, resolution: 65
+level 7, resolution: 81
+level 8, resolution: 102
+level 9, resolution: 129
+level 10, resolution: 162
+level 11, resolution: 204
+level 12, resolution: 257
+level 13, resolution: 323
+level 14, resolution: 407
+level 15, resolution: 513
+GridEncoder: input_dim=3 n_levels=16 level_dim=2 resolution=16 -> 512 per_level_scale=1.2599 params=(29580312, 2) gridtype=hash align_corners=False
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:159: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.amp_scaler = torch.cuda.amp.GradScaler(enabled=self.cfg['amp'])
+sc_factor 14.850189637177428
+translation [ 0.00231164 -0.0063575   0.00410788]
+[nerf_runner.py] denoise cloud
+[nerf_runner.py] Denoising rays based on octree cloud
+[nerf_runner.py] bad_mask#=21854
+rays torch.Size([10023575, 12])
+[nerf_runner.py] train progress 0/501
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1259: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1293: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Iter: 0, valid_samples: 392232/393216, valid_rays: 2047/2048, loss: 8.2299538, rgb_loss: 1.7245517, rgb0_loss: 0.0000000, fs_rgb_loss: 0.0000000, depth_loss: 0.0000000, depth_loss0: 0.0000000, fs_loss: 0.1710443, point_cloud_loss: 0.0000000, point_cloud_normal_loss: 0.0000000, sdf_loss: 6.3343577, eikonal_loss: 0.0000000, variation_loss: 0.0000000, truncation(meter): 0.0100000, pose_reg: 0.0000000, reg_features: 0.0000000, 
+
+[nerf_runner.py] train progress 50/501
+[nerf_runner.py] train progress 100/501
+[nerf_runner.py] train progress 150/501
+[nerf_runner.py] train progress 200/501
+[nerf_runner.py] train progress 250/501
+[nerf_runner.py] train progress 300/501
+[nerf_runner.py] train progress 350/501
+[nerf_runner.py] train progress 400/501
+[nerf_runner.py] train progress 450/501
+[nerf_runner.py] train progress 500/501
+[nerf_runner.py] query_pts:torch.Size([91125, 3]), valid:87132
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1323: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1338: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Running Marching Cubes
+[nerf_runner.py] done V:(8468, 3), F:(16758, 3)
+[N] MPM12 I round 48 n=240: 22.8s
+[nerf_runner.py] Octree voxel dilate_radius:1
+level 0, resolution: 16
+level 1, resolution: 21
+level 2, resolution: 26
+level 3, resolution: 32
+level 4, resolution: 41
+level 5, resolution: 51
+level 6, resolution: 65
+level 7, resolution: 81
+level 8, resolution: 102
+level 9, resolution: 129
+level 10, resolution: 162
+level 11, resolution: 204
+level 12, resolution: 257
+level 13, resolution: 323
+level 14, resolution: 407
+level 15, resolution: 513
+GridEncoder: input_dim=3 n_levels=16 level_dim=2 resolution=16 -> 512 per_level_scale=1.2599 params=(29580312, 2) gridtype=hash align_corners=False
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:159: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.amp_scaler = torch.cuda.amp.GradScaler(enabled=self.cfg['amp'])
+sc_factor 14.850189637177428
+translation [ 0.00231164 -0.0063575   0.00410788]
+[nerf_runner.py] denoise cloud
+[nerf_runner.py] Denoising rays based on octree cloud
+[nerf_runner.py] bad_mask#=22086
+rays torch.Size([10109341, 12])
+[nerf_runner.py] train progress 0/501
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1259: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1293: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Iter: 0, valid_samples: 392094/393216, valid_rays: 2047/2048, loss: 8.3991585, rgb_loss: 1.7635459, rgb0_loss: 0.0000000, fs_rgb_loss: 0.0000000, depth_loss: 0.0000000, depth_loss0: 0.0000000, fs_loss: 0.1833116, point_cloud_loss: 0.0000000, point_cloud_normal_loss: 0.0000000, sdf_loss: 6.4523010, eikonal_loss: 0.0000000, variation_loss: 0.0000000, truncation(meter): 0.0100000, pose_reg: 0.0000000, reg_features: 0.0000000, 
+
+[nerf_runner.py] train progress 50/501
+[nerf_runner.py] train progress 100/501
+[nerf_runner.py] train progress 150/501
+[nerf_runner.py] train progress 200/501
+[nerf_runner.py] train progress 250/501
+[nerf_runner.py] train progress 300/501
+[nerf_runner.py] train progress 350/501
+[nerf_runner.py] train progress 400/501
+[nerf_runner.py] train progress 450/501
+[nerf_runner.py] train progress 500/501
+[nerf_runner.py] query_pts:torch.Size([91125, 3]), valid:87132
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1323: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+/home/kist/Desktop/BundleSAM3DGS/nerf_runner.py:1338: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=self.cfg['amp']):
+[nerf_runner.py] Running Marching Cubes
+[nerf_runner.py] done V:(8517, 3), F:(16844, 3)
+[N] MPM12 I round 49 n=242: 22.9s

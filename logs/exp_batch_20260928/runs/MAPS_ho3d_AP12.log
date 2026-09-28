@@ -1,0 +1,4 @@
+[probe] prior alignment refined; normalization scale 6.280; gaussians 19998
+[maps] AP12 K=40: cycle 0263 views 40 gaussians 187837
+[maps] AP12 K=80: cycle 0696 views 80 gaussians 292717
+[maps] AP12 K=last: cycle 1600 views 169 gaussians 451301

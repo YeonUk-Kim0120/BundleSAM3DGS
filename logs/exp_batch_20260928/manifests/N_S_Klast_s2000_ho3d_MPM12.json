@@ -1,0 +1,28 @@
+{
+ "tag": "N_S_Klast_s2000_ho3d_MPM12",
+ "arm": "N",
+ "dataset": "ho3d",
+ "seq": "MPM12",
+ "gpu": "0",
+ "container": "bundlesdf",
+ "command": "/usr/bin/python3 experiments/exp_nerf_round.py --input logs/exp_batch_20260928/inputs/ho3d_MPM12.json --mode S --K last --n-step 2000 --out outputs/exp_batch_20260928/N/ho3d/MPM12/S_Klast_s2000",
+ "env": {
+  "CUDA_VISIBLE_DEVICES": "0",
+  "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True",
+  "PYTHONDONTWRITEBYTECODE": "1",
+  "TZ": "Asia/Seoul"
+ },
+ "input": "logs/exp_batch_20260928/inputs/ho3d_MPM12.json",
+ "output": "outputs/exp_batch_20260928/N/ho3d/MPM12/S_Klast_s2000",
+ "start": "2026-09-28 01:58:51",
+ "end": "2026-09-28 02:00:03",
+ "rc": 0,
+ "git_head": "8096fd083f85d940cbddf1d6879efa2ee122e129",
+ "git_status_main_code": "",
+ "scripts_sha1": {
+  "experiments/exp_nerf_round.py": "a19d98271eaf472215e132e9e5fe6cc1fe190b55",
+  "experiments/exp_gs_joint_refit.py": "4bc8ae920e84311800df22792cb3cb4595817257",
+  "experiments/exp_round_inputs.py": "38bcbedc25131970b974f6b78e1f724daa31bbd3",
+  "experiments/joint_refit_eval.py": "79cebbb9bb8fdfbd012d1d41269fd16dfd0bddbe"
+ }
+}

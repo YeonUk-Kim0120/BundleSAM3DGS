@@ -1,0 +1,4 @@
+[probe] prior alignment refined; normalization scale 12.021; gaussians 19926
+[maps] MPM12 K=40: cycle 0232 views 40 gaussians 58179
+[maps] MPM12 K=80: cycle 0409 views 80 gaussians 74586
+[maps] MPM12 K=last: cycle 1616 views 242 gaussians 112256
